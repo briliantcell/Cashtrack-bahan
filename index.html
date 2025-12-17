@@ -66,7 +66,7 @@
             transition: var(--transition);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
-            overflow: hidden;
+            /* DIUBAH: overflow: hidden dihapus agar bisa scroll */
         }
 
         /* Install Prompt */
@@ -307,7 +307,7 @@
             display: none;
         }
 
-        /* Donation Screen */
+        /* Donation Screen - DIUBAH: Ukuran diperkecil */
         #donation-screen {
             min-height: 100vh;
             display: none;
@@ -322,35 +322,35 @@
 
         .donation-container {
             width: 100%;
-            max-width: 450px;
-            background: rgba(255, 255, 255, 0.95);
+            max-width: 380px; /* DIUBAH: dari 450px menjadi 380px */
+            background: rgba(255, 255, 255, 0.98);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 30px;
+            padding: 20px; /* DIUBAH: dari 30px menjadi 20px */
             animation: fadeIn 0.5s ease;
             text-align: center;
         }
 
         .donation-header {
-            margin-bottom: 25px;
+            margin-bottom: 15px; /* DIUBAH: dari 25px menjadi 15px */
         }
 
         .donation-icon {
-            width: 80px;
-            height: 80px;
+            width: 60px; /* DIUBAH: dari 80px menjadi 60px */
+            height: 60px; /* DIUBAH: dari 80px menjadi 60px */
             background: linear-gradient(135deg, #977dff, #0033ff);
-            border-radius: 20px;
-            margin: 0 auto 15px;
+            border-radius: 15px; /* DIUBAH: dari 20px menjadi 15px */
+            margin: 0 auto 10px; /* DIUBAH: dari 15px menjadi 10px */
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 30px;
+            font-size: 24px; /* DIUBAH: dari 30px menjadi 24px */
             font-weight: bold;
         }
 
         .donation-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem; /* DIUBAH: dari 1.8rem menjadi 1.5rem */
             font-weight: 700;
             color: #1a73e8;
             margin-bottom: 5px;
@@ -358,51 +358,51 @@
 
         .donation-subtitle {
             color: var(--gray);
-            font-size: 1rem;
-            margin-bottom: 25px;
+            font-size: 0.9rem; /* DIUBAH: dari 1rem menjadi 0.9rem */
+            margin-bottom: 15px; /* DIUBAH: dari 25px menjadi 15px */
         }
 
         .donation-message {
             color: #555;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            padding: 15px;
+            font-size: 0.85rem; /* DIUBAH: dari 0.95rem menjadi 0.85rem */
+            line-height: 1.4;
+            margin-bottom: 15px; /* DIUBAH: dari 20px menjadi 15px */
+            padding: 12px; /* DIUBAH: dari 15px menjadi 12px */
             background: rgba(151, 125, 255, 0.05);
-            border-radius: 10px;
-            border-left: 4px solid #977dff;
+            border-radius: 8px;
+            border-left: 3px solid #977dff;
         }
 
         .donation-box {
             background: linear-gradient(145deg, #f8f9ff, #eef2ff);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
+            border-radius: 12px;
+            padding: 20px; /* DIUBAH: dari 25px menjadi 20px */
+            margin: 15px 0; /* DIUBAH: dari 25px menjadi 15px */
             border: 2px solid #e0e7ff;
-            box-shadow: 0 8px 20px rgba(151, 125, 255, 0.1);
+            box-shadow: 0 6px 15px rgba(151, 125, 255, 0.1);
             text-align: center;
         }
 
         .bank-name {
-            font-size: 20px;
+            font-size: 18px; /* DIUBAH: dari 20px menjadi 18px */
             font-weight: 700;
             color: #0033ff;
-            margin-bottom: 10px;
+            margin-bottom: 8px; /* DIUBAH: dari 10px menjadi 8px */
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .account-number {
-            font-size: 24px;
+            font-size: 20px; /* DIUBAH: dari 24px menjadi 20px */
             font-weight: 800;
             color: #0600ab;
-            letter-spacing: 2px;
-            margin: 15px 0;
-            padding: 15px;
+            letter-spacing: 1px; /* DIUBAH: dari 2px menjadi 1px */
+            margin: 12px 0; /* DIUBAH: dari 15px menjadi 12px */
+            padding: 12px; /* DIUBAH: dari 15px menjadi 12px */
             background: #ffffff;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px dashed #977dff;
             font-family: monospace, sans-serif;
             cursor: pointer;
@@ -416,53 +416,54 @@
         }
 
         .account-name {
-            font-size: 18px;
+            font-size: 16px; /* DIUBAH: dari 18px menjadi 16px */
             color: #444;
-            margin-bottom: 10px;
+            margin-bottom: 8px; /* DIUBAH: dari 10px menjadi 8px */
             font-weight: 600;
         }
 
         .copy-notice {
-            font-size: 14px;
+            font-size: 12px; /* DIUBAH: dari 14px menjadi 12px */
             color: #666;
             font-style: italic;
-            margin-top: 10px;
+            margin-top: 8px; /* DIUBAH: dari 10px menjadi 8px */
         }
 
         .donation-buttons {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 25px;
+            gap: 12px; /* DIUBAH: dari 15px menjadi 12px */
+            margin-top: 20px; /* DIUBAH: dari 25px menjadi 20px */
         }
 
         .donation-btn {
             background: linear-gradient(to right, #977dff, #0033ff);
             color: white;
             border: none;
-            padding: 16px;
+            padding: 14px; /* DIUBAH: dari 16px menjadi 14px */
             border-radius: 10px;
-            font-size: 18px;
+            font-size: 16px; /* DIUBAH: dari 18px menjadi 16px */
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
-            box-shadow: 0 6px 20px rgba(151, 125, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(151, 125, 255, 0.4);
             position: relative;
             overflow: hidden;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .donation-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(151, 125, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(151, 125, 255, 0.6);
         }
 
         .donation-btn:active {
             transform: translateY(-1px);
         }
 
-        .donation-btn-secondary {
+        /* DIHAPUS: Tombol secondary donation-btn-secondary dihapus */
+        /* .donation-btn-secondary {
             background: #f1f3f4;
             color: var(--dark);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -476,7 +477,7 @@
         [data-theme="dark"] .donation-btn-secondary {
             background: #2d2d2d;
             color: var(--dark);
-        }
+        } */
 
         .button-shine {
             position: absolute;
@@ -494,8 +495,8 @@
         }
 
         .donation-footer {
-            margin-top: 30px;
-            font-size: 12px;
+            margin-top: 20px; /* DIUBAH: dari 30px menjadi 20px */
+            font-size: 11px; /* DIUBAH: dari 12px menjadi 11px */
             color: rgba(255, 255, 255, 0.9);
             text-align: center;
             line-height: 1.4;
@@ -619,6 +620,8 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
+            /* DIUBAH: Tambahkan untuk memastikan konten bisa scroll */
+            min-height: calc(100vh - 140px);
         }
 
         /* Page Sections */
@@ -1124,18 +1127,18 @@
             }
             
             .donation-title {
-                font-size: 1.6rem;
+                font-size: 1.4rem; /* DIUBAH: dari 1.6rem menjadi 1.4rem */
             }
             
             .account-number {
-                font-size: 20px;
-                padding: 12px;
+                font-size: 18px; /* DIUBAH: dari 20px menjadi 18px */
+                padding: 10px; /* DIUBAH: dari 12px menjadi 10px */
                 letter-spacing: 1px;
             }
             
             .donation-btn {
-                padding: 14px;
-                font-size: 16px;
+                padding: 12px; /* DIUBAH: dari 14px menjadi 12px */
+                font-size: 15px; /* DIUBAH: dari 16px menjadi 15px */
             }
         }
 
@@ -1152,7 +1155,7 @@
             
             .app-title,
             .donation-title {
-                font-size: 1.7rem;
+                font-size: 1.5rem; /* DIUBAH: dari 1.7rem menjadi 1.5rem */
             }
             
             .app-footer {
@@ -1231,8 +1234,8 @@
             }
             
             .account-number {
-                font-size: 18px;
-                padding: 10px;
+                font-size: 16px; /* DIUBAH: dari 18px menjadi 16px */
+                padding: 8px; /* DIUBAH: dari 10px menjadi 8px */
             }
             
             .donation-container {
@@ -1270,8 +1273,13 @@
             }
             
             .account-number {
-                font-size: 16px;
+                font-size: 15px; /* DIUBAH: dari 16px menjadi 15px */
                 letter-spacing: 0;
+            }
+            
+            .donation-btn {
+                padding: 10px; /* DIUBAH: tambah padding lebih kecil */
+                font-size: 14px; /* DIUBAH: font lebih kecil */
             }
         }
 
@@ -1433,9 +1441,10 @@
                     <span class="button-shine"></span>
                     KLIK UNTUK MASUK KE APLIKASI
                 </button>
-                <button class="donation-btn donation-btn-secondary" onclick="skipDonation()">
+                <!-- DIHAPUS: Tombol "Lewati dan Masuk Aplikasi" dihapus -->
+                <!-- <button class="donation-btn donation-btn-secondary" onclick="skipDonation()">
                     Lewati dan Masuk Aplikasi
-                </button>
+                </button> -->
             </div>
         </div>
         
@@ -1668,7 +1677,7 @@
             return dateString.substring(0, 4);
         }
 
-               // ==================== PWA FUNCTIONS ====================
+        // ==================== PWA FUNCTIONS ====================
 
         // PWA Manifest
         const manifest = {
@@ -1828,9 +1837,10 @@
             document.getElementById('enter-app-btn').addEventListener('click', enterApp);
         }
 
-        function skipDonation() {
-            enterApp();
-        }
+        // DIHAPUS: Fungsi skipDonation tidak diperlukan lagi
+        // function skipDonation() {
+        //     enterApp();
+        // }
 
         function enterApp() {
             document.getElementById('donation-screen').style.display = 'none';
