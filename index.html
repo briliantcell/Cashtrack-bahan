@@ -53,6 +53,11 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
         body {
             background-color: var(--light);
             color: var(--dark);
@@ -61,6 +66,7 @@
             transition: var(--transition);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
+            overflow: hidden;
         }
 
         /* Install Prompt */
@@ -299,6 +305,200 @@
             margin-top: 10px;
             font-size: 14px;
             display: none;
+        }
+
+        /* Donation Screen */
+        #donation-screen {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #977dff 0%, #0033ff 50%, #0600ab 100%);
+            padding-top: var(--safe-area-top);
+            padding-bottom: var(--safe-area-bottom);
+        }
+
+        .donation-container {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+            text-align: center;
+        }
+
+        .donation-header {
+            margin-bottom: 25px;
+        }
+
+        .donation-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #977dff, #0033ff);
+            border-radius: 20px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .donation-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a73e8;
+            margin-bottom: 5px;
+        }
+
+        .donation-subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .donation-message {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(151, 125, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #977dff;
+        }
+
+        .donation-box {
+            background: linear-gradient(145deg, #f8f9ff, #eef2ff);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #e0e7ff;
+            box-shadow: 0 8px 20px rgba(151, 125, 255, 0.1);
+            text-align: center;
+        }
+
+        .bank-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0033ff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .account-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0600ab;
+            letter-spacing: 2px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 10px;
+            border: 2px dashed #977dff;
+            font-family: monospace, sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            word-break: break-all;
+        }
+
+        .account-number:hover {
+            background: #f9f9ff;
+            transform: scale(1.02);
+        }
+
+        .account-name {
+            font-size: 18px;
+            color: #444;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .copy-notice {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .donation-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .donation-btn {
+            background: linear-gradient(to right, #977dff, #0033ff);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            box-shadow: 0 6px 20px rgba(151, 125, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        .donation-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(151, 125, 255, 0.6);
+        }
+
+        .donation-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .donation-btn-secondary {
+            background: #f1f3f4;
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .donation-btn-secondary:hover {
+            background: #e8eaed;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        [data-theme="dark"] .donation-btn-secondary {
+            background: #2d2d2d;
+            color: var(--dark);
+        }
+
+        .button-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        .donation-footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            line-height: 1.4;
         }
 
         /* Main App */
@@ -814,7 +1014,8 @@
                 display: flex;
             }
             
-            .login-container {
+            .login-container,
+            .donation-container {
                 padding: 20px;
                 margin: 10px;
                 max-width: 100%;
@@ -921,6 +1122,21 @@
                 font-size: 1.2rem;
                 margin: 20px 0 12px;
             }
+            
+            .donation-title {
+                font-size: 1.6rem;
+            }
+            
+            .account-number {
+                font-size: 20px;
+                padding: 12px;
+                letter-spacing: 1px;
+            }
+            
+            .donation-btn {
+                padding: 14px;
+                font-size: 16px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -934,7 +1150,8 @@
                 font-size: 30px;
             }
             
-            .app-title {
+            .app-title,
+            .donation-title {
                 font-size: 1.7rem;
             }
             
@@ -1012,6 +1229,15 @@
                 padding: 10px;
                 font-size: 13px;
             }
+            
+            .account-number {
+                font-size: 18px;
+                padding: 10px;
+            }
+            
+            .donation-container {
+                padding: 15px;
+            }
         }
 
         @media (min-width: 769px) {
@@ -1042,24 +1268,32 @@
                 padding: 8px;
                 font-size: 12px;
             }
+            
+            .account-number {
+                font-size: 16px;
+                letter-spacing: 0;
+            }
         }
 
         /* Touch Device Optimization */
         @media (hover: none) and (pointer: coarse) {
             .btn:hover,
             .icon-btn:hover,
-            .nav-tab:hover {
+            .nav-tab:hover,
+            .donation-btn:hover {
                 transform: none;
             }
             
             .btn:active,
             .icon-btn:active,
-            .nav-tab:active {
+            .nav-tab:active,
+            .donation-btn:active {
                 transform: scale(0.95);
                 transition: transform 0.1s ease;
             }
             
-            .login-btn:active {
+            .login-btn:active,
+            .donation-btn:active {
                 transform: scale(0.98);
             }
         }
@@ -1160,6 +1394,53 @@
             </button>
 
             <div class="error-message" id="password-error">Password salah!</div>
+        </div>
+    </div>
+
+    <!-- Donation Screen -->
+    <div id="donation-screen">
+        <div class="donation-container">
+            <div class="donation-header">
+                <div class="donation-icon">
+                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" rx="20" fill="#977dff"/>
+                        <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M35 40L60 65" stroke="white" stroke-width="3"/>
+                        <path d="M60 35L35 60" stroke="white" stroke-width="3"/>
+                        <rect x="30" y="45" width="40" height="10" rx="2" fill="white"/>
+                    </svg>
+                </div>
+                <h1 class="donation-title">Support Developer</h1>
+                <p class="donation-subtitle">Bantu pengembangan aplikasi dengan donasi seikhlasnya</p>
+            </div>
+
+            <div class="donation-message">
+                "Terima kasih telah menggunakan CashTrack! Donasi Anda akan membantu pengembangan aplikasi ini menjadi lebih baik."
+            </div>
+
+            <div class="donation-box">
+                <div class="bank-name">
+                    <span>🏦</span> Bank Seabank
+                </div>
+                <div class="account-name">Muhamad Abid kalkautsar</div>
+                <div class="account-number" id="copy-account-number">9018 9866 1823</div>
+                <div class="copy-notice">Klik untuk menyalin nomor rekening</div>
+            </div>
+
+            <div class="donation-buttons">
+                <button class="donation-btn" id="enter-app-btn">
+                    <span class="button-shine"></span>
+                    KLIK UNTUK MASUK KE APLIKASI
+                </button>
+                <button class="donation-btn donation-btn-secondary" onclick="skipDonation()">
+                    Lewati dan Masuk Aplikasi
+                </button>
+            </div>
+        </div>
+        
+        <div class="donation-footer">
+            CashTrack © 2025 | Buatan Anak Indonesia 🇮🇩
         </div>
     </div>
 
@@ -1387,7 +1668,7 @@
             return dateString.substring(0, 4);
         }
 
-        // ==================== PWA FUNCTIONS ====================
+               // ==================== PWA FUNCTIONS ====================
 
         // PWA Manifest
         const manifest = {
@@ -1402,49 +1683,38 @@
             "categories": ["finance", "productivity"],
             "icons": [
                 {
-                    "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNjAgMzVMMzUgNjAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjMwIiB5PSI0NSIgd2lkdGg9IjQwIiBoZWlnaHQ9IjEwIiByeD0iMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+                    "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=",
                     "sizes": "192x192",
                     "type": "image/svg+xml"
                 }
             ]
         };
 
-        // Set manifest dynamically
-        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+        // Create and set manifest
+        const manifestJson = JSON.stringify(manifest);
+        const manifestBlob = new Blob([manifestJson], { type: 'application/json' });
         const manifestURL = URL.createObjectURL(manifestBlob);
         document.getElementById('app-manifest').href = manifestURL;
 
-        // Tampilkan splash screen pertama kali
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.getElementById('splash-screen').style.opacity = '0';
-                setTimeout(function() {
-                    document.getElementById('splash-screen').style.display = 'none';
-                    document.getElementById('login-screen').style.display = 'flex';
-                }, 500);
-            }, 2000);
-        });
-
-        // PWA Installation
+        // Install Prompt
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            setTimeout(showInstallPrompt, 3000);
-            
-            window.addEventListener('appinstalled', (evt) => {
-                console.log('Aplikasi berhasil diinstal');
-                hideInstallPrompt();
-            });
+            setTimeout(() => {
+                showInstallPrompt();
+            }, 3000);
         });
 
         function showInstallPrompt() {
             if (deferredPrompt) {
-                document.getElementById('install-prompt').style.display = 'block';
+                const installPrompt = document.getElementById('install-prompt');
+                installPrompt.style.display = 'block';
             }
         }
 
         function hideInstallPrompt() {
-            document.getElementById('install-prompt').style.display = 'none';
+            const installPrompt = document.getElementById('install-prompt');
+            installPrompt.style.display = 'none';
         }
 
         document.getElementById('install-btn').addEventListener('click', async () => {
@@ -1452,861 +1722,317 @@
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    hideInstallPrompt();
+                    console.log('User accepted the install prompt');
                 }
                 deferredPrompt = null;
+                hideInstallPrompt();
             }
         });
 
-        // ==================== AUTHENTICATION FUNCTIONS ====================
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
+
+        // ==================== SPLASH SCREEN ====================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splashScreen = document.getElementById('splash-screen');
+                splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    
+                    // Check if already logged in
+                    const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
+                    if (isLoggedIn) {
+                        showDonationScreen();
+                    } else {
+                        showLoginScreen();
+                    }
+                }, 500);
+            }, 2000);
+        });
+
+        // ==================== LOGIN FUNCTIONS ====================
+        function showLoginScreen() {
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('donation-screen').style.display = 'none';
+            document.getElementById('main-app').style.display = 'none';
+            
+            // Set today's date as default
+            document.getElementById('transaction-date').valueAsDate = new Date();
+        }
 
         // Toggle password visibility
         document.getElementById('toggle-password').addEventListener('click', function() {
             const passwordInput = document.getElementById('password-input');
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? '👁️' : '🔒';
+            this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
         });
 
-        // Password authentication
+        // Enter key support for password input
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
         function checkPassword() {
-            const password = document.getElementById('password-input').value;
+            const passwordInput = document.getElementById('password-input');
             const errorMessage = document.getElementById('password-error');
             
-            if (password === correctPassword) {
-                errorMessage.style.display = 'none';
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                initializeApp();
+            if (passwordInput.value === correctPassword) {
+                localStorage.setItem('cashTrackLoggedIn', 'true');
+                showDonationScreen();
             } else {
                 errorMessage.style.display = 'block';
-                document.getElementById('password-input').value = '';
+                passwordInput.value = '';
+                passwordInput.focus();
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
             }
         }
 
-        function logout() {
-            if (confirm('Apakah Anda yakin ingin keluar dari aplikasi?')) {
-                document.getElementById('login-screen').style.display = 'flex';
-                document.getElementById('main-app').style.display = 'none';
-                document.getElementById('password-input').value = '';
-                document.getElementById('password-input').setAttribute('type', 'password');
-                document.getElementById('toggle-password').textContent = '👁️';
-                document.getElementById('password-error').style.display = 'none';
-            }
-        }
-
-        // ==================== NAVIGATION FUNCTIONS ====================
-
-        // Navigation tabs untuk mobile
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                // Update active tab
-                document.querySelectorAll('.nav-tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                this.classList.add('active');
-                
-                // Show selected page
-                const pageId = this.getAttribute('data-page');
-                document.querySelectorAll('.page-section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                document.getElementById(pageId).classList.add('active');
-                
-                currentPage = pageId;
-                
-                // Jika pindah ke history page, refresh data
-                if (pageId === 'history-page') {
-                    displayGroupedTransactions();
-                }
-            });
-        });
-
-        // ==================== TRANSACTION MANAGEMENT ====================
-
-        // Fungsi untuk mengelompokkan transaksi berdasarkan bulan
-        function groupTransactionsByMonth(transactionsArray) {
-            const grouped = {};
+        // ==================== DONATION SCREEN ====================
+        function showDonationScreen() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('donation-screen').style.display = 'flex';
+            document.getElementById('main-app').style.display = 'none';
             
-            transactionsArray.forEach(transaction => {
-                const year = getYearFromDate(transaction.date);
-                const month = getMonthFromDate(transaction.date);
-                const yearMonth = `${year}-${month}`;
-                const monthName = getMonthName(month);
-                const yearMonthLabel = `${monthName} ${year}`;
-                
-                if (!grouped[yearMonth]) {
-                    grouped[yearMonth] = {
-                        label: yearMonthLabel,
-                        year: year,
-                        month: month,
-                        monthName: monthName,
-                        transactions: [],
-                        totalIncome: 0,
-                        totalExpense: 0,
-                        balance: 0
-                    };
-                }
-                
-                grouped[yearMonth].transactions.push(transaction);
-                grouped[yearMonth].totalIncome += transaction.income;
-                grouped[yearMonth].totalExpense += transaction.expense;
-                grouped[yearMonth].balance = grouped[yearMonth].totalIncome - grouped[yearMonth].totalExpense;
-            });
-            
-            // Urutkan berdasarkan tanggal (terbaru ke terlama)
-            return Object.values(grouped).sort((a, b) => {
-                const dateA = new Date(`${a.year}-${a.month}-01`);
-                const dateB = new Date(`${b.year}-${b.month}-01`);
-                return dateB - dateA;
-            });
-        }
-
-        // Fungsi untuk menampilkan transaksi berkelompok per bulan
-        function displayGroupedTransactions() {
-            const container = document.getElementById('transactions-container');
-            container.innerHTML = '';
-            
-            // Gunakan filteredTransactions jika ada filter
-            const transactionsToShow = filteredTransactions.length > 0 ? filteredTransactions : transactions;
-            
-            if (transactionsToShow.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div style="font-size: 3rem; opacity: 0.5;">📊</div>
-                        <p>Belum ada transaksi</p>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">Kembali ke halaman "Tambah Transaksi" untuk menambahkan transaksi baru</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Kelompokkan transaksi berdasarkan bulan
-            const groupedTransactions = groupTransactionsByMonth(transactionsToShow);
-            
-            groupedTransactions.forEach(group => {
-                // Buat section untuk setiap bulan
-                const tableSection = document.createElement('div');
-                tableSection.className = 'month-group';
-                
-                // Header bulan dengan total
-                tableSection.innerHTML = `
-                    <div class="month-header">
-                        <div>${group.label}</div>
-                        <div class="month-totals">
-                            <span>Pendapatan: <strong>${formatCurrency(group.totalIncome)}</strong></span>
-                            <span>Pengeluaran: <strong>${formatCurrency(group.totalExpense)}</strong></span>
-                            <span>Saldo: <strong>${formatCurrency(group.balance)}</strong></span>
-                        </div>
-                    </div>
-                    <div class="table-container">
-                        <div class="transactions-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Keterangan</th>
-                                        <th>Pendapatan</th>
-                                        <th>Pengeluaran</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="transactions-${group.year}-${group.month}">
-                                    <!-- Data akan diisi di bawah -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
-                
-                container.appendChild(tableSection);
-                
-                // Isi data transaksi untuk bulan ini
-                const tbody = document.getElementById(`transactions-${group.year}-${group.month}`);
-                
-                // Urutkan transaksi dalam bulan (terbaru ke terlama)
-                group.transactions.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(transaction => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${formatDate(transaction.date)}</td>
-                        <td>${transaction.desc}</td>
-                        <td class="income-amount">${formatCurrency(transaction.income)}</td>
-                        <td class="expense-amount">${formatCurrency(transaction.expense)}</td>
-                        <td class="action-buttons">
-                            <button class="btn btn-primary" onclick="editTransaction(${transaction.id})">✏️ Edit</button>
-                            <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})">🗑️ Hapus</button>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
+            // Copy account number functionality
+            const accountNumber = document.getElementById('copy-account-number');
+            accountNumber.addEventListener('click', function() {
+                const text = this.textContent.replace(/\s/g, '');
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = '✓ Berhasil Disalin!';
+                    this.style.background = '#34a853';
+                    this.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                    }, 2000);
                 });
             });
             
-            // Update total transaksi
-            document.getElementById('total-transactions').textContent = transactionsToShow.length;
+            document.getElementById('enter-app-btn').addEventListener('click', enterApp);
         }
 
-        // Tambah transaksi baru
+        function skipDonation() {
+            enterApp();
+        }
+
+        function enterApp() {
+            document.getElementById('donation-screen').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            initializeApp();
+        }
+
+        // ==================== APP INITIALIZATION ====================
+        function initializeApp() {
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
+            
+            // Initialize filter options
+            updateYearOptions();
+            updateMonthOptions();
+            updateDayOptions();
+            
+            // Set default filters
+            currentFilters.year = new Date().getFullYear().toString();
+            currentFilters.month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+            
+            // Update UI
+            updateBalance();
+            renderChart();
+            
+            // Load transactions based on current filters
+            filterTransactions();
+            
+            // Setup navigation tabs
+            setupNavigationTabs();
+        }
+
+        // ==================== TRANSACTION FUNCTIONS ====================
         function addTransaction() {
             const date = document.getElementById('transaction-date').value;
-            const desc = document.getElementById('transaction-desc').value.trim();
+            const description = document.getElementById('transaction-desc').value.trim();
             const income = parseCurrency(document.getElementById('transaction-income').value);
             const expense = parseCurrency(document.getElementById('transaction-expense').value);
-
-            // Validasi
+            
             if (!date) {
-                alert('Tanggal harus diisi!');
+                alert('Harap pilih tanggal transaksi!');
                 return;
             }
             
-            if (!desc) {
-                alert('Keterangan transaksi harus diisi!');
+            if (!description) {
+                alert('Harap isi keterangan transaksi!');
                 return;
             }
             
             if (income === 0 && expense === 0) {
-                alert('Pendapatan atau pengeluaran harus diisi!');
+                alert('Harap isi pendapatan atau pengeluaran!');
                 return;
             }
-
+            
             const transaction = {
                 id: Date.now(),
-                date,
-                desc,
-                income,
-                expense
+                date: date,
+                description: description,
+                income: income,
+                expense: expense,
+                timestamp: new Date().toISOString()
             };
-
-            transactions.push(transaction);
+            
+            transactions.unshift(transaction);
             saveTransactions();
-            clearForm();
-            
-            // Update filter options jika tahun baru ditambahkan
-            const year = date.substring(0, 4);
-            const yearSelect = document.getElementById('filter-year');
-            if (![...yearSelect.options].some(opt => opt.value === year)) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
-            }
-            
-            // Update tampilan
             updateBalance();
             renderChart();
+            clearForm();
             
+            if (currentPage === 'history-page') {
+                displayGroupedTransactions();
+            }
+            
+            // Update filter options
+            updateYearOptions();
+            updateMonthOptions();
+            updateDayOptions();
+            
+            // Show success message
             alert('Transaksi berhasil ditambahkan!');
         }
 
-        // Edit transaksi
-        function editTransaction(id) {
-            const transaction = transactions.find(t => t.id === id);
-            if (transaction) {
-                // Switch to transaction page
-                document.querySelectorAll('.nav-tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                document.querySelector('.nav-tab[data-page="transactions-page"]').classList.add('active');
-                
-                document.querySelectorAll('.page-section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                document.getElementById('transactions-page').classList.add('active');
-                currentPage = 'transactions-page';
-                
-                // Isi form dengan data transaksi yang akan diedit
-                document.getElementById('transaction-date').value = transaction.date;
-                document.getElementById('transaction-desc').value = transaction.desc;
-                document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
-                document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
-
-                // Hapus transaksi lama
-                transactions = transactions.filter(t => t.id !== id);
-                saveTransactions();
-                
-                // Scroll ke form
-                document.querySelector('.transaction-form').scrollIntoView({ behavior: 'smooth' });
-                
-                // Tampilkan pesan
-                alert('Transaksi telah dipindahkan ke form untuk diedit. Silakan perbarui data dan klik "Tambah Transaksi" untuk menyimpan perubahan.');
-                
-                // Update tampilan
-                updateBalance();
-                renderChart();
-            }
+        function clearForm() {
+            document.getElementById('transaction-date').valueAsDate = new Date();
+            document.getElementById('transaction-desc').value = '';
+            document.getElementById('transaction-income').value = '';
+            document.getElementById('transaction-expense').value = '';
         }
 
-        // Hapus transaksi
         function deleteTransaction(id) {
             if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
                 transactions = transactions.filter(t => t.id !== id);
                 saveTransactions();
-                
-                if (currentFilters.year || currentFilters.month || currentFilters.day) {
-                    applyFilter();
-                } else {
-                    displayGroupedTransactions();
-                }
-                
                 updateBalance();
                 renderChart();
                 
-                alert('Transaksi berhasil dihapus!');
-            }
-        }
-
-        // Bersihkan form
-        function clearForm() {
-            document.getElementById('transaction-date').value = '';
-            document.getElementById('transaction-desc').value = '';
-            document.getElementById('transaction-income').value = '';
-            document.getElementById('transaction-expense').value = '';
-            
-            // Set tanggal default ke hari ini
-            const today = new Date();
-            document.getElementById('transaction-date').valueAsDate = today;
-        }
-
-        // Simpan transaksi ke localStorage
-        function saveTransactions() {
-            localStorage.setItem('cashTrackTransactions', JSON.stringify(transactions));
-            document.getElementById('last-update').textContent = new Date().toLocaleString('id-ID');
-        }
-
-        // Update saldo
-        function updateBalance() {
-            const totalIncome = transactions.reduce((sum, t) => sum + t.income, 0);
-            const totalExpense = transactions.reduce((sum, t) => sum + t.expense, 0);
-            const balance = totalIncome - totalExpense;
-
-            document.getElementById('balance-amount').textContent = formatCurrency(balance);
-            document.getElementById('total-transactions').textContent = transactions.length;
-        }
-
-        // ==================== FILTER FUNCTIONS ====================
-
-        // Inisialisasi filter dengan data yang ada
-        function initializeFilters() {
-            const yearSelect = document.getElementById('filter-year');
-            
-            // Reset options
-            yearSelect.innerHTML = '<option value="">Semua Tahun</option>';
-            
-            // Get unique years dari transaksi
-            const years = [...new Set(transactions.map(t => t.date.substring(0, 4)))].sort();
-            years.forEach(year => {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
-            });
-            
-            // Set tanggal default di form transaksi
-            const today = new Date();
-            document.getElementById('transaction-date').valueAsDate = today;
-            
-            // Load initial display
-            updateBalance();
-            renderChart();
-        }
-
-        // Update month options berdasarkan tahun yang dipilih
-        function updateMonthOptions() {
-            const yearSelect = document.getElementById('filter-year');
-            const monthSelect = document.getElementById('filter-month');
-            const selectedYear = yearSelect.value;
-            
-            monthSelect.innerHTML = '<option value="">Semua Bulan</option>';
-            
-            const months = [
-                { value: '01', name: 'Januari' },
-                { value: '02', name: 'Februari' },
-                { value: '03', name: 'Maret' },
-                { value: '04', name: 'April' },
-                { value: '05', name: 'Mei' },
-                { value: '06', name: 'Juni' },
-                { value: '07', name: 'Juli' },
-                { value: '08', name: 'Agustus' },
-                { value: '09', name: 'September' },
-                { value: '10', name: 'Oktober' },
-                { value: '11', name: 'November' },
-                { value: '12', name: 'Desember' }
-            ];
-            
-            // Jika tahun dipilih, hanya tampilkan bulan yang memiliki transaksi
-            if (selectedYear) {
-                const monthsInYear = [...new Set(
-                    transactions
-                        .filter(t => t.date.startsWith(selectedYear))
-                        .map(t => t.date.substring(5, 7))
-                )].sort();
-                
-                months.forEach(month => {
-                    if (monthsInYear.includes(month.value)) {
-                        const option = document.createElement('option');
-                        option.value = month.value;
-                        option.textContent = month.name;
-                        monthSelect.appendChild(option);
-                    }
-                });
-            } else {
-                // Tampilkan semua bulan jika tidak ada tahun yang dipilih
-                months.forEach(month => {
-                    const option = document.createElement('option');
-                    option.value = month.value;
-                    option.textContent = month.name;
-                    monthSelect.appendChild(option);
-                });
-            }
-            
-            updateDayOptions();
-        }
-
-        // Update day options berdasarkan tahun dan bulan yang dipilih
-        function updateDayOptions() {
-            const yearSelect = document.getElementById('filter-year');
-            const monthSelect = document.getElementById('filter-month');
-            const daySelect = document.getElementById('filter-day');
-            
-            const selectedYear = yearSelect.value;
-            const selectedMonth = monthSelect.value;
-            
-            daySelect.innerHTML = '<option value="">Semua Tanggal</option>';
-            
-            // Dapatkan tanggal yang tersedia
-            let availableDays = [];
-            
-            if (selectedYear && selectedMonth) {
-                availableDays = [...new Set(
-                    transactions
-                        .filter(t => t.date.startsWith(`${selectedYear}-${selectedMonth}`))
-                        .map(t => t.date.substring(8, 10))
-                )].sort();
-            } else if (selectedYear) {
-                availableDays = [...new Set(
-                    transactions
-                        .filter(t => t.date.startsWith(selectedYear))
-                        .map(t => t.date.substring(8, 10))
-                )].sort();
-            } else if (selectedMonth) {
-                availableDays = [...new Set(
-                    transactions
-                        .filter(t => t.date.substring(5, 7) === selectedMonth)
-                        .map(t => t.date.substring(8, 10))
-                )].sort();
-            }
-            
-            // Tambahkan opsi tanggal
-            for (let i = 1; i <= 31; i++) {
-                const day = i.toString().padStart(2, '0');
-                if (availableDays.length === 0 || availableDays.includes(day)) {
-                    const option = document.createElement('option');
-                    option.value = day;
-                    option.textContent = i;
-                    daySelect.appendChild(option);
+                if (currentPage === 'history-page') {
+                    displayGroupedTransactions();
                 }
             }
         }
 
-        // Terapkan filter
-        function applyFilter() {
-            const year = document.getElementById('filter-year').value;
-            const month = document.getElementById('filter-month').value;
-            const day = document.getElementById('filter-day').value;
+        function editTransaction(id) {
+            const transaction = transactions.find(t => t.id === id);
+            if (!transaction) return;
             
-            currentFilters = { year, month, day };
+            document.getElementById('transaction-date').value = transaction.date;
+            document.getElementById('transaction-desc').value = transaction.description;
+            document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
+            document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
             
-            let filtered = transactions;
+            // Scroll to form
+            document.getElementById('transactions-page').classList.add('active');
+            document.getElementById('history-page').classList.remove('active');
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                if (tab.dataset.page === 'transactions-page') {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            currentPage = 'transactions-page';
             
-            if (year) {
-                filtered = filtered.filter(t => t.date.startsWith(year));
-            }
-            
-            if (month) {
-                filtered = filtered.filter(t => t.date.substring(5, 7) === month);
-            }
-            
-            if (day) {
-                filtered = filtered.filter(t => t.date.substring(8, 10) === day);
-            }
-            
-            filteredTransactions = filtered;
-            displayGroupedTransactions();
+            // Remove the transaction being edited
+            transactions = transactions.filter(t => t.id !== id);
+            saveTransactions();
         }
 
-        // Reset semua filter
-        function resetFilters() {
-            document.getElementById('filter-year').value = '';
-            document.getElementById('filter-month').value = '';
-            document.getElementById('filter-day').value = '';
-            currentFilters = { year: '', month: '', day: '' };
-            filteredTransactions = [];
-            displayGroupedTransactions();
-            updateMonthOptions();
+        function saveTransactions() {
+            localStorage.setItem('cashTrackTransactions', JSON.stringify(transactions));
         }
 
-        // ==================== EXPORT FUNCTIONS ====================
-
-        // Export ke CSV
-        function exportToCSV() {
-            const transactionsToExport = filteredTransactions.length > 0 ? filteredTransactions : transactions;
+        // ==================== BALANCE FUNCTIONS ====================
+        function updateBalance() {
+            let totalIncome = 0;
+            let totalExpense = 0;
+            let totalTransactions = 0;
             
-            // Dapatkan informasi filter untuk judul
-            let filterInfo = 'Semua Data';
-            if (currentFilters.year) filterInfo += ` - Tahun ${currentFilters.year}`;
-            if (currentFilters.month) filterInfo += ` - Bulan ${getMonthName(currentFilters.month)}`;
-            if (currentFilters.day) filterInfo += ` - Tanggal ${currentFilters.day}`;
-            
-            const headers = ['Tanggal', 'Keterangan', 'Pendapatan (Rp)', 'Pengeluaran (Rp)', 'Bulan', 'Tahun'];
-            const csvContent = [
-                `Laporan Keuangan CashTrack - ${filterInfo}`,
-                `Tanggal Ekspor: ${new Date().toLocaleDateString('id-ID')}`,
-                `Total Transaksi: ${transactionsToExport.length}`,
-                '',
-                headers.join(','),
-                ...transactionsToExport.map(t => [
-                    t.date,
-                    `"${t.desc.replace(/"/g, '""')}"`,
-                    t.income,
-                    t.expense,
-                    getMonthName(getMonthFromDate(t.date)),
-                    getYearFromDate(t.date)
-                ].join(','))
-            ].join('\n');
-
-            downloadFile(csvContent, `cashTrack_${getExportFilename()}.csv`, 'text/csv;charset=utf-8;');
-        }
-
-        // Export ke Excel (standar)
-        function exportToExcel() {
-            const transactionsToExport = filteredTransactions.length > 0 ? filteredTransactions : transactions;
-            
-            let filterInfo = 'Semua Data';
-            if (currentFilters.year) filterInfo += ` - Tahun ${currentFilters.year}`;
-            if (currentFilters.month) filterInfo += ` - Bulan ${getMonthName(currentFilters.month)}`;
-            if (currentFilters.day) filterInfo += ` - Tanggal ${currentFilters.day}`;
-            
-            let htmlContent = `
-                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>CashTrack Transactions</title>
-                    <!--[if gte mso 9]>
-                    <xml>
-                        <x:ExcelWorkbook>
-                            <x:ExcelWorksheets>
-                                <x:ExcelWorksheet>
-                                    <x:Name>Transaksi</x:Name>
-                                    <x:WorksheetOptions>
-                                        <x:DisplayGridlines/>
-                                    </x:WorksheetOptions>
-                                </x:ExcelWorksheet>
-                            </x:ExcelWorksheets>
-                        </x:ExcelWorkbook>
-                    </xml>
-                    <![endif]-->
-                    <style>
-                        table {
-                            border-collapse: collapse;
-                            width: 100%;
-                            margin-bottom: 20px;
-                        }
-                        th, td {
-                            border: 1px solid #ddd;
-                            padding: 8px;
-                            text-align: left;
-                        }
-                        th {
-                            background-color: #4a90e2;
-                            color: white;
-                            font-weight: bold;
-                        }
-                        .income {
-                            color: green;
-                        }
-                        .expense {
-                            color: red;
-                        }
-                        .summary {
-                            background-color: #e8f0fe;
-                            font-weight: bold;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <h2>Laporan Keuangan CashTrack</h2>
-                    <h3>${filterInfo}</h3>
-                    <p>Tanggal Ekspor: ${new Date().toLocaleDateString('id-ID')}</p>
-                    <p>Total Transaksi: ${transactionsToExport.length}</p>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Keterangan</th>
-                                <th>Pendapatan (Rp)</th>
-                                <th>Pengeluaran (Rp)</th>
-                                <th>Bulan</th>
-                                <th>Tahun</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            // Urutkan transaksi berdasarkan tanggal (terbaru ke terlama)
-            const sortedTransactions = [...transactionsToExport].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            sortedTransactions.forEach(t => {
-                htmlContent += `
-                    <tr>
-                        <td>${t.date}</td>
-                        <td>${t.desc}</td>
-                        <td class="income">${t.income.toLocaleString('id-ID')}</td>
-                        <td class="expense">${t.expense.toLocaleString('id-ID')}</td>
-                        <td>${getMonthName(getMonthFromDate(t.date))}</td>
-                        <td>${getYearFromDate(t.date)}</td>
-                    </tr>
-                `;
+            transactions.forEach(transaction => {
+                totalIncome += transaction.income || 0;
+                totalExpense += transaction.expense || 0;
+                totalTransactions++;
             });
             
-            // Hitung total
-            const totalIncome = transactionsToExport.reduce((sum, t) => sum + t.income, 0);
-            const totalExpense = transactionsToExport.reduce((sum, t) => sum + t.expense, 0);
-            const finalBalance = totalIncome - totalExpense;
+            const balance = totalIncome - totalExpense;
             
-            htmlContent += `
-                        </tbody>
-                        <tfoot class="summary">
-                            <tr>
-                                <td colspan="2" style="text-align: right; font-weight: bold;">Total Keseluruhan:</td>
-                                <td class="income" style="font-weight: bold;">${totalIncome.toLocaleString('id-ID')}</td>
-                                <td class="expense" style="font-weight: bold;">${totalExpense.toLocaleString('id-ID')}</td>
-                                <td colspan="2" style="font-weight: bold; color: ${finalBalance >= 0 ? 'green' : 'red'};">SALDO: ${finalBalance.toLocaleString('id-ID')}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </body>
-                </html>
-            `;
+            document.getElementById('balance-amount').textContent = formatCurrency(balance);
+            document.getElementById('total-transactions').textContent = totalTransactions;
             
-            downloadFile(htmlContent, `cashTrack_${getExportFilename()}.xls`, 'application/vnd.ms-excel');
-        }
-
-        // Export ke Excel dengan pengelompokan per bulan
-        function exportToExcelGrouped() {
-            const transactionsToExport = filteredTransactions.length > 0 ? filteredTransactions : transactions;
-            const groupedTransactions = groupTransactionsByMonth(transactionsToExport);
-            
-            // Dapatkan informasi filter untuk judul
-            let filterInfo = 'Semua Data';
-            if (currentFilters.year) filterInfo += ` - Tahun ${currentFilters.year}`;
-            if (currentFilters.month) filterInfo += ` - Bulan ${getMonthName(currentFilters.month)}`;
-            if (currentFilters.day) filterInfo += ` - Tanggal ${currentFilters.day}`;
-            
-            let htmlContent = `
-                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>CashTrack Transactions - Berkelompok per Bulan</title>
-                    <!--[if gte mso 9]>
-                    <xml>
-                        <x:ExcelWorkbook>
-                            <x:ExcelWorksheets>
-                                <x:ExcelWorksheet>
-                                    <x:Name>Transaksi per Bulan</x:Name>
-                                    <x:WorksheetOptions>
-                                        <x:DisplayGridlines/>
-                                    </x:WorksheetOptions>
-                                </x:ExcelWorksheet>
-                            </x:ExcelWorksheets>
-                        </x:ExcelWorkbook>
-                    </xml>
-                    <![endif]-->
-                    <style>
-                        table {
-                            border-collapse: collapse;
-                            margin-bottom: 30px;
-                            width: 100%;
-                        }
-                        th, td {
-                            border: 1px solid #ddd;
-                            padding: 8px;
-                            text-align: left;
-                        }
-                        th {
-                            background-color: #4a90e2;
-                            color: white;
-                            font-weight: bold;
-                        }
-                        .month-header {
-                            background-color: #1a73e8;
-                            color: white;
-                            padding: 15px;
-                            font-size: 16px;
-                            font-weight: bold;
-                            margin-top: 20px;
-                            border-radius: 5px;
-                        }
-                        .month-total {
-                            background-color: #f2f2f2;
-                            font-weight: bold;
-                        }
-                        .income {
-                            color: green;
-                        }
-                        .expense {
-                            color: red;
-                        }
-                        .summary-table {
-                            background-color: #e8f0fe;
-                            margin-top: 20px;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <h2>Laporan Keuangan CashTrack - Per Bulan</h2>
-                    <h3>${filterInfo}</h3>
-                    <p>Tanggal Ekspor: ${new Date().toLocaleDateString('id-ID')}</p>
-                    <p>Total Transaksi: ${transactionsToExport.length}</p>
-            `;
-            
-            let totalOverallIncome = 0;
-            let totalOverallExpense = 0;
-            
-            groupedTransactions.forEach(group => {
-                htmlContent += `
-                    <div class="month-header">
-                        ${group.label} - Total Pendapatan: Rp ${group.totalIncome.toLocaleString('id-ID')} | 
-                        Total Pengeluaran: Rp ${group.totalExpense.toLocaleString('id-ID')} | 
-                        Saldo Bulanan: Rp ${group.balance.toLocaleString('id-ID')}
-                    </div>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Keterangan</th>
-                                <th>Pendapatan (Rp)</th>
-                                <th>Pengeluaran (Rp)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-                
-                // Urutkan transaksi dalam bulan (terbaru ke terlama)
-                group.transactions.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(t => {
-                    htmlContent += `
-                        <tr>
-                            <td>${t.date}</td>
-                            <td>${t.desc}</td>
-                            <td class="income">${t.income.toLocaleString('id-ID')}</td>
-                            <td class="expense">${t.expense.toLocaleString('id-ID')}</td>
-                        </tr>
-                    `;
-                });
-                
-                // Total per bulan
-                htmlContent += `
-                        </tbody>
-                        <tfoot class="month-total">
-                            <tr>
-                                <td colspan="2" style="text-align: right; font-weight: bold;">Total ${group.monthName}:</td>
-                                <td class="income" style="font-weight: bold;">${group.totalIncome.toLocaleString('id-ID')}</td>
-                                <td class="expense" style="font-weight: bold;">${group.totalExpense.toLocaleString('id-ID')}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                `;
-                
-                totalOverallIncome += group.totalIncome;
-                totalOverallExpense += group.totalExpense;
+            // Update last update time
+            const now = new Date();
+            document.getElementById('last-update').textContent = now.toLocaleTimeString('id-ID', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
             });
-            
-            // Summary keseluruhan
-            const overallBalance = totalOverallIncome - totalOverallExpense;
-            htmlContent += `
-                <table class="summary-table" border="1">
-                    <thead>
-                        <tr>
-                            <th colspan="4" style="text-align: center; font-size: 16px; padding: 15px;">
-                                RINGKASAN KESELURUHAN
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2" style="text-align: right; font-weight: bold;">Total Pendapatan Keseluruhan:</td>
-                            <td colspan="2" style="font-weight: bold; color: green;">Rp ${totalOverallIncome.toLocaleString('id-ID')}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: right; font-weight: bold;">Total Pengeluaran Keseluruhan:</td>
-                            <td colspan="2" style="font-weight: bold; color: red;">Rp ${totalOverallExpense.toLocaleString('id-ID')}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: right; font-weight: bold;">SALDO AKHIR:</td>
-                            <td colspan="2" style="font-weight: bold; font-size: 18px; color: ${overallBalance >= 0 ? 'green' : 'red'};">Rp ${overallBalance.toLocaleString('id-ID')}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </body>
-                </html>
-            `;
-            
-            downloadFile(htmlContent, `cashTrack_perbulan_${getExportFilename()}.xls`, 'application/vnd.ms-excel');
-        }
-
-        // Helper function untuk nama file ekspor
-        function getExportFilename() {
-            let filename = 'transactions';
-            if (currentFilters.year) filename += `_${currentFilters.year}`;
-            if (currentFilters.month) filename += `_${getMonthName(currentFilters.month)}`;
-            if (currentFilters.day) filename += `_${currentFilters.day}`;
-            filename += `_${new Date().getTime()}`;
-            return filename;
-        }
-
-        // Fungsi untuk download file
-        function downloadFile(content, filename, type) {
-            const blob = new Blob([content], { type });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
         }
 
         // ==================== CHART FUNCTIONS ====================
-
-        // Render chart dengan Chart.js
         function renderChart() {
-            const ctx = document.getElementById('finance-chart');
+            const ctx = document.getElementById('finance-chart').getContext('2d');
             const placeholder = document.getElementById('chart-placeholder');
             
-            // Hapus chart sebelumnya jika ada
-            if (financeChart) {
-                financeChart.destroy();
-            }
-            
             if (transactions.length === 0) {
+                if (financeChart) {
+                    financeChart.destroy();
+                    financeChart = null;
+                }
                 placeholder.style.display = 'flex';
-                ctx.style.display = 'none';
-                placeholder.innerHTML = 'Tidak ada data untuk ditampilkan dalam grafik';
                 return;
             }
             
-            // Kelompokkan transaksi per bulan untuk chart
-            const groupedByMonth = groupTransactionsByMonth(transactions);
-            const labels = groupedByMonth.map(g => g.label);
-            const incomeData = groupedByMonth.map(g => g.totalIncome);
-            const expenseData = groupedByMonth.map(g => g.totalExpense);
-            
             placeholder.style.display = 'none';
-            ctx.style.display = 'block';
+            
+            // Group by month
+            const monthlyData = {};
+            transactions.forEach(transaction => {
+                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                if (!monthlyData[monthKey]) {
+                    monthlyData[monthKey] = { income: 0, expense: 0 };
+                }
+                monthlyData[monthKey].income += transaction.income;
+                monthlyData[monthKey].expense += transaction.expense;
+            });
+            
+            // Sort months
+            const sortedMonths = Object.keys(monthlyData).sort();
+            const labels = sortedMonths.map(month => {
+                const [year, monthNum] = month.split('-');
+                return `${getMonthName(monthNum)} ${year}`;
+            });
+            
+            const incomeData = sortedMonths.map(month => monthlyData[month].income);
+            const expenseData = sortedMonths.map(month => monthlyData[month].expense);
             
             const isDarkMode = document.body.getAttribute('data-theme') === 'dark';
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
             const textColor = isDarkMode ? '#e0e0e0' : '#202124';
-            const gridColor = isDarkMode ? '#444' : '#f0f0f0';
             
-            // Deteksi mobile device
-            const isMobile = window.innerWidth <= 768;
+            if (financeChart) {
+                financeChart.destroy();
+            }
             
             financeChart = new Chart(ctx, {
                 type: 'bar',
@@ -2331,51 +2057,21 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: true,
+                    maintainAspectRatio: false,
                     plugins: {
-                        title: {
-                            display: !isMobile,
-                            text: 'Grafik Pendapatan dan Pengeluaran per Bulan',
-                            color: textColor,
-                            font: {
-                                size: isMobile ? 14 : 16,
-                                weight: 'bold'
-                            },
-                            padding: {
-                                bottom: 20
-                            }
-                        },
                         legend: {
-                            display: true,
-                            position: 'top',
                             labels: {
-                                color: textColor,
-                                font: {
-                                    size: isMobile ? 12 : 14
-                                },
-                                padding: 20
+                                color: textColor
                             }
                         },
                         tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            backgroundColor: isDarkMode ? '#2d2d2d' : 'white',
-                            titleColor: textColor,
-                            bodyColor: textColor,
-                            borderColor: isDarkMode ? '#444' : '#e0e0e0',
-                            borderWidth: 1,
-                            cornerRadius: 8,
-                            padding: 12,
-                            displayColors: true,
                             callbacks: {
                                 label: function(context) {
                                     let label = context.dataset.label || '';
                                     if (label) {
                                         label += ': ';
                                     }
-                                    if (context.parsed.y !== null) {
-                                        label += formatCurrency(context.parsed.y);
-                                    }
+                                    label += formatCurrency(context.raw);
                                     return label;
                                 }
                             }
@@ -2384,19 +2080,10 @@
                     scales: {
                         x: {
                             grid: {
-                                color: gridColor,
-                                display: !isMobile
+                                color: gridColor
                             },
                             ticks: {
-                                color: textColor,
-                                maxRotation: isMobile ? 45 : 0,
-                                minRotation: isMobile ? 45 : 0,
-                                font: {
-                                    size: isMobile ? 11 : 12
-                                },
-                                padding: 5,
-                                autoSkip: true,
-                                maxTicksLimit: isMobile ? 6 : 12
+                                color: textColor
                             }
                         },
                         y: {
@@ -2406,90 +2093,465 @@
                             },
                             ticks: {
                                 color: textColor,
-                                font: {
-                                    size: isMobile ? 11 : 12
-                                },
-                                padding: 5,
                                 callback: function(value) {
-                                    // Untuk mobile, sederhanakan format
-                                    if (isMobile && value >= 1000000) {
-                                        return 'Rp ' + (value / 1000000).toFixed(1) + 'Jt';
+                                    if (value >= 1000000) {
+                                        return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
                                     }
-                                    if (isMobile && value >= 1000) {
-                                        return 'Rp ' + (value / 1000).toFixed(0) + 'Rb';
+                                    if (value >= 1000) {
+                                        return 'Rp' + (value / 1000).toFixed(0) + 'rb';
                                     }
-                                    return formatCurrency(value);
+                                    return 'Rp' + value;
                                 }
                             }
                         }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index'
-                    },
-                    animation: {
-                        duration: isMobile ? 500 : 1000
-                    },
-                    elements: {
-                        bar: {
-                            borderRadius: 4,
-                            borderSkipped: false,
-                        }
                     }
                 }
             });
         }
 
-        // ==================== INITIALIZATION ====================
-
-        // Inisialisasi aplikasi setelah login berhasil
-        function initializeApp() {
-            // Load initial data
-            updateBalance();
-            initializeFilters();
-            renderChart();
+        // ==================== FILTER FUNCTIONS ====================
+        function updateYearOptions() {
+            const yearSelect = document.getElementById('filter-year');
+            const years = new Set();
             
-            // Set tanggal default untuk form transaksi
-            const today = new Date();
-            document.getElementById('transaction-date').valueAsDate = today;
-            
-            // Handle window resize untuk chart
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    if (financeChart) {
-                        financeChart.destroy();
-                        renderChart();
-                    }
-                }, 250);
+            transactions.forEach(transaction => {
+                years.add(getYearFromDate(transaction.date));
             });
             
-            // Handle enter key untuk password input
-            document.getElementById('password-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkPassword();
-                }
+            // Get current year and next year
+            const currentYear = new Date().getFullYear();
+            years.add(currentYear.toString());
+            years.add((currentYear + 1).toString());
+            
+            // Sort years descending
+            const sortedYears = Array.from(years).sort((a, b) => b - a);
+            
+            // Update options
+            yearSelect.innerHTML = '<option value="">Semua Tahun</option>';
+            sortedYears.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
             });
             
-            // Handle orientation change
-            window.addEventListener('orientationchange', function() {
-                setTimeout(() => {
-                    if (financeChart) {
-                        financeChart.destroy();
-                        renderChart();
-                    }
-                }, 300);
-            });
+            // Set to current year by default
+            yearSelect.value = currentYear.toString();
+            currentFilters.year = currentYear.toString();
         }
 
-        // Initialize event listeners saat DOM siap
-        document.addEventListener('DOMContentLoaded', function() {
-            // Cek apakah aplikasi sudah diinstal sebagai PWA
-            if (window.matchMedia('(display-mode: standalone)').matches) {
-                console.log('Aplikasi dijalankan dalam mode PWA');
+        function updateMonthOptions() {
+            const yearSelect = document.getElementById('filter-year');
+            const monthSelect = document.getElementById('filter-month');
+            const selectedYear = yearSelect.value;
+            
+            const months = new Set();
+            
+            if (selectedYear) {
+                transactions.forEach(transaction => {
+                    if (getYearFromDate(transaction.date) === selectedYear) {
+                        months.add(getMonthFromDate(transaction.date));
+                    }
+                });
             }
+            
+            // Update options
+            monthSelect.innerHTML = '<option value="">Semua Bulan</option>';
+            for (let i = 1; i <= 12; i++) {
+                const month = i.toString().padStart(2, '0');
+                if (!selectedYear || months.has(month)) {
+                    const option = document.createElement('option');
+                    option.value = month;
+                    option.textContent = getMonthName(month);
+                    monthSelect.appendChild(option);
+                }
+            }
+            
+            // Set to current month by default if year is current year
+            const currentYear = new Date().getFullYear().toString();
+            if (selectedYear === currentYear) {
+                const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
+                monthSelect.value = currentMonth;
+                currentFilters.month = currentMonth;
+            }
+        }
+
+        function updateDayOptions() {
+            const yearSelect = document.getElementById('filter-year');
+            const monthSelect = document.getElementById('filter-month');
+            const daySelect = document.getElementById('filter-day');
+            const selectedYear = yearSelect.value;
+            const selectedMonth = monthSelect.value;
+            
+            const days = new Set();
+            
+            if (selectedYear && selectedMonth) {
+                transactions.forEach(transaction => {
+                    const year = getYearFromDate(transaction.date);
+                    const month = getMonthFromDate(transaction.date);
+                    if (year === selectedYear && month === selectedMonth) {
+                        days.add(transaction.date.substring(8, 10));
+                    }
+                });
+            }
+            
+            // Update options
+            daySelect.innerHTML = '<option value="">Semua Tanggal</option>';
+            if (selectedYear && selectedMonth) {
+                // Get number of days in month
+                const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const day = i.toString().padStart(2, '0');
+                    if (!selectedYear || !selectedMonth || days.has(day)) {
+                        const option = document.createElement('option');
+                        option.value = day;
+                        option.textContent = day;
+                        daySelect.appendChild(option);
+                    }
+                }
+            }
+        }
+
+        function filterTransactions() {
+            const year = currentFilters.year;
+            const month = currentFilters.month;
+            const day = currentFilters.day;
+            
+            filteredTransactions = transactions.filter(transaction => {
+                const transactionYear = getYearFromDate(transaction.date);
+                const transactionMonth = getMonthFromDate(transaction.date);
+                const transactionDay = transaction.date.substring(8, 10);
+                
+                if (year && transactionYear !== year) return false;
+                if (month && transactionMonth !== month) return false;
+                if (day && transactionDay !== day) return false;
+                
+                return true;
+            });
+            
+            displayGroupedTransactions();
+        }
+
+        function applyFilter() {
+            currentFilters.year = document.getElementById('filter-year').value;
+            currentFilters.month = document.getElementById('filter-month').value;
+            currentFilters.day = document.getElementById('filter-day').value;
+            
+            filterTransactions();
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-year').value = '';
+            document.getElementById('filter-month').value = '';
+            document.getElementById('filter-day').value = '';
+            
+            currentFilters = { year: '', month: '', day: '' };
+            filteredTransactions = [...transactions];
+            
+            displayGroupedTransactions();
+        }
+
+        // ==================== DISPLAY FUNCTIONS ====================
+        function displayGroupedTransactions() {
+            const container = document.getElementById('transactions-container');
+            
+            if (filteredTransactions.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div>📊</div>
+                        <p>Tidak ada transaksi ditemukan</p>
+                        <p>Tambahkan transaksi baru di halaman "Tambah Transaksi"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Group by month
+            const grouped = {};
+            filteredTransactions.forEach(transaction => {
+                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                if (!grouped[monthKey]) {
+                    grouped[monthKey] = [];
+                }
+                grouped[monthKey].push(transaction);
+            });
+            
+            // Sort months descending
+            const sortedMonths = Object.keys(grouped).sort().reverse();
+            
+            let html = '';
+            
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const monthName = getMonthName(month);
+                const monthTransactions = grouped[monthKey];
+                
+                // Calculate month totals
+                let monthIncome = 0;
+                let monthExpense = 0;
+                
+                monthTransactions.forEach(t => {
+                    monthIncome += t.income || 0;
+                    monthExpense += t.expense || 0;
+                });
+                
+                const monthBalance = monthIncome - monthExpense;
+                
+                // Sort transactions by date descending
+                monthTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                let transactionsHtml = `
+                    <div class="transactions-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Keterangan</th>
+                                    <th>Pendapatan</th>
+                                    <th>Pengeluaran</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                monthTransactions.forEach(transaction => {
+                    transactionsHtml += `
+                        <tr>
+                            <td>${formatDate(transaction.date)}</td>
+                            <td>${transaction.description}</td>
+                            <td class="income-amount">${transaction.income > 0 ? formatCurrency(transaction.income) : '-'}</td>
+                            <td class="expense-amount">${transaction.expense > 0 ? formatCurrency(transaction.expense) : '-'}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})">✏️ Edit</button>
+                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})">🗑️ Hapus</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                transactionsHtml += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                
+                html += `
+                    <div class="month-group">
+                        <div class="month-header">
+                            <span>${monthName} ${year}</span>
+                            <div class="month-totals">
+                                <span>Pendapatan: <strong>${formatCurrency(monthIncome)}</strong></span>
+                                <span>Pengeluaran: <strong>${formatCurrency(monthExpense)}</strong></span>
+                                <span>Saldo: <strong style="color: ${monthBalance >= 0 ? '#34a853' : '#ea4335'}">${formatCurrency(monthBalance)}</strong></span>
+                            </div>
+                        </div>
+                        ${transactionsHtml}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // ==================== EXPORT FUNCTIONS ====================
+        function exportToCSV() {
+            if (transactions.length === 0) {
+                alert('Tidak ada data transaksi untuk diexport!');
+                return;
+            }
+            
+            const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
+            const csvContent = [
+                headers.join(','),
+                ...transactions.map(t => [
+                    t.date,
+                    `"${t.description.replace(/"/g, '""')}"`,
+                    t.income,
+                    t.expense
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportToExcel() {
+            if (transactions.length === 0) {
+                alert('Tidak ada data transaksi untuk diexport!');
+                return;
+            }
+            
+            // Group by month for Excel export
+            const grouped = {};
+            transactions.forEach(transaction => {
+                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                if (!grouped[monthKey]) {
+                    grouped[monthKey] = [];
+                }
+                grouped[monthKey].push(transaction);
+            });
+            
+            // Sort months descending
+            const sortedMonths = Object.keys(grouped).sort().reverse();
+            
+            let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
+            
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const monthName = getMonthName(month);
+                const monthTransactions = grouped[monthKey];
+                
+                // Calculate month totals
+                let monthIncome = 0;
+                let monthExpense = 0;
+                
+                monthTransactions.forEach(t => {
+                    monthIncome += t.income || 0;
+                    monthExpense += t.expense || 0;
+                });
+                
+                const monthBalance = monthIncome - monthExpense;
+                
+                excelContent += `
+                    <tr style="background-color: #f0f0f0;">
+                        <td colspan="4"><strong>${monthName} ${year}</strong></td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Keterangan</th>
+                        <th>Pendapatan</th>
+                        <th>Pengeluaran</th>
+                    </tr>
+                `;
+                
+                monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                    excelContent += `
+                        <tr>
+                            <td>${formatDate(t.date)}</td>
+                            <td>${t.description}</td>
+                            <td>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                            <td>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                        </tr>
+                    `;
+                });
+                
+                excelContent += `
+                    <tr style="background-color: #e8f5e9;">
+                        <td colspan="2"><strong>Total ${monthName}</strong></td>
+                        <td><strong>${formatCurrency(monthIncome)}</strong></td>
+                        <td><strong>${formatCurrency(monthExpense)}</strong></td>
+                    </tr>
+                    <tr style="background-color: #fff3e0;">
+                        <td colspan="3"><strong>Saldo Bulan ${monthName}</strong></td>
+                        <td><strong style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</strong></td>
+                    </tr>
+                    <tr><td colspan="4" style="height: 20px;"></td></tr>
+                `;
+            });
+            
+            // Add overall summary
+            let totalIncome = 0;
+            let totalExpense = 0;
+            transactions.forEach(t => {
+                totalIncome += t.income || 0;
+                totalExpense += t.expense || 0;
+            });
+            const totalBalance = totalIncome - totalExpense;
+            
+            excelContent += `
+                <tr style="background-color: #e3f2fd;">
+                    <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
+                    <td><strong>${formatCurrency(totalIncome)}</strong></td>
+                    <td><strong>${formatCurrency(totalExpense)}</strong></td>
+                </tr>
+                <tr style="background-color: #fce4ec;">
+                    <td colspan="3"><strong>SALDO AKHIR</strong></td>
+                    <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
+                </tr>
+            </table>
+            
+            <style>
+                td { padding: 5px; }
+                th { background-color: #4CAF50; color: white; padding: 8px; }
+            </style>
+            `;
+            
+            const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cash-track-report-${new Date().toISOString().split('T')[0]}.xls`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportToExcelGrouped() {
+            exportToExcel(); // Same function for now
+        }
+
+        // ==================== NAVIGATION ====================
+        function setupNavigationTabs() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding page
+                    const pageId = tab.dataset.page;
+                    document.querySelectorAll('.page-section').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    currentPage = pageId;
+                    
+                    // If going to history page, refresh the transactions display
+                    if (pageId === 'history-page') {
+                        displayGroupedTransactions();
+                    }
+                });
+            });
+        }
+
+        // ==================== LOGOUT ====================
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('cashTrackLoggedIn');
+                showLoginScreen();
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        // ==================== INITIALIZE ON LOAD ====================
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set today's date as default in transaction form
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
+            
+            // Enter key support for form inputs
+            ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
+                document.getElementById(id).addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addTransaction();
+                    }
+                });
+            });
         });
     </script>
 </body>
-                    </html>
+</html>
