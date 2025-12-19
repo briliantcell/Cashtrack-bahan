@@ -1689,7 +1689,7 @@
                     const audio = new Audio();
                     audio.src = filename;
                     audio.load();
-                    audio.volume = 0.3; // Set volume ke 30%
+                    audio.volume = 0.8; // Set volume ke 80%
                     audioCache[key] = audio;
                     console.log(`Audio ${key} loaded: ${filename}`);
                 } catch (error) {
@@ -1708,7 +1708,7 @@
                     // Reset audio ke awal
                     audio.currentTime = 0;
                     // Set volume
-                    audio.volume = 0.3;
+                    audio.volume = 0.8;
                     
                     // Play dengan promise untuk handle error
                     const playPromise = audio.play();
