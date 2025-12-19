@@ -56,6 +56,7 @@
         html, body {
             width: 100%;
             height: 100%;
+            overflow-x: hidden;
         }
 
         body {
@@ -66,7 +67,7 @@
             transition: var(--transition);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
-            /* DIUBAH: overflow: hidden dihapus agar bisa scroll */
+            overflow-x: hidden;
         }
 
         /* Install Prompt */
@@ -183,6 +184,7 @@
             background: var(--light);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
+            overflow-y: auto;
         }
 
         .login-container {
@@ -307,7 +309,7 @@
             display: none;
         }
 
-        /* Donation Screen - DIUBAH: Ukuran diperkecil */
+        /* Donation Screen */
         #donation-screen {
             min-height: 100vh;
             display: none;
@@ -318,39 +320,40 @@
             background: linear-gradient(135deg, #977dff 0%, #0033ff 50%, #0600ab 100%);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
+            overflow-y: auto;
         }
 
         .donation-container {
             width: 100%;
-            max-width: 380px; /* DIUBAH: dari 450px menjadi 380px */
-            background: rgba(255, 255, 255, 0.98);
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 20px; /* DIUBAH: dari 30px menjadi 20px */
+            padding: 30px;
             animation: fadeIn 0.5s ease;
             text-align: center;
         }
 
         .donation-header {
-            margin-bottom: 15px; /* DIUBAH: dari 25px menjadi 15px */
+            margin-bottom: 25px;
         }
 
         .donation-icon {
-            width: 60px; /* DIUBAH: dari 80px menjadi 60px */
-            height: 60px; /* DIUBAH: dari 80px menjadi 60px */
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, #977dff, #0033ff);
-            border-radius: 15px; /* DIUBAH: dari 20px menjadi 15px */
-            margin: 0 auto 10px; /* DIUBAH: dari 15px menjadi 10px */
+            border-radius: 20px;
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 24px; /* DIUBAH: dari 30px menjadi 24px */
+            font-size: 30px;
             font-weight: bold;
         }
 
         .donation-title {
-            font-size: 1.5rem; /* DIUBAH: dari 1.8rem menjadi 1.5rem */
+            font-size: 1.8rem;
             font-weight: 700;
             color: #1a73e8;
             margin-bottom: 5px;
@@ -358,51 +361,51 @@
 
         .donation-subtitle {
             color: var(--gray);
-            font-size: 0.9rem; /* DIUBAH: dari 1rem menjadi 0.9rem */
-            margin-bottom: 15px; /* DIUBAH: dari 25px menjadi 15px */
+            font-size: 1rem;
+            margin-bottom: 25px;
         }
 
         .donation-message {
             color: #555;
-            font-size: 0.85rem; /* DIUBAH: dari 0.95rem menjadi 0.85rem */
-            line-height: 1.4;
-            margin-bottom: 15px; /* DIUBAH: dari 20px menjadi 15px */
-            padding: 12px; /* DIUBAH: dari 15px menjadi 12px */
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            padding: 15px;
             background: rgba(151, 125, 255, 0.05);
-            border-radius: 8px;
-            border-left: 3px solid #977dff;
+            border-radius: 10px;
+            border-left: 4px solid #977dff;
         }
 
         .donation-box {
             background: linear-gradient(145deg, #f8f9ff, #eef2ff);
-            border-radius: 12px;
-            padding: 20px; /* DIUBAH: dari 25px menjadi 20px */
-            margin: 15px 0; /* DIUBAH: dari 25px menjadi 15px */
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
             border: 2px solid #e0e7ff;
-            box-shadow: 0 6px 15px rgba(151, 125, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(151, 125, 255, 0.1);
             text-align: center;
         }
 
         .bank-name {
-            font-size: 18px; /* DIUBAH: dari 20px menjadi 18px */
+            font-size: 20px;
             font-weight: 700;
             color: #0033ff;
-            margin-bottom: 8px; /* DIUBAH: dari 10px menjadi 8px */
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .account-number {
-            font-size: 20px; /* DIUBAH: dari 24px menjadi 20px */
+            font-size: 24px;
             font-weight: 800;
             color: #0600ab;
-            letter-spacing: 1px; /* DIUBAH: dari 2px menjadi 1px */
-            margin: 12px 0; /* DIUBAH: dari 15px menjadi 12px */
-            padding: 12px; /* DIUBAH: dari 15px menjadi 12px */
+            letter-spacing: 2px;
+            margin: 15px 0;
+            padding: 15px;
             background: #ffffff;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 2px dashed #977dff;
             font-family: monospace, sans-serif;
             cursor: pointer;
@@ -416,54 +419,53 @@
         }
 
         .account-name {
-            font-size: 16px; /* DIUBAH: dari 18px menjadi 16px */
+            font-size: 18px;
             color: #444;
-            margin-bottom: 8px; /* DIUBAH: dari 10px menjadi 8px */
+            margin-bottom: 10px;
             font-weight: 600;
         }
 
         .copy-notice {
-            font-size: 12px; /* DIUBAH: dari 14px menjadi 12px */
+            font-size: 14px;
             color: #666;
             font-style: italic;
-            margin-top: 8px; /* DIUBAH: dari 10px menjadi 8px */
+            margin-top: 10px;
         }
 
         .donation-buttons {
             display: flex;
             flex-direction: column;
-            gap: 12px; /* DIUBAH: dari 15px menjadi 12px */
-            margin-top: 20px; /* DIUBAH: dari 25px menjadi 20px */
+            gap: 15px;
+            margin-top: 25px;
         }
 
         .donation-btn {
             background: linear-gradient(to right, #977dff, #0033ff);
             color: white;
             border: none;
-            padding: 14px; /* DIUBAH: dari 16px menjadi 14px */
+            padding: 16px;
             border-radius: 10px;
-            font-size: 16px; /* DIUBAH: dari 18px menjadi 16px */
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
-            box-shadow: 0 4px 15px rgba(151, 125, 255, 0.4);
+            box-shadow: 0 6px 20px rgba(151, 125, 255, 0.4);
             position: relative;
             overflow: hidden;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
         }
 
         .donation-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(151, 125, 255, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(151, 125, 255, 0.6);
         }
 
         .donation-btn:active {
             transform: translateY(-1px);
         }
 
-        /* DIHAPUS: Tombol secondary donation-btn-secondary dihapus */
-        /* .donation-btn-secondary {
+        .donation-btn-secondary {
             background: #f1f3f4;
             color: var(--dark);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -477,7 +479,7 @@
         [data-theme="dark"] .donation-btn-secondary {
             background: #2d2d2d;
             color: var(--dark);
-        } */
+        }
 
         .button-shine {
             position: absolute;
@@ -495,20 +497,20 @@
         }
 
         .donation-footer {
-            margin-top: 20px; /* DIUBAH: dari 30px menjadi 20px */
-            font-size: 11px; /* DIUBAH: dari 12px menjadi 11px */
+            margin-top: 30px;
+            font-size: 12px;
             color: rgba(255, 255, 255, 0.9);
             text-align: center;
             line-height: 1.4;
         }
 
-        /* Main App */
+        /* Main App - FIXED SCROLL ISSUE */
         #main-app {
             display: none;
-            min-height: 100vh;
+            height: 100vh;
             background: var(--light);
             position: relative;
-            padding-bottom: 60px;
+            overflow: hidden;
         }
 
         .main-header {
@@ -518,8 +520,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
             padding-top: calc(15px + var(--safe-area-top));
         }
@@ -579,8 +583,10 @@
             display: flex;
             background: var(--light);
             border-bottom: 1px solid #e0e0e0;
-            position: sticky;
+            position: fixed;
             top: 70px;
+            left: 0;
+            right: 0;
             z-index: 99;
         }
 
@@ -614,20 +620,45 @@
             background: rgba(74, 144, 226, 0.1);
         }
 
-        /* App Content */
+        /* App Content - FIXED FOR SCROLLING */
         .app-content {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            right: 0;
+            bottom: 60px;
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            /* DIUBAH: Tambahkan untuk memastikan konten bisa scroll */
-            min-height: calc(100vh - 140px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Adjust for mobile nav tabs */
+        @media (max-width: 768px) {
+            .app-content {
+                top: 120px;
+            }
+            .nav-tabs {
+                display: flex;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .app-content {
+                top: 70px;
+            }
+            .nav-tabs {
+                display: none;
+            }
         }
 
         /* Page Sections */
         .page-section {
             display: none;
             animation: fadeIn 0.3s ease;
+            min-height: 100%;
         }
 
         .page-section.active {
@@ -1026,6 +1057,7 @@
             
             .app-content {
                 padding: 15px;
+                top: 120px;
             }
             
             .form-grid,
@@ -1127,18 +1159,22 @@
             }
             
             .donation-title {
-                font-size: 1.4rem; /* DIUBAH: dari 1.6rem menjadi 1.4rem */
+                font-size: 1.6rem;
             }
             
             .account-number {
-                font-size: 18px; /* DIUBAH: dari 20px menjadi 18px */
-                padding: 10px; /* DIUBAH: dari 12px menjadi 10px */
+                font-size: 20px;
+                padding: 12px;
                 letter-spacing: 1px;
             }
             
             .donation-btn {
-                padding: 12px; /* DIUBAH: dari 14px menjadi 12px */
-                font-size: 15px; /* DIUBAH: dari 16px menjadi 15px */
+                padding: 14px;
+                font-size: 16px;
+            }
+            
+            .main-header {
+                padding: 12px 15px;
             }
         }
 
@@ -1155,7 +1191,7 @@
             
             .app-title,
             .donation-title {
-                font-size: 1.5rem; /* DIUBAH: dari 1.7rem menjadi 1.5rem */
+                font-size: 1.7rem;
             }
             
             .app-footer {
@@ -1234,8 +1270,8 @@
             }
             
             .account-number {
-                font-size: 16px; /* DIUBAH: dari 18px menjadi 16px */
-                padding: 8px; /* DIUBAH: dari 10px menjadi 8px */
+                font-size: 18px;
+                padding: 10px;
             }
             
             .donation-container {
@@ -1246,6 +1282,10 @@
         @media (min-width: 769px) {
             .nav-tabs {
                 display: none;
+            }
+            
+            .app-content {
+                top: 70px;
             }
             
             .page-section {
@@ -1273,13 +1313,13 @@
             }
             
             .account-number {
-                font-size: 15px; /* DIUBAH: dari 16px menjadi 15px */
+                font-size: 16px;
                 letter-spacing: 0;
             }
             
-            .donation-btn {
-                padding: 10px; /* DIUBAH: tambah padding lebih kecil */
-                font-size: 14px; /* DIUBAH: font lebih kecil */
+            .app-content {
+                top: 120px;
+                bottom: 50px;
             }
         }
 
@@ -1307,6 +1347,36 @@
         }
 
         /* Scrollbar Styling */
+        .app-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .app-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .app-content::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .app-content::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        [data-theme="dark"] .app-content::-webkit-scrollbar-track {
+            background: #2d2d2d;
+        }
+
+        [data-theme="dark"] .app-content::-webkit-scrollbar-thumb {
+            background: #555;
+        }
+
+        [data-theme="dark"] .app-content::-webkit-scrollbar-thumb:hover {
+            background: #666;
+        }
+
         .transactions-table::-webkit-scrollbar {
             height: 6px;
         }
@@ -1424,7 +1494,7 @@
             </div>
 
             <div class="donation-message">
-                "Terima kasih telah menggunakan CashTrack! Donasi sangat membantu untuk pengembangan aplikasi lainnya."
+                "Terima kasih telah menggunakan CashTrack! Donasi Anda akan membantu pengembangan aplikasi ini menjadi lebih baik."
             </div>
 
             <div class="donation-box">
@@ -1441,15 +1511,14 @@
                     <span class="button-shine"></span>
                     KLIK UNTUK MASUK KE APLIKASI
                 </button>
-                <!-- DIHAPUS: Tombol "Lewati dan Masuk Aplikasi" dihapus -->
-                <!-- <button class="donation-btn donation-btn-secondary" onclick="skipDonation()">
+                <button class="donation-btn donation-btn-secondary" onclick="skipDonation()">
                     Lewati dan Masuk Aplikasi
-                </button> -->
+                </button>
             </div>
         </div>
         
         <div class="donation-footer">
-            ByteNesh Developer © 2025 | Buatan Anak Indonesia 🇮🇩
+            CashTrack © 2025 | Buatan Anak Indonesia 🇮🇩
         </div>
     </div>
 
@@ -1586,7 +1655,7 @@
 
         <!-- App Footer -->
         <footer class="app-footer">
-            © ByteNesh Developer — Buatan Anak Indonesia 🇮🇩
+            © 2025 CashTrack — Buatan Anak Indonesia 🇮🇩
         </footer>
     </div>
 
@@ -1600,6 +1669,156 @@
         let currentFilters = { year: '', month: '', day: '' };
         let currentPage = 'transactions-page';
 
+        // ==================== SOUND EFFECT FUNCTIONS ====================
+        // Cache untuk audio files
+        const audioCache = {};
+        let audioEnabled = true;
+
+        // Load audio files
+        function loadAudioFiles() {
+            const audioFiles = {
+                positive: 'mixkit-positive-notification-951.wav',
+                notification: 'new-notification-011-364050.mp3',
+                success: 'notification-center-443093.mp3',
+                click: 'preview.mp3',
+                delete: 'mixkit-positive-notification-951.wav' // fallback untuk delete
+            };
+
+            Object.entries(audioFiles).forEach(([key, filename]) => {
+                try {
+                    const audio = new Audio();
+                    audio.src = filename;
+                    audio.load();
+                    audio.volume = 0.3; // Set volume ke 30%
+                    audioCache[key] = audio;
+                    console.log(`Audio ${key} loaded: ${filename}`);
+                } catch (error) {
+                    console.error(`Failed to load audio ${filename}:`, error);
+                }
+            });
+        }
+
+        // Function to play sound effect
+        function playSoundEffect(type = 'click') {
+            if (!audioEnabled) return;
+            
+            try {
+                const audio = audioCache[type];
+                if (audio) {
+                    // Reset audio ke awal
+                    audio.currentTime = 0;
+                    // Set volume
+                    audio.volume = 0.3;
+                    
+                    // Play dengan promise untuk handle error
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            console.error(`Audio play failed for ${type}:`, error);
+                            // Coba fallback ke click sound
+                            if (type !== 'click' && audioCache.click) {
+                                audioCache.click.currentTime = 0;
+                                audioCache.click.volume = 0.3;
+                                audioCache.click.play().catch(e => console.log('Fallback audio also failed'));
+                            }
+                        });
+                    }
+                } else {
+                    console.warn(`Audio ${type} not found in cache`);
+                    // Fallback ke Web Audio API jika file tidak ada
+                    playFallbackSound(type);
+                }
+            } catch (error) {
+                console.error(`Error playing sound ${type}:`, error);
+                playFallbackSound(type);
+            }
+        }
+
+        // Fallback sound menggunakan Web Audio API
+        function playFallbackSound(type) {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                let frequency = 300;
+                let duration = 0.1;
+                
+                switch(type) {
+                    case 'positive':
+                    case 'success':
+                        frequency = 800;
+                        duration = 0.2;
+                        break;
+                    case 'notification':
+                        frequency = 600;
+                        duration = 0.15;
+                        break;
+                    case 'delete':
+                        frequency = 400;
+                        duration = 0.25;
+                        break;
+                    default: // click
+                        frequency = 300;
+                        duration = 0.08;
+                }
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + duration);
+                
+                // Resume context jika suspended
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+            } catch (error) {
+                console.log('Fallback audio failed:', error);
+            }
+        }
+
+        // Function to play sound with vibration for mobile
+        function playSoundWithVibration(type = 'click') {
+            playSoundEffect(type);
+            
+            // Add haptic feedback for mobile devices
+            if ('vibrate' in navigator) {
+                switch(type) {
+                    case 'positive':
+                    case 'success':
+                        navigator.vibrate([30, 40, 30]);
+                        break;
+                    case 'delete':
+                        navigator.vibrate([80]);
+                        break;
+                    case 'click':
+                    default:
+                        navigator.vibrate(20);
+                        break;
+                }
+            }
+        }
+
+        // Initialize audio on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                loadAudioFiles();
+            }, 1000);
+        });
+
+        // Enable audio on first user interaction
+        document.addEventListener('click', function initAudioOnInteraction() {
+            audioEnabled = true;
+            document.removeEventListener('click', initAudioOnInteraction);
+        }, { once: true });
+
         // Dark Mode
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         const currentTheme = localStorage.getItem('theme') || 'light';
@@ -1610,6 +1829,7 @@
         }
 
         darkModeToggle.addEventListener('click', () => {
+            playSoundEffect('click');
             if (document.body.getAttribute('data-theme') === 'dark') {
                 document.body.removeAttribute('data-theme');
                 localStorage.setItem('theme', 'light');
@@ -1631,7 +1851,6 @@
         });
 
         // ==================== FUNGSI UTILITAS ====================
-
         function formatCurrency(amount) {
             if (!amount && amount !== 0) return '-';
             return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -1678,7 +1897,6 @@
         }
 
         // ==================== PWA FUNCTIONS ====================
-
         // PWA Manifest
         const manifest = {
             "name": "CashTrack",
@@ -1715,6 +1933,7 @@
         });
 
         function showInstallPrompt() {
+            playSoundEffect('click');
             if (deferredPrompt) {
                 const installPrompt = document.getElementById('install-prompt');
                 installPrompt.style.display = 'block';
@@ -1722,11 +1941,13 @@
         }
 
         function hideInstallPrompt() {
+            playSoundEffect('click');
             const installPrompt = document.getElementById('install-prompt');
             installPrompt.style.display = 'none';
         }
 
         document.getElementById('install-btn').addEventListener('click', async () => {
+            playSoundEffect('positive');
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
@@ -1775,15 +1996,23 @@
             document.getElementById('main-app').style.display = 'none';
             
             // Set today's date as default
-            document.getElementById('transaction-date').valueAsDate = new Date();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
+            
+            // Focus on password input
+            setTimeout(() => {
+                document.getElementById('password-input').focus();
+            }, 100);
         }
 
         // Toggle password visibility
         document.getElementById('toggle-password').addEventListener('click', function() {
+            playSoundEffect('click');
             const passwordInput = document.getElementById('password-input');
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
             this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+            passwordInput.focus();
         });
 
         // Enter key support for password input
@@ -1794,13 +2023,16 @@
         });
 
         function checkPassword() {
+            playSoundEffect('click');
             const passwordInput = document.getElementById('password-input');
             const errorMessage = document.getElementById('password-error');
             
             if (passwordInput.value === correctPassword) {
+                playSoundEffect('success');
                 localStorage.setItem('cashTrackLoggedIn', 'true');
                 showDonationScreen();
             } else {
+                playSoundEffect('delete');
                 errorMessage.style.display = 'block';
                 passwordInput.value = '';
                 passwordInput.focus();
@@ -1819,8 +2051,29 @@
             // Copy account number functionality
             const accountNumber = document.getElementById('copy-account-number');
             accountNumber.addEventListener('click', function() {
+                playSoundEffect('success');
                 const text = this.textContent.replace(/\s/g, '');
                 navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = '✓ Berhasil Disalin!';
+                    this.style.background = '#34a853';
+                    this.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Copy failed: ', err);
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
                     const originalText = this.textContent;
                     this.textContent = '✓ Berhasil Disalin!';
                     this.style.background = '#34a853';
@@ -1834,13 +2087,16 @@
                 });
             });
             
-            document.getElementById('enter-app-btn').addEventListener('click', enterApp);
+            document.getElementById('enter-app-btn').addEventListener('click', function() {
+                playSoundEffect('positive');
+                enterApp();
+            });
         }
 
-        // DIHAPUS: Fungsi skipDonation tidak diperlukan lagi
-        // function skipDonation() {
-        //     enterApp();
-        // }
+        function skipDonation() {
+            playSoundEffect('click');
+            enterApp();
+        }
 
         function enterApp() {
             document.getElementById('donation-screen').style.display = 'none';
@@ -1872,6 +2128,141 @@
             
             // Setup navigation tabs
             setupNavigationTabs();
+            
+            // Add sound effects to all buttons
+            addSoundEffectsToButtons();
+            
+            // Focus on description input
+            setTimeout(() => {
+                document.getElementById('transaction-desc').focus();
+            }, 100);
+        }
+
+        // Function to add sound effects to all buttons
+        function addSoundEffectsToButtons() {
+            // Tambah Transaksi button
+            const addTransactionBtn = document.querySelector('.btn-primary[onclick="addTransaction()"]');
+            if (addTransactionBtn) {
+                addTransactionBtn.addEventListener('click', () => {
+                    playSoundEffect('positive');
+                });
+            }
+            
+            // Bersihkan Form button
+            const clearFormBtn = document.querySelector('.btn-secondary[onclick="clearForm()"]');
+            if (clearFormBtn) {
+                clearFormBtn.addEventListener('click', () => {
+                    playSoundEffect('click');
+                });
+            }
+            
+            // Terapkan Filter button
+            const applyFilterBtn = document.querySelector('.btn-primary[onclick="applyFilter()"]');
+            if (applyFilterBtn) {
+                applyFilterBtn.addEventListener('click', () => {
+                    playSoundEffect('click');
+                });
+            }
+            
+            // Reset Filter button
+            const resetFilterBtn = document.querySelector('.btn-secondary[onclick="resetFilters()"]');
+            if (resetFilterBtn) {
+                resetFilterBtn.addEventListener('click', () => {
+                    playSoundEffect('click');
+                });
+            }
+            
+            // Export CSV button
+            const exportCSVBtn = document.querySelector('.btn-success[onclick="exportToCSV()"]');
+            if (exportCSVBtn) {
+                exportCSVBtn.addEventListener('click', () => {
+                    playSoundEffect('success');
+                });
+            }
+            
+            // Export Excel button
+            const exportExcelBtn = document.querySelector('.btn-success[onclick="exportToExcel()"]');
+            if (exportExcelBtn) {
+                exportExcelBtn.addEventListener('click', () => {
+                    playSoundEffect('success');
+                });
+            }
+            
+            // Export Excel Berkelompok button
+            const exportExcelGroupedBtn = document.querySelector('.btn-warning[onclick="exportToExcelGrouped()"]');
+            if (exportExcelGroupedBtn) {
+                exportExcelGroupedBtn.addEventListener('click', () => {
+                    playSoundEffect('success');
+                });
+            }
+            
+            // Navigation tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    playSoundEffect('click');
+                });
+            });
+            
+            // Header icon buttons
+            document.querySelectorAll('.icon-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSoundEffect('click');
+                });
+            });
+            
+            // Form input focus sound
+            ['transaction-date', 'transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('focus', () => {
+                        playSoundEffect('click');
+                    });
+                }
+            });
+            
+            // Filter select focus sound
+            ['filter-year', 'filter-month', 'filter-day'].forEach(id => {
+                const select = document.getElementById(id);
+                if (select) {
+                    select.addEventListener('focus', () => {
+                        playSoundEffect('click');
+                    });
+                }
+            });
+            
+            // Add sound effects to action buttons in transactions
+            addSoundEffectsToActionButtons();
+        }
+
+        function addSoundEffectsToActionButtons() {
+            // Edit buttons
+            document.querySelectorAll('.btn-secondary').forEach(btn => {
+                if (btn.textContent.includes('Edit')) {
+                    btn.addEventListener('click', function(e) {
+                        // Pastikan sound effect hanya dipanggil sekali
+                        if (!this.dataset.soundAdded) {
+                            this.addEventListener('click', () => {
+                                playSoundEffect('click');
+                            });
+                            this.dataset.soundAdded = 'true';
+                        }
+                    });
+                }
+            });
+            
+            // Delete buttons
+            document.querySelectorAll('.btn-danger').forEach(btn => {
+                if (btn.textContent.includes('Hapus')) {
+                    btn.addEventListener('click', function(e) {
+                        if (!this.dataset.soundAdded) {
+                            this.addEventListener('click', () => {
+                                playSoundEffect('delete');
+                            });
+                            this.dataset.soundAdded = 'true';
+                        }
+                    });
+                }
+            });
         }
 
         // ==================== TRANSACTION FUNCTIONS ====================
@@ -1883,16 +2274,22 @@
             
             if (!date) {
                 alert('Harap pilih tanggal transaksi!');
+                playSoundEffect('delete');
+                document.getElementById('transaction-date').focus();
                 return;
             }
             
             if (!description) {
                 alert('Harap isi keterangan transaksi!');
+                playSoundEffect('delete');
+                document.getElementById('transaction-desc').focus();
                 return;
             }
             
             if (income === 0 && expense === 0) {
                 alert('Harap isi pendapatan atau pengeluaran!');
+                playSoundEffect('delete');
+                document.getElementById('transaction-income').focus();
                 return;
             }
             
@@ -1913,6 +2310,8 @@
             
             if (currentPage === 'history-page') {
                 displayGroupedTransactions();
+                // Tambah sound effect ke button baru
+                setTimeout(addSoundEffectsToActionButtons, 100);
             }
             
             // Update filter options
@@ -1920,19 +2319,24 @@
             updateMonthOptions();
             updateDayOptions();
             
-            // Show success message
-            alert('Transaksi berhasil ditambahkan!');
+            // Focus kembali ke description input
+            setTimeout(() => {
+                document.getElementById('transaction-desc').focus();
+            }, 100);
         }
 
         function clearForm() {
-            document.getElementById('transaction-date').valueAsDate = new Date();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
             document.getElementById('transaction-desc').value = '';
             document.getElementById('transaction-income').value = '';
             document.getElementById('transaction-expense').value = '';
+            document.getElementById('transaction-desc').focus();
         }
 
         function deleteTransaction(id) {
             if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+                playSoundEffect('delete');
                 transactions = transactions.filter(t => t.id !== id);
                 saveTransactions();
                 updateBalance();
@@ -1940,11 +2344,16 @@
                 
                 if (currentPage === 'history-page') {
                     displayGroupedTransactions();
+                    // Tambah sound effect ke button baru
+                    setTimeout(addSoundEffectsToActionButtons, 100);
                 }
+            } else {
+                playSoundEffect('click');
             }
         }
 
         function editTransaction(id) {
+            playSoundEffect('click');
             const transaction = transactions.find(t => t.id === id);
             if (!transaction) return;
             
@@ -1953,7 +2362,7 @@
             document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
             document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
             
-            // Scroll to form
+            // Switch to transactions page
             document.getElementById('transactions-page').classList.add('active');
             document.getElementById('history-page').classList.remove('active');
             document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -1968,6 +2377,11 @@
             // Remove the transaction being edited
             transactions = transactions.filter(t => t.id !== id);
             saveTransactions();
+            
+            // Focus on description input
+            setTimeout(() => {
+                document.getElementById('transaction-desc').focus();
+            }, 100);
         }
 
         function saveTransactions() {
@@ -2093,7 +2507,9 @@
                                 color: gridColor
                             },
                             ticks: {
-                                color: textColor
+                                color: textColor,
+                                maxRotation: 45,
+                                minRotation: 45
                             }
                         },
                         y: {
@@ -2364,12 +2780,16 @@
             });
             
             container.innerHTML = html;
+            
+            // Add sound effects to newly created buttons
+            setTimeout(addSoundEffectsToActionButtons, 100);
         }
 
         // ==================== EXPORT FUNCTIONS ====================
         function exportToCSV() {
             if (transactions.length === 0) {
                 alert('Tidak ada data transaksi untuk diexport!');
+                playSoundEffect('delete');
                 return;
             }
             
@@ -2398,6 +2818,7 @@
         function exportToExcel() {
             if (transactions.length === 0) {
                 alert('Tidak ada data transaksi untuk diexport!');
+                playSoundEffect('delete');
                 return;
             }
             
@@ -2508,7 +2929,7 @@
         }
 
         function exportToExcelGrouped() {
-            exportToExcel(); // Same function for now
+            exportToExcel();
         }
 
         // ==================== NAVIGATION ====================
@@ -2540,9 +2961,13 @@
         // ==================== LOGOUT ====================
         function logout() {
             if (confirm('Apakah Anda yakin ingin keluar?')) {
+                playSoundEffect('click');
                 localStorage.removeItem('cashTrackLoggedIn');
+                localStorage.removeItem('cashTrackTransactions');
                 showLoginScreen();
                 document.getElementById('password-input').value = '';
+            } else {
+                playSoundEffect('click');
             }
         }
 
@@ -2555,11 +2980,14 @@
             
             // Enter key support for form inputs
             ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
-                document.getElementById(id).addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        addTransaction();
-                    }
-                });
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            addTransaction();
+                        }
+                    });
+                }
             });
         });
     </script>
