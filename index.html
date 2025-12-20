@@ -465,37 +465,6 @@
             transform: translateY(-1px);
         }
 
-        .donation-btn-secondary {
-            background: #f1f3f4;
-            color: var(--dark);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .donation-btn-secondary:hover {
-            background: #e8eaed;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-
-        [data-theme="dark"] .donation-btn-secondary {
-            background: #2d2d2d;
-            color: var(--dark);
-        }
-
-        .button-shine {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 200%; }
-        }
-
         .donation-footer {
             margin-top: 30px;
             font-size: 12px;
@@ -550,6 +519,69 @@
         .header-actions {
             display: flex;
             gap: 15px;
+            align-items: center;
+        }
+
+        /* Toggle Switch untuk Dark Mode */
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: var(--transition);
+            border-radius: 34px;
+        }
+
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .theme-slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .theme-slider:before {
+            transform: translateX(30px);
+            background-color: white;
+        }
+
+        .theme-slider:after {
+            content: "🌙";
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        input:checked + .theme-slider:after {
+            content: "☀️";
+            left: 38px;
         }
 
         .icon-btn {
@@ -1176,6 +1208,31 @@
             .main-header {
                 padding: 12px 15px;
             }
+            
+            .theme-switch {
+                width: 50px;
+                height: 25px;
+            }
+            
+            .theme-slider:before {
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3.5px;
+            }
+            
+            input:checked + .theme-slider:before {
+                transform: translateX(25px);
+            }
+            
+            .theme-slider:after {
+                font-size: 12px;
+                left: 6px;
+            }
+            
+            input:checked + .theme-slider:after {
+                left: 32px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1414,13 +1471,6 @@
     </style>
 </head>
 <body>
-    <!-- Install Prompt -->
-    <div class="install-prompt" id="install-prompt">
-        Pasang CashTrack di perangkat Anda untuk pengalaman terbaik
-        <button class="install-btn" id="install-btn">Pasang</button>
-        <button class="install-btn" onclick="hideInstallPrompt()" style="background: transparent; color: white;">✕</button>
-    </div>
-
     <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-logo">
@@ -1475,7 +1525,7 @@
         </div>
     </div>
 
-    <!-- Donation Screen -->
+    <!-- Donation Screen - DIUBAH: Hanya 1 tombol -->
     <div id="donation-screen">
         <div class="donation-container">
             <div class="donation-header">
@@ -1506,13 +1556,11 @@
                 <div class="copy-notice">Klik untuk menyalin nomor rekening</div>
             </div>
 
+            <!-- DIUBAH: Hanya 1 tombol saja -->
             <div class="donation-buttons">
                 <button class="donation-btn" id="enter-app-btn">
                     <span class="button-shine"></span>
-                    KLIK UNTUK MASUK KE APLIKASI
-                </button>
-                <button class="donation-btn donation-btn-secondary" onclick="skipDonation()">
-                    Lewati dan Masuk Aplikasi
+                    MASUK KE APLIKASI
                 </button>
             </div>
         </div>
@@ -1539,8 +1587,13 @@
                 <h2>CashTrack</h2>
             </div>
             <div class="header-actions">
-                <button class="icon-btn" id="dark-mode-toggle" title="Toggle Dark Mode">🌙</button>
-                <button class="icon-btn" onclick="showInstallPrompt()" title="Pasang Aplikasi">📱</button>
+                <!-- DIUBAH: Switch untuk dark mode -->
+                <label class="theme-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="theme-slider"></span>
+                </label>
+                
+                <!-- DIUBAH: Hanya tombol logout saja -->
                 <button class="icon-btn" onclick="logout()" title="Keluar">🚪</button>
             </div>
         </header>
@@ -1663,7 +1716,6 @@
         // Data dan state management
         let transactions = JSON.parse(localStorage.getItem('cashTrackTransactions')) || [];
         const correctPassword = "free palestina";
-        let deferredPrompt;
         let financeChart = null;
         let filteredTransactions = [];
         let currentFilters = { year: '', month: '', day: '' };
@@ -1681,7 +1733,7 @@
                 notification: 'new-notification-011-364050.mp3',
                 success: 'notification-center-443093.mp3',
                 click: 'preview.mp3',
-                delete: 'mixkit-positive-notification-951.wav' // fallback untuk delete
+                delete: 'mixkit-positive-notification-951.wav'
             };
 
             Object.entries(audioFiles).forEach(([key, filename]) => {
@@ -1689,9 +1741,8 @@
                     const audio = new Audio();
                     audio.src = filename;
                     audio.load();
-                    audio.volume = 0.8; // Set volume ke 80%
+                    audio.volume = 0.8; // Volume 80%
                     audioCache[key] = audio;
-                    console.log(`Audio ${key} loaded: ${filename}`);
                 } catch (error) {
                     console.error(`Failed to load audio ${filename}:`, error);
                 }
@@ -1705,27 +1756,21 @@
             try {
                 const audio = audioCache[type];
                 if (audio) {
-                    // Reset audio ke awal
                     audio.currentTime = 0;
-                    // Set volume
-                    audio.volume = 0.8;
+                    audio.volume = 0.8; // Volume 80%
                     
-                    // Play dengan promise untuk handle error
                     const playPromise = audio.play();
                     if (playPromise !== undefined) {
                         playPromise.catch(error => {
                             console.error(`Audio play failed for ${type}:`, error);
-                            // Coba fallback ke click sound
                             if (type !== 'click' && audioCache.click) {
                                 audioCache.click.currentTime = 0;
-                                audioCache.click.volume = 0.3;
+                                audioCache.click.volume = 0.8;
                                 audioCache.click.play().catch(e => console.log('Fallback audio also failed'));
                             }
                         });
                     }
                 } else {
-                    console.warn(`Audio ${type} not found in cache`);
-                    // Fallback ke Web Audio API jika file tidak ada
                     playFallbackSound(type);
                 }
             } catch (error) {
@@ -1758,7 +1803,7 @@
                         frequency = 400;
                         duration = 0.25;
                         break;
-                    default: // click
+                    default:
                         frequency = 300;
                         duration = 0.08;
                 }
@@ -1769,13 +1814,12 @@
                 oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
                 oscillator.type = 'sine';
                 
-                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime); // Volume 50% untuk fallback
                 gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
                 
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + duration);
                 
-                // Resume context jika suspended
                 if (audioContext.state === 'suspended') {
                     audioContext.resume();
                 }
@@ -1788,7 +1832,6 @@
         function playSoundWithVibration(type = 'click') {
             playSoundEffect(type);
             
-            // Add haptic feedback for mobile devices
             if ('vibrate' in navigator) {
                 switch(type) {
                     case 'positive':
@@ -1819,32 +1862,31 @@
             document.removeEventListener('click', initAudioOnInteraction);
         }, { once: true });
 
-        // Dark Mode
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        // ==================== DARK MODE TOGGLE ====================
+        const themeToggle = document.getElementById('theme-toggle');
         const currentTheme = localStorage.getItem('theme') || 'light';
 
+        // Set initial theme
         if (currentTheme === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
-            darkModeToggle.textContent = '☀️';
+            themeToggle.checked = true;
         }
 
-        darkModeToggle.addEventListener('click', () => {
+        // Theme toggle event
+        themeToggle.addEventListener('change', function() {
             playSoundEffect('click');
-            if (document.body.getAttribute('data-theme') === 'dark') {
-                document.body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-                darkModeToggle.textContent = '🌙';
-            } else {
+            if (this.checked) {
                 document.body.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
-                darkModeToggle.textContent = '☀️';
+            } else {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
             }
             
             if (financeChart) {
                 renderChart();
             }
             
-            // Refresh display untuk update tema
             if (currentPage === 'history-page') {
                 displayGroupedTransactions();
             }
@@ -1896,80 +1938,6 @@
             return dateString.substring(0, 4);
         }
 
-        // ==================== PWA FUNCTIONS ====================
-        // PWA Manifest
-        const manifest = {
-            "name": "CashTrack",
-            "short_name": "CashTrack",
-            "description": "Aplikasi manajemen keuangan pribadi",
-            "start_url": "/",
-            "display": "standalone",
-            "background_color": "#ffffff",
-            "theme_color": "#1a73e8",
-            "orientation": "portrait-primary",
-            "categories": ["finance", "productivity"],
-            "icons": [
-                {
-                    "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=",
-                    "sizes": "192x192",
-                    "type": "image/svg+xml"
-                }
-            ]
-        };
-
-        // Create and set manifest
-        const manifestJson = JSON.stringify(manifest);
-        const manifestBlob = new Blob([manifestJson], { type: 'application/json' });
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        document.getElementById('app-manifest').href = manifestURL;
-
-        // Install Prompt
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            setTimeout(() => {
-                showInstallPrompt();
-            }, 3000);
-        });
-
-        function showInstallPrompt() {
-            playSoundEffect('click');
-            if (deferredPrompt) {
-                const installPrompt = document.getElementById('install-prompt');
-                installPrompt.style.display = 'block';
-            }
-        }
-
-        function hideInstallPrompt() {
-            playSoundEffect('click');
-            const installPrompt = document.getElementById('install-prompt');
-            installPrompt.style.display = 'none';
-        }
-
-        document.getElementById('install-btn').addEventListener('click', async () => {
-            playSoundEffect('positive');
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                }
-                deferredPrompt = null;
-                hideInstallPrompt();
-            }
-        });
-
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(registration => {
-                    console.log('SW registered: ', registration);
-                }).catch(registrationError => {
-                    console.log('SW registration failed: ', registrationError);
-                });
-            });
-        }
-
         // ==================== SPLASH SCREEN ====================
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -1978,7 +1946,6 @@
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                     
-                    // Check if already logged in
                     const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
                     if (isLoggedIn) {
                         showDonationScreen();
@@ -1995,11 +1962,9 @@
             document.getElementById('donation-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'none';
             
-            // Set today's date as default
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('transaction-date').value = today;
             
-            // Focus on password input
             setTimeout(() => {
                 document.getElementById('password-input').focus();
             }, 100);
@@ -2066,7 +2031,6 @@
                     }, 2000);
                 }).catch(err => {
                     console.error('Copy failed: ', err);
-                    // Fallback for older browsers
                     const textArea = document.createElement('textarea');
                     textArea.value = text;
                     document.body.appendChild(textArea);
@@ -2093,11 +2057,6 @@
             });
         }
 
-        function skipDonation() {
-            playSoundEffect('click');
-            enterApp();
-        }
-
         function enterApp() {
             document.getElementById('donation-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
@@ -2106,33 +2065,25 @@
 
         // ==================== APP INITIALIZATION ====================
         function initializeApp() {
-            // Set today's date as default
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('transaction-date').value = today;
             
-            // Initialize filter options
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
             
-            // Set default filters
             currentFilters.year = new Date().getFullYear().toString();
             currentFilters.month = (new Date().getMonth() + 1).toString().padStart(2, '0');
             
-            // Update UI
             updateBalance();
             renderChart();
             
-            // Load transactions based on current filters
             filterTransactions();
             
-            // Setup navigation tabs
             setupNavigationTabs();
             
-            // Add sound effects to all buttons
             addSoundEffectsToButtons();
             
-            // Focus on description input
             setTimeout(() => {
                 document.getElementById('transaction-desc').focus();
             }, 100);
@@ -2203,13 +2154,6 @@
                 });
             });
             
-            // Header icon buttons
-            document.querySelectorAll('.icon-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    playSoundEffect('click');
-                });
-            });
-            
             // Form input focus sound
             ['transaction-date', 'transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
                 const input = document.getElementById(id);
@@ -2237,30 +2181,21 @@
         function addSoundEffectsToActionButtons() {
             // Edit buttons
             document.querySelectorAll('.btn-secondary').forEach(btn => {
-                if (btn.textContent.includes('Edit')) {
-                    btn.addEventListener('click', function(e) {
-                        // Pastikan sound effect hanya dipanggil sekali
-                        if (!this.dataset.soundAdded) {
-                            this.addEventListener('click', () => {
-                                playSoundEffect('click');
-                            });
-                            this.dataset.soundAdded = 'true';
-                        }
+                if (btn.textContent.includes('Edit') && !btn.dataset.soundAdded) {
+                    btn.addEventListener('click', () => {
+                        playSoundEffect('click');
                     });
+                    btn.dataset.soundAdded = 'true';
                 }
             });
             
             // Delete buttons
             document.querySelectorAll('.btn-danger').forEach(btn => {
-                if (btn.textContent.includes('Hapus')) {
-                    btn.addEventListener('click', function(e) {
-                        if (!this.dataset.soundAdded) {
-                            this.addEventListener('click', () => {
-                                playSoundEffect('delete');
-                            });
-                            this.dataset.soundAdded = 'true';
-                        }
+                if (btn.textContent.includes('Hapus') && !btn.dataset.soundAdded) {
+                    btn.addEventListener('click', () => {
+                        playSoundEffect('delete');
                     });
+                    btn.dataset.soundAdded = 'true';
                 }
             });
         }
@@ -2309,17 +2244,14 @@
             clearForm();
             
             if (currentPage === 'history-page') {
-                displayGroupedTransactions();
-                // Tambah sound effect ke button baru
+                filterTransactions(); // PERBAIKAN: Gunakan filterTransactions, bukan displayGroupedTransactions
                 setTimeout(addSoundEffectsToActionButtons, 100);
             }
             
-            // Update filter options
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
             
-            // Focus kembali ke description input
             setTimeout(() => {
                 document.getElementById('transaction-desc').focus();
             }, 100);
@@ -2337,16 +2269,17 @@
         function deleteTransaction(id) {
             if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
                 playSoundEffect('delete');
+                // PERBAIKAN: Hapus dari transactions array
                 transactions = transactions.filter(t => t.id !== id);
+                // PERBAIKAN: Juga hapus dari filteredTransactions jika ada
+                filteredTransactions = filteredTransactions.filter(t => t.id !== id);
                 saveTransactions();
                 updateBalance();
                 renderChart();
                 
-                if (currentPage === 'history-page') {
-                    displayGroupedTransactions();
-                    // Tambah sound effect ke button baru
-                    setTimeout(addSoundEffectsToActionButtons, 100);
-                }
+                // PERBAIKAN: Selalu refresh display dengan filterTransactions
+                filterTransactions();
+                setTimeout(addSoundEffectsToActionButtons, 100);
             } else {
                 playSoundEffect('click');
             }
@@ -2378,7 +2311,6 @@
             transactions = transactions.filter(t => t.id !== id);
             saveTransactions();
             
-            // Focus on description input
             setTimeout(() => {
                 document.getElementById('transaction-desc').focus();
             }, 100);
@@ -2405,7 +2337,6 @@
             document.getElementById('balance-amount').textContent = formatCurrency(balance);
             document.getElementById('total-transactions').textContent = totalTransactions;
             
-            // Update last update time
             const now = new Date();
             document.getElementById('last-update').textContent = now.toLocaleTimeString('id-ID', { 
                 hour: '2-digit', 
@@ -2432,7 +2363,7 @@
             // Group by month
             const monthlyData = {};
             transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                const monthKey = transaction.date.substring(0, 7);
                 if (!monthlyData[monthKey]) {
                     monthlyData[monthKey] = { income: 0, expense: 0 };
                 }
@@ -2440,7 +2371,6 @@
                 monthlyData[monthKey].expense += transaction.expense;
             });
             
-            // Sort months
             const sortedMonths = Object.keys(monthlyData).sort();
             const labels = sortedMonths.map(month => {
                 const [year, monthNum] = month.split('-');
@@ -2544,15 +2474,12 @@
                 years.add(getYearFromDate(transaction.date));
             });
             
-            // Get current year and next year
             const currentYear = new Date().getFullYear();
             years.add(currentYear.toString());
             years.add((currentYear + 1).toString());
             
-            // Sort years descending
             const sortedYears = Array.from(years).sort((a, b) => b - a);
             
-            // Update options
             yearSelect.innerHTML = '<option value="">Semua Tahun</option>';
             sortedYears.forEach(year => {
                 const option = document.createElement('option');
@@ -2561,7 +2488,6 @@
                 yearSelect.appendChild(option);
             });
             
-            // Set to current year by default
             yearSelect.value = currentYear.toString();
             currentFilters.year = currentYear.toString();
         }
@@ -2581,7 +2507,6 @@
                 });
             }
             
-            // Update options
             monthSelect.innerHTML = '<option value="">Semua Bulan</option>';
             for (let i = 1; i <= 12; i++) {
                 const month = i.toString().padStart(2, '0');
@@ -2593,7 +2518,6 @@
                 }
             }
             
-            // Set to current month by default if year is current year
             const currentYear = new Date().getFullYear().toString();
             if (selectedYear === currentYear) {
                 const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
@@ -2621,10 +2545,8 @@
                 });
             }
             
-            // Update options
             daySelect.innerHTML = '<option value="">Semua Tanggal</option>';
             if (selectedYear && selectedMonth) {
-                // Get number of days in month
                 const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
                 for (let i = 1; i <= daysInMonth; i++) {
                     const day = i.toString().padStart(2, '0');
@@ -2695,14 +2617,13 @@
             // Group by month
             const grouped = {};
             filteredTransactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                const monthKey = transaction.date.substring(0, 7);
                 if (!grouped[monthKey]) {
                     grouped[monthKey] = [];
                 }
                 grouped[monthKey].push(transaction);
             });
             
-            // Sort months descending
             const sortedMonths = Object.keys(grouped).sort().reverse();
             
             let html = '';
@@ -2712,7 +2633,6 @@
                 const monthName = getMonthName(month);
                 const monthTransactions = grouped[monthKey];
                 
-                // Calculate month totals
                 let monthIncome = 0;
                 let monthExpense = 0;
                 
@@ -2723,7 +2643,6 @@
                 
                 const monthBalance = monthIncome - monthExpense;
                 
-                // Sort transactions by date descending
                 monthTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
                 
                 let transactionsHtml = `
@@ -2781,7 +2700,6 @@
             
             container.innerHTML = html;
             
-            // Add sound effects to newly created buttons
             setTimeout(addSoundEffectsToActionButtons, 100);
         }
 
@@ -2822,17 +2740,15 @@
                 return;
             }
             
-            // Group by month for Excel export
             const grouped = {};
             transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                const monthKey = transaction.date.substring(0, 7);
                 if (!grouped[monthKey]) {
                     grouped[monthKey] = [];
                 }
                 grouped[monthKey].push(transaction);
             });
             
-            // Sort months descending
             const sortedMonths = Object.keys(grouped).sort().reverse();
             
             let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
@@ -2842,7 +2758,6 @@
                 const monthName = getMonthName(month);
                 const monthTransactions = grouped[monthKey];
                 
-                // Calculate month totals
                 let monthIncome = 0;
                 let monthExpense = 0;
                 
@@ -2890,7 +2805,6 @@
                 `;
             });
             
-            // Add overall summary
             let totalIncome = 0;
             let totalExpense = 0;
             transactions.forEach(t => {
@@ -2937,11 +2851,9 @@
             const tabs = document.querySelectorAll('.nav-tab');
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Update active tab
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
                     
-                    // Show corresponding page
                     const pageId = tab.dataset.page;
                     document.querySelectorAll('.page-section').forEach(page => {
                         page.classList.remove('active');
@@ -2950,9 +2862,8 @@
                     
                     currentPage = pageId;
                     
-                    // If going to history page, refresh the transactions display
                     if (pageId === 'history-page') {
-                        displayGroupedTransactions();
+                        filterTransactions();
                     }
                 });
             });
@@ -2972,13 +2883,10 @@
         }
 
         // ==================== INITIALIZE ON LOAD ====================
-        // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            // Set today's date as default in transaction form
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('transaction-date').value = today;
             
-            // Enter key support for form inputs
             ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
                 const input = document.getElementById(id);
                 if (input) {
