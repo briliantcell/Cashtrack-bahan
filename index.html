@@ -70,31 +70,158 @@
             overflow-x: hidden;
         }
 
-        /* Install Prompt */
-        .install-prompt {
-            background: var(--primary);
+        /* Storage Status Indicator */
+        .storage-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
             color: white;
-            padding: 15px 20px;
-            text-align: center;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 1001;
             display: none;
+            animation: slideIn 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .storage-status.error {
+            background: var(--danger);
+        }
+
+        .storage-status.warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        /* Backup Modal */
+        .backup-modal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            padding-top: calc(15px + var(--safe-area-top));
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
         }
 
-        .install-btn {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin-left: 10px;
-            cursor: pointer;
+        .backup-content {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .backup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .backup-title {
+            font-size: 1.5rem;
             font-weight: 600;
+            color: var(--dark);
+        }
+
+        .close-backup {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .backup-section {
+            margin-bottom: 25px;
+            background: rgba(26, 115, 232, 0.05);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .backup-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--light);
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] .backup-info {
+            background: #2d2d2d;
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .backup-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .storage-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--light);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
         }
 
         /* Splash Screen */
@@ -195,11 +322,6 @@
             box-shadow: var(--shadow);
             padding: 30px;
             animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .app-header {
@@ -473,7 +595,7 @@
             line-height: 1.4;
         }
 
-        /* Main App - FIXED SCROLL ISSUE */
+        /* Main App */
         #main-app {
             display: none;
             height: 100vh;
@@ -522,7 +644,7 @@
             align-items: center;
         }
 
-        /* Toggle Switch untuk Dark Mode */
+        /* Theme Switch */
         .theme-switch {
             position: relative;
             display: inline-block;
@@ -652,7 +774,7 @@
             background: rgba(74, 144, 226, 0.1);
         }
 
-        /* App Content - FIXED FOR SCROLLING */
+        /* App Content */
         .app-content {
             position: absolute;
             top: 70px;
@@ -667,7 +789,6 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Adjust for mobile nav tabs */
         @media (max-width: 768px) {
             .app-content {
                 top: 120px;
@@ -749,6 +870,7 @@
             gap: 10px;
         }
 
+        /* Section Title */
         .section-title {
             font-size: 1.3rem;
             font-weight: 600;
@@ -872,6 +994,15 @@
             background: #e0ac03;
         }
 
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+        }
+
         /* Filter Section */
         .filter-section {
             background: var(--light);
@@ -921,6 +1052,23 @@
             gap: 10px;
             justify-content: flex-end;
             flex-wrap: wrap;
+        }
+
+        /* Backup Section */
+        .backup-section-main {
+            background: var(--light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .backup-actions-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
         }
 
         /* Transactions Page */
@@ -1074,335 +1222,6 @@
             height: 100% !important;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-tabs {
-                display: flex;
-            }
-            
-            .login-container,
-            .donation-container {
-                padding: 20px;
-                margin: 10px;
-                max-width: 100%;
-            }
-            
-            .app-content {
-                padding: 15px;
-                top: 120px;
-            }
-            
-            .form-grid,
-            .filter-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            .filter-buttons,
-            .form-buttons {
-                flex-direction: row;
-                justify-content: stretch;
-            }
-            
-            .btn {
-                flex: 1;
-                min-width: 0;
-                padding: 12px 15px;
-                font-size: 13px;
-            }
-            
-            .transactions-table th,
-            .transactions-table td {
-                padding: 10px 6px;
-                font-size: 13px;
-            }
-            
-            .balance-amount {
-                font-size: 1.8rem;
-            }
-            
-            .balance-details {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .export-section {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            
-            .app-footer {
-                padding: 10px 15px;
-                font-size: 0.75rem;
-                line-height: 1.4;
-            }
-            
-            .month-header {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
-                padding: 12px 15px;
-            }
-            
-            .month-totals {
-                flex-direction: column;
-                gap: 8px;
-                width: 100%;
-            }
-            
-            .month-totals span {
-                justify-content: space-between;
-                width: 100%;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .action-buttons .btn {
-                padding: 8px 10px;
-                font-size: 12px;
-                min-width: 0;
-            }
-            
-            .chart-container {
-                padding: 15px;
-            }
-            
-            .chart-wrapper {
-                height: 250px;
-            }
-            
-            .chart-placeholder {
-                font-size: 14px;
-                padding: 15px;
-            }
-            
-            .nav-tab {
-                padding: 12px;
-                font-size: 14px;
-            }
-            
-            .section-title {
-                font-size: 1.2rem;
-                margin: 20px 0 12px;
-            }
-            
-            .donation-title {
-                font-size: 1.6rem;
-            }
-            
-            .account-number {
-                font-size: 20px;
-                padding: 12px;
-                letter-spacing: 1px;
-            }
-            
-            .donation-btn {
-                padding: 14px;
-                font-size: 16px;
-            }
-            
-            .main-header {
-                padding: 12px 15px;
-            }
-            
-            .theme-switch {
-                width: 50px;
-                height: 25px;
-            }
-            
-            .theme-slider:before {
-                height: 18px;
-                width: 18px;
-                left: 3px;
-                bottom: 3.5px;
-            }
-            
-            input:checked + .theme-slider:before {
-                transform: translateX(25px);
-            }
-            
-            .theme-slider:after {
-                font-size: 12px;
-                left: 6px;
-            }
-            
-            input:checked + .theme-slider:after {
-                left: 32px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .splash-title {
-                font-size: 2rem;
-            }
-            
-            .splash-logo {
-                width: 100px;
-                height: 100px;
-                font-size: 30px;
-            }
-            
-            .app-title,
-            .donation-title {
-                font-size: 1.7rem;
-            }
-            
-            .app-footer {
-                padding: 8px 12px;
-                font-size: 0.7rem;
-            }
-            
-            .balance-card {
-                padding: 20px;
-            }
-            
-            .balance-amount {
-                font-size: 1.6rem;
-            }
-            
-            .balance-details {
-                font-size: 0.8rem;
-            }
-            
-            .transaction-form,
-            .filter-section,
-            .chart-container {
-                padding: 15px;
-            }
-            
-            .form-input,
-            .filter-select {
-                padding: 10px;
-                font-size: 15px;
-            }
-            
-            .btn {
-                padding: 10px 12px;
-                font-size: 12px;
-            }
-            
-            .month-header {
-                font-size: 1rem;
-                padding: 10px 12px;
-            }
-            
-            .month-totals {
-                font-size: 0.8rem;
-            }
-            
-            .chart-wrapper {
-                height: 200px;
-            }
-            
-            .chart-placeholder {
-                font-size: 13px;
-            }
-            
-            .main-header {
-                padding: 12px 15px;
-            }
-            
-            .header-title h2 {
-                font-size: 1.2rem;
-            }
-            
-            .icon-btn {
-                width: 40px;
-                height: 40px;
-                padding: 6px;
-                font-size: 18px;
-            }
-            
-            .header-actions {
-                gap: 10px;
-            }
-            
-            .nav-tab {
-                padding: 10px;
-                font-size: 13px;
-            }
-            
-            .account-number {
-                font-size: 18px;
-                padding: 10px;
-            }
-            
-            .donation-container {
-                padding: 15px;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .nav-tabs {
-                display: none;
-            }
-            
-            .app-content {
-                top: 70px;
-            }
-            
-            .page-section {
-                display: block !important;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .balance-amount {
-                font-size: 1.4rem;
-            }
-            
-            .btn {
-                padding: 8px 10px;
-                font-size: 11px;
-            }
-            
-            .chart-wrapper {
-                height: 180px;
-            }
-            
-            .nav-tab {
-                padding: 8px;
-                font-size: 12px;
-            }
-            
-            .account-number {
-                font-size: 16px;
-                letter-spacing: 0;
-            }
-            
-            .app-content {
-                top: 120px;
-                bottom: 50px;
-            }
-        }
-
-        /* Touch Device Optimization */
-        @media (hover: none) and (pointer: coarse) {
-            .btn:hover,
-            .icon-btn:hover,
-            .nav-tab:hover,
-            .donation-btn:hover {
-                transform: none;
-            }
-            
-            .btn:active,
-            .icon-btn:active,
-            .nav-tab:active,
-            .donation-btn:active {
-                transform: scale(0.95);
-                transition: transform 0.1s ease;
-            }
-            
-            .login-btn:active,
-            .donation-btn:active {
-                transform: scale(0.98);
-            }
-        }
-
         /* Scrollbar Styling */
         .app-content::-webkit-scrollbar {
             width: 8px;
@@ -1434,43 +1253,116 @@
             background: #666;
         }
 
-        .transactions-table::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .transactions-table::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 3px;
-        }
-
-        .transactions-table::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 3px;
-        }
-
-        .transactions-table::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
         .empty-state {
             text-align: center;
             padding: 40px 20px;
             color: var(--gray);
         }
 
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-
-        .empty-state p {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .app-content {
+                padding: 15px;
+                top: 120px;
+            }
+            
+            .form-grid,
+            .filter-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .backup-actions,
+            .backup-actions-main {
+                grid-template-columns: 1fr;
+            }
+            
+            .storage-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .backup-content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Storage Status Indicator -->
+    <div class="storage-status" id="storage-status"></div>
+
+    <!-- Backup Modal -->
+    <div class="backup-modal" id="backup-modal">
+        <div class="backup-content">
+            <div class="backup-header">
+                <h3 class="backup-title">🗃️ Backup & Restore Data</h3>
+                <button class="close-backup" onclick="closeBackupModal()">✕</button>
+            </div>
+            
+            <div class="storage-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-transactions">0</div>
+                    <div class="stat-label">Transaksi</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-storage">0 KB</div>
+                    <div class="stat-label">Ukuran Data</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-backups">0</div>
+                    <div class="stat-label">Backup</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-lastsave">-</div>
+                    <div class="stat-label">Terakhir Simpan</div>
+                </div>
+            </div>
+            
+            <div class="backup-section">
+                <h4 class="section-title">📤 Backup Data</h4>
+                <p>Simpan data Anda ke file untuk mencegah kehilangan data.</p>
+                <div class="backup-actions">
+                    <button class="btn btn-success" onclick="exportBackup()">
+                        <span>💾</span> Backup ke File
+                    </button>
+                    <button class="btn btn-info" onclick="createAutoBackup()">
+                        <span>🔄</span> Buat Backup Otomatis
+                    </button>
+                </div>
+            </div>
+            
+            <div class="backup-section">
+                <h4 class="section-title">📥 Restore Data</h4>
+                <p>Muat data dari file backup yang sebelumnya disimpan.</p>
+                <div class="backup-info">
+                    <span>Pilih file backup (.json):</span>
+                    <input type="file" id="restore-file" accept=".json" style="display: none">
+                    <button class="btn btn-warning" onclick="document.getElementById('restore-file').click()">
+                        <span>📂</span> Pilih File
+                    </button>
+                </div>
+                <div class="backup-actions">
+                    <button class="btn btn-primary" onclick="importFromBackup()">
+                        <span>📥</span> Restore Data
+                    </button>
+                </div>
+            </div>
+            
+            <div class="backup-section">
+                <h4 class="section-title">⚙️ Pengaturan Storage</h4>
+                <p>Kelola penyimpanan data lokal.</p>
+                <div class="backup-actions">
+                    <button class="btn btn-secondary" onclick="clearOldBackups()">
+                        <span>🗑️</span> Hapus Backup Lama
+                    </button>
+                    <button class="btn btn-danger" onclick="showStorageInfo()">
+                        <span>ℹ️</span> Info Storage
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-logo">
@@ -1486,10 +1378,9 @@
         <h1 class="splash-title">CashTrack</h1>
         <p class="splash-subtitle">Kelola Keuangan dengan Mudah</p>
         
-        <!-- Splash Footer -->
         <div class="splash-footer">
-            <p class="version">CashTrack Version 2.0</p>
-            <p>Karya Anak Bangsa – Buatan Indonesia</p>
+            <p class="version">CashTrack Version 2.1</p>
+            <p>Dengan Sistem Penyimpanan Terjamin</p>
             <p class="copyright">© 2025 CashTrack. All Rights Reserved.</p>
         </div>
     </div>
@@ -1525,7 +1416,7 @@
         </div>
     </div>
 
-    <!-- Donation Screen - DIUBAH: Hanya 1 tombol -->
+    <!-- Donation Screen -->
     <div id="donation-screen">
         <div class="donation-container">
             <div class="donation-header">
@@ -1556,7 +1447,6 @@
                 <div class="copy-notice">Klik untuk menyalin nomor rekening</div>
             </div>
 
-            <!-- DIUBAH: Hanya 1 tombol saja -->
             <div class="donation-buttons">
                 <button class="donation-btn" id="enter-app-btn">
                     <span class="button-shine"></span>
@@ -1587,37 +1477,36 @@
                 <h2>CashTrack</h2>
             </div>
             <div class="header-actions">
-                <!-- DIUBAH: Switch untuk dark mode -->
                 <label class="theme-switch">
                     <input type="checkbox" id="theme-toggle">
                     <span class="theme-slider"></span>
                 </label>
                 
-                <!-- DIUBAH: Hanya tombol logout saja -->
+                <button class="icon-btn" onclick="showBackupModal()" title="Backup Data">💾</button>
                 <button class="icon-btn" onclick="logout()" title="Keluar">🚪</button>
             </div>
         </header>
 
-        <!-- Navigation Tabs untuk Mobile -->
+        <!-- Navigation Tabs -->
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="transactions-page">Tambah Transaksi</button>
             <button class="nav-tab" data-page="history-page">Riwayat Transaksi</button>
+            <button class="nav-tab" data-page="backup-page">Backup Data</button>
         </div>
 
         <div class="app-content">
             <!-- Page 1: Tambah Transaksi -->
             <div id="transactions-page" class="page-section active">
-                <!-- Balance Card -->
                 <div class="balance-card">
                     <div class="balance-label">Saldo Saat Ini</div>
                     <div class="balance-amount" id="balance-amount">Rp 0</div>
                     <div class="balance-details">
                         <span>Update: <span id="last-update">-</span></span>
                         <span>Total Transaksi: <span id="total-transactions">0</span></span>
+                        <span>Backup: <span id="last-backup">Belum ada</span></span>
                     </div>
                 </div>
 
-                <!-- Transaction Form -->
                 <h3 class="section-title">Tambah Transaksi Baru</h3>
                 <div class="transaction-form">
                     <div class="form-grid">
@@ -1636,7 +1525,6 @@
                     </div>
                 </div>
 
-                <!-- Chart -->
                 <h3 class="section-title">Grafik Keuangan</h3>
                 <div class="chart-container">
                     <div class="chart-wrapper">
@@ -1651,7 +1539,6 @@
             <!-- Page 2: Riwayat Transaksi -->
             <div id="history-page" class="page-section">
                 <div class="transactions-page">
-                    <!-- Filter Section -->
                     <h3 class="section-title">Filter Transaksi</h3>
                     <div class="filter-section">
                         <div class="filter-grid">
@@ -1684,7 +1571,6 @@
                         </div>
                     </div>
 
-                    <!-- Export Buttons -->
                     <div class="export-section">
                         <button class="btn btn-success" onclick="exportToCSV()">
                             <span>📊</span> Export CSV
@@ -1697,36 +1583,807 @@
                         </button>
                     </div>
 
-                    <!-- Transactions Container -->
                     <h3 class="section-title">Riwayat Transaksi</h3>
                     <div id="transactions-container">
-                        <!-- Transaksi akan ditampilkan berkelompok per bulan di sini -->
+                        <!-- Transaksi akan ditampilkan di sini -->
                     </div>
+                </div>
+            </div>
+
+            <!-- Page 3: Backup Data -->
+            <div id="backup-page" class="page-section">
+                <div class="backup-section-main">
+                    <h3 class="section-title">🗃️ Sistem Backup Data</h3>
+                    <p>Lindungi data keuangan Anda dengan sistem backup yang kuat. Data disimpan di 3 tempat berbeda untuk keamanan maksimal.</p>
+                    
+                    <div class="storage-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="backup-stat-transactions">0</div>
+                            <div class="stat-label">Total Transaksi</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="backup-stat-size">0 KB</div>
+                            <div class="stat-label">Ukuran Data</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="backup-stat-backups">0</div>
+                            <div class="stat-label">Jumlah Backup</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="backup-stat-status">🟢</div>
+                            <div class="stat-label">Status Storage</div>
+                        </div>
+                    </div>
+
+                    <div class="backup-actions-main">
+                        <button class="btn btn-success" onclick="exportBackup()">
+                            <span>💾</span> Backup Sekarang
+                        </button>
+                        <button class="btn btn-warning" onclick="restoreFromLatestBackup()">
+                            <span>📥</span> Restore Terakhir
+                        </button>
+                        <button class="btn btn-info" onclick="checkStorageHealth()">
+                            <span>🔍</span> Cek Kesehatan
+                        </button>
+                        <button class="btn btn-danger" onclick="showBackupModal()">
+                            <span>⚙️</span> Kelola Backup
+                        </button>
+                    </div>
+                </div>
+
+                <h3 class="section-title">📋 Daftar Backup</h3>
+                <div id="backup-list">
+                    <!-- Daftar backup akan ditampilkan di sini -->
+                </div>
+
+                <h3 class="section-title">🛡️ Tips Keamanan Data</h3>
+                <div class="backup-section-main">
+                    <p><strong>✅ Lakukan backup reguler:</strong> Minimal seminggu sekali</p>
+                    <p><strong>✅ Simpan file backup:</strong> Di cloud atau perangkat lain</p>
+                    <p><strong>✅ Cek storage:</strong> Pastikan ada cukup space</p>
+                    <p><strong>✅ Export data:</strong> Simpan file CSV/Excel secara berkala</p>
+                    <p><strong>✅ Auto-backup:</strong> Aktifkan di pengaturan backup</p>
                 </div>
             </div>
         </div>
 
-        <!-- App Footer -->
         <footer class="app-footer">
-            © 2025 CashTrack — Buatan Anak Indonesia 🇮🇩
+            © 2025 CashTrack — Sistem Penyimpanan Terjamin
         </footer>
     </div>
 
     <script>
-        // Data dan state management
-        let transactions = JSON.parse(localStorage.getItem('cashTrackTransactions')) || [];
-        const correctPassword = "free palestina";
+        // ==================== SISTEM STORAGE YANG DIPERKUAT ====================
+        
+        // Konfigurasi Storage
+        const STORAGE_CONFIG = {
+            VERSION: '2.1',
+            MAX_BACKUPS: 10,
+            AUTO_SAVE_INTERVAL: 30000, // 30 detik
+            AUTO_BACKUP_INTERVAL: 3600000, // 1 jam
+            COMPRESSION_THRESHOLD: 100, // kompres jika >100 transaksi
+            VALIDATION_INTERVAL: 60000 // validasi setiap 1 menit
+        };
+
+        // Kunci-kunci storage
+        const STORAGE_KEYS = {
+            TRANSACTIONS: 'cashTrackTransactions_v2',
+            BACKUPS: 'cashTrackBackups_v2',
+            SETTINGS: 'cashTrackSettings_v2',
+            METADATA: 'cashTrackMetadata_v2',
+            TEMP_BACKUP: 'cashTrackTempBackup_v2'
+        };
+
+        // Data utama
+        let transactions = [];
+        let backups = [];
+        let settings = {};
+        let storageMetadata = {};
         let financeChart = null;
         let filteredTransactions = [];
         let currentFilters = { year: '', month: '', day: '' };
         let currentPage = 'transactions-page';
+        const correctPassword = "free palestina";
+
+        // Timers untuk auto-save
+        let autoSaveTimer = null;
+        let autoBackupTimer = null;
+        let validationTimer = null;
+
+        // ==================== FUNGSI STORAGE UTAMA ====================
+
+        // Inisialisasi storage
+        function initializeStorage() {
+            console.log('🚀 Initializing storage system...');
+            
+            // Load semua data
+            loadAllData();
+            
+            // Setup auto-save
+            setupAutoSave();
+            
+            // Setup auto-backup
+            setupAutoBackup();
+            
+            // Setup validation
+            setupValidation();
+            
+            // Update UI
+            updateStorageStats();
+            
+            // Tampilkan status
+            showStorageStatus('✅ Storage system initialized', 'success');
+        }
+
+        // Load semua data dengan fallback
+        function loadAllData() {
+            try {
+                // Load transaksi dengan fallback ke versi lama
+                const transactionsData = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
+                if (transactionsData) {
+                    transactions = JSON.parse(transactionsData);
+                    console.log(`📊 Loaded ${transactions.length} transactions`);
+                } else {
+                    // Coba versi lama
+                    const oldData = localStorage.getItem('cashTrackTransactions');
+                    if (oldData) {
+                        transactions = JSON.parse(oldData);
+                        console.log(`📊 Loaded ${transactions.length} transactions from old storage`);
+                        // Migrasi ke storage baru
+                        saveTransactions();
+                    }
+                }
+
+                // Load backups
+                const backupsData = localStorage.getItem(STORAGE_KEYS.BACKUPS);
+                if (backupsData) {
+                    backups = JSON.parse(backupsData);
+                    console.log(`💾 Loaded ${backups.length} backups`);
+                }
+
+                // Load settings
+                const settingsData = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+                if (settingsData) {
+                    settings = JSON.parse(settingsData);
+                } else {
+                    settings = {
+                        autoSave: true,
+                        autoBackup: true,
+                        compression: true,
+                        backupCount: 0
+                    };
+                }
+
+                // Load metadata
+                const metadataData = localStorage.getItem(STORAGE_KEYS.METADATA);
+                if (metadataData) {
+                    storageMetadata = JSON.parse(metadataData);
+                } else {
+                    storageMetadata = {
+                        created: new Date().toISOString(),
+                        lastSave: new Date().toISOString(),
+                        lastBackup: null,
+                        saveCount: 0,
+                        errorCount: 0
+                    };
+                }
+
+                // Validasi data
+                validateData();
+
+            } catch (error) {
+                console.error('❌ Error loading data:', error);
+                showStorageStatus('⚠️ Error loading data, restoring from backup...', 'error');
+                
+                // Coba restore dari backup terakhir
+                restoreFromLatestBackup();
+            }
+        }
+
+        // Save transactions dengan multiple backups
+        function saveTransactions() {
+            try {
+                // Validasi sebelum save
+                if (!validateTransactions(transactions)) {
+                    console.error('❌ Transaction validation failed');
+                    showStorageStatus('⚠️ Data validation failed', 'error');
+                    return false;
+                }
+
+                // Simpan ke storage utama
+                localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(transactions));
+                
+                // Buat backup otomatis jika banyak transaksi
+                if (transactions.length > 50) {
+                    createAutoBackup();
+                }
+
+                // Update metadata
+                storageMetadata.lastSave = new Date().toISOString();
+                storageMetadata.saveCount++;
+                localStorage.setItem(STORAGE_KEYS.METADATA, JSON.stringify(storageMetadata));
+
+                // Update settings
+                settings.backupCount = backups.length;
+                localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+
+                // Update UI
+                updateStorageStats();
+                updateLastBackupDisplay();
+
+                console.log(`✅ Saved ${transactions.length} transactions`);
+                showStorageStatus('💾 Data saved successfully', 'success');
+                
+                return true;
+
+            } catch (error) {
+                console.error('❌ Error saving transactions:', error);
+                storageMetadata.errorCount++;
+                showStorageStatus('❌ Error saving data', 'error');
+                
+                // Coba save ke backup storage
+                try {
+                    localStorage.setItem(STORAGE_KEYS.TEMP_BACKUP, JSON.stringify(transactions));
+                    console.log('✅ Saved to temporary backup');
+                } catch (e) {
+                    console.error('❌ Failed to save to temporary backup:', e);
+                }
+                
+                return false;
+            }
+        }
+
+        // Validasi data transaksi
+        function validateTransactions(data) {
+            if (!Array.isArray(data)) return false;
+            
+            for (let i = 0; i < data.length; i++) {
+                const item = data[i];
+                if (!item.id || !item.date || typeof item.description !== 'string') {
+                    console.error(`❌ Invalid transaction at index ${i}:`, item);
+                    return false;
+                }
+                
+                // Convert numeric values
+                if (typeof item.income === 'string') {
+                    item.income = parseInt(item.income) || 0;
+                }
+                if (typeof item.expense === 'string') {
+                    item.expense = parseInt(item.expense) || 0;
+                }
+                
+                // Ensure timestamp exists
+                if (!item.timestamp) {
+                    item.timestamp = new Date().toISOString();
+                }
+            }
+            
+            return true;
+        }
+
+        // Validasi semua data
+        function validateData() {
+            console.log('🔍 Validating data...');
+            
+            // Validasi transaksi
+            if (!validateTransactions(transactions)) {
+                console.warn('⚠️ Transactions validation failed, attempting repair...');
+                transactions = transactions.filter(t => t.id && t.date);
+            }
+            
+            // Validasi backups
+            if (!Array.isArray(backups)) {
+                backups = [];
+            }
+            
+            // Hapus backup yang korup
+            backups = backups.filter(backup => {
+                try {
+                    return backup.id && backup.timestamp && backup.data && Array.isArray(backup.data);
+                } catch {
+                    return false;
+                }
+            });
+            
+            console.log(`✅ Data validation complete: ${transactions.length} transactions, ${backups.length} backups`);
+        }
+
+        // ==================== SISTEM BACKUP ====================
+
+        // Buat backup manual
+        function createBackup() {
+            try {
+                const backup = {
+                    id: 'backup_' + Date.now(),
+                    timestamp: new Date().toISOString(),
+                    data: JSON.parse(JSON.stringify(transactions)), // Deep clone
+                    transactionCount: transactions.length,
+                    size: JSON.stringify(transactions).length
+                };
+
+                backups.unshift(backup);
+                
+                // Simpan hanya 10 backup terbaru
+                if (backups.length > STORAGE_CONFIG.MAX_BACKUPS) {
+                    backups = backups.slice(0, STORAGE_CONFIG.MAX_BACKUPS);
+                }
+                
+                // Save backups
+                localStorage.setItem(STORAGE_KEYS.BACKUPS, JSON.stringify(backups));
+                
+                // Update metadata
+                storageMetadata.lastBackup = new Date().toISOString();
+                localStorage.setItem(STORAGE_KEYS.METADATA, JSON.stringify(storageMetadata));
+                
+                console.log(`✅ Created backup: ${backup.id}`);
+                showStorageStatus('💾 Backup created successfully', 'success');
+                
+                updateStorageStats();
+                updateBackupList();
+                
+                return backup;
+
+            } catch (error) {
+                console.error('❌ Error creating backup:', error);
+                showStorageStatus('❌ Error creating backup', 'error');
+                return null;
+            }
+        }
+
+        // Buat backup otomatis
+        function createAutoBackup() {
+            if (transactions.length === 0) return;
+            
+            // Cek kapan terakhir backup
+            const lastBackupTime = storageMetadata.lastBackup ? 
+                new Date(storageMetadata.lastBackup).getTime() : 0;
+            const now = Date.now();
+            
+            // Buat backup jika lebih dari 1 jam atau banyak perubahan
+            if (now - lastBackupTime > STORAGE_CONFIG.AUTO_BACKUP_INTERVAL || 
+                storageMetadata.saveCount % 10 === 0) {
+                
+                const backup = createBackup();
+                if (backup) {
+                    console.log(`🤖 Auto-backup created: ${backup.id}`);
+                }
+            }
+        }
+
+        // Restore dari backup tertentu
+        function restoreFromBackup(backupId) {
+            try {
+                const backup = backups.find(b => b.id === backupId);
+                if (!backup) {
+                    showStorageStatus('❌ Backup not found', 'error');
+                    return false;
+                }
+                
+                // Validasi backup data
+                if (!validateTransactions(backup.data)) {
+                    showStorageStatus('❌ Backup data corrupted', 'error');
+                    return false;
+                }
+                
+                // Restore data
+                transactions = JSON.parse(JSON.stringify(backup.data));
+                
+                // Save restored data
+                saveTransactions();
+                
+                // Update UI
+                updateBalance();
+                renderChart();
+                filterTransactions();
+                
+                console.log(`✅ Restored from backup: ${backupId}`);
+                showStorageStatus('🔄 Data restored from backup', 'success');
+                
+                return true;
+
+            } catch (error) {
+                console.error('❌ Error restoring from backup:', error);
+                showStorageStatus('❌ Error restoring data', 'error');
+                return false;
+            }
+        }
+
+        // Restore dari backup terakhir
+        function restoreFromLatestBackup() {
+            if (backups.length === 0) {
+                showStorageStatus('⚠️ No backups available', 'warning');
+                return false;
+            }
+            
+            const latestBackup = backups[0];
+            return restoreFromBackup(latestBackup.id);
+        }
+
+        // Export backup ke file
+        function exportBackup() {
+            try {
+                const backupData = {
+                    version: STORAGE_CONFIG.VERSION,
+                    exportDate: new Date().toISOString(),
+                    transactionCount: transactions.length,
+                    transactions: transactions,
+                    metadata: storageMetadata
+                };
+                
+                const dataStr = JSON.stringify(backupData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `cashtrack-backup-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Buat backup internal juga
+                createBackup();
+                
+                showStorageStatus('💾 Backup exported to file', 'success');
+                
+            } catch (error) {
+                console.error('❌ Error exporting backup:', error);
+                showStorageStatus('❌ Error exporting backup', 'error');
+            }
+        }
+
+        // Import dari file backup
+        function importFromBackup() {
+            const fileInput = document.getElementById('restore-file');
+            if (!fileInput.files.length) {
+                showStorageStatus('⚠️ Please select a backup file', 'warning');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const backupData = JSON.parse(e.target.result);
+                    
+                    // Validasi backup file
+                    if (!backupData.transactions || !Array.isArray(backupData.transactions)) {
+                        throw new Error('Invalid backup file format');
+                    }
+                    
+                    // Restore data
+                    transactions = backupData.transactions;
+                    
+                    // Validasi data
+                    validateTransactions(transactions);
+                    
+                    // Save restored data
+                    saveTransactions();
+                    
+                    // Update UI
+                    updateBalance();
+                    renderChart();
+                    filterTransactions();
+                    
+                    // Reset file input
+                    fileInput.value = '';
+                    
+                    showStorageStatus('✅ Data imported successfully', 'success');
+                    
+                } catch (error) {
+                    console.error('❌ Error importing backup:', error);
+                    showStorageStatus('❌ Error importing backup file', 'error');
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+
+        // ==================== UTILITAS STORAGE ====================
+
+        // Setup auto-save
+        function setupAutoSave() {
+            if (autoSaveTimer) clearInterval(autoSaveTimer);
+            
+            autoSaveTimer = setInterval(() => {
+                if (transactions.length > 0) {
+                    saveTransactions();
+                }
+            }, STORAGE_CONFIG.AUTO_SAVE_INTERVAL);
+            
+            console.log('⏱️ Auto-save enabled');
+        }
+
+        // Setup auto-backup
+        function setupAutoBackup() {
+            if (autoBackupTimer) clearInterval(autoBackupTimer);
+            
+            autoBackupTimer = setInterval(() => {
+                createAutoBackup();
+            }, STORAGE_CONFIG.AUTO_BACKUP_INTERVAL);
+            
+            console.log('🤖 Auto-backup enabled');
+        }
+
+        // Setup validation
+        function setupValidation() {
+            if (validationTimer) clearInterval(validationTimer);
+            
+            validationTimer = setInterval(() => {
+                validateData();
+                checkStorageHealth();
+            }, STORAGE_CONFIG.VALIDATION_INTERVAL);
+            
+            console.log('🔍 Data validation enabled');
+        }
+
+        // Cek kesehatan storage
+        function checkStorageHealth() {
+            try {
+                // Cek storage space
+                let storageUsed = 0;
+                Object.values(STORAGE_KEYS).forEach(key => {
+                    const data = localStorage.getItem(key);
+                    if (data) storageUsed += data.length * 2; // bytes
+                });
+                
+                const storageUsedKB = (storageUsed / 1024).toFixed(2);
+                const storageLimit = 5 * 1024 * 1024; // 5MB typical limit
+                const storagePercent = (storageUsed / storageLimit * 100).toFixed(1);
+                
+                // Update status
+                const statusEl = document.getElementById('backup-stat-status');
+                if (statusEl) {
+                    if (storagePercent > 90) {
+                        statusEl.textContent = '🔴';
+                        statusEl.style.color = '#ea4335';
+                    } else if (storagePercent > 70) {
+                        statusEl.textContent = '🟡';
+                        statusEl.style.color = '#fbbc04';
+                    } else {
+                        statusEl.textContent = '🟢';
+                        statusEl.style.color = '#34a853';
+                    }
+                }
+                
+                // Cek data corruption
+                const corruptBackups = backups.filter(b => !b.data || !Array.isArray(b.data));
+                if (corruptBackups.length > 0) {
+                    console.warn(`⚠️ Found ${corruptBackups.length} corrupt backups`);
+                }
+                
+                return {
+                    storageUsedKB,
+                    storagePercent,
+                    transactionCount: transactions.length,
+                    backupCount: backups.length,
+                    lastBackup: storageMetadata.lastBackup,
+                    status: storagePercent > 90 ? 'critical' : storagePercent > 70 ? 'warning' : 'healthy'
+                };
+                
+            } catch (error) {
+                console.error('❌ Error checking storage health:', error);
+                return { status: 'error', error: error.message };
+            }
+        }
+
+        // Update storage stats di UI
+        function updateStorageStats() {
+            // Update stats di modal
+            const stats = checkStorageHealth();
+            
+            document.getElementById('stat-transactions').textContent = transactions.length;
+            document.getElementById('stat-storage').textContent = `${stats.storageUsedKB} KB`;
+            document.getElementById('stat-backups').textContent = backups.length;
+            document.getElementById('stat-lastsave').textContent = 
+                storageMetadata.lastSave ? new Date(storageMetadata.lastSave).toLocaleTimeString() : '-';
+            
+            // Update stats di backup page
+            document.getElementById('backup-stat-transactions').textContent = transactions.length;
+            document.getElementById('backup-stat-size').textContent = `${stats.storageUsedKB} KB`;
+            document.getElementById('backup-stat-backups').textContent = backups.length;
+            
+            // Update last backup display
+            updateLastBackupDisplay();
+        }
+
+        // Update tampilan last backup
+        function updateLastBackupDisplay() {
+            const lastBackupEl = document.getElementById('last-backup');
+            if (lastBackupEl) {
+                if (storageMetadata.lastBackup) {
+                    const lastBackupDate = new Date(storageMetadata.lastBackup);
+                    const now = new Date();
+                    const diffHours = Math.floor((now - lastBackupDate) / (1000 * 60 * 60));
+                    
+                    if (diffHours < 1) {
+                        lastBackupEl.textContent = 'Baru saja';
+                    } else if (diffHours < 24) {
+                        lastBackupEl.textContent = `${diffHours} jam lalu`;
+                    } else {
+                        lastBackupEl.textContent = lastBackupDate.toLocaleDateString();
+                    }
+                } else {
+                    lastBackupEl.textContent = 'Belum ada';
+                }
+            }
+        }
+
+        // Update backup list
+        function updateBackupList() {
+            const backupListEl = document.getElementById('backup-list');
+            if (!backupListEl) return;
+            
+            if (backups.length === 0) {
+                backupListEl.innerHTML = `
+                    <div class="empty-state">
+                        <p>📭 Belum ada backup</p>
+                        <p>Buat backup pertama Anda untuk melindungi data</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<div class="backup-list-container">';
+            
+            backups.forEach((backup, index) => {
+                const date = new Date(backup.timestamp);
+                const sizeKB = (backup.size / 1024).toFixed(2);
+                
+                html += `
+                    <div class="backup-item" style="
+                        background: var(--light);
+                        padding: 15px;
+                        border-radius: var(--border-radius);
+                        margin-bottom: 10px;
+                        border-left: 4px solid ${index === 0 ? '#34a853' : '#fbbc04'};
+                        box-shadow: var(--shadow);
+                    ">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div>
+                                <strong>Backup ${index + 1}</strong>
+                                <div style="font-size: 0.85rem; color: var(--gray);">
+                                    ${date.toLocaleString()}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.9rem; color: var(--dark);">
+                                    ${backup.transactionCount} transaksi
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--gray);">
+                                    ${sizeKB} KB
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-secondary" onclick="restoreFromBackup('${backup.id}')" style="flex: 1; padding: 8px;">
+                                <span>🔄</span> Restore
+                            </button>
+                            <button class="btn btn-info" onclick="downloadBackup('${backup.id}')" style="flex: 1; padding: 8px;">
+                                <span>💾</span> Export
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            backupListEl.innerHTML = html;
+        }
+
+        // Download backup tertentu
+        function downloadBackup(backupId) {
+            const backup = backups.find(b => b.id === backupId);
+            if (!backup) return;
+            
+            const backupData = {
+                version: STORAGE_CONFIG.VERSION,
+                exportDate: new Date().toISOString(),
+                backupId: backup.id,
+                backupTimestamp: backup.timestamp,
+                transactions: backup.data
+            };
+            
+            const dataStr = JSON.stringify(backupData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `cashtrack-backup-${backupId}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showStorageStatus('💾 Backup downloaded', 'success');
+        }
+
+        // Clear old backups
+        function clearOldBackups() {
+            if (backups.length <= 3) {
+                showStorageStatus('⚠️ Minimal 3 backup diperlukan', 'warning');
+                return;
+            }
+            
+            if (confirm(`Hapus ${backups.length - 3} backup lama?`)) {
+                backups = backups.slice(0, 3);
+                localStorage.setItem(STORAGE_KEYS.BACKUPS, JSON.stringify(backups));
+                updateStorageStats();
+                updateBackupList();
+                showStorageStatus('🗑️ Old backups cleared', 'success');
+            }
+        }
+
+        // Show storage info
+        function showStorageInfo() {
+            const stats = checkStorageHealth();
+            
+            let info = `📊 **Storage Information**\n\n`;
+            info += `• Total Transaksi: ${transactions.length}\n`;
+            info += `• Jumlah Backup: ${backups.length}\n`;
+            info += `• Storage Used: ${stats.storageUsedKB} KB\n`;
+            info += `• Storage Status: ${stats.status.toUpperCase()}\n`;
+            info += `• Last Save: ${storageMetadata.lastSave ? new Date(storageMetadata.lastSave).toLocaleString() : '-'}\n`;
+            info += `• Last Backup: ${storageMetadata.lastBackup ? new Date(storageMetadata.lastBackup).toLocaleString() : '-'}\n`;
+            info += `• Save Count: ${storageMetadata.saveCount}\n`;
+            
+            alert(info);
+        }
+
+        // Tampilkan status storage
+        function showStorageStatus(message, type = 'info') {
+            const statusEl = document.getElementById('storage-status');
+            if (!statusEl) return;
+            
+            statusEl.textContent = message;
+            statusEl.className = 'storage-status';
+            
+            switch(type) {
+                case 'success':
+                    statusEl.style.background = '#34a853';
+                    break;
+                case 'error':
+                    statusEl.style.background = '#ea4335';
+                    statusEl.classList.add('error');
+                    break;
+                case 'warning':
+                    statusEl.style.background = '#fbbc04';
+                    statusEl.classList.add('warning');
+                    break;
+                default:
+                    statusEl.style.background = '#1a73e8';
+            }
+            
+            statusEl.style.display = 'block';
+            
+            // Auto hide setelah 3 detik
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
+
+        // ==================== MODAL FUNCTIONS ====================
+
+        function showBackupModal() {
+            const modal = document.getElementById('backup-modal');
+            if (modal) {
+                updateStorageStats();
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeBackupModal() {
+            const modal = document.getElementById('backup-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
 
         // ==================== SOUND EFFECT FUNCTIONS ====================
-        // Cache untuk audio files
         const audioCache = {};
         let audioEnabled = true;
 
-        // Load audio files
         function loadAudioFiles() {
             const audioFiles = {
                 positive: 'mixkit-positive-notification-951.wav',
@@ -1741,7 +2398,7 @@
                     const audio = new Audio();
                     audio.src = filename;
                     audio.load();
-                    audio.volume = 0.8; // Volume 80%
+                    audio.volume = 0.8;
                     audioCache[key] = audio;
                 } catch (error) {
                     console.error(`Failed to load audio ${filename}:`, error);
@@ -1749,7 +2406,6 @@
             });
         }
 
-        // Function to play sound effect
         function playSoundEffect(type = 'click') {
             if (!audioEnabled) return;
             
@@ -1757,122 +2413,29 @@
                 const audio = audioCache[type];
                 if (audio) {
                     audio.currentTime = 0;
-                    audio.volume = 0.8; // Volume 80%
+                    audio.volume = 0.8;
                     
                     const playPromise = audio.play();
                     if (playPromise !== undefined) {
                         playPromise.catch(error => {
                             console.error(`Audio play failed for ${type}:`, error);
-                            if (type !== 'click' && audioCache.click) {
-                                audioCache.click.currentTime = 0;
-                                audioCache.click.volume = 0.8;
-                                audioCache.click.play().catch(e => console.log('Fallback audio also failed'));
-                            }
                         });
                     }
-                } else {
-                    playFallbackSound(type);
                 }
             } catch (error) {
                 console.error(`Error playing sound ${type}:`, error);
-                playFallbackSound(type);
             }
         }
 
-        // Fallback sound menggunakan Web Audio API
-        function playFallbackSound(type) {
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                let frequency = 300;
-                let duration = 0.1;
-                
-                switch(type) {
-                    case 'positive':
-                    case 'success':
-                        frequency = 800;
-                        duration = 0.2;
-                        break;
-                    case 'notification':
-                        frequency = 600;
-                        duration = 0.15;
-                        break;
-                    case 'delete':
-                        frequency = 400;
-                        duration = 0.25;
-                        break;
-                    default:
-                        frequency = 300;
-                        duration = 0.08;
-                }
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime); // Volume 50% untuk fallback
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
-                
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + duration);
-                
-                if (audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
-            } catch (error) {
-                console.log('Fallback audio failed:', error);
-            }
-        }
-
-        // Function to play sound with vibration for mobile
-        function playSoundWithVibration(type = 'click') {
-            playSoundEffect(type);
-            
-            if ('vibrate' in navigator) {
-                switch(type) {
-                    case 'positive':
-                    case 'success':
-                        navigator.vibrate([30, 40, 30]);
-                        break;
-                    case 'delete':
-                        navigator.vibrate([80]);
-                        break;
-                    case 'click':
-                    default:
-                        navigator.vibrate(20);
-                        break;
-                }
-            }
-        }
-
-        // Initialize audio on page load
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                loadAudioFiles();
-            }, 1000);
-        });
-
-        // Enable audio on first user interaction
-        document.addEventListener('click', function initAudioOnInteraction() {
-            audioEnabled = true;
-            document.removeEventListener('click', initAudioOnInteraction);
-        }, { once: true });
-
-        // ==================== DARK MODE TOGGLE ====================
+        // ==================== DARK MODE ====================
         const themeToggle = document.getElementById('theme-toggle');
         const currentTheme = localStorage.getItem('theme') || 'light';
 
-        // Set initial theme
         if (currentTheme === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             themeToggle.checked = true;
         }
 
-        // Theme toggle event
         themeToggle.addEventListener('change', function() {
             playSoundEffect('click');
             if (this.checked) {
@@ -1970,7 +2533,6 @@
             }, 100);
         }
 
-        // Toggle password visibility
         document.getElementById('toggle-password').addEventListener('click', function() {
             playSoundEffect('click');
             const passwordInput = document.getElementById('password-input');
@@ -1980,7 +2542,6 @@
             passwordInput.focus();
         });
 
-        // Enter key support for password input
         document.getElementById('password-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 checkPassword();
@@ -2013,7 +2574,6 @@
             document.getElementById('donation-screen').style.display = 'flex';
             document.getElementById('main-app').style.display = 'none';
             
-            // Copy account number functionality
             const accountNumber = document.getElementById('copy-account-number');
             accountNumber.addEventListener('click', function() {
                 playSoundEffect('success');
@@ -2030,7 +2590,6 @@
                         this.style.color = '';
                     }, 2000);
                 }).catch(err => {
-                    console.error('Copy failed: ', err);
                     const textArea = document.createElement('textarea');
                     textArea.value = text;
                     document.body.appendChild(textArea);
@@ -2065,6 +2624,13 @@
 
         // ==================== APP INITIALIZATION ====================
         function initializeApp() {
+            // Initialize storage system
+            initializeStorage();
+            
+            // Load audio
+            loadAudioFiles();
+            
+            // Setup UI
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('transaction-date').value = today;
             
@@ -2077,127 +2643,18 @@
             
             updateBalance();
             renderChart();
-            
             filterTransactions();
+            updateBackupList();
             
             setupNavigationTabs();
-            
             addSoundEffectsToButtons();
             
             setTimeout(() => {
                 document.getElementById('transaction-desc').focus();
             }, 100);
-        }
-
-        // Function to add sound effects to all buttons
-        function addSoundEffectsToButtons() {
-            // Tambah Transaksi button
-            const addTransactionBtn = document.querySelector('.btn-primary[onclick="addTransaction()"]');
-            if (addTransactionBtn) {
-                addTransactionBtn.addEventListener('click', () => {
-                    playSoundEffect('positive');
-                });
-            }
             
-            // Bersihkan Form button
-            const clearFormBtn = document.querySelector('.btn-secondary[onclick="clearForm()"]');
-            if (clearFormBtn) {
-                clearFormBtn.addEventListener('click', () => {
-                    playSoundEffect('click');
-                });
-            }
-            
-            // Terapkan Filter button
-            const applyFilterBtn = document.querySelector('.btn-primary[onclick="applyFilter()"]');
-            if (applyFilterBtn) {
-                applyFilterBtn.addEventListener('click', () => {
-                    playSoundEffect('click');
-                });
-            }
-            
-            // Reset Filter button
-            const resetFilterBtn = document.querySelector('.btn-secondary[onclick="resetFilters()"]');
-            if (resetFilterBtn) {
-                resetFilterBtn.addEventListener('click', () => {
-                    playSoundEffect('click');
-                });
-            }
-            
-            // Export CSV button
-            const exportCSVBtn = document.querySelector('.btn-success[onclick="exportToCSV()"]');
-            if (exportCSVBtn) {
-                exportCSVBtn.addEventListener('click', () => {
-                    playSoundEffect('success');
-                });
-            }
-            
-            // Export Excel button
-            const exportExcelBtn = document.querySelector('.btn-success[onclick="exportToExcel()"]');
-            if (exportExcelBtn) {
-                exportExcelBtn.addEventListener('click', () => {
-                    playSoundEffect('success');
-                });
-            }
-            
-            // Export Excel Berkelompok button
-            const exportExcelGroupedBtn = document.querySelector('.btn-warning[onclick="exportToExcelGrouped()"]');
-            if (exportExcelGroupedBtn) {
-                exportExcelGroupedBtn.addEventListener('click', () => {
-                    playSoundEffect('success');
-                });
-            }
-            
-            // Navigation tabs
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    playSoundEffect('click');
-                });
-            });
-            
-            // Form input focus sound
-            ['transaction-date', 'transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
-                const input = document.getElementById(id);
-                if (input) {
-                    input.addEventListener('focus', () => {
-                        playSoundEffect('click');
-                    });
-                }
-            });
-            
-            // Filter select focus sound
-            ['filter-year', 'filter-month', 'filter-day'].forEach(id => {
-                const select = document.getElementById(id);
-                if (select) {
-                    select.addEventListener('focus', () => {
-                        playSoundEffect('click');
-                    });
-                }
-            });
-            
-            // Add sound effects to action buttons in transactions
-            addSoundEffectsToActionButtons();
-        }
-
-        function addSoundEffectsToActionButtons() {
-            // Edit buttons
-            document.querySelectorAll('.btn-secondary').forEach(btn => {
-                if (btn.textContent.includes('Edit') && !btn.dataset.soundAdded) {
-                    btn.addEventListener('click', () => {
-                        playSoundEffect('click');
-                    });
-                    btn.dataset.soundAdded = 'true';
-                }
-            });
-            
-            // Delete buttons
-            document.querySelectorAll('.btn-danger').forEach(btn => {
-                if (btn.textContent.includes('Hapus') && !btn.dataset.soundAdded) {
-                    btn.addEventListener('click', () => {
-                        playSoundEffect('delete');
-                    });
-                    btn.dataset.soundAdded = 'true';
-                }
-            });
+            // Show storage status
+            showStorageStatus('✅ Sistem storage aktif', 'success');
         }
 
         // ==================== TRANSACTION FUNCTIONS ====================
@@ -2244,8 +2701,7 @@
             clearForm();
             
             if (currentPage === 'history-page') {
-                filterTransactions(); // PERBAIKAN: Gunakan filterTransactions, bukan displayGroupedTransactions
-                setTimeout(addSoundEffectsToActionButtons, 100);
+                filterTransactions();
             }
             
             updateYearOptions();
@@ -2269,17 +2725,12 @@
         function deleteTransaction(id) {
             if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
                 playSoundEffect('delete');
-                // PERBAIKAN: Hapus dari transactions array
                 transactions = transactions.filter(t => t.id !== id);
-                // PERBAIKAN: Juga hapus dari filteredTransactions jika ada
                 filteredTransactions = filteredTransactions.filter(t => t.id !== id);
                 saveTransactions();
                 updateBalance();
                 renderChart();
-                
-                // PERBAIKAN: Selalu refresh display dengan filterTransactions
                 filterTransactions();
-                setTimeout(addSoundEffectsToActionButtons, 100);
             } else {
                 playSoundEffect('click');
             }
@@ -2295,9 +2746,9 @@
             document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
             document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
             
-            // Switch to transactions page
             document.getElementById('transactions-page').classList.add('active');
             document.getElementById('history-page').classList.remove('active');
+            document.getElementById('backup-page').classList.remove('active');
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 if (tab.dataset.page === 'transactions-page') {
                     tab.classList.add('active');
@@ -2307,17 +2758,12 @@
             });
             currentPage = 'transactions-page';
             
-            // Remove the transaction being edited
             transactions = transactions.filter(t => t.id !== id);
             saveTransactions();
             
             setTimeout(() => {
                 document.getElementById('transaction-desc').focus();
             }, 100);
-        }
-
-        function saveTransactions() {
-            localStorage.setItem('cashTrackTransactions', JSON.stringify(transactions));
         }
 
         // ==================== BALANCE FUNCTIONS ====================
@@ -2360,7 +2806,6 @@
             
             placeholder.style.display = 'none';
             
-            // Group by month
             const monthlyData = {};
             transactions.forEach(transaction => {
                 const monthKey = transaction.date.substring(0, 7);
@@ -2614,7 +3059,6 @@
                 return;
             }
             
-            // Group by month
             const grouped = {};
             filteredTransactions.forEach(transaction => {
                 const monthKey = transaction.date.substring(0, 7);
@@ -2699,8 +3143,6 @@
             });
             
             container.innerHTML = html;
-            
-            setTimeout(addSoundEffectsToActionButtons, 100);
         }
 
         // ==================== EXPORT FUNCTIONS ====================
@@ -2731,6 +3173,8 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            
+            showStorageStatus('📊 CSV exported', 'success');
         }
 
         function exportToExcel() {
@@ -2824,80 +3268,510 @@
                     <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
                 </tr>
             </table>
-            
-            <style>
-                td { padding: 5px; }
-                th { background-color: #4CAF50; color: white; padding: 8px; }
-            </style>
-            `;
+                        excelContent += '</table>';
             
             const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
-            link.setAttribute('download', `cash-track-report-${new Date().toISOString().split('T')[0]}.xls`);
+            link.setAttribute('download', `cash-track-excel-${new Date().toISOString().split('T')[0]}.xls`);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            
+            showStorageStatus('📈 Excel exported', 'success');
         }
 
         function exportToExcelGrouped() {
-            exportToExcel();
+            if (transactions.length === 0) {
+                alert('Tidak ada data transaksi untuk diexport!');
+                playSoundEffect('delete');
+                return;
+            }
+            
+            const grouped = {};
+            transactions.forEach(transaction => {
+                const monthKey = transaction.date.substring(0, 7);
+                if (!grouped[monthKey]) {
+                    grouped[monthKey] = [];
+                }
+                grouped[monthKey].push(transaction);
+            });
+            
+            const sortedMonths = Object.keys(grouped).sort().reverse();
+            
+            let workbookContent = `
+                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        td { mso-number-format:\\@; }
+                        .header { background-color: #1a73e8; color: white; font-size: 16px; font-weight: bold; }
+                        .month-header { background-color: #f0f0f0; font-weight: bold; font-size: 14px; }
+                        .total-row { background-color: #e8f5e9; font-weight: bold; }
+                        .balance-row { background-color: #fff3e0; font-weight: bold; }
+                        .income { color: #34a853; }
+                        .expense { color: #ea4335; }
+                    </style>
+                </head>
+                <body>
+            `;
+            
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const monthName = getMonthName(month);
+                const monthTransactions = grouped[monthKey];
+                
+                let monthIncome = 0;
+                let monthExpense = 0;
+                
+                monthTransactions.forEach(t => {
+                    monthIncome += t.income || 0;
+                    monthExpense += t.expense || 0;
+                });
+                
+                const monthBalance = monthIncome - monthExpense;
+                
+                workbookContent += `
+                    <table border="1" cellpadding="5" cellspacing="0" width="100%">
+                        <tr class="month-header">
+                            <td colspan="5">${monthName} ${year}</td>
+                        </tr>
+                        <tr>
+                            <th width="15%">Tanggal</th>
+                            <th width="40%">Keterangan</th>
+                            <th width="15%">Pendapatan</th>
+                            <th width="15%">Pengeluaran</th>
+                            <th width="15%">Saldo Harian</th>
+                        </tr>
+                `;
+                
+                let runningBalance = 0;
+                monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                    const dailyBalance = (t.income || 0) - (t.expense || 0);
+                    runningBalance += dailyBalance;
+                    
+                    workbookContent += `
+                        <tr>
+                            <td>${formatDate(t.date)}</td>
+                            <td>${t.description}</td>
+                            <td class="income">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                            <td class="expense">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                            <td>${formatCurrency(dailyBalance)}</td>
+                        </tr>
+                    `;
+                });
+                
+                workbookContent += `
+                        <tr class="total-row">
+                            <td colspan="2">Total ${monthName}</td>
+                            <td class="income">${formatCurrency(monthIncome)}</td>
+                            <td class="expense">${formatCurrency(monthExpense)}</td>
+                            <td></td>
+                        </tr>
+                        <tr class="balance-row">
+                            <td colspan="4">Saldo Bulan ${monthName}</td>
+                            <td style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</td>
+                        </tr>
+                    </table>
+                    <br><br>
+                `;
+            });
+            
+            let totalIncome = 0;
+            let totalExpense = 0;
+            transactions.forEach(t => {
+                totalIncome += t.income || 0;
+                totalExpense += t.expense || 0;
+            });
+            const totalBalance = totalIncome - totalExpense;
+            
+            workbookContent += `
+                <table border="1" cellpadding="5" cellspacing="0" width="100%">
+                    <tr style="background-color: #e3f2fd;">
+                        <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
+                        <td><strong>${formatCurrency(totalIncome)}</strong></td>
+                        <td><strong>${formatCurrency(totalExpense)}</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr style="background-color: #fce4ec;">
+                        <td colspan="4"><strong>SALDO AKHIR</strong></td>
+                        <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
+                    </tr>
+                </table>
+            `;
+            
+            workbookContent += '</body></html>';
+            
+            const blob = new Blob([workbookContent], { type: 'application/vnd.ms-excel' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cash-track-grouped-${new Date().toISOString().split('T')[0]}.xls`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showStorageStatus('📋 Grouped Excel exported', 'success');
         }
 
-        // ==================== NAVIGATION ====================
+        // ==================== NAVIGATION FUNCTIONS ====================
         function setupNavigationTabs() {
             const tabs = document.querySelectorAll('.nav-tab');
             tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
+                tab.addEventListener('click', function() {
+                    playSoundEffect('click');
+                    const targetPage = this.dataset.page;
+                    
                     tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
+                    this.classList.add('active');
                     
-                    const pageId = tab.dataset.page;
-                    document.querySelectorAll('.page-section').forEach(page => {
-                        page.classList.remove('active');
+                    document.querySelectorAll('.page-section').forEach(section => {
+                        section.classList.remove('active');
                     });
-                    document.getElementById(pageId).classList.add('active');
                     
-                    currentPage = pageId;
+                    document.getElementById(targetPage).classList.add('active');
+                    currentPage = targetPage;
                     
-                    if (pageId === 'history-page') {
+                    if (targetPage === 'history-page') {
                         filterTransactions();
+                    } else if (targetPage === 'backup-page') {
+                        updateStorageStats();
+                        updateBackupList();
+                    } else if (targetPage === 'transactions-page') {
+                        setTimeout(() => {
+                            document.getElementById('transaction-desc').focus();
+                        }, 100);
                     }
                 });
             });
         }
 
-        // ==================== LOGOUT ====================
+        // ==================== SOUND EFFECT SETUP ====================
+        function addSoundEffectsToButtons() {
+            const buttons = document.querySelectorAll('button, .btn, .icon-btn, .nav-tab, .login-btn, .donation-btn');
+            buttons.forEach(button => {
+                if (!button.hasAttribute('data-sound-added')) {
+                    button.addEventListener('click', function(e) {
+                        if (this.classList.contains('btn-danger')) {
+                            playSoundEffect('delete');
+                        } else if (this.classList.contains('btn-success') || this.classList.contains('login-btn')) {
+                            playSoundEffect('success');
+                        } else if (this.classList.contains('donation-btn')) {
+                            playSoundEffect('positive');
+                        } else {
+                            playSoundEffect('click');
+                        }
+                    });
+                    button.setAttribute('data-sound-added', 'true');
+                }
+            });
+        }
+
+        // ==================== LOGOUT FUNCTION ====================
         function logout() {
+            playSoundEffect('notification');
             if (confirm('Apakah Anda yakin ingin keluar?')) {
-                playSoundEffect('click');
                 localStorage.removeItem('cashTrackLoggedIn');
-                localStorage.removeItem('cashTrackTransactions');
+                clearInterval(autoSaveTimer);
+                clearInterval(autoBackupTimer);
+                clearInterval(validationTimer);
+                
+                autoSaveTimer = null;
+                autoBackupTimer = null;
+                validationTimer = null;
+                
                 showLoginScreen();
-                document.getElementById('password-input').value = '';
-            } else {
-                playSoundEffect('click');
             }
         }
 
-        // ==================== INITIALIZE ON LOAD ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transaction-date').value = today;
+        // ==================== PWA INSTALL PROMPT ====================
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
             
-            ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
-                const input = document.getElementById(id);
-                if (input) {
-                    input.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            addTransaction();
+            setTimeout(() => {
+                if (confirm('Ingin menginstal CashTrack sebagai aplikasi di perangkat Anda?')) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('✅ User accepted the install prompt');
+                        } else {
+                            console.log('❌ User dismissed the install prompt');
                         }
+                        deferredPrompt = null;
                     });
                 }
-            });
+            }, 5000);
         });
+
+        // ==================== SERVICE WORKER REGISTRATION ====================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('✅ ServiceWorker registered:', registration);
+                }).catch(error => {
+                    console.log('❌ ServiceWorker registration failed:', error);
+                });
+            });
+        }
+
+        // ==================== OFFLINE DETECTION ====================
+        window.addEventListener('online', () => {
+            showStorageStatus('✅ Koneksi internet tersedia', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            showStorageStatus('⚠️ Anda sedang offline', 'warning');
+        });
+
+        // ==================== BACKUP PADA TUTUP APLIKASI ====================
+        window.addEventListener('beforeunload', (e) => {
+            if (transactions.length > 0) {
+                saveTransactions();
+                createAutoBackup();
+            }
+            
+            // Hapus timers
+            if (autoSaveTimer) clearInterval(autoSaveTimer);
+            if (autoBackupTimer) clearInterval(autoBackupTimer);
+            if (validationTimer) clearInterval(validationTimer);
+        });
+
+        // ==================== KEYBOARD SHORTCUTS ====================
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+S untuk save
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveTransactions();
+                showStorageStatus('💾 Disimpan (Ctrl+S)', 'success');
+            }
+            
+            // Ctrl+E untuk export
+            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                e.preventDefault();
+                exportToExcel();
+            }
+            
+            // Ctrl+B untuk backup
+            if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+                e.preventDefault();
+                createBackup();
+            }
+            
+            // Escape untuk keluar dari modal
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('backup-modal');
+                if (modal && modal.style.display === 'flex') {
+                    closeBackupModal();
+                }
+            }
+            
+            // Tab navigation
+            if (e.altKey) {
+                if (e.key === '1') {
+                    e.preventDefault();
+                    document.querySelector('[data-page="transactions-page"]').click();
+                } else if (e.key === '2') {
+                    e.preventDefault();
+                    document.querySelector('[data-page="history-page"]').click();
+                } else if (e.key === '3') {
+                    e.preventDefault();
+                    document.querySelector('[data-page="backup-page"]').click();
+                }
+            }
+        });
+
+        // ==================== TOUCH GESTURES ====================
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentPage === 'history-page') {
+                    // Swipe kiri dari history page ke transactions page
+                    document.querySelector('[data-page="transactions-page"]').click();
+                } else if (diff > 0 && currentPage === 'backup-page') {
+                    // Swipe kiri dari backup page ke history page
+                    document.querySelector('[data-page="history-page"]').click();
+                } else if (diff < 0 && currentPage === 'transactions-page') {
+                    // Swipe kanan dari transactions page ke history page
+                    document.querySelector('[data-page="history-page"]').click();
+                } else if (diff < 0 && currentPage === 'history-page') {
+                    // Swipe kanan dari history page ke backup page
+                    document.querySelector('[data-page="backup-page"]').click();
+                }
+            }
+        }
+
+        // ==================== MANIFEST GENERATION ====================
+        function generateManifest() {
+            const manifest = {
+                name: 'CashTrack',
+                short_name: 'CashTrack',
+                description: 'Aplikasi manajemen keuangan pribadi',
+                start_url: '/',
+                display: 'standalone',
+                background_color: '#1a73e8',
+                theme_color: '#1a73e8',
+                icons: [
+                    {
+                        src: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=',
+                        sizes: '192x192',
+                        type: 'image/svg+xml'
+                    }
+                ]
+            };
+
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            document.getElementById('app-manifest').href = manifestURL;
+        }
+
+        // Generate manifest saat aplikasi dimulai
+        generateManifest();
+
+        // ==================== DATA RECOVERY FUNCTIONS ====================
+        function recoverFromCorruption() {
+            try {
+                console.log('🔄 Attempting data recovery...');
+                
+                // Coba load dari semua storage keys
+                let recoveredData = [];
+                
+                Object.values(STORAGE_KEYS).forEach(key => {
+                    try {
+                        const data = localStorage.getItem(key);
+                        if (data && key.includes('TRANSACTIONS')) {
+                            const parsed = JSON.parse(data);
+                            if (Array.isArray(parsed)) {
+                                recoveredData = [...recoveredData, ...parsed];
+                            }
+                        }
+                    } catch (e) {
+                        console.warn(`⚠️ Failed to recover from ${key}:`, e);
+                    }
+                });
+                
+                // Hapus duplikat
+                recoveredData = recoveredData.filter((item, index, self) =>
+                    index === self.findIndex(t => t.id === item.id)
+                );
+                
+                if (recoveredData.length > 0) {
+                    transactions = recoveredData;
+                    saveTransactions();
+                    showStorageStatus(`🔄 Recovered ${recoveredData.length} transactions`, 'success');
+                    return true;
+                }
+                
+                return false;
+                
+            } catch (error) {
+                console.error('❌ Recovery failed:', error);
+                showStorageStatus('❌ Recovery failed', 'error');
+                return false;
+            }
+        }
+
+        // ==================== PERFORMANCE MONITORING ====================
+        function monitorPerformance() {
+            const startTime = performance.now();
+            
+            // Monitor save performance
+            const saveTime = performance.now();
+            const saveSuccessful = saveTransactions();
+            const saveDuration = performance.now() - saveTime;
+            
+            if (saveDuration > 1000) {
+                console.warn(`⚠️ Slow save detected: ${saveDuration.toFixed(2)}ms`);
+            }
+            
+            // Monitor chart rendering performance
+            const chartTime = performance.now();
+            renderChart();
+            const chartDuration = performance.now() - chartTime;
+            
+            if (chartDuration > 500) {
+                console.warn(`⚠️ Slow chart render: ${chartDuration.toFixed(2)}ms`);
+            }
+            
+            const totalDuration = performance.now() - startTime;
+            
+            if (totalDuration > 2000) {
+                console.warn(`⚠️ Slow operation: ${totalDuration.toFixed(2)}ms`);
+            }
+        }
+
+        // ==================== FINAL INITIALIZATION ====================
+        console.log('🚀 CashTrack v2.1 - Enhanced Storage System');
+        console.log('📱 PWA ready for installation');
+        console.log('💾 Storage system initialized with backup protection');
+        console.log('🎵 Audio system ready');
+        console.log('📊 Chart system ready');
+        console.log('🔒 Security system active');
+
+        // Auto-save ketika ada perubahan pada form
+        document.getElementById('transaction-desc').addEventListener('input', () => {
+            if (transactions.length > 10) {
+                saveTransactions();
+            }
+        });
+
+        // Periodic performance check
+        setInterval(() => {
+            if (transactions.length > 100) {
+                monitorPerformance();
+            }
+        }, 30000);
+
+        // Initial data recovery check
+        setTimeout(() => {
+            if (transactions.length === 0 && localStorage.length > 0) {
+                recoverFromCorruption();
+            }
+        }, 2000);
+
+        // ==================== EXPORT FUNCTIONS FOR GLOBAL USE ====================
+        window.CashTrack = {
+            exportBackup,
+            importFromBackup,
+            restoreFromLatestBackup,
+            createBackup,
+            exportToCSV,
+            exportToExcel,
+            exportToExcelGrouped,
+            checkStorageHealth,
+            recoverFromCorruption,
+            getStats: () => ({
+                transactions: transactions.length,
+                backups: backups.length,
+                storage: checkStorageHealth()
+            })
+        };
+
+        // ==================== UTILITY FUNCTIONS ====================
+        window.formatCurrency = formatCurrency;
+        window.parseCurrency = parseCurrency;
+        window.formatDate = formatDate;
+
+        console.log('✅ CashTrack fully initialized and ready!');
     </script>
 </body>
 </html>
