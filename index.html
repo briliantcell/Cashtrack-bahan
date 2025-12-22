@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#1a73e8">
     
     <!-- PWA Manifest -->
-    <link rel="manifest" id="app-manifest">
+    <link rel="manifest" href="manifest.json">
     
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
@@ -303,7 +303,7 @@
         /* Login Screen */
         #login-screen {
             min-height: 100vh;
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -1653,19 +1653,15 @@
     </div>
 
     <script>
-        // ==================== SISTEM STORAGE YANG DIPERKUAT ====================
-        
-        // Konfigurasi Storage
+        // ==================== KONFIGURASI ====================
         const STORAGE_CONFIG = {
             VERSION: '2.1',
             MAX_BACKUPS: 10,
-            AUTO_SAVE_INTERVAL: 30000, // 30 detik
-            AUTO_BACKUP_INTERVAL: 3600000, // 1 jam
-            COMPRESSION_THRESHOLD: 100, // kompres jika >100 transaksi
-            VALIDATION_INTERVAL: 60000 // validasi setiap 1 menit
+            AUTO_SAVE_INTERVAL: 30000,
+            AUTO_BACKUP_INTERVAL: 3600000,
+            COMPRESSION_THRESHOLD: 100
         };
 
-        // Kunci-kunci storage
         const STORAGE_KEYS = {
             TRANSACTIONS: 'cashTrackTransactions_v2',
             BACKUPS: 'cashTrackBackups_v2',
@@ -1674,7 +1670,7 @@
             TEMP_BACKUP: 'cashTrackTempBackup_v2'
         };
 
-        // Data utama
+        // ==================== VARIABEL GLOBAL ====================
         let transactions = [];
         let backups = [];
         let settings = {};
@@ -1684,63 +1680,271 @@
         let currentFilters = { year: '', month: '', day: '' };
         let currentPage = 'transactions-page';
         const correctPassword = "free palestina";
-
-        // Timers untuk auto-save
+        
         let autoSaveTimer = null;
         let autoBackupTimer = null;
         let validationTimer = null;
 
-        // ==================== FUNGSI STORAGE UTAMA ====================
+        // ==================== SPLASH SCREEN ====================
+        window.addEventListener('load', function() {
+            console.log('🔄 App loading...');
+            
+            // Set tanggal default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Hide splash screen setelah 2 detik
+            setTimeout(() => {
+                const splashScreen = document.getElementById('splash-screen');
+                splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    
+                    // Cek apakah user sudah login
+                    const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
+                    console.log('🔑 Login status:', isLoggedIn);
+                    
+                    if (isLoggedIn === 'true') {
+                        showDonationScreen();
+                    } else {
+                        showLoginScreen();
+                    }
+                }, 500);
+            }, 2000);
+        });
 
-        // Inisialisasi storage
-        function initializeStorage() {
-            console.log('🚀 Initializing storage system...');
+        // ==================== SETUP EVENT LISTENERS ====================
+        function setupEventListeners() {
+            // Password input event
+            const passwordInput = document.getElementById('password-input');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
             
-            // Load semua data
-            loadAllData();
+            // Toggle password visibility
+            const togglePassword = document.getElementById('toggle-password');
+            if (togglePassword) {
+                togglePassword.addEventListener('click', function() {
+                    const passwordInput = document.getElementById('password-input');
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+                    passwordInput.focus();
+                });
+            }
             
-            // Setup auto-save
-            setupAutoSave();
+            // Enter app button
+            const enterAppBtn = document.getElementById('enter-app-btn');
+            if (enterAppBtn) {
+                enterAppBtn.addEventListener('click', function() {
+                    enterApp();
+                });
+            }
             
-            // Setup auto-backup
-            setupAutoBackup();
+            // Copy account number
+            const accountNumber = document.getElementById('copy-account-number');
+            if (accountNumber) {
+                accountNumber.addEventListener('click', function() {
+                    const text = this.textContent.replace(/\s/g, '');
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = '✓ Berhasil Disalin!';
+                        this.style.background = '#34a853';
+                        this.style.color = 'white';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.background = '';
+                            this.style.color = '';
+                        }, 2000);
+                    }).catch(err => {
+                        const textArea = document.createElement('textarea');
+                        textArea.value = text;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        
+                        const originalText = this.textContent;
+                        this.textContent = '✓ Berhasil Disalin!';
+                        this.style.background = '#34a853';
+                        this.style.color = 'white';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.background = '';
+                            this.style.color = '';
+                        }, 2000);
+                    });
+                });
+            }
             
-            // Setup validation
-            setupValidation();
+            // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                if (currentTheme === 'dark') {
+                    document.body.setAttribute('data-theme', 'dark');
+                    themeToggle.checked = true;
+                }
+                
+                themeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.body.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.body.removeAttribute('data-theme');
+                        localStorage.setItem('theme', 'light');
+                    }
+                    
+                    if (financeChart) {
+                        renderChart();
+                    }
+                    
+                    if (currentPage === 'history-page') {
+                        displayGroupedTransactions();
+                    }
+                });
+            }
             
-            // Update UI
-            updateStorageStats();
+            // Restore file input
+            const restoreFile = document.getElementById('restore-file');
+            if (restoreFile) {
+                restoreFile.addEventListener('change', function() {
+                    if (this.files.length > 0) {
+                        importFromBackup();
+                    }
+                });
+            }
             
-            // Tampilkan status
-            showStorageStatus('✅ Storage system initialized', 'success');
+            // Setup navigation tabs
+            setupNavigationTabs();
         }
 
-        // Load semua data dengan fallback
-        function loadAllData() {
+        // ==================== LOGIN FUNCTIONS ====================
+        function showLoginScreen() {
+            console.log('🔐 Showing login screen');
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('donation-screen').style.display = 'none';
+            document.getElementById('main-app').style.display = 'none';
+            
+            setTimeout(() => {
+                const passwordInput = document.getElementById('password-input');
+                if (passwordInput) {
+                    passwordInput.focus();
+                }
+            }, 100);
+        }
+
+        function checkPassword() {
+            const passwordInput = document.getElementById('password-input');
+            const errorMessage = document.getElementById('password-error');
+            
+            if (!passwordInput) {
+                console.error('❌ Password input not found');
+                return;
+            }
+            
+            console.log('🔑 Checking password...');
+            
+            if (passwordInput.value === correctPassword) {
+                console.log('✅ Password correct');
+                localStorage.setItem('cashTrackLoggedIn', 'true');
+                showDonationScreen();
+            } else {
+                console.log('❌ Password incorrect');
+                if (errorMessage) {
+                    errorMessage.style.display = 'block';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 3000);
+                }
+            }
+        }
+
+        // ==================== DONATION SCREEN ====================
+        function showDonationScreen() {
+            console.log('💰 Showing donation screen');
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('donation-screen').style.display = 'flex';
+            document.getElementById('main-app').style.display = 'none';
+        }
+
+        function enterApp() {
+            console.log('🚀 Entering main app');
+            document.getElementById('donation-screen').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            initializeApp();
+        }
+
+        // ==================== APP INITIALIZATION ====================
+        function initializeApp() {
+            console.log('🎯 Initializing app...');
+            
             try {
-                // Load transaksi dengan fallback ke versi lama
+                // Initialize storage
+                initializeStorage();
+                
+                // Setup UI
+                updateYearOptions();
+                updateMonthOptions();
+                updateDayOptions();
+                
+                currentFilters.year = new Date().getFullYear().toString();
+                currentFilters.month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+                
+                updateBalance();
+                renderChart();
+                filterTransactions();
+                updateBackupList();
+                
+                // Setup navigation
+                setupNavigationTabs();
+                
+                // Set focus
+                setTimeout(() => {
+                    const descInput = document.getElementById('transaction-desc');
+                    if (descInput) {
+                        descInput.focus();
+                    }
+                }, 100);
+                
+                console.log('✅ App initialized successfully');
+                
+            } catch (error) {
+                console.error('❌ Error initializing app:', error);
+                showStorageStatus('❌ Error initializing app', 'error');
+            }
+        }
+
+        // ==================== STORAGE FUNCTIONS ====================
+        function initializeStorage() {
+            console.log('💾 Initializing storage...');
+            
+            try {
+                // Load transactions
                 const transactionsData = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
                 if (transactionsData) {
                     transactions = JSON.parse(transactionsData);
                     console.log(`📊 Loaded ${transactions.length} transactions`);
-                } else {
-                    // Coba versi lama
-                    const oldData = localStorage.getItem('cashTrackTransactions');
-                    if (oldData) {
-                        transactions = JSON.parse(oldData);
-                        console.log(`📊 Loaded ${transactions.length} transactions from old storage`);
-                        // Migrasi ke storage baru
-                        saveTransactions();
-                    }
                 }
-
+                
                 // Load backups
                 const backupsData = localStorage.getItem(STORAGE_KEYS.BACKUPS);
                 if (backupsData) {
                     backups = JSON.parse(backupsData);
                     console.log(`💾 Loaded ${backups.length} backups`);
                 }
-
+                
                 // Load settings
                 const settingsData = localStorage.getItem(STORAGE_KEYS.SETTINGS);
                 if (settingsData) {
@@ -1753,7 +1957,7 @@
                         backupCount: 0
                     };
                 }
-
+                
                 // Load metadata
                 const metadataData = localStorage.getItem(STORAGE_KEYS.METADATA);
                 if (metadataData) {
@@ -1767,159 +1971,93 @@
                         errorCount: 0
                     };
                 }
-
-                // Validasi data
-                validateData();
-
-            } catch (error) {
-                console.error('❌ Error loading data:', error);
-                showStorageStatus('⚠️ Error loading data, restoring from backup...', 'error');
                 
-                // Coba restore dari backup terakhir
-                restoreFromLatestBackup();
+                // Setup auto-save
+                setupAutoSave();
+                
+                // Setup auto-backup
+                setupAutoBackup();
+                
+                // Update stats
+                updateStorageStats();
+                
+                console.log('✅ Storage initialized');
+                
+            } catch (error) {
+                console.error('❌ Error initializing storage:', error);
+                showStorageStatus('❌ Error loading data', 'error');
             }
         }
 
-        // Save transactions dengan multiple backups
         function saveTransactions() {
             try {
-                // Validasi sebelum save
-                if (!validateTransactions(transactions)) {
-                    console.error('❌ Transaction validation failed');
-                    showStorageStatus('⚠️ Data validation failed', 'error');
-                    return false;
-                }
-
-                // Simpan ke storage utama
                 localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(transactions));
                 
-                // Buat backup otomatis jika banyak transaksi
-                if (transactions.length > 50) {
-                    createAutoBackup();
-                }
-
                 // Update metadata
                 storageMetadata.lastSave = new Date().toISOString();
                 storageMetadata.saveCount++;
                 localStorage.setItem(STORAGE_KEYS.METADATA, JSON.stringify(storageMetadata));
-
-                // Update settings
-                settings.backupCount = backups.length;
-                localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
-
+                
                 // Update UI
                 updateStorageStats();
                 updateLastBackupDisplay();
-
-                console.log(`✅ Saved ${transactions.length} transactions`);
-                showStorageStatus('💾 Data saved successfully', 'success');
                 
                 return true;
-
+                
             } catch (error) {
                 console.error('❌ Error saving transactions:', error);
                 storageMetadata.errorCount++;
                 showStorageStatus('❌ Error saving data', 'error');
-                
-                // Coba save ke backup storage
-                try {
-                    localStorage.setItem(STORAGE_KEYS.TEMP_BACKUP, JSON.stringify(transactions));
-                    console.log('✅ Saved to temporary backup');
-                } catch (e) {
-                    console.error('❌ Failed to save to temporary backup:', e);
-                }
-                
                 return false;
             }
         }
 
-        // Validasi data transaksi
-        function validateTransactions(data) {
-            if (!Array.isArray(data)) return false;
+        function setupAutoSave() {
+            if (autoSaveTimer) clearInterval(autoSaveTimer);
             
-            for (let i = 0; i < data.length; i++) {
-                const item = data[i];
-                if (!item.id || !item.date || typeof item.description !== 'string') {
-                    console.error(`❌ Invalid transaction at index ${i}:`, item);
-                    return false;
+            autoSaveTimer = setInterval(() => {
+                if (transactions.length > 0) {
+                    saveTransactions();
                 }
-                
-                // Convert numeric values
-                if (typeof item.income === 'string') {
-                    item.income = parseInt(item.income) || 0;
-                }
-                if (typeof item.expense === 'string') {
-                    item.expense = parseInt(item.expense) || 0;
-                }
-                
-                // Ensure timestamp exists
-                if (!item.timestamp) {
-                    item.timestamp = new Date().toISOString();
-                }
-            }
-            
-            return true;
+            }, STORAGE_CONFIG.AUTO_SAVE_INTERVAL);
         }
 
-        // Validasi semua data
-        function validateData() {
-            console.log('🔍 Validating data...');
+        function setupAutoBackup() {
+            if (autoBackupTimer) clearInterval(autoBackupTimer);
             
-            // Validasi transaksi
-            if (!validateTransactions(transactions)) {
-                console.warn('⚠️ Transactions validation failed, attempting repair...');
-                transactions = transactions.filter(t => t.id && t.date);
-            }
-            
-            // Validasi backups
-            if (!Array.isArray(backups)) {
-                backups = [];
-            }
-            
-            // Hapus backup yang korup
-            backups = backups.filter(backup => {
-                try {
-                    return backup.id && backup.timestamp && backup.data && Array.isArray(backup.data);
-                } catch {
-                    return false;
+            autoBackupTimer = setInterval(() => {
+                if (transactions.length > 0) {
+                    createAutoBackup();
                 }
-            });
-            
-            console.log(`✅ Data validation complete: ${transactions.length} transactions, ${backups.length} backups`);
+            }, STORAGE_CONFIG.AUTO_BACKUP_INTERVAL);
         }
 
-        // ==================== SISTEM BACKUP ====================
-
-        // Buat backup manual
+        // ==================== BACKUP FUNCTIONS ====================
         function createBackup() {
             try {
                 const backup = {
                     id: 'backup_' + Date.now(),
                     timestamp: new Date().toISOString(),
-                    data: JSON.parse(JSON.stringify(transactions)), // Deep clone
+                    data: JSON.parse(JSON.stringify(transactions)),
                     transactionCount: transactions.length,
                     size: JSON.stringify(transactions).length
                 };
 
                 backups.unshift(backup);
                 
-                // Simpan hanya 10 backup terbaru
                 if (backups.length > STORAGE_CONFIG.MAX_BACKUPS) {
                     backups = backups.slice(0, STORAGE_CONFIG.MAX_BACKUPS);
                 }
                 
-                // Save backups
                 localStorage.setItem(STORAGE_KEYS.BACKUPS, JSON.stringify(backups));
                 
-                // Update metadata
                 storageMetadata.lastBackup = new Date().toISOString();
                 localStorage.setItem(STORAGE_KEYS.METADATA, JSON.stringify(storageMetadata));
                 
-                console.log(`✅ Created backup: ${backup.id}`);
-                showStorageStatus('💾 Backup created successfully', 'success');
-                
                 updateStorageStats();
                 updateBackupList();
+                
+                showStorageStatus('💾 Backup created', 'success');
                 
                 return backup;
 
@@ -1930,76 +2068,19 @@
             }
         }
 
-        // Buat backup otomatis
         function createAutoBackup() {
             if (transactions.length === 0) return;
             
-            // Cek kapan terakhir backup
             const lastBackupTime = storageMetadata.lastBackup ? 
                 new Date(storageMetadata.lastBackup).getTime() : 0;
             const now = Date.now();
             
-            // Buat backup jika lebih dari 1 jam atau banyak perubahan
             if (now - lastBackupTime > STORAGE_CONFIG.AUTO_BACKUP_INTERVAL || 
                 storageMetadata.saveCount % 10 === 0) {
-                
-                const backup = createBackup();
-                if (backup) {
-                    console.log(`🤖 Auto-backup created: ${backup.id}`);
-                }
+                createBackup();
             }
         }
 
-        // Restore dari backup tertentu
-        function restoreFromBackup(backupId) {
-            try {
-                const backup = backups.find(b => b.id === backupId);
-                if (!backup) {
-                    showStorageStatus('❌ Backup not found', 'error');
-                    return false;
-                }
-                
-                // Validasi backup data
-                if (!validateTransactions(backup.data)) {
-                    showStorageStatus('❌ Backup data corrupted', 'error');
-                    return false;
-                }
-                
-                // Restore data
-                transactions = JSON.parse(JSON.stringify(backup.data));
-                
-                // Save restored data
-                saveTransactions();
-                
-                // Update UI
-                updateBalance();
-                renderChart();
-                filterTransactions();
-                
-                console.log(`✅ Restored from backup: ${backupId}`);
-                showStorageStatus('🔄 Data restored from backup', 'success');
-                
-                return true;
-
-            } catch (error) {
-                console.error('❌ Error restoring from backup:', error);
-                showStorageStatus('❌ Error restoring data', 'error');
-                return false;
-            }
-        }
-
-        // Restore dari backup terakhir
-        function restoreFromLatestBackup() {
-            if (backups.length === 0) {
-                showStorageStatus('⚠️ No backups available', 'warning');
-                return false;
-            }
-            
-            const latestBackup = backups[0];
-            return restoreFromBackup(latestBackup.id);
-        }
-
-        // Export backup ke file
         function exportBackup() {
             try {
                 const backupData = {
@@ -2021,10 +2102,9 @@
                 link.click();
                 document.body.removeChild(link);
                 
-                // Buat backup internal juga
                 createBackup();
                 
-                showStorageStatus('💾 Backup exported to file', 'success');
+                showStorageStatus('💾 Backup exported', 'success');
                 
             } catch (error) {
                 console.error('❌ Error exporting backup:', error);
@@ -2032,10 +2112,9 @@
             }
         }
 
-        // Import dari file backup
         function importFromBackup() {
             const fileInput = document.getElementById('restore-file');
-            if (!fileInput.files.length) {
+            if (!fileInput || !fileInput.files.length) {
                 showStorageStatus('⚠️ Please select a backup file', 'warning');
                 return;
             }
@@ -2047,415 +2126,65 @@
                 try {
                     const backupData = JSON.parse(e.target.result);
                     
-                    // Validasi backup file
                     if (!backupData.transactions || !Array.isArray(backupData.transactions)) {
                         throw new Error('Invalid backup file format');
                     }
                     
-                    // Restore data
                     transactions = backupData.transactions;
-                    
-                    // Validasi data
-                    validateTransactions(transactions);
-                    
-                    // Save restored data
                     saveTransactions();
-                    
-                    // Update UI
                     updateBalance();
                     renderChart();
                     filterTransactions();
                     
-                    // Reset file input
                     fileInput.value = '';
                     
-                    showStorageStatus('✅ Data imported successfully', 'success');
+                    showStorageStatus('✅ Data imported', 'success');
                     
                 } catch (error) {
                     console.error('❌ Error importing backup:', error);
-                    showStorageStatus('❌ Error importing backup file', 'error');
+                    showStorageStatus('❌ Error importing backup', 'error');
                 }
             };
             
             reader.readAsText(file);
         }
 
-        // ==================== UTILITAS STORAGE ====================
-
-        // Setup auto-save
-        function setupAutoSave() {
-            if (autoSaveTimer) clearInterval(autoSaveTimer);
-            
-            autoSaveTimer = setInterval(() => {
-                if (transactions.length > 0) {
-                    saveTransactions();
-                }
-            }, STORAGE_CONFIG.AUTO_SAVE_INTERVAL);
-            
-            console.log('⏱️ Auto-save enabled');
-        }
-
-        // Setup auto-backup
-        function setupAutoBackup() {
-            if (autoBackupTimer) clearInterval(autoBackupTimer);
-            
-            autoBackupTimer = setInterval(() => {
-                createAutoBackup();
-            }, STORAGE_CONFIG.AUTO_BACKUP_INTERVAL);
-            
-            console.log('🤖 Auto-backup enabled');
-        }
-
-        // Setup validation
-        function setupValidation() {
-            if (validationTimer) clearInterval(validationTimer);
-            
-            validationTimer = setInterval(() => {
-                validateData();
-                checkStorageHealth();
-            }, STORAGE_CONFIG.VALIDATION_INTERVAL);
-            
-            console.log('🔍 Data validation enabled');
-        }
-
-        // Cek kesehatan storage
-        function checkStorageHealth() {
-            try {
-                // Cek storage space
-                let storageUsed = 0;
-                Object.values(STORAGE_KEYS).forEach(key => {
-                    const data = localStorage.getItem(key);
-                    if (data) storageUsed += data.length * 2; // bytes
-                });
-                
-                const storageUsedKB = (storageUsed / 1024).toFixed(2);
-                const storageLimit = 5 * 1024 * 1024; // 5MB typical limit
-                const storagePercent = (storageUsed / storageLimit * 100).toFixed(1);
-                
-                // Update status
-                const statusEl = document.getElementById('backup-stat-status');
-                if (statusEl) {
-                    if (storagePercent > 90) {
-                        statusEl.textContent = '🔴';
-                        statusEl.style.color = '#ea4335';
-                    } else if (storagePercent > 70) {
-                        statusEl.textContent = '🟡';
-                        statusEl.style.color = '#fbbc04';
-                    } else {
-                        statusEl.textContent = '🟢';
-                        statusEl.style.color = '#34a853';
-                    }
-                }
-                
-                // Cek data corruption
-                const corruptBackups = backups.filter(b => !b.data || !Array.isArray(b.data));
-                if (corruptBackups.length > 0) {
-                    console.warn(`⚠️ Found ${corruptBackups.length} corrupt backups`);
-                }
-                
-                return {
-                    storageUsedKB,
-                    storagePercent,
-                    transactionCount: transactions.length,
-                    backupCount: backups.length,
-                    lastBackup: storageMetadata.lastBackup,
-                    status: storagePercent > 90 ? 'critical' : storagePercent > 70 ? 'warning' : 'healthy'
-                };
-                
-            } catch (error) {
-                console.error('❌ Error checking storage health:', error);
-                return { status: 'error', error: error.message };
-            }
-        }
-
-        // Update storage stats di UI
-        function updateStorageStats() {
-            // Update stats di modal
-            const stats = checkStorageHealth();
-            
-            document.getElementById('stat-transactions').textContent = transactions.length;
-            document.getElementById('stat-storage').textContent = `${stats.storageUsedKB} KB`;
-            document.getElementById('stat-backups').textContent = backups.length;
-            document.getElementById('stat-lastsave').textContent = 
-                storageMetadata.lastSave ? new Date(storageMetadata.lastSave).toLocaleTimeString() : '-';
-            
-            // Update stats di backup page
-            document.getElementById('backup-stat-transactions').textContent = transactions.length;
-            document.getElementById('backup-stat-size').textContent = `${stats.storageUsedKB} KB`;
-            document.getElementById('backup-stat-backups').textContent = backups.length;
-            
-            // Update last backup display
-            updateLastBackupDisplay();
-        }
-
-        // Update tampilan last backup
-        function updateLastBackupDisplay() {
-            const lastBackupEl = document.getElementById('last-backup');
-            if (lastBackupEl) {
-                if (storageMetadata.lastBackup) {
-                    const lastBackupDate = new Date(storageMetadata.lastBackup);
-                    const now = new Date();
-                    const diffHours = Math.floor((now - lastBackupDate) / (1000 * 60 * 60));
-                    
-                    if (diffHours < 1) {
-                        lastBackupEl.textContent = 'Baru saja';
-                    } else if (diffHours < 24) {
-                        lastBackupEl.textContent = `${diffHours} jam lalu`;
-                    } else {
-                        lastBackupEl.textContent = lastBackupDate.toLocaleDateString();
-                    }
-                } else {
-                    lastBackupEl.textContent = 'Belum ada';
-                }
-            }
-        }
-
-        // Update backup list
-        function updateBackupList() {
-            const backupListEl = document.getElementById('backup-list');
-            if (!backupListEl) return;
-            
+        function restoreFromLatestBackup() {
             if (backups.length === 0) {
-                backupListEl.innerHTML = `
-                    <div class="empty-state">
-                        <p>📭 Belum ada backup</p>
-                        <p>Buat backup pertama Anda untuk melindungi data</p>
-                    </div>
-                `;
-                return;
+                showStorageStatus('⚠️ No backups available', 'warning');
+                return false;
             }
             
-            let html = '<div class="backup-list-container">';
-            
-            backups.forEach((backup, index) => {
-                const date = new Date(backup.timestamp);
-                const sizeKB = (backup.size / 1024).toFixed(2);
-                
-                html += `
-                    <div class="backup-item" style="
-                        background: var(--light);
-                        padding: 15px;
-                        border-radius: var(--border-radius);
-                        margin-bottom: 10px;
-                        border-left: 4px solid ${index === 0 ? '#34a853' : '#fbbc04'};
-                        box-shadow: var(--shadow);
-                    ">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <div>
-                                <strong>Backup ${index + 1}</strong>
-                                <div style="font-size: 0.85rem; color: var(--gray);">
-                                    ${date.toLocaleString()}
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-size: 0.9rem; color: var(--dark);">
-                                    ${backup.transactionCount} transaksi
-                                </div>
-                                <div style="font-size: 0.8rem; color: var(--gray);">
-                                    ${sizeKB} KB
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 10px;">
-                            <button class="btn btn-secondary" onclick="restoreFromBackup('${backup.id}')" style="flex: 1; padding: 8px;">
-                                <span>🔄</span> Restore
-                            </button>
-                            <button class="btn btn-info" onclick="downloadBackup('${backup.id}')" style="flex: 1; padding: 8px;">
-                                <span>💾</span> Export
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += '</div>';
-            backupListEl.innerHTML = html;
+            const latestBackup = backups[0];
+            return restoreFromBackup(latestBackup.id);
         }
 
-        // Download backup tertentu
-        function downloadBackup(backupId) {
-            const backup = backups.find(b => b.id === backupId);
-            if (!backup) return;
-            
-            const backupData = {
-                version: STORAGE_CONFIG.VERSION,
-                exportDate: new Date().toISOString(),
-                backupId: backup.id,
-                backupTimestamp: backup.timestamp,
-                transactions: backup.data
-            };
-            
-            const dataStr = JSON.stringify(backupData, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-            
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `cashtrack-backup-${backupId}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showStorageStatus('💾 Backup downloaded', 'success');
-        }
-
-        // Clear old backups
-        function clearOldBackups() {
-            if (backups.length <= 3) {
-                showStorageStatus('⚠️ Minimal 3 backup diperlukan', 'warning');
-                return;
-            }
-            
-            if (confirm(`Hapus ${backups.length - 3} backup lama?`)) {
-                backups = backups.slice(0, 3);
-                localStorage.setItem(STORAGE_KEYS.BACKUPS, JSON.stringify(backups));
-                updateStorageStats();
-                updateBackupList();
-                showStorageStatus('🗑️ Old backups cleared', 'success');
-            }
-        }
-
-        // Show storage info
-        function showStorageInfo() {
-            const stats = checkStorageHealth();
-            
-            let info = `📊 **Storage Information**\n\n`;
-            info += `• Total Transaksi: ${transactions.length}\n`;
-            info += `• Jumlah Backup: ${backups.length}\n`;
-            info += `• Storage Used: ${stats.storageUsedKB} KB\n`;
-            info += `• Storage Status: ${stats.status.toUpperCase()}\n`;
-            info += `• Last Save: ${storageMetadata.lastSave ? new Date(storageMetadata.lastSave).toLocaleString() : '-'}\n`;
-            info += `• Last Backup: ${storageMetadata.lastBackup ? new Date(storageMetadata.lastBackup).toLocaleString() : '-'}\n`;
-            info += `• Save Count: ${storageMetadata.saveCount}\n`;
-            
-            alert(info);
-        }
-
-        // Tampilkan status storage
-        function showStorageStatus(message, type = 'info') {
-            const statusEl = document.getElementById('storage-status');
-            if (!statusEl) return;
-            
-            statusEl.textContent = message;
-            statusEl.className = 'storage-status';
-            
-            switch(type) {
-                case 'success':
-                    statusEl.style.background = '#34a853';
-                    break;
-                case 'error':
-                    statusEl.style.background = '#ea4335';
-                    statusEl.classList.add('error');
-                    break;
-                case 'warning':
-                    statusEl.style.background = '#fbbc04';
-                    statusEl.classList.add('warning');
-                    break;
-                default:
-                    statusEl.style.background = '#1a73e8';
-            }
-            
-            statusEl.style.display = 'block';
-            
-            // Auto hide setelah 3 detik
-            setTimeout(() => {
-                statusEl.style.display = 'none';
-            }, 3000);
-        }
-
-        // ==================== MODAL FUNCTIONS ====================
-
-        function showBackupModal() {
-            const modal = document.getElementById('backup-modal');
-            if (modal) {
-                updateStorageStats();
-                modal.style.display = 'flex';
-            }
-        }
-
-        function closeBackupModal() {
-            const modal = document.getElementById('backup-modal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        }
-
-        // ==================== SOUND EFFECT FUNCTIONS ====================
-        const audioCache = {};
-        let audioEnabled = true;
-
-        function loadAudioFiles() {
-            const audioFiles = {
-                positive: 'mixkit-positive-notification-951.wav',
-                notification: 'new-notification-011-364050.mp3',
-                success: 'notification-center-443093.mp3',
-                click: 'preview.mp3',
-                delete: 'mixkit-positive-notification-951.wav'
-            };
-
-            Object.entries(audioFiles).forEach(([key, filename]) => {
-                try {
-                    const audio = new Audio();
-                    audio.src = filename;
-                    audio.load();
-                    audio.volume = 0.8;
-                    audioCache[key] = audio;
-                } catch (error) {
-                    console.error(`Failed to load audio ${filename}:`, error);
-                }
-            });
-        }
-
-        function playSoundEffect(type = 'click') {
-            if (!audioEnabled) return;
-            
+        function restoreFromBackup(backupId) {
             try {
-                const audio = audioCache[type];
-                if (audio) {
-                    audio.currentTime = 0;
-                    audio.volume = 0.8;
-                    
-                    const playPromise = audio.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            console.error(`Audio play failed for ${type}:`, error);
-                        });
-                    }
+                const backup = backups.find(b => b.id === backupId);
+                if (!backup) {
+                    showStorageStatus('❌ Backup not found', 'error');
+                    return false;
                 }
-            } catch (error) {
-                console.error(`Error playing sound ${type}:`, error);
-            }
-        }
-
-        // ==================== DARK MODE ====================
-        const themeToggle = document.getElementById('theme-toggle');
-        const currentTheme = localStorage.getItem('theme') || 'light';
-
-        if (currentTheme === 'dark') {
-            document.body.setAttribute('data-theme', 'dark');
-            themeToggle.checked = true;
-        }
-
-        themeToggle.addEventListener('change', function() {
-            playSoundEffect('click');
-            if (this.checked) {
-                document.body.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            }
-            
-            if (financeChart) {
+                
+                transactions = JSON.parse(JSON.stringify(backup.data));
+                saveTransactions();
+                updateBalance();
                 renderChart();
-            }
-            
-            if (currentPage === 'history-page') {
-                displayGroupedTransactions();
-            }
-        });
+                filterTransactions();
+                
+                showStorageStatus('🔄 Data restored', 'success');
+                
+                return true;
 
-        // ==================== FUNGSI UTILITAS ====================
+            } catch (error) {
+                console.error('❌ Error restoring backup:', error);
+                showStorageStatus('❌ Error restoring data', 'error');
+                return false;
+            }
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
         function formatCurrency(amount) {
             if (!amount && amount !== 0) return '-';
             return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -2501,162 +2230,6 @@
             return dateString.substring(0, 4);
         }
 
-        // ==================== SPLASH SCREEN ====================
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const splashScreen = document.getElementById('splash-screen');
-                splashScreen.style.opacity = '0';
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    
-                    const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
-                    if (isLoggedIn) {
-                        showDonationScreen();
-                    } else {
-                        showLoginScreen();
-                    }
-                }, 500);
-            }, 2000);
-        });
-
-        // ==================== LOGIN FUNCTIONS ====================
-        function showLoginScreen() {
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('donation-screen').style.display = 'none';
-            document.getElementById('main-app').style.display = 'none';
-            
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transaction-date').value = today;
-            
-            setTimeout(() => {
-                document.getElementById('password-input').focus();
-            }, 100);
-        }
-
-        document.getElementById('toggle-password').addEventListener('click', function() {
-            playSoundEffect('click');
-            const passwordInput = document.getElementById('password-input');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
-            passwordInput.focus();
-        });
-
-        document.getElementById('password-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
-        });
-
-        function checkPassword() {
-            playSoundEffect('click');
-            const passwordInput = document.getElementById('password-input');
-            const errorMessage = document.getElementById('password-error');
-            
-            if (passwordInput.value === correctPassword) {
-                playSoundEffect('success');
-                localStorage.setItem('cashTrackLoggedIn', 'true');
-                showDonationScreen();
-            } else {
-                playSoundEffect('delete');
-                errorMessage.style.display = 'block';
-                passwordInput.value = '';
-                passwordInput.focus();
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000);
-            }
-        }
-
-        // ==================== DONATION SCREEN ====================
-        function showDonationScreen() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('donation-screen').style.display = 'flex';
-            document.getElementById('main-app').style.display = 'none';
-            
-            const accountNumber = document.getElementById('copy-account-number');
-            accountNumber.addEventListener('click', function() {
-                playSoundEffect('success');
-                const text = this.textContent.replace(/\s/g, '');
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = this.textContent;
-                    this.textContent = '✓ Berhasil Disalin!';
-                    this.style.background = '#34a853';
-                    this.style.color = 'white';
-                    
-                    setTimeout(() => {
-                        this.textContent = originalText;
-                        this.style.background = '';
-                        this.style.color = '';
-                    }, 2000);
-                }).catch(err => {
-                    const textArea = document.createElement('textarea');
-                    textArea.value = text;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    
-                    const originalText = this.textContent;
-                    this.textContent = '✓ Berhasil Disalin!';
-                    this.style.background = '#34a853';
-                    this.style.color = 'white';
-                    
-                    setTimeout(() => {
-                        this.textContent = originalText;
-                        this.style.background = '';
-                        this.style.color = '';
-                    }, 2000);
-                });
-            });
-            
-            document.getElementById('enter-app-btn').addEventListener('click', function() {
-                playSoundEffect('positive');
-                enterApp();
-            });
-        }
-
-        function enterApp() {
-            document.getElementById('donation-screen').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-            initializeApp();
-        }
-
-        // ==================== APP INITIALIZATION ====================
-        function initializeApp() {
-            // Initialize storage system
-            initializeStorage();
-            
-            // Load audio
-            loadAudioFiles();
-            
-            // Setup UI
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transaction-date').value = today;
-            
-            updateYearOptions();
-            updateMonthOptions();
-            updateDayOptions();
-            
-            currentFilters.year = new Date().getFullYear().toString();
-            currentFilters.month = (new Date().getMonth() + 1).toString().padStart(2, '0');
-            
-            updateBalance();
-            renderChart();
-            filterTransactions();
-            updateBackupList();
-            
-            setupNavigationTabs();
-            addSoundEffectsToButtons();
-            
-            setTimeout(() => {
-                document.getElementById('transaction-desc').focus();
-            }, 100);
-            
-            // Show storage status
-            showStorageStatus('✅ Sistem storage aktif', 'success');
-        }
-
         // ==================== TRANSACTION FUNCTIONS ====================
         function addTransaction() {
             const date = document.getElementById('transaction-date').value;
@@ -2666,21 +2239,18 @@
             
             if (!date) {
                 alert('Harap pilih tanggal transaksi!');
-                playSoundEffect('delete');
                 document.getElementById('transaction-date').focus();
                 return;
             }
             
             if (!description) {
                 alert('Harap isi keterangan transaksi!');
-                playSoundEffect('delete');
                 document.getElementById('transaction-desc').focus();
                 return;
             }
             
             if (income === 0 && expense === 0) {
                 alert('Harap isi pendapatan atau pengeluaran!');
-                playSoundEffect('delete');
                 document.getElementById('transaction-income').focus();
                 return;
             }
@@ -2724,20 +2294,16 @@
 
         function deleteTransaction(id) {
             if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
-                playSoundEffect('delete');
                 transactions = transactions.filter(t => t.id !== id);
                 filteredTransactions = filteredTransactions.filter(t => t.id !== id);
                 saveTransactions();
                 updateBalance();
                 renderChart();
                 filterTransactions();
-            } else {
-                playSoundEffect('click');
             }
         }
 
         function editTransaction(id) {
-            playSoundEffect('click');
             const transaction = transactions.find(t => t.id === id);
             if (!transaction) return;
             
@@ -2749,6 +2315,7 @@
             document.getElementById('transactions-page').classList.add('active');
             document.getElementById('history-page').classList.remove('active');
             document.getElementById('backup-page').classList.remove('active');
+            
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 if (tab.dataset.page === 'transactions-page') {
                     tab.classList.add('active');
@@ -2756,6 +2323,7 @@
                     tab.classList.remove('active');
                 }
             });
+            
             currentPage = 'transactions-page';
             
             transactions = transactions.filter(t => t.id !== id);
@@ -2913,6 +2481,8 @@
         // ==================== FILTER FUNCTIONS ====================
         function updateYearOptions() {
             const yearSelect = document.getElementById('filter-year');
+            if (!yearSelect) return;
+            
             const years = new Set();
             
             transactions.forEach(transaction => {
@@ -2940,8 +2510,9 @@
         function updateMonthOptions() {
             const yearSelect = document.getElementById('filter-year');
             const monthSelect = document.getElementById('filter-month');
-            const selectedYear = yearSelect.value;
+            if (!yearSelect || !monthSelect) return;
             
+            const selectedYear = yearSelect.value;
             const months = new Set();
             
             if (selectedYear) {
@@ -2975,9 +2546,10 @@
             const yearSelect = document.getElementById('filter-year');
             const monthSelect = document.getElementById('filter-month');
             const daySelect = document.getElementById('filter-day');
+            if (!yearSelect || !monthSelect || !daySelect) return;
+            
             const selectedYear = yearSelect.value;
             const selectedMonth = monthSelect.value;
-            
             const days = new Set();
             
             if (selectedYear && selectedMonth) {
@@ -3026,17 +2598,25 @@
         }
 
         function applyFilter() {
-            currentFilters.year = document.getElementById('filter-year').value;
-            currentFilters.month = document.getElementById('filter-month').value;
-            currentFilters.day = document.getElementById('filter-day').value;
+            const yearSelect = document.getElementById('filter-year');
+            const monthSelect = document.getElementById('filter-month');
+            const daySelect = document.getElementById('filter-day');
+            
+            if (yearSelect) currentFilters.year = yearSelect.value;
+            if (monthSelect) currentFilters.month = monthSelect.value;
+            if (daySelect) currentFilters.day = daySelect.value;
             
             filterTransactions();
         }
 
         function resetFilters() {
-            document.getElementById('filter-year').value = '';
-            document.getElementById('filter-month').value = '';
-            document.getElementById('filter-day').value = '';
+            const yearSelect = document.getElementById('filter-year');
+            const monthSelect = document.getElementById('filter-month');
+            const daySelect = document.getElementById('filter-day');
+            
+            if (yearSelect) yearSelect.value = '';
+            if (monthSelect) monthSelect.value = '';
+            if (daySelect) daySelect.value = '';
             
             currentFilters = { year: '', month: '', day: '' };
             filteredTransactions = [...transactions];
@@ -3047,6 +2627,7 @@
         // ==================== DISPLAY FUNCTIONS ====================
         function displayGroupedTransactions() {
             const container = document.getElementById('transactions-container');
+            if (!container) return;
             
             if (filteredTransactions.length === 0) {
                 container.innerHTML = `
@@ -3145,11 +2726,44 @@
             container.innerHTML = html;
         }
 
+        // ==================== NAVIGATION FUNCTIONS ====================
+        function setupNavigationTabs() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetPage = this.dataset.page;
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.page-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    document.getElementById(targetPage).classList.add('active');
+                    currentPage = targetPage;
+                    
+                    if (targetPage === 'history-page') {
+                        filterTransactions();
+                    } else if (targetPage === 'backup-page') {
+                        updateStorageStats();
+                        updateBackupList();
+                    } else if (targetPage === 'transactions-page') {
+                        setTimeout(() => {
+                            const descInput = document.getElementById('transaction-desc');
+                            if (descInput) {
+                                descInput.focus();
+                            }
+                        }, 100);
+                    }
+                });
+            });
+        }
+
         // ==================== EXPORT FUNCTIONS ====================
         function exportToCSV() {
             if (transactions.length === 0) {
                 alert('Tidak ada data transaksi untuk diexport!');
-                playSoundEffect('delete');
                 return;
             }
             
@@ -3180,7 +2794,6 @@
         function exportToExcel() {
             if (transactions.length === 0) {
                 alert('Tidak ada data transaksi untuk diexport!');
-                playSoundEffect('delete');
                 return;
             }
             
@@ -3268,7 +2881,7 @@
                     <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
                 </tr>
             </table>
-                        excelContent += '</table>';
+            `;
             
             const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
             const link = document.createElement('a');
@@ -3286,7 +2899,6 @@
         function exportToExcelGrouped() {
             if (transactions.length === 0) {
                 alert('Tidak ada data transaksi untuk diexport!');
-                playSoundEffect('delete');
                 return;
             }
             
@@ -3417,62 +3029,272 @@
             showStorageStatus('📋 Grouped Excel exported', 'success');
         }
 
-        // ==================== NAVIGATION FUNCTIONS ====================
-        function setupNavigationTabs() {
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    playSoundEffect('click');
-                    const targetPage = this.dataset.page;
-                    
-                    tabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    document.querySelectorAll('.page-section').forEach(section => {
-                        section.classList.remove('active');
-                    });
-                    
-                    document.getElementById(targetPage).classList.add('active');
-                    currentPage = targetPage;
-                    
-                    if (targetPage === 'history-page') {
-                        filterTransactions();
-                    } else if (targetPage === 'backup-page') {
-                        updateStorageStats();
-                        updateBackupList();
-                    } else if (targetPage === 'transactions-page') {
-                        setTimeout(() => {
-                            document.getElementById('transaction-desc').focus();
-                        }, 100);
-                    }
-                });
+        // ==================== STORAGE UTILITIES ====================
+        function updateStorageStats() {
+            // Hitung storage usage
+            let storageUsed = 0;
+            Object.values(STORAGE_KEYS).forEach(key => {
+                const data = localStorage.getItem(key);
+                if (data) storageUsed += data.length * 2;
             });
+            
+            const storageUsedKB = (storageUsed / 1024).toFixed(2);
+            const storageLimit = 5 * 1024 * 1024;
+            const storagePercent = (storageUsed / storageLimit * 100).toFixed(1);
+            
+            // Update stats di modal
+            const statTransactions = document.getElementById('stat-transactions');
+            const statStorage = document.getElementById('stat-storage');
+            const statBackups = document.getElementById('stat-backups');
+            const statLastsave = document.getElementById('stat-lastsave');
+            
+            if (statTransactions) statTransactions.textContent = transactions.length;
+            if (statStorage) statStorage.textContent = `${storageUsedKB} KB`;
+            if (statBackups) statBackups.textContent = backups.length;
+            if (statLastsave) {
+                statLastsave.textContent = storageMetadata.lastSave ? 
+                    new Date(storageMetadata.lastSave).toLocaleTimeString() : '-';
+            }
+            
+            // Update stats di backup page
+            const backupStatTransactions = document.getElementById('backup-stat-transactions');
+            const backupStatSize = document.getElementById('backup-stat-size');
+            const backupStatBackups = document.getElementById('backup-stat-backups');
+            const backupStatStatus = document.getElementById('backup-stat-status');
+            
+            if (backupStatTransactions) backupStatTransactions.textContent = transactions.length;
+            if (backupStatSize) backupStatSize.textContent = `${storageUsedKB} KB`;
+            if (backupStatBackups) backupStatBackups.textContent = backups.length;
+            if (backupStatStatus) {
+                if (storagePercent > 90) {
+                    backupStatStatus.textContent = '🔴';
+                    backupStatStatus.style.color = '#ea4335';
+                } else if (storagePercent > 70) {
+                    backupStatStatus.textContent = '🟡';
+                    backupStatStatus.style.color = '#fbbc04';
+                } else {
+                    backupStatStatus.textContent = '🟢';
+                    backupStatStatus.style.color = '#34a853';
+                }
+            }
+            
+            updateLastBackupDisplay();
         }
 
-        // ==================== SOUND EFFECT SETUP ====================
-        function addSoundEffectsToButtons() {
-            const buttons = document.querySelectorAll('button, .btn, .icon-btn, .nav-tab, .login-btn, .donation-btn');
-            buttons.forEach(button => {
-                if (!button.hasAttribute('data-sound-added')) {
-                    button.addEventListener('click', function(e) {
-                        if (this.classList.contains('btn-danger')) {
-                            playSoundEffect('delete');
-                        } else if (this.classList.contains('btn-success') || this.classList.contains('login-btn')) {
-                            playSoundEffect('success');
-                        } else if (this.classList.contains('donation-btn')) {
-                            playSoundEffect('positive');
-                        } else {
-                            playSoundEffect('click');
-                        }
-                    });
-                    button.setAttribute('data-sound-added', 'true');
+        function updateLastBackupDisplay() {
+            const lastBackupEl = document.getElementById('last-backup');
+            if (lastBackupEl) {
+                if (storageMetadata.lastBackup) {
+                    const lastBackupDate = new Date(storageMetadata.lastBackup);
+                    const now = new Date();
+                    const diffHours = Math.floor((now - lastBackupDate) / (1000 * 60 * 60));
+                    
+                    if (diffHours < 1) {
+                        lastBackupEl.textContent = 'Baru saja';
+                    } else if (diffHours < 24) {
+                        lastBackupEl.textContent = `${diffHours} jam lalu`;
+                    } else {
+                        lastBackupEl.textContent = lastBackupDate.toLocaleDateString();
+                    }
+                } else {
+                    lastBackupEl.textContent = 'Belum ada';
                 }
+            }
+        }
+
+        function updateBackupList() {
+            const backupListEl = document.getElementById('backup-list');
+            if (!backupListEl) return;
+            
+            if (backups.length === 0) {
+                backupListEl.innerHTML = `
+                    <div class="empty-state">
+                        <p>📭 Belum ada backup</p>
+                        <p>Buat backup pertama Anda untuk melindungi data</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<div class="backup-list-container">';
+            
+            backups.forEach((backup, index) => {
+                const date = new Date(backup.timestamp);
+                const sizeKB = (backup.size / 1024).toFixed(2);
+                
+                html += `
+                    <div class="backup-item" style="
+                        background: var(--light);
+                        padding: 15px;
+                        border-radius: var(--border-radius);
+                        margin-bottom: 10px;
+                        border-left: 4px solid ${index === 0 ? '#34a853' : '#fbbc04'};
+                        box-shadow: var(--shadow);
+                    ">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div>
+                                <strong>Backup ${index + 1}</strong>
+                                <div style="font-size: 0.85rem; color: var(--gray);">
+                                    ${date.toLocaleString()}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.9rem; color: var(--dark);">
+                                    ${backup.transactionCount} transaksi
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--gray);">
+                                    ${sizeKB} KB
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-secondary" onclick="restoreFromBackup('${backup.id}')" style="flex: 1; padding: 8px;">
+                                <span>🔄</span> Restore
+                            </button>
+                            <button class="btn btn-info" onclick="downloadBackup('${backup.id}')" style="flex: 1; padding: 8px;">
+                                <span>💾</span> Export
+                            </button>
+                        </div>
+                    </div>
+                `;
             });
+            
+            html += '</div>';
+            backupListEl.innerHTML = html;
+        }
+
+        function downloadBackup(backupId) {
+            const backup = backups.find(b => b.id === backupId);
+            if (!backup) return;
+            
+            const backupData = {
+                version: STORAGE_CONFIG.VERSION,
+                exportDate: new Date().toISOString(),
+                backupId: backup.id,
+                backupTimestamp: backup.timestamp,
+                transactions: backup.data
+            };
+            
+            const dataStr = JSON.stringify(backupData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `cashtrack-backup-${backupId}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showStorageStatus('💾 Backup downloaded', 'success');
+        }
+
+        function clearOldBackups() {
+            if (backups.length <= 3) {
+                showStorageStatus('⚠️ Minimal 3 backup diperlukan', 'warning');
+                return;
+            }
+            
+            if (confirm(`Hapus ${backups.length - 3} backup lama?`)) {
+                backups = backups.slice(0, 3);
+                localStorage.setItem(STORAGE_KEYS.BACKUPS, JSON.stringify(backups));
+                updateStorageStats();
+                updateBackupList();
+                showStorageStatus('🗑️ Old backups cleared', 'success');
+            }
+        }
+
+        function showStorageInfo() {
+            let storageUsed = 0;
+            Object.values(STORAGE_KEYS).forEach(key => {
+                const data = localStorage.getItem(key);
+                if (data) storageUsed += data.length * 2;
+            });
+            
+            const storageUsedKB = (storageUsed / 1024).toFixed(2);
+            const storageLimit = 5 * 1024 * 1024;
+            const storagePercent = (storageUsed / storageLimit * 100).toFixed(1);
+            
+            let info = `📊 **Storage Information**\n\n`;
+            info += `• Total Transaksi: ${transactions.length}\n`;
+            info += `• Jumlah Backup: ${backups.length}\n`;
+            info += `• Storage Used: ${storageUsedKB} KB\n`;
+            info += `• Storage Usage: ${storagePercent}%\n`;
+            info += `• Last Save: ${storageMetadata.lastSave ? new Date(storageMetadata.lastSave).toLocaleString() : '-'}\n`;
+            info += `• Last Backup: ${storageMetadata.lastBackup ? new Date(storageMetadata.lastBackup).toLocaleString() : '-'}\n`;
+            info += `• Save Count: ${storageMetadata.saveCount}\n`;
+            
+            alert(info);
+        }
+
+        function checkStorageHealth() {
+            let storageUsed = 0;
+            Object.values(STORAGE_KEYS).forEach(key => {
+                const data = localStorage.getItem(key);
+                if (data) storageUsed += data.length * 2;
+            });
+            
+            const storageUsedKB = (storageUsed / 1024).toFixed(2);
+            const storageLimit = 5 * 1024 * 1024;
+            const storagePercent = (storageUsed / storageLimit * 100).toFixed(1);
+            
+            const status = storagePercent > 90 ? 'critical' : storagePercent > 70 ? 'warning' : 'healthy';
+            
+            showStorageStatus(`Storage: ${storageUsedKB} KB (${storagePercent}%) - ${status}`, 
+                storagePercent > 90 ? 'error' : storagePercent > 70 ? 'warning' : 'success');
+            
+            return { storageUsedKB, storagePercent, status };
+        }
+
+        // ==================== MODAL FUNCTIONS ====================
+        function showBackupModal() {
+            const modal = document.getElementById('backup-modal');
+            if (modal) {
+                updateStorageStats();
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeBackupModal() {
+            const modal = document.getElementById('backup-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // ==================== STATUS FUNCTIONS ====================
+        function showStorageStatus(message, type = 'info') {
+            const statusEl = document.getElementById('storage-status');
+            if (!statusEl) return;
+            
+            statusEl.textContent = message;
+            statusEl.className = 'storage-status';
+            
+            switch(type) {
+                case 'success':
+                    statusEl.style.background = '#34a853';
+                    break;
+                case 'error':
+                    statusEl.style.background = '#ea4335';
+                    statusEl.classList.add('error');
+                    break;
+                case 'warning':
+                    statusEl.style.background = '#fbbc04';
+                    statusEl.classList.add('warning');
+                    break;
+                default:
+                    statusEl.style.background = '#1a73e8';
+            }
+            
+            statusEl.style.display = 'block';
+            
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
         }
 
         // ==================== LOGOUT FUNCTION ====================
         function logout() {
-            playSoundEffect('notification');
             if (confirm('Apakah Anda yakin ingin keluar?')) {
                 localStorage.removeItem('cashTrackLoggedIn');
                 clearInterval(autoSaveTimer);
@@ -3487,9 +3309,16 @@
             }
         }
 
-        // ==================== PWA INSTALL PROMPT ====================
-        let deferredPrompt;
+        // ==================== PWA FUNCTIONS ====================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(error => {
+                    console.log('ServiceWorker registration failed:', error);
+                });
+            });
+        }
 
+        let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -3498,280 +3327,31 @@
                 if (confirm('Ingin menginstal CashTrack sebagai aplikasi di perangkat Anda?')) {
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
-                        if (choiceResult.outcome === 'accepted') {
-                            console.log('✅ User accepted the install prompt');
-                        } else {
-                            console.log('❌ User dismissed the install prompt');
-                        }
                         deferredPrompt = null;
                     });
                 }
             }, 5000);
         });
 
-        // ==================== SERVICE WORKER REGISTRATION ====================
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(registration => {
-                    console.log('✅ ServiceWorker registered:', registration);
-                }).catch(error => {
-                    console.log('❌ ServiceWorker registration failed:', error);
-                });
-            });
-        }
-
-        // ==================== OFFLINE DETECTION ====================
-        window.addEventListener('online', () => {
-            showStorageStatus('✅ Koneksi internet tersedia', 'success');
-        });
-
-        window.addEventListener('offline', () => {
-            showStorageStatus('⚠️ Anda sedang offline', 'warning');
-        });
-
-        // ==================== BACKUP PADA TUTUP APLIKASI ====================
-        window.addEventListener('beforeunload', (e) => {
-            if (transactions.length > 0) {
-                saveTransactions();
-                createAutoBackup();
-            }
-            
-            // Hapus timers
-            if (autoSaveTimer) clearInterval(autoSaveTimer);
-            if (autoBackupTimer) clearInterval(autoBackupTimer);
-            if (validationTimer) clearInterval(validationTimer);
-        });
-
-        // ==================== KEYBOARD SHORTCUTS ====================
-        document.addEventListener('keydown', (e) => {
-            // Ctrl+S untuk save
-            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-                e.preventDefault();
-                saveTransactions();
-                showStorageStatus('💾 Disimpan (Ctrl+S)', 'success');
-            }
-            
-            // Ctrl+E untuk export
-            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
-                e.preventDefault();
-                exportToExcel();
-            }
-            
-            // Ctrl+B untuk backup
-            if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
-                e.preventDefault();
-                createBackup();
-            }
-            
-            // Escape untuk keluar dari modal
-            if (e.key === 'Escape') {
-                const modal = document.getElementById('backup-modal');
-                if (modal && modal.style.display === 'flex') {
-                    closeBackupModal();
-                }
-            }
-            
-            // Tab navigation
-            if (e.altKey) {
-                if (e.key === '1') {
-                    e.preventDefault();
-                    document.querySelector('[data-page="transactions-page"]').click();
-                } else if (e.key === '2') {
-                    e.preventDefault();
-                    document.querySelector('[data-page="history-page"]').click();
-                } else if (e.key === '3') {
-                    e.preventDefault();
-                    document.querySelector('[data-page="backup-page"]').click();
-                }
-            }
-        });
-
-        // ==================== TOUCH GESTURES ====================
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0 && currentPage === 'history-page') {
-                    // Swipe kiri dari history page ke transactions page
-                    document.querySelector('[data-page="transactions-page"]').click();
-                } else if (diff > 0 && currentPage === 'backup-page') {
-                    // Swipe kiri dari backup page ke history page
-                    document.querySelector('[data-page="history-page"]').click();
-                } else if (diff < 0 && currentPage === 'transactions-page') {
-                    // Swipe kanan dari transactions page ke history page
-                    document.querySelector('[data-page="history-page"]').click();
-                } else if (diff < 0 && currentPage === 'history-page') {
-                    // Swipe kanan dari history page ke backup page
-                    document.querySelector('[data-page="backup-page"]').click();
-                }
-            }
-        }
-
-        // ==================== MANIFEST GENERATION ====================
-        function generateManifest() {
-            const manifest = {
-                name: 'CashTrack',
-                short_name: 'CashTrack',
-                description: 'Aplikasi manajemen keuangan pribadi',
-                start_url: '/',
-                display: 'standalone',
-                background_color: '#1a73e8',
-                theme_color: '#1a73e8',
-                icons: [
-                    {
-                        src: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=',
-                        sizes: '192x192',
-                        type: 'image/svg+xml'
-                    }
-                ]
-            };
-
-            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-            const manifestURL = URL.createObjectURL(manifestBlob);
-            document.getElementById('app-manifest').href = manifestURL;
-        }
-
-        // Generate manifest saat aplikasi dimulai
-        generateManifest();
-
-        // ==================== DATA RECOVERY FUNCTIONS ====================
-        function recoverFromCorruption() {
-            try {
-                console.log('🔄 Attempting data recovery...');
-                
-                // Coba load dari semua storage keys
-                let recoveredData = [];
-                
-                Object.values(STORAGE_KEYS).forEach(key => {
-                    try {
-                        const data = localStorage.getItem(key);
-                        if (data && key.includes('TRANSACTIONS')) {
-                            const parsed = JSON.parse(data);
-                            if (Array.isArray(parsed)) {
-                                recoveredData = [...recoveredData, ...parsed];
-                            }
-                        }
-                    } catch (e) {
-                        console.warn(`⚠️ Failed to recover from ${key}:`, e);
-                    }
-                });
-                
-                // Hapus duplikat
-                recoveredData = recoveredData.filter((item, index, self) =>
-                    index === self.findIndex(t => t.id === item.id)
-                );
-                
-                if (recoveredData.length > 0) {
-                    transactions = recoveredData;
-                    saveTransactions();
-                    showStorageStatus(`🔄 Recovered ${recoveredData.length} transactions`, 'success');
-                    return true;
-                }
-                
-                return false;
-                
-            } catch (error) {
-                console.error('❌ Recovery failed:', error);
-                showStorageStatus('❌ Recovery failed', 'error');
-                return false;
-            }
-        }
-
-        // ==================== PERFORMANCE MONITORING ====================
-        function monitorPerformance() {
-            const startTime = performance.now();
-            
-            // Monitor save performance
-            const saveTime = performance.now();
-            const saveSuccessful = saveTransactions();
-            const saveDuration = performance.now() - saveTime;
-            
-            if (saveDuration > 1000) {
-                console.warn(`⚠️ Slow save detected: ${saveDuration.toFixed(2)}ms`);
-            }
-            
-            // Monitor chart rendering performance
-            const chartTime = performance.now();
-            renderChart();
-            const chartDuration = performance.now() - chartTime;
-            
-            if (chartDuration > 500) {
-                console.warn(`⚠️ Slow chart render: ${chartDuration.toFixed(2)}ms`);
-            }
-            
-            const totalDuration = performance.now() - startTime;
-            
-            if (totalDuration > 2000) {
-                console.warn(`⚠️ Slow operation: ${totalDuration.toFixed(2)}ms`);
-            }
-        }
-
         // ==================== FINAL INITIALIZATION ====================
         console.log('🚀 CashTrack v2.1 - Enhanced Storage System');
         console.log('📱 PWA ready for installation');
-        console.log('💾 Storage system initialized with backup protection');
-        console.log('🎵 Audio system ready');
+        console.log('💾 Storage system initialized');
         console.log('📊 Chart system ready');
         console.log('🔒 Security system active');
 
-        // Auto-save ketika ada perubahan pada form
-        document.getElementById('transaction-desc').addEventListener('input', () => {
-            if (transactions.length > 10) {
-                saveTransactions();
-            }
-        });
-
-        // Periodic performance check
-        setInterval(() => {
-            if (transactions.length > 100) {
-                monitorPerformance();
-            }
-        }, 30000);
-
-        // Initial data recovery check
-        setTimeout(() => {
-            if (transactions.length === 0 && localStorage.length > 0) {
-                recoverFromCorruption();
-            }
-        }, 2000);
-
-        // ==================== EXPORT FUNCTIONS FOR GLOBAL USE ====================
+        // Tambahkan ke global scope untuk debugging
         window.CashTrack = {
-            exportBackup,
-            importFromBackup,
-            restoreFromLatestBackup,
+            transactions,
+            backups,
+            settings,
+            storageMetadata,
+            saveTransactions,
             createBackup,
-            exportToCSV,
-            exportToExcel,
-            exportToExcelGrouped,
-            checkStorageHealth,
-            recoverFromCorruption,
-            getStats: () => ({
-                transactions: transactions.length,
-                backups: backups.length,
-                storage: checkStorageHealth()
-            })
+            restoreFromBackup,
+            exportBackup,
+            importFromBackup
         };
-
-        // ==================== UTILITY FUNCTIONS ====================
-        window.formatCurrency = formatCurrency;
-        window.parseCurrency = parseCurrency;
-        window.formatDate = formatDate;
-
-        console.log('✅ CashTrack fully initialized and ready!');
     </script>
 </body>
 </html>
