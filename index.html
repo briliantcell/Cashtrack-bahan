@@ -16,6 +16,9 @@
     <!-- Tambahkan Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
+    <!-- Tambahkan Font Awesome untuk icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #1a73e8;
@@ -29,8 +32,8 @@
             --border-radius: 12px;
             --shadow: 0 2px 10px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
-            --safe-area-top: env(safe-area-inset-top);
-            --safe-area-bottom: env(safe-area-inset-bottom);
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         [data-theme="dark"] {
@@ -57,12 +60,13 @@
             width: 100%;
             height: 100%;
             overflow-x: hidden;
+            font-size: 14px;
         }
 
         body {
             background-color: var(--light);
             color: var(--dark);
-            line-height: 1.6;
+            line-height: 1.5;
             min-height: 100vh;
             transition: var(--transition);
             padding-top: var(--safe-area-top);
@@ -112,16 +116,16 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
-            padding: 20px;
+            padding: 15px;
         }
 
         .backup-content {
             background: var(--light);
             border-radius: var(--border-radius);
-            padding: 30px;
+            padding: 20px;
             max-width: 500px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             box-shadow: var(--shadow);
             animation: fadeIn 0.3s ease;
@@ -136,13 +140,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 2px solid var(--primary);
         }
 
         .backup-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--dark);
         }
@@ -150,39 +154,45 @@
         .close-backup {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             color: var(--gray);
             cursor: pointer;
             padding: 5px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .backup-section {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             background: rgba(26, 115, 232, 0.05);
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--border-radius);
             border-left: 4px solid var(--primary);
         }
 
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: var(--dark);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .backup-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             padding: 10px;
             background: var(--light);
             border-radius: 8px;
             border: 1px solid rgba(0,0,0,0.1);
+            font-size: 13px;
         }
 
         [data-theme="dark"] .backup-info {
@@ -192,35 +202,35 @@
 
         .backup-actions {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+            margin-top: 15px;
         }
 
         .storage-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .stat-card {
             background: var(--light);
-            padding: 15px;
+            padding: 12px;
             border-radius: var(--border-radius);
             text-align: center;
             box-shadow: var(--shadow);
         }
 
         .stat-value {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--gray);
         }
 
@@ -243,60 +253,61 @@
         }
 
         .splash-logo {
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
             background: white;
-            border-radius: 24px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            font-size: 40px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            font-size: 32px;
             color: var(--primary);
             font-weight: bold;
         }
 
         .splash-title {
             color: white;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-align: center;
-            padding: 0 20px;
+            padding: 0 15px;
         }
 
         .splash-subtitle {
             color: rgba(255,255,255,0.8);
-            font-size: 1.2rem;
-            margin-bottom: 40px;
+            font-size: 1rem;
+            margin-bottom: 30px;
             text-align: center;
-            padding: 0 20px;
+            padding: 0 15px;
         }
 
         .splash-footer {
             position: absolute;
-            bottom: 30px;
+            bottom: 20px;
             left: 0;
             right: 0;
             text-align: center;
             color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            padding: 0 20px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            padding: 0 15px;
         }
 
         .splash-footer p {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .splash-footer .version {
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
         }
 
         .splash-footer .copyright {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             opacity: 0.8;
         }
 
@@ -307,7 +318,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             background: var(--light);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
@@ -316,59 +327,59 @@
 
         .login-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             background: var(--light);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 30px;
+            padding: 25px;
             animation: fadeIn 0.5s ease;
         }
 
         .app-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .app-icon {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: white;
             border: 3px solid var(--primary);
-            border-radius: 20px;
-            margin: 0 auto 15px;
+            border-radius: 16px;
+            margin: 0 auto 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 30px;
+            font-size: 26px;
             font-weight: bold;
         }
 
         .app-title {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--dark);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             text-align: center;
         }
 
         .app-subtitle {
             color: var(--gray);
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-align: center;
         }
 
         .input-container {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .password-input {
             width: 100%;
-            padding: 15px 50px 15px 15px;
+            padding: 12px 45px 12px 12px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 14px;
             transition: var(--transition);
             background: var(--light);
             color: var(--dark);
@@ -387,33 +398,34 @@
 
         .toggle-password {
             position: absolute;
-            right: 15px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             color: var(--gray);
             cursor: pointer;
-            font-size: 18px;
-            width: 30px;
-            height: 30px;
+            font-size: 16px;
+            width: 26px;
+            height: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
         }
 
         .login-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             touch-action: manipulation;
         }
 
@@ -426,8 +438,8 @@
         .error-message {
             color: var(--danger);
             text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
+            margin-top: 8px;
+            font-size: 13px;
             display: none;
         }
 
@@ -438,7 +450,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             background: linear-gradient(135deg, #977dff 0%, #0033ff 50%, #0600ab 100%);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
@@ -447,92 +459,93 @@
 
         .donation-container {
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 30px;
+            padding: 25px;
             animation: fadeIn 0.5s ease;
             text-align: center;
         }
 
         .donation-header {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .donation-icon {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, #977dff, #0033ff);
-            border-radius: 20px;
-            margin: 0 auto 15px;
+            border-radius: 16px;
+            margin: 0 auto 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 30px;
+            font-size: 26px;
             font-weight: bold;
         }
 
         .donation-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #1a73e8;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .donation-subtitle {
             color: var(--gray);
-            font-size: 1rem;
-            margin-bottom: 25px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
         }
 
         .donation-message {
             color: #555;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             line-height: 1.5;
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 15px;
+            padding: 12px;
             background: rgba(151, 125, 255, 0.05);
-            border-radius: 10px;
-            border-left: 4px solid #977dff;
+            border-radius: 8px;
+            border-left: 3px solid #977dff;
         }
 
         .donation-box {
             background: linear-gradient(145deg, #f8f9ff, #eef2ff);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
             border: 2px solid #e0e7ff;
-            box-shadow: 0 8px 20px rgba(151, 125, 255, 0.1);
+            box-shadow: 0 6px 15px rgba(151, 125, 255, 0.1);
             text-align: center;
         }
 
         .bank-name {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 700;
             color: #0033ff;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .account-number {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
             color: #0600ab;
-            letter-spacing: 2px;
-            margin: 15px 0;
-            padding: 15px;
+            letter-spacing: 1px;
+            margin: 12px 0;
+            padding: 12px;
             background: #ffffff;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px dashed #977dff;
             font-family: monospace, sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
             word-break: break-all;
+            font-size: 18px;
         }
 
         .account-number:hover {
@@ -541,46 +554,46 @@
         }
 
         .account-name {
-            font-size: 18px;
+            font-size: 16px;
             color: #444;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
         }
 
         .copy-notice {
-            font-size: 14px;
+            font-size: 12px;
             color: #666;
             font-style: italic;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .donation-buttons {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 25px;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         .donation-btn {
             background: linear-gradient(to right, #977dff, #0033ff);
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 10px;
-            font-size: 18px;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
-            box-shadow: 0 6px 20px rgba(151, 125, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(151, 125, 255, 0.4);
             position: relative;
             overflow: hidden;
             letter-spacing: 0.5px;
         }
 
         .donation-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(151, 125, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(151, 125, 255, 0.6);
         }
 
         .donation-btn:active {
@@ -588,8 +601,8 @@
         }
 
         .donation-footer {
-            margin-top: 30px;
-            font-size: 12px;
+            margin-top: 25px;
+            font-size: 11px;
             color: rgba(255, 255, 255, 0.9);
             text-align: center;
             line-height: 1.4;
@@ -606,7 +619,7 @@
 
         .main-header {
             background: var(--light);
-            padding: 15px 20px;
+            padding: 12px 15px;
             box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
@@ -616,31 +629,41 @@
             left: 0;
             right: 0;
             z-index: 100;
-            padding-top: calc(15px + var(--safe-area-top));
+            padding-top: calc(12px + var(--safe-area-top));
+            height: 60px;
         }
 
         .header-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .header-icon {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: var(--primary);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .header-title h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .header-actions {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
         }
 
@@ -648,8 +671,9 @@
         .theme-switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 30px;
+            width: 52px;
+            height: 26px;
+            flex-shrink: 0;
         }
 
         .theme-switch input {
@@ -673,10 +697,10 @@
         .theme-slider:before {
             position: absolute;
             content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
             background-color: white;
             transition: var(--transition);
             border-radius: 50%;
@@ -687,40 +711,41 @@
         }
 
         input:checked + .theme-slider:before {
-            transform: translateX(30px);
+            transform: translateX(26px);
             background-color: white;
         }
 
         .theme-slider:after {
             content: "🌙";
             position: absolute;
-            left: 8px;
+            left: 7px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 14px;
+            font-size: 12px;
             transition: var(--transition);
         }
 
         input:checked + .theme-slider:after {
             content: "☀️";
-            left: 38px;
+            left: 32px;
         }
 
         .icon-btn {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 18px;
             color: var(--gray);
             cursor: pointer;
-            padding: 8px;
+            padding: 6px;
             border-radius: 50%;
             transition: var(--transition);
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             touch-action: manipulation;
+            flex-shrink: 0;
         }
 
         .icon-btn:hover {
@@ -738,10 +763,11 @@
             background: var(--light);
             border-bottom: 1px solid #e0e0e0;
             position: fixed;
-            top: 70px;
+            top: 60px;
             left: 0;
             right: 0;
             z-index: 99;
+            height: 50px;
         }
 
         [data-theme="dark"] .nav-tabs {
@@ -751,17 +777,20 @@
 
         .nav-tab {
             flex: 1;
-            padding: 15px;
+            padding: 12px 8px;
             text-align: center;
             background: none;
             border: none;
             border-bottom: 3px solid transparent;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--gray);
             cursor: pointer;
             transition: var(--transition);
             touch-action: manipulation;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .nav-tab.active {
@@ -777,11 +806,11 @@
         /* App Content */
         .app-content {
             position: absolute;
-            top: 70px;
+            top: 110px;
             left: 0;
             right: 0;
-            bottom: 60px;
-            padding: 20px;
+            bottom: 50px;
+            padding: 15px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
@@ -791,16 +820,18 @@
 
         @media (max-width: 768px) {
             .app-content {
-                top: 120px;
+                top: 110px;
+                padding: 12px;
             }
             .nav-tabs {
                 display: flex;
+                height: 50px;
             }
         }
 
         @media (min-width: 769px) {
             .app-content {
-                top: 70px;
+                top: 60px;
             }
             .nav-tabs {
                 display: none;
@@ -825,12 +856,16 @@
             right: 0;
             background: var(--light);
             border-top: 1px solid #e0e0e0;
-            padding: 12px 20px;
+            padding: 10px 15px;
             text-align: center;
             color: var(--gray);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             z-index: 99;
-            padding-bottom: calc(12px + var(--safe-area-bottom));
+            padding-bottom: calc(10px + var(--safe-area-bottom));
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         [data-theme="dark"] .app-footer {
@@ -842,63 +877,64 @@
         .balance-card {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: var(--border-radius);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             box-shadow: var(--shadow);
         }
 
         .balance-label {
-            font-size: 1rem;
+            font-size: 0.9rem;
             opacity: 0.9;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .balance-amount {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             word-break: break-word;
+            line-height: 1.2;
         }
 
         .balance-details {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.9;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         /* Section Title */
         .section-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin: 25px 0 15px;
+            margin: 20px 0 12px;
             color: var(--dark);
         }
 
         /* Form Transaksi */
         .transaction-form {
             background: var(--light);
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .form-input {
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 13px;
             transition: var(--transition);
             background: var(--light);
             color: var(--dark);
@@ -918,16 +954,16 @@
 
         .form-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 12px 20px;
+            padding: 10px 15px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             transition: var(--transition);
             display: flex;
@@ -937,7 +973,7 @@
             touch-action: manipulation;
             white-space: nowrap;
             flex: 1;
-            min-width: 120px;
+            min-width: 100px;
         }
 
         .btn-primary {
@@ -1006,32 +1042,33 @@
         /* Filter Section */
         .filter-section {
             background: var(--light);
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .filter-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .filter-label {
             font-weight: 500;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: var(--dark);
             display: block;
+            font-size: 13px;
         }
 
         .filter-select {
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 6px;
             background: var(--light);
-            font-size: 16px;
+            font-size: 13px;
             width: 100%;
             color: var(--dark);
             -webkit-appearance: none;
@@ -1049,7 +1086,7 @@
 
         .filter-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: flex-end;
             flex-wrap: wrap;
         }
@@ -1057,36 +1094,36 @@
         /* Backup Section */
         .backup-section-main {
             background: var(--light);
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 30px;
-            border-left: 4px solid var(--warning);
+            margin-bottom: 20px;
+            border-left: 3px solid var(--warning);
         }
 
         .backup-actions-main {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 12px;
         }
 
         /* Transactions Page */
         .transactions-page {
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
 
         .export-section {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 8px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         /* Month Group untuk Riwayat Transaksi */
         .month-group {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -1095,20 +1132,20 @@
         .month-group .month-header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 15px 20px;
-            font-size: 1.1rem;
+            padding: 12px 15px;
+            font-size: 1rem;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .month-totals {
             display: flex;
-            gap: 15px;
-            font-size: 0.9rem;
+            gap: 10px;
+            font-size: 0.8rem;
             opacity: 0.9;
             flex-wrap: wrap;
         }
@@ -1116,7 +1153,7 @@
         .month-totals span {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         /* Transactions Table */
@@ -1126,16 +1163,17 @@
             display: block;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            font-size: 13px;
         }
 
         .transactions-table table {
             width: 100%;
-            min-width: 600px;
+            min-width: 500px;
         }
 
         .transactions-table th,
         .transactions-table td {
-            padding: 12px 8px;
+            padding: 8px 6px;
             text-align: left;
             border-bottom: 1px solid #f0f0f0;
             color: var(--dark);
@@ -1151,7 +1189,7 @@
             background: #f8f9fa;
             font-weight: 600;
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         [data-theme="dark"] .transactions-table th {
@@ -1182,23 +1220,29 @@
 
         .action-buttons {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             flex-wrap: nowrap;
+        }
+
+        .action-buttons .btn {
+            padding: 6px 8px;
+            font-size: 12px;
+            min-width: auto;
         }
 
         /* Chart Container */
         .chart-container {
             background: var(--light);
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .chart-wrapper {
             position: relative;
             width: 100%;
-            height: 300px;
+            height: 250px;
         }
 
         .chart-placeholder {
@@ -1207,10 +1251,11 @@
             align-items: center;
             justify-content: center;
             background: #f8f9fa;
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--gray);
-            padding: 20px;
+            padding: 15px;
             text-align: center;
+            font-size: 13px;
         }
 
         [data-theme="dark"] .chart-placeholder {
@@ -1224,17 +1269,17 @@
 
         /* Scrollbar Styling */
         .app-content::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         .app-content::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         .app-content::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         .app-content::-webkit-scrollbar-thumb:hover {
@@ -1255,21 +1300,32 @@
 
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 15px;
             color: var(--gray);
+            font-size: 13px;
+        }
+
+        .empty-state div {
+            font-size: 32px;
+            margin-bottom: 10px;
+            opacity: 0.5;
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
+            html, body {
+                font-size: 13px;
+            }
+            
             .app-content {
-                padding: 15px;
-                top: 120px;
+                padding: 10px;
+                top: 110px;
             }
             
             .form-grid,
             .filter-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 8px;
             }
             
             .backup-actions,
@@ -1278,12 +1334,106 @@
             }
             
             .storage-stats {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .backup-content {
+                padding: 15px;
+            }
+            
+            .btn {
+                min-width: 80px;
+                padding: 8px 10px;
+            }
+            
+            .balance-amount {
+                font-size: 1.6rem;
+            }
+            
+            .chart-wrapper {
+                height: 200px;
+            }
+            
+            .nav-tab {
+                font-size: 12px;
+                padding: 10px 5px;
+            }
+            
+            .main-header {
+                padding: 10px 12px;
+                height: 55px;
+            }
+            
+            .nav-tabs {
+                top: 55px;
+                height: 45px;
+            }
+            
+            .app-content {
+                top: 100px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            html, body {
+                font-size: 15px;
+            }
+            
+            .app-content {
                 padding: 20px;
             }
+            
+            .balance-amount {
+                font-size: 2rem;
+            }
+            
+            .chart-wrapper {
+                height: 300px;
+            }
+        }
+
+        /* Audio Control */
+        .audio-control {
+            position: fixed;
+            bottom: 60px;
+            right: 15px;
+            z-index: 100;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .audio-control:hover {
+            transform: scale(1.1);
+        }
+
+        .audio-control.muted {
+            background: var(--gray);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -1291,11 +1441,16 @@
     <!-- Storage Status Indicator -->
     <div class="storage-status" id="storage-status"></div>
 
+    <!-- Audio Control -->
+    <button class="audio-control" id="audio-control" title="Toggle Sound">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
     <!-- Backup Modal -->
     <div class="backup-modal" id="backup-modal">
         <div class="backup-content">
             <div class="backup-header">
-                <h3 class="backup-title">🗃️ Backup & Restore Data</h3>
+                <h3 class="backup-title"><i class="fas fa-database"></i> Backup & Restore Data</h3>
                 <button class="close-backup" onclick="closeBackupModal()">✕</button>
             </div>
             
@@ -1319,44 +1474,44 @@
             </div>
             
             <div class="backup-section">
-                <h4 class="section-title">📤 Backup Data</h4>
-                <p>Simpan data Anda ke file untuk mencegah kehilangan data.</p>
+                <h4 class="section-title"><i class="fas fa-upload"></i> Backup Data</h4>
+                <p style="font-size: 13px;">Simpan data Anda ke file untuk mencegah kehilangan data.</p>
                 <div class="backup-actions">
                     <button class="btn btn-success" onclick="exportBackup()">
-                        <span>💾</span> Backup ke File
+                        <i class="fas fa-save"></i> Backup ke File
                     </button>
                     <button class="btn btn-info" onclick="createAutoBackup()">
-                        <span>🔄</span> Buat Backup Otomatis
+                        <i class="fas fa-sync-alt"></i> Buat Backup Otomatis
                     </button>
                 </div>
             </div>
             
             <div class="backup-section">
-                <h4 class="section-title">📥 Restore Data</h4>
-                <p>Muat data dari file backup yang sebelumnya disimpan.</p>
+                <h4 class="section-title"><i class="fas fa-download"></i> Restore Data</h4>
+                <p style="font-size: 13px;">Muat data dari file backup yang sebelumnya disimpan.</p>
                 <div class="backup-info">
                     <span>Pilih file backup (.json):</span>
                     <input type="file" id="restore-file" accept=".json" style="display: none">
                     <button class="btn btn-warning" onclick="document.getElementById('restore-file').click()">
-                        <span>📂</span> Pilih File
+                        <i class="fas fa-folder-open"></i> Pilih File
                     </button>
                 </div>
                 <div class="backup-actions">
                     <button class="btn btn-primary" onclick="importFromBackup()">
-                        <span>📥</span> Restore Data
+                        <i class="fas fa-file-import"></i> Restore Data
                     </button>
                 </div>
             </div>
             
             <div class="backup-section">
-                <h4 class="section-title">⚙️ Pengaturan Storage</h4>
-                <p>Kelola penyimpanan data lokal.</p>
+                <h4 class="section-title"><i class="fas fa-cog"></i> Pengaturan Storage</h4>
+                <p style="font-size: 13px;">Kelola penyimpanan data lokal.</p>
                 <div class="backup-actions">
                     <button class="btn btn-secondary" onclick="clearOldBackups()">
-                        <span>🗑️</span> Hapus Backup Lama
+                        <i class="fas fa-trash"></i> Hapus Backup Lama
                     </button>
                     <button class="btn btn-danger" onclick="showStorageInfo()">
-                        <span>ℹ️</span> Info Storage
+                        <i class="fas fa-info-circle"></i> Info Storage
                     </button>
                 </div>
             </div>
@@ -1366,7 +1521,7 @@
     <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-logo">
-            <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="100" height="100" rx="20" fill="#1a73e8"/>
                 <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
                 <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -1379,7 +1534,7 @@
         <p class="splash-subtitle">Kelola Keuangan dengan Mudah</p>
         
         <div class="splash-footer">
-            <p class="version">CashTrack Version 2.1</p>
+            <p class="version">CashTrack Version 2.2</p>
             <p>Dengan Sistem Penyimpanan Terjamin</p>
             <p class="copyright">© 2025 CashTrack. All Rights Reserved.</p>
         </div>
@@ -1390,7 +1545,7 @@
         <div class="login-container">
             <div class="app-header">
                 <div class="app-icon">
-                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="100" height="100" rx="20" fill="#1a73e8"/>
                         <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
                         <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -1405,7 +1560,9 @@
 
             <div class="input-container">
                 <input type="password" class="password-input" placeholder="Masukkan password" id="password-input">
-                <button type="button" class="toggle-password" id="toggle-password">👁️</button>
+                <button type="button" class="toggle-password" id="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
 
             <button class="login-btn" onclick="checkPassword()">
@@ -1421,7 +1578,7 @@
         <div class="donation-container">
             <div class="donation-header">
                 <div class="donation-icon">
-                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="100" height="100" rx="20" fill="#977dff"/>
                         <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
                         <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -1440,7 +1597,7 @@
 
             <div class="donation-box">
                 <div class="bank-name">
-                    <span>🏦</span> Bank Seabank
+                    <i class="fas fa-university"></i> Bank Seabank
                 </div>
                 <div class="account-name">Muhamad Abid kalkautsar</div>
                 <div class="account-number" id="copy-account-number">9018 9866 1823</div>
@@ -1449,8 +1606,7 @@
 
             <div class="donation-buttons">
                 <button class="donation-btn" id="enter-app-btn">
-                    <span class="button-shine"></span>
-                    MASUK KE APLIKASI
+                    <i class="fas fa-sign-in-alt"></i> MASUK KE APLIKASI
                 </button>
             </div>
         </div>
@@ -1465,7 +1621,7 @@
         <header class="main-header">
             <div class="header-title">
                 <div class="header-icon">
-                    <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="100" height="100" rx="20" fill="#1a73e8"/>
                         <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
                         <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -1482,16 +1638,26 @@
                     <span class="theme-slider"></span>
                 </label>
                 
-                <button class="icon-btn" onclick="showBackupModal()" title="Backup Data">💾</button>
-                <button class="icon-btn" onclick="logout()" title="Keluar">🚪</button>
+                <button class="icon-btn" onclick="showBackupModal()" title="Backup Data">
+                    <i class="fas fa-save"></i>
+                </button>
+                <button class="icon-btn" onclick="logout()" title="Keluar">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
             </div>
         </header>
 
         <!-- Navigation Tabs -->
         <div class="nav-tabs">
-            <button class="nav-tab active" data-page="transactions-page">Tambah Transaksi</button>
-            <button class="nav-tab" data-page="history-page">Riwayat Transaksi</button>
-            <button class="nav-tab" data-page="backup-page">Backup Data</button>
+            <button class="nav-tab active" data-page="transactions-page">
+                <i class="fas fa-plus-circle"></i> Tambah
+            </button>
+            <button class="nav-tab" data-page="history-page">
+                <i class="fas fa-history"></i> Riwayat
+            </button>
+            <button class="nav-tab" data-page="backup-page">
+                <i class="fas fa-database"></i> Backup
+            </button>
         </div>
 
         <div class="app-content">
@@ -1502,12 +1668,12 @@
                     <div class="balance-amount" id="balance-amount">Rp 0</div>
                     <div class="balance-details">
                         <span>Update: <span id="last-update">-</span></span>
-                        <span>Total Transaksi: <span id="total-transactions">0</span></span>
+                        <span>Transaksi: <span id="total-transactions">0</span></span>
                         <span>Backup: <span id="last-backup">Belum ada</span></span>
                     </div>
                 </div>
 
-                <h3 class="section-title">Tambah Transaksi Baru</h3>
+                <h3 class="section-title"><i class="fas fa-plus-circle"></i> Tambah Transaksi Baru</h3>
                 <div class="transaction-form">
                     <div class="form-grid">
                         <input type="date" class="form-input" id="transaction-date">
@@ -1517,18 +1683,19 @@
                     </div>
                     <div class="form-buttons">
                         <button class="btn btn-primary" onclick="addTransaction()">
-                            <span>➕</span> Tambah Transaksi
+                            <i class="fas fa-plus"></i> Tambah Transaksi
                         </button>
                         <button class="btn btn-secondary" onclick="clearForm()">
-                            <span>🗑️</span> Bersihkan Form
+                            <i class="fas fa-trash"></i> Bersihkan Form
                         </button>
                     </div>
                 </div>
 
-                <h3 class="section-title">Grafik Keuangan</h3>
+                <h3 class="section-title"><i class="fas fa-chart-bar"></i> Grafik Keuangan</h3>
                 <div class="chart-container">
                     <div class="chart-wrapper">
                         <div class="chart-placeholder" id="chart-placeholder">
+                            <i class="fas fa-chart-line"></i><br>
                             Grafik akan ditampilkan di sini
                         </div>
                         <canvas id="finance-chart"></canvas>
@@ -1539,7 +1706,7 @@
             <!-- Page 2: Riwayat Transaksi -->
             <div id="history-page" class="page-section">
                 <div class="transactions-page">
-                    <h3 class="section-title">Filter Transaksi</h3>
+                    <h3 class="section-title"><i class="fas fa-filter"></i> Filter Transaksi</h3>
                     <div class="filter-section">
                         <div class="filter-grid">
                             <div>
@@ -1563,27 +1730,27 @@
                         </div>
                         <div class="filter-buttons">
                             <button class="btn btn-primary" onclick="applyFilter()">
-                                <span>🔍</span> Terapkan Filter
+                                <i class="fas fa-search"></i> Terapkan Filter
                             </button>
                             <button class="btn btn-secondary" onclick="resetFilters()">
-                                <span>🔄</span> Reset Filter
+                                <i class="fas fa-redo"></i> Reset Filter
                             </button>
                         </div>
                     </div>
 
                     <div class="export-section">
                         <button class="btn btn-success" onclick="exportToCSV()">
-                            <span>📊</span> Export CSV
+                            <i class="fas fa-file-csv"></i> Export CSV
                         </button>
                         <button class="btn btn-success" onclick="exportToExcel()">
-                            <span>📈</span> Export Excel
+                            <i class="fas fa-file-excel"></i> Export Excel
                         </button>
                         <button class="btn btn-warning" onclick="exportToExcelGrouped()">
-                            <span>📋</span> Export Excel Berkelompok
+                            <i class="fas fa-file-alt"></i> Export Excel Berkelompok
                         </button>
                     </div>
 
-                    <h3 class="section-title">Riwayat Transaksi</h3>
+                    <h3 class="section-title"><i class="fas fa-history"></i> Riwayat Transaksi</h3>
                     <div id="transactions-container">
                         <!-- Transaksi akan ditampilkan di sini -->
                     </div>
@@ -1593,8 +1760,8 @@
             <!-- Page 3: Backup Data -->
             <div id="backup-page" class="page-section">
                 <div class="backup-section-main">
-                    <h3 class="section-title">🗃️ Sistem Backup Data</h3>
-                    <p>Lindungi data keuangan Anda dengan sistem backup yang kuat. Data disimpan di 3 tempat berbeda untuk keamanan maksimal.</p>
+                    <h3 class="section-title"><i class="fas fa-database"></i> Sistem Backup Data</h3>
+                    <p style="font-size: 13px;">Lindungi data keuangan Anda dengan sistem backup yang kuat. Data disimpan di 3 tempat berbeda untuk keamanan maksimal.</p>
                     
                     <div class="storage-stats">
                         <div class="stat-card">
@@ -1617,45 +1784,45 @@
 
                     <div class="backup-actions-main">
                         <button class="btn btn-success" onclick="exportBackup()">
-                            <span>💾</span> Backup Sekarang
+                            <i class="fas fa-save"></i> Backup Sekarang
                         </button>
                         <button class="btn btn-warning" onclick="restoreFromLatestBackup()">
-                            <span>📥</span> Restore Terakhir
+                            <i class="fas fa-download"></i> Restore Terakhir
                         </button>
                         <button class="btn btn-info" onclick="checkStorageHealth()">
-                            <span>🔍</span> Cek Kesehatan
+                            <i class="fas fa-search"></i> Cek Kesehatan
                         </button>
                         <button class="btn btn-danger" onclick="showBackupModal()">
-                            <span>⚙️</span> Kelola Backup
+                            <i class="fas fa-cog"></i> Kelola Backup
                         </button>
                     </div>
                 </div>
 
-                <h3 class="section-title">📋 Daftar Backup</h3>
+                <h3 class="section-title"><i class="fas fa-list"></i> Daftar Backup</h3>
                 <div id="backup-list">
                     <!-- Daftar backup akan ditampilkan di sini -->
                 </div>
 
-                <h3 class="section-title">🛡️ Tips Keamanan Data</h3>
+                <h3 class="section-title"><i class="fas fa-shield-alt"></i> Tips Keamanan Data</h3>
                 <div class="backup-section-main">
-                    <p><strong>✅ Lakukan backup reguler:</strong> Minimal seminggu sekali</p>
-                    <p><strong>✅ Simpan file backup:</strong> Di cloud atau perangkat lain</p>
-                    <p><strong>✅ Cek storage:</strong> Pastikan ada cukup space</p>
-                    <p><strong>✅ Export data:</strong> Simpan file CSV/Excel secara berkala</p>
-                    <p><strong>✅ Auto-backup:</strong> Aktifkan di pengaturan backup</p>
+                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Lakukan backup reguler:</strong> Minimal seminggu sekali</p>
+                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Simpan file backup:</strong> Di cloud atau perangkat lain</p>
+                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Cek storage:</strong> Pastikan ada cukup space</p>
+                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Export data:</strong> Simpan file CSV/Excel secara berkala</p>
+                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Auto-backup:</strong> Aktifkan di pengaturan backup</p>
                 </div>
             </div>
         </div>
 
         <footer class="app-footer">
-            © 2025 CashTrack — Sistem Penyimpanan Terjamin
+            <i class="fas fa-lock"></i> © 2025 CashTrack — Sistem Penyimpanan Terjamin
         </footer>
     </div>
 
     <script>
         // ==================== KONFIGURASI ====================
         const STORAGE_CONFIG = {
-            VERSION: '2.1',
+            VERSION: '2.2',
             MAX_BACKUPS: 10,
             AUTO_SAVE_INTERVAL: 30000,
             AUTO_BACKUP_INTERVAL: 3600000,
@@ -1684,6 +1851,71 @@
         let autoSaveTimer = null;
         let autoBackupTimer = null;
         let validationTimer = null;
+        
+        // ==================== SISTEM SUARA ====================
+        let audioEnabled = true;
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const audioCache = {};
+
+        // Fungsi untuk membuat suara sederhana
+        function playSound(type = 'click') {
+            if (!audioEnabled) return;
+            
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Atur frekuensi berdasarkan jenis suara
+                switch(type) {
+                    case 'success':
+                        oscillator.frequency.value = 800;
+                        break;
+                    case 'error':
+                        oscillator.frequency.value = 400;
+                        break;
+                    case 'notification':
+                        oscillator.frequency.value = 600;
+                        break;
+                    case 'click':
+                    default:
+                        oscillator.frequency.value = 500;
+                }
+                
+                // Atur volume
+                gainNode.gain.value = 0.1;
+                
+                // Fade out
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+                
+                // Play suara
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.1);
+                
+            } catch (error) {
+                console.log('Audio error:', error);
+            }
+        }
+
+        // Fungsi untuk toggle suara
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const audioControl = document.getElementById('audio-control');
+            const icon = audioControl.querySelector('i');
+            
+            if (audioEnabled) {
+                audioControl.classList.remove('muted');
+                icon.className = 'fas fa-volume-up';
+                playSound('notification');
+                showStorageStatus('🔊 Suara diaktifkan', 'success');
+            } else {
+                audioControl.classList.add('muted');
+                icon.className = 'fas fa-volume-mute';
+                showStorageStatus('🔇 Suara dimatikan', 'warning');
+            }
+        }
 
         // ==================== SPLASH SCREEN ====================
         window.addEventListener('load', function() {
@@ -1691,12 +1923,15 @@
             
             // Set tanggal default
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transaction-date').value = today;
+            const dateInput = document.getElementById('transaction-date');
+            if (dateInput) {
+                dateInput.value = today;
+            }
             
             // Setup event listeners
             setupEventListeners();
             
-            // Hide splash screen setelah 2 detik
+            // Hide splash screen setelah 1.5 detik
             setTimeout(() => {
                 const splashScreen = document.getElementById('splash-screen');
                 splashScreen.style.opacity = '0';
@@ -1713,11 +1948,17 @@
                         showLoginScreen();
                     }
                 }, 500);
-            }, 2000);
+            }, 1500);
         });
 
         // ==================== SETUP EVENT LISTENERS ====================
         function setupEventListeners() {
+            // Audio control
+            const audioControl = document.getElementById('audio-control');
+            if (audioControl) {
+                audioControl.addEventListener('click', toggleAudio);
+            }
+            
             // Password input event
             const passwordInput = document.getElementById('password-input');
             if (passwordInput) {
@@ -1733,10 +1974,12 @@
             if (togglePassword) {
                 togglePassword.addEventListener('click', function() {
                     const passwordInput = document.getElementById('password-input');
+                    const icon = this.querySelector('i');
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                     passwordInput.setAttribute('type', type);
-                    this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+                    icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
                     passwordInput.focus();
+                    playSound('click');
                 });
             }
             
@@ -1744,6 +1987,7 @@
             const enterAppBtn = document.getElementById('enter-app-btn');
             if (enterAppBtn) {
                 enterAppBtn.addEventListener('click', function() {
+                    playSound('success');
                     enterApp();
                 });
             }
@@ -1758,6 +2002,7 @@
                         this.textContent = '✓ Berhasil Disalin!';
                         this.style.background = '#34a853';
                         this.style.color = 'white';
+                        playSound('success');
                         
                         setTimeout(() => {
                             this.textContent = originalText;
@@ -1776,6 +2021,7 @@
                         this.textContent = '✓ Berhasil Disalin!';
                         this.style.background = '#34a853';
                         this.style.color = 'white';
+                        playSound('success');
                         
                         setTimeout(() => {
                             this.textContent = originalText;
@@ -1796,6 +2042,7 @@
                 }
                 
                 themeToggle.addEventListener('change', function() {
+                    playSound('click');
                     if (this.checked) {
                         document.body.setAttribute('data-theme', 'dark');
                         localStorage.setItem('theme', 'dark');
@@ -1819,6 +2066,7 @@
             if (restoreFile) {
                 restoreFile.addEventListener('change', function() {
                     if (this.files.length > 0) {
+                        playSound('notification');
                         importFromBackup();
                     }
                 });
@@ -1826,6 +2074,24 @@
             
             // Setup navigation tabs
             setupNavigationTabs();
+            
+            // Add sound to all buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                    const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
+                    
+                    if (button.classList.contains('btn-danger')) {
+                        playSound('error');
+                    } else if (button.classList.contains('btn-success') || 
+                               button.classList.contains('login-btn') || 
+                               button.classList.contains('donation-btn')) {
+                        playSound('success');
+                    } else if (!button.id.includes('toggle') && 
+                               !button.classList.contains('close-backup')) {
+                        playSound('click');
+                    }
+                }
+            });
         }
 
         // ==================== LOGIN FUNCTIONS ====================
@@ -1856,10 +2122,12 @@
             
             if (passwordInput.value === correctPassword) {
                 console.log('✅ Password correct');
+                playSound('success');
                 localStorage.setItem('cashTrackLoggedIn', 'true');
                 showDonationScreen();
             } else {
                 console.log('❌ Password incorrect');
+                playSound('error');
                 if (errorMessage) {
                     errorMessage.style.display = 'block';
                     passwordInput.value = '';
@@ -1899,8 +2167,9 @@
                 updateMonthOptions();
                 updateDayOptions();
                 
-                currentFilters.year = new Date().getFullYear().toString();
-                currentFilters.month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+                const currentDate = new Date();
+                currentFilters.year = currentDate.getFullYear().toString();
+                currentFilters.month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
                 
                 updateBalance();
                 renderChart();
@@ -1919,6 +2188,7 @@
                 }, 100);
                 
                 console.log('✅ App initialized successfully');
+                showStorageStatus('✅ Aplikasi siap digunakan', 'success');
                 
             } catch (error) {
                 console.error('❌ Error initializing app:', error);
@@ -2058,12 +2328,14 @@
                 updateBackupList();
                 
                 showStorageStatus('💾 Backup created', 'success');
+                playSound('success');
                 
                 return backup;
 
             } catch (error) {
                 console.error('❌ Error creating backup:', error);
                 showStorageStatus('❌ Error creating backup', 'error');
+                playSound('error');
                 return null;
             }
         }
@@ -2105,10 +2377,12 @@
                 createBackup();
                 
                 showStorageStatus('💾 Backup exported', 'success');
+                playSound('success');
                 
             } catch (error) {
                 console.error('❌ Error exporting backup:', error);
                 showStorageStatus('❌ Error exporting backup', 'error');
+                playSound('error');
             }
         }
 
@@ -2139,10 +2413,12 @@
                     fileInput.value = '';
                     
                     showStorageStatus('✅ Data imported', 'success');
+                    playSound('success');
                     
                 } catch (error) {
                     console.error('❌ Error importing backup:', error);
                     showStorageStatus('❌ Error importing backup', 'error');
+                    playSound('error');
                 }
             };
             
@@ -2152,6 +2428,7 @@
         function restoreFromLatestBackup() {
             if (backups.length === 0) {
                 showStorageStatus('⚠️ No backups available', 'warning');
+                playSound('error');
                 return false;
             }
             
@@ -2164,6 +2441,7 @@
                 const backup = backups.find(b => b.id === backupId);
                 if (!backup) {
                     showStorageStatus('❌ Backup not found', 'error');
+                    playSound('error');
                     return false;
                 }
                 
@@ -2174,12 +2452,14 @@
                 filterTransactions();
                 
                 showStorageStatus('🔄 Data restored', 'success');
+                playSound('success');
                 
                 return true;
 
             } catch (error) {
                 console.error('❌ Error restoring backup:', error);
                 showStorageStatus('❌ Error restoring data', 'error');
+                playSound('error');
                 return false;
             }
         }
@@ -2240,18 +2520,21 @@
             if (!date) {
                 alert('Harap pilih tanggal transaksi!');
                 document.getElementById('transaction-date').focus();
+                playSound('error');
                 return;
             }
             
             if (!description) {
                 alert('Harap isi keterangan transaksi!');
                 document.getElementById('transaction-desc').focus();
+                playSound('error');
                 return;
             }
             
             if (income === 0 && expense === 0) {
                 alert('Harap isi pendapatan atau pengeluaran!');
                 document.getElementById('transaction-income').focus();
+                playSound('error');
                 return;
             }
             
@@ -2278,6 +2561,9 @@
             updateMonthOptions();
             updateDayOptions();
             
+            showStorageStatus('✅ Transaksi ditambahkan', 'success');
+            playSound('success');
+            
             setTimeout(() => {
                 document.getElementById('transaction-desc').focus();
             }, 100);
@@ -2290,22 +2576,29 @@
             document.getElementById('transaction-income').value = '';
             document.getElementById('transaction-expense').value = '';
             document.getElementById('transaction-desc').focus();
+            playSound('click');
         }
 
         function deleteTransaction(id) {
             if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+                playSound('error');
                 transactions = transactions.filter(t => t.id !== id);
                 filteredTransactions = filteredTransactions.filter(t => t.id !== id);
                 saveTransactions();
                 updateBalance();
                 renderChart();
                 filterTransactions();
+                showStorageStatus('🗑️ Transaksi dihapus', 'warning');
+            } else {
+                playSound('click');
             }
         }
 
         function editTransaction(id) {
             const transaction = transactions.find(t => t.id === id);
             if (!transaction) return;
+            
+            playSound('click');
             
             document.getElementById('transaction-date').value = transaction.date;
             document.getElementById('transaction-desc').value = transaction.description;
@@ -2329,6 +2622,8 @@
             transactions = transactions.filter(t => t.id !== id);
             saveTransactions();
             
+            showStorageStatus('✏️ Mode edit transaksi', 'info');
+            
             setTimeout(() => {
                 document.getElementById('transaction-desc').focus();
             }, 100);
@@ -2348,31 +2643,56 @@
             
             const balance = totalIncome - totalExpense;
             
-            document.getElementById('balance-amount').textContent = formatCurrency(balance);
-            document.getElementById('total-transactions').textContent = totalTransactions;
+            const balanceAmount = document.getElementById('balance-amount');
+            const totalTransactionsEl = document.getElementById('total-transactions');
+            
+            if (balanceAmount) {
+                balanceAmount.textContent = formatCurrency(balance);
+                // Beri warna berdasarkan saldo
+                if (balance < 0) {
+                    balanceAmount.style.color = '#ff6b6b';
+                } else if (balance > 0) {
+                    balanceAmount.style.color = '#51cf66';
+                } else {
+                    balanceAmount.style.color = 'white';
+                }
+            }
+            
+            if (totalTransactionsEl) {
+                totalTransactionsEl.textContent = totalTransactions;
+            }
             
             const now = new Date();
-            document.getElementById('last-update').textContent = now.toLocaleTimeString('id-ID', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
+            const lastUpdate = document.getElementById('last-update');
+            if (lastUpdate) {
+                lastUpdate.textContent = now.toLocaleTimeString('id-ID', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+            }
         }
 
         // ==================== CHART FUNCTIONS ====================
         function renderChart() {
-            const ctx = document.getElementById('finance-chart').getContext('2d');
+            const ctx = document.getElementById('finance-chart');
             const placeholder = document.getElementById('chart-placeholder');
+            
+            if (!ctx) return;
             
             if (transactions.length === 0) {
                 if (financeChart) {
                     financeChart.destroy();
                     financeChart = null;
                 }
-                placeholder.style.display = 'flex';
+                if (placeholder) {
+                    placeholder.style.display = 'flex';
+                }
                 return;
             }
             
-            placeholder.style.display = 'none';
+            if (placeholder) {
+                placeholder.style.display = 'none';
+            }
             
             const monthlyData = {};
             transactions.forEach(transaction => {
@@ -2401,81 +2721,98 @@
                 financeChart.destroy();
             }
             
-            financeChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Pendapatan',
-                            data: incomeData,
-                            backgroundColor: '#34a853',
-                            borderColor: '#2d924a',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Pengeluaran',
-                            data: expenseData,
-                            backgroundColor: '#ea4335',
-                            borderColor: '#d33426',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: textColor
+            try {
+                financeChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Pendapatan',
+                                data: incomeData,
+                                backgroundColor: '#34a853',
+                                borderColor: '#2d924a',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Pengeluaran',
+                                data: expenseData,
+                                backgroundColor: '#ea4335',
+                                borderColor: '#d33426',
+                                borderWidth: 1
                             }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: textColor,
+                                    font: {
+                                        size: 12
                                     }
-                                    label += formatCurrency(context.raw);
-                                    return label;
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += formatCurrency(context.raw);
+                                        return label;
+                                    }
                                 }
                             }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                color: gridColor
-                            },
-                            ticks: {
-                                color: textColor,
-                                maxRotation: 45,
-                                minRotation: 45
-                            }
                         },
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: gridColor
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: gridColor
+                                },
+                                ticks: {
+                                    color: textColor,
+                                    maxRotation: 45,
+                                    minRotation: 45,
+                                    font: {
+                                        size: 11
+                                    }
+                                }
                             },
-                            ticks: {
-                                color: textColor,
-                                callback: function(value) {
-                                    if (value >= 1000000) {
-                                        return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: gridColor
+                                },
+                                ticks: {
+                                    color: textColor,
+                                    callback: function(value) {
+                                        if (value >= 1000000) {
+                                            return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
+                                        }
+                                        if (value >= 1000) {
+                                            return 'Rp' + (value / 1000).toFixed(0) + 'rb';
+                                        }
+                                        return 'Rp' + value;
+                                    },
+                                    font: {
+                                        size: 11
                                     }
-                                    if (value >= 1000) {
-                                        return 'Rp' + (value / 1000).toFixed(0) + 'rb';
-                                    }
-                                    return 'Rp' + value;
                                 }
                             }
                         }
                     }
+                });
+            } catch (error) {
+                console.error('Error rendering chart:', error);
+                if (placeholder) {
+                    placeholder.style.display = 'flex';
+                    placeholder.innerHTML = '<i class="fas fa-exclamation-triangle"></i><br>Error loading chart';
                 }
-            });
+            }
         }
 
         // ==================== FILTER FUNCTIONS ====================
@@ -2607,6 +2944,8 @@
             if (daySelect) currentFilters.day = daySelect.value;
             
             filterTransactions();
+            playSound('click');
+            showStorageStatus('🔍 Filter diterapkan', 'success');
         }
 
         function resetFilters() {
@@ -2622,6 +2961,8 @@
             filteredTransactions = [...transactions];
             
             displayGroupedTransactions();
+            playSound('click');
+            showStorageStatus('🔄 Filter direset', 'success');
         }
 
         // ==================== DISPLAY FUNCTIONS ====================
@@ -2632,7 +2973,7 @@
             if (filteredTransactions.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div>📊</div>
+                        <div><i class="fas fa-receipt"></i></div>
                         <p>Tidak ada transaksi ditemukan</p>
                         <p>Tambahkan transaksi baru di halaman "Tambah Transaksi"</p>
                     </div>
@@ -2689,13 +3030,17 @@
                     transactionsHtml += `
                         <tr>
                             <td>${formatDate(transaction.date)}</td>
-                            <td>${transaction.description}</td>
+                            <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${transaction.description}</td>
                             <td class="income-amount">${transaction.income > 0 ? formatCurrency(transaction.income) : '-'}</td>
                             <td class="expense-amount">${transaction.expense > 0 ? formatCurrency(transaction.expense) : '-'}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})">✏️ Edit</button>
-                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})">🗑️ Hapus</button>
+                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})" title="Hapus">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -2713,9 +3058,9 @@
                         <div class="month-header">
                             <span>${monthName} ${year}</span>
                             <div class="month-totals">
-                                <span>Pendapatan: <strong>${formatCurrency(monthIncome)}</strong></span>
-                                <span>Pengeluaran: <strong>${formatCurrency(monthExpense)}</strong></span>
-                                <span>Saldo: <strong style="color: ${monthBalance >= 0 ? '#34a853' : '#ea4335'}">${formatCurrency(monthBalance)}</strong></span>
+                                <span><i class="fas fa-arrow-up" style="color: #34a853;"></i> ${formatCurrency(monthIncome)}</span>
+                                <span><i class="fas fa-arrow-down" style="color: #ea4335;"></i> ${formatCurrency(monthExpense)}</span>
+                                <span><i class="fas fa-balance-scale"></i> <strong style="color: ${monthBalance >= 0 ? '#34a853' : '#ea4335'}">${formatCurrency(monthBalance)}</strong></span>
                             </div>
                         </div>
                         ${transactionsHtml}
@@ -2731,6 +3076,7 @@
             const tabs = document.querySelectorAll('.nav-tab');
             tabs.forEach(tab => {
                 tab.addEventListener('click', function() {
+                    playSound('click');
                     const targetPage = this.dataset.page;
                     
                     tabs.forEach(t => t.classList.remove('active'));
@@ -2740,7 +3086,10 @@
                         section.classList.remove('active');
                     });
                     
-                    document.getElementById(targetPage).classList.add('active');
+                    const targetSection = document.getElementById(targetPage);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
                     currentPage = targetPage;
                     
                     if (targetPage === 'history-page') {
@@ -2764,269 +3113,296 @@
         function exportToCSV() {
             if (transactions.length === 0) {
                 alert('Tidak ada data transaksi untuk diexport!');
+                playSound('error');
                 return;
             }
             
-            const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
-            const csvContent = [
-                headers.join(','),
-                ...transactions.map(t => [
-                    t.date,
-                    `"${t.description.replace(/"/g, '""')}"`,
-                    t.income,
-                    t.expense
-                ].join(','))
-            ].join('\n');
-            
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showStorageStatus('📊 CSV exported', 'success');
+            try {
+                const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
+                const csvContent = [
+                    headers.join(','),
+                    ...transactions.map(t => [
+                        t.date,
+                        `"${t.description.replace(/"/g, '""')}"`,
+                        t.income,
+                        t.expense
+                    ].join(','))
+                ].join('\n');
+                
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showStorageStatus('📊 CSV exported', 'success');
+                playSound('success');
+                
+            } catch (error) {
+                console.error('Error exporting CSV:', error);
+                showStorageStatus('❌ Error exporting CSV', 'error');
+                playSound('error');
+            }
         }
 
         function exportToExcel() {
             if (transactions.length === 0) {
                 alert('Tidak ada data transaksi untuk diexport!');
+                playSound('error');
                 return;
             }
             
-            const grouped = {};
-            transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7);
-                if (!grouped[monthKey]) {
-                    grouped[monthKey] = [];
-                }
-                grouped[monthKey].push(transaction);
-            });
-            
-            const sortedMonths = Object.keys(grouped).sort().reverse();
-            
-            let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
-            
-            sortedMonths.forEach(monthKey => {
-                const [year, month] = monthKey.split('-');
-                const monthName = getMonthName(month);
-                const monthTransactions = grouped[monthKey];
-                
-                let monthIncome = 0;
-                let monthExpense = 0;
-                
-                monthTransactions.forEach(t => {
-                    monthIncome += t.income || 0;
-                    monthExpense += t.expense || 0;
+            try {
+                const grouped = {};
+                transactions.forEach(transaction => {
+                    const monthKey = transaction.date.substring(0, 7);
+                    if (!grouped[monthKey]) {
+                        grouped[monthKey] = [];
+                    }
+                    grouped[monthKey].push(transaction);
                 });
                 
-                const monthBalance = monthIncome - monthExpense;
+                const sortedMonths = Object.keys(grouped).sort().reverse();
                 
-                excelContent += `
-                    <tr style="background-color: #f0f0f0;">
-                        <td colspan="4"><strong>${monthName} ${year}</strong></td>
-                    </tr>
-                    <tr>
-                        <th>Tanggal</th>
-                        <th>Keterangan</th>
-                        <th>Pendapatan</th>
-                        <th>Pengeluaran</th>
-                    </tr>
-                `;
+                let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
                 
-                monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                sortedMonths.forEach(monthKey => {
+                    const [year, month] = monthKey.split('-');
+                    const monthName = getMonthName(month);
+                    const monthTransactions = grouped[monthKey];
+                    
+                    let monthIncome = 0;
+                    let monthExpense = 0;
+                    
+                    monthTransactions.forEach(t => {
+                        monthIncome += t.income || 0;
+                        monthExpense += t.expense || 0;
+                    });
+                    
+                    const monthBalance = monthIncome - monthExpense;
+                    
                     excelContent += `
-                        <tr>
-                            <td>${formatDate(t.date)}</td>
-                            <td>${t.description}</td>
-                            <td>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                            <td>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                        <tr style="background-color: #f0f0f0;">
+                            <td colspan="4"><strong>${monthName} ${year}</strong></td>
                         </tr>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Keterangan</th>
+                            <th>Pendapatan</th>
+                            <th>Pengeluaran</th>
+                        </tr>
+                    `;
+                    
+                    monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                        excelContent += `
+                            <tr>
+                                <td>${formatDate(t.date)}</td>
+                                <td>${t.description}</td>
+                                <td>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                                <td>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    excelContent += `
+                        <tr style="background-color: #e8f5e9;">
+                            <td colspan="2"><strong>Total ${monthName}</strong></td>
+                            <td><strong>${formatCurrency(monthIncome)}</strong></td>
+                            <td><strong>${formatCurrency(monthExpense)}</strong></td>
+                        </tr>
+                        <tr style="background-color: #fff3e0;">
+                            <td colspan="3"><strong>Saldo Bulan ${monthName}</strong></td>
+                            <td><strong style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</strong></td>
+                        </tr>
+                        <tr><td colspan="4" style="height: 20px;"></td></tr>
                     `;
                 });
                 
+                let totalIncome = 0;
+                let totalExpense = 0;
+                transactions.forEach(t => {
+                    totalIncome += t.income || 0;
+                    totalExpense += t.expense || 0;
+                });
+                const totalBalance = totalIncome - totalExpense;
+                
                 excelContent += `
-                    <tr style="background-color: #e8f5e9;">
-                        <td colspan="2"><strong>Total ${monthName}</strong></td>
-                        <td><strong>${formatCurrency(monthIncome)}</strong></td>
-                        <td><strong>${formatCurrency(monthExpense)}</strong></td>
+                    <tr style="background-color: #e3f2fd;">
+                        <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
+                        <td><strong>${formatCurrency(totalIncome)}</strong></td>
+                        <td><strong>${formatCurrency(totalExpense)}</strong></td>
                     </tr>
-                    <tr style="background-color: #fff3e0;">
-                        <td colspan="3"><strong>Saldo Bulan ${monthName}</strong></td>
-                        <td><strong style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</strong></td>
+                    <tr style="background-color: #fce4ec;">
+                        <td colspan="3"><strong>SALDO AKHIR</strong></td>
+                        <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
                     </tr>
-                    <tr><td colspan="4" style="height: 20px;"></td></tr>
+                </table>
                 `;
-            });
-            
-            let totalIncome = 0;
-            let totalExpense = 0;
-            transactions.forEach(t => {
-                totalIncome += t.income || 0;
-                totalExpense += t.expense || 0;
-            });
-            const totalBalance = totalIncome - totalExpense;
-            
-            excelContent += `
-                <tr style="background-color: #e3f2fd;">
-                    <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
-                    <td><strong>${formatCurrency(totalIncome)}</strong></td>
-                    <td><strong>${formatCurrency(totalExpense)}</strong></td>
-                </tr>
-                <tr style="background-color: #fce4ec;">
-                    <td colspan="3"><strong>SALDO AKHIR</strong></td>
-                    <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
-                </tr>
-            </table>
-            `;
-            
-            const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `cash-track-excel-${new Date().toISOString().split('T')[0]}.xls`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showStorageStatus('📈 Excel exported', 'success');
+                
+                const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', `cash-track-excel-${new Date().toISOString().split('T')[0]}.xls`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showStorageStatus('📈 Excel exported', 'success');
+                playSound('success');
+                
+            } catch (error) {
+                console.error('Error exporting Excel:', error);
+                showStorageStatus('❌ Error exporting Excel', 'error');
+                playSound('error');
+            }
         }
 
         function exportToExcelGrouped() {
             if (transactions.length === 0) {
                 alert('Tidak ada data transaksi untuk diexport!');
+                playSound('error');
                 return;
             }
             
-            const grouped = {};
-            transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7);
-                if (!grouped[monthKey]) {
-                    grouped[monthKey] = [];
-                }
-                grouped[monthKey].push(transaction);
-            });
-            
-            const sortedMonths = Object.keys(grouped).sort().reverse();
-            
-            let workbookContent = `
-                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                <head>
-                    <meta charset="UTF-8">
-                    <style>
-                        td { mso-number-format:\\@; }
-                        .header { background-color: #1a73e8; color: white; font-size: 16px; font-weight: bold; }
-                        .month-header { background-color: #f0f0f0; font-weight: bold; font-size: 14px; }
-                        .total-row { background-color: #e8f5e9; font-weight: bold; }
-                        .balance-row { background-color: #fff3e0; font-weight: bold; }
-                        .income { color: #34a853; }
-                        .expense { color: #ea4335; }
-                    </style>
-                </head>
-                <body>
-            `;
-            
-            sortedMonths.forEach(monthKey => {
-                const [year, month] = monthKey.split('-');
-                const monthName = getMonthName(month);
-                const monthTransactions = grouped[monthKey];
-                
-                let monthIncome = 0;
-                let monthExpense = 0;
-                
-                monthTransactions.forEach(t => {
-                    monthIncome += t.income || 0;
-                    monthExpense += t.expense || 0;
+            try {
+                const grouped = {};
+                transactions.forEach(transaction => {
+                    const monthKey = transaction.date.substring(0, 7);
+                    if (!grouped[monthKey]) {
+                        grouped[monthKey] = [];
+                    }
+                    grouped[monthKey].push(transaction);
                 });
                 
-                const monthBalance = monthIncome - monthExpense;
+                const sortedMonths = Object.keys(grouped).sort().reverse();
                 
-                workbookContent += `
-                    <table border="1" cellpadding="5" cellspacing="0" width="100%">
-                        <tr class="month-header">
-                            <td colspan="5">${monthName} ${year}</td>
-                        </tr>
-                        <tr>
-                            <th width="15%">Tanggal</th>
-                            <th width="40%">Keterangan</th>
-                            <th width="15%">Pendapatan</th>
-                            <th width="15%">Pengeluaran</th>
-                            <th width="15%">Saldo Harian</th>
-                        </tr>
+                let workbookContent = `
+                    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+                    <head>
+                        <meta charset="UTF-8">
+                        <style>
+                            td { mso-number-format:\\@; }
+                            .header { background-color: #1a73e8; color: white; font-size: 14px; font-weight: bold; }
+                            .month-header { background-color: #f0f0f0; font-weight: bold; font-size: 13px; }
+                            .total-row { background-color: #e8f5e9; font-weight: bold; }
+                            .balance-row { background-color: #fff3e0; font-weight: bold; }
+                            .income { color: #34a853; }
+                            .expense { color: #ea4335; }
+                        </style>
+                    </head>
+                    <body>
                 `;
                 
-                let runningBalance = 0;
-                monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
-                    const dailyBalance = (t.income || 0) - (t.expense || 0);
-                    runningBalance += dailyBalance;
+                sortedMonths.forEach(monthKey => {
+                    const [year, month] = monthKey.split('-');
+                    const monthName = getMonthName(month);
+                    const monthTransactions = grouped[monthKey];
+                    
+                    let monthIncome = 0;
+                    let monthExpense = 0;
+                    
+                    monthTransactions.forEach(t => {
+                        monthIncome += t.income || 0;
+                        monthExpense += t.expense || 0;
+                    });
+                    
+                    const monthBalance = monthIncome - monthExpense;
                     
                     workbookContent += `
-                        <tr>
-                            <td>${formatDate(t.date)}</td>
-                            <td>${t.description}</td>
-                            <td class="income">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                            <td class="expense">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                            <td>${formatCurrency(dailyBalance)}</td>
-                        </tr>
+                        <table border="1" cellpadding="4" cellspacing="0" width="100%">
+                            <tr class="month-header">
+                                <td colspan="5">${monthName} ${year}</td>
+                            </tr>
+                            <tr>
+                                <th width="15%">Tanggal</th>
+                                <th width="40%">Keterangan</th>
+                                <th width="15%">Pendapatan</th>
+                                <th width="15%">Pengeluaran</th>
+                                <th width="15%">Saldo Harian</th>
+                            </tr>
+                    `;
+                    
+                    let runningBalance = 0;
+                    monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                        const dailyBalance = (t.income || 0) - (t.expense || 0);
+                        runningBalance += dailyBalance;
+                        
+                        workbookContent += `
+                            <tr>
+                                <td>${formatDate(t.date)}</td>
+                                <td>${t.description}</td>
+                                <td class="income">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                                <td class="expense">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                                <td>${formatCurrency(dailyBalance)}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    workbookContent += `
+                            <tr class="total-row">
+                                <td colspan="2">Total ${monthName}</td>
+                                <td class="income">${formatCurrency(monthIncome)}</td>
+                                <td class="expense">${formatCurrency(monthExpense)}</td>
+                                <td></td>
+                            </tr>
+                            <tr class="balance-row">
+                                <td colspan="4">Saldo Bulan ${monthName}</td>
+                                <td style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</td>
+                            </tr>
+                        </table>
+                        <br><br>
                     `;
                 });
                 
+                let totalIncome = 0;
+                let totalExpense = 0;
+                transactions.forEach(t => {
+                    totalIncome += t.income || 0;
+                    totalExpense += t.expense || 0;
+                });
+                const totalBalance = totalIncome - totalExpense;
+                
                 workbookContent += `
-                        <tr class="total-row">
-                            <td colspan="2">Total ${monthName}</td>
-                            <td class="income">${formatCurrency(monthIncome)}</td>
-                            <td class="expense">${formatCurrency(monthExpense)}</td>
+                    <table border="1" cellpadding="4" cellspacing="0" width="100%">
+                        <tr style="background-color: #e3f2fd;">
+                            <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
+                            <td><strong>${formatCurrency(totalIncome)}</strong></td>
+                            <td><strong>${formatCurrency(totalExpense)}</strong></td>
                             <td></td>
                         </tr>
-                        <tr class="balance-row">
-                            <td colspan="4">Saldo Bulan ${monthName}</td>
-                            <td style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</td>
+                        <tr style="background-color: #fce4ec;">
+                            <td colspan="4"><strong>SALDO AKHIR</strong></td>
+                            <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
                         </tr>
                     </table>
-                    <br><br>
                 `;
-            });
-            
-            let totalIncome = 0;
-            let totalExpense = 0;
-            transactions.forEach(t => {
-                totalIncome += t.income || 0;
-                totalExpense += t.expense || 0;
-            });
-            const totalBalance = totalIncome - totalExpense;
-            
-            workbookContent += `
-                <table border="1" cellpadding="5" cellspacing="0" width="100%">
-                    <tr style="background-color: #e3f2fd;">
-                        <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
-                        <td><strong>${formatCurrency(totalIncome)}</strong></td>
-                        <td><strong>${formatCurrency(totalExpense)}</strong></td>
-                        <td></td>
-                    </tr>
-                    <tr style="background-color: #fce4ec;">
-                        <td colspan="4"><strong>SALDO AKHIR</strong></td>
-                        <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
-                    </tr>
-                </table>
-            `;
-            
-            workbookContent += '</body></html>';
-            
-            const blob = new Blob([workbookContent], { type: 'application/vnd.ms-excel' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `cash-track-grouped-${new Date().toISOString().split('T')[0]}.xls`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showStorageStatus('📋 Grouped Excel exported', 'success');
+                
+                workbookContent += '</body></html>';
+                
+                const blob = new Blob([workbookContent], { type: 'application/vnd.ms-excel' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', `cash-track-grouped-${new Date().toISOString().split('T')[0]}.xls`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showStorageStatus('📋 Grouped Excel exported', 'success');
+                playSound('success');
+                
+            } catch (error) {
+                console.error('Error exporting grouped Excel:', error);
+                showStorageStatus('❌ Error exporting grouped Excel', 'error');
+                playSound('error');
+            }
         }
 
         // ==================== STORAGE UTILITIES ====================
@@ -3109,6 +3485,7 @@
             if (backups.length === 0) {
                 backupListEl.innerHTML = `
                     <div class="empty-state">
+                        <div><i class="fas fa-database"></i></div>
                         <p>📭 Belum ada backup</p>
                         <p>Buat backup pertama Anda untuk melindungi data</p>
                     </div>
@@ -3125,34 +3502,35 @@
                 html += `
                     <div class="backup-item" style="
                         background: var(--light);
-                        padding: 15px;
+                        padding: 12px;
                         border-radius: var(--border-radius);
-                        margin-bottom: 10px;
+                        margin-bottom: 8px;
                         border-left: 4px solid ${index === 0 ? '#34a853' : '#fbbc04'};
                         box-shadow: var(--shadow);
+                        font-size: 13px;
                     ">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <div>
-                                <strong>Backup ${index + 1}</strong>
-                                <div style="font-size: 0.85rem; color: var(--gray);">
+                                <strong><i class="fas fa-save"></i> Backup ${index + 1}</strong>
+                                <div style="font-size: 11px; color: var(--gray);">
                                     ${date.toLocaleString()}
                                 </div>
                             </div>
                             <div style="text-align: right;">
-                                <div style="font-size: 0.9rem; color: var(--dark);">
+                                <div style="font-size: 12px; color: var(--dark);">
                                     ${backup.transactionCount} transaksi
                                 </div>
-                                <div style="font-size: 0.8rem; color: var(--gray);">
+                                <div style="font-size: 11px; color: var(--gray);">
                                     ${sizeKB} KB
                                 </div>
                             </div>
                         </div>
-                        <div style="display: flex; gap: 10px;">
-                            <button class="btn btn-secondary" onclick="restoreFromBackup('${backup.id}')" style="flex: 1; padding: 8px;">
-                                <span>🔄</span> Restore
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-secondary" onclick="restoreFromBackup('${backup.id}')" style="flex: 1; padding: 6px; font-size: 12px;">
+                                <i class="fas fa-redo"></i> Restore
                             </button>
-                            <button class="btn btn-info" onclick="downloadBackup('${backup.id}')" style="flex: 1; padding: 8px;">
-                                <span>💾</span> Export
+                            <button class="btn btn-info" onclick="downloadBackup('${backup.id}')" style="flex: 1; padding: 6px; font-size: 12px;">
+                                <i class="fas fa-download"></i> Export
                             </button>
                         </div>
                     </div>
@@ -3167,31 +3545,40 @@
             const backup = backups.find(b => b.id === backupId);
             if (!backup) return;
             
-            const backupData = {
-                version: STORAGE_CONFIG.VERSION,
-                exportDate: new Date().toISOString(),
-                backupId: backup.id,
-                backupTimestamp: backup.timestamp,
-                transactions: backup.data
-            };
-            
-            const dataStr = JSON.stringify(backupData, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-            
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `cashtrack-backup-${backupId}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showStorageStatus('💾 Backup downloaded', 'success');
+            try {
+                const backupData = {
+                    version: STORAGE_CONFIG.VERSION,
+                    exportDate: new Date().toISOString(),
+                    backupId: backup.id,
+                    backupTimestamp: backup.timestamp,
+                    transactions: backup.data
+                };
+                
+                const dataStr = JSON.stringify(backupData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `cashtrack-backup-${backupId}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showStorageStatus('💾 Backup downloaded', 'success');
+                playSound('success');
+                
+            } catch (error) {
+                console.error('Error downloading backup:', error);
+                showStorageStatus('❌ Error downloading backup', 'error');
+                playSound('error');
+            }
         }
 
         function clearOldBackups() {
             if (backups.length <= 3) {
                 showStorageStatus('⚠️ Minimal 3 backup diperlukan', 'warning');
+                playSound('error');
                 return;
             }
             
@@ -3201,6 +3588,9 @@
                 updateStorageStats();
                 updateBackupList();
                 showStorageStatus('🗑️ Old backups cleared', 'success');
+                playSound('success');
+            } else {
+                playSound('click');
             }
         }
 
@@ -3225,6 +3615,7 @@
             info += `• Save Count: ${storageMetadata.saveCount}\n`;
             
             alert(info);
+            playSound('notification');
         }
 
         function checkStorageHealth() {
@@ -3243,6 +3634,8 @@
             showStorageStatus(`Storage: ${storageUsedKB} KB (${storagePercent}%) - ${status}`, 
                 storagePercent > 90 ? 'error' : storagePercent > 70 ? 'warning' : 'success');
             
+            playSound('notification');
+            
             return { storageUsedKB, storagePercent, status };
         }
 
@@ -3252,6 +3645,7 @@
             if (modal) {
                 updateStorageStats();
                 modal.style.display = 'flex';
+                playSound('notification');
             }
         }
 
@@ -3259,6 +3653,7 @@
             const modal = document.getElementById('backup-modal');
             if (modal) {
                 modal.style.display = 'none';
+                playSound('click');
             }
         }
 
@@ -3296,6 +3691,7 @@
         // ==================== LOGOUT FUNCTION ====================
         function logout() {
             if (confirm('Apakah Anda yakin ingin keluar?')) {
+                playSound('notification');
                 localStorage.removeItem('cashTrackLoggedIn');
                 clearInterval(autoSaveTimer);
                 clearInterval(autoBackupTimer);
@@ -3306,6 +3702,8 @@
                 validationTimer = null;
                 
                 showLoginScreen();
+            } else {
+                playSound('click');
             }
         }
 
@@ -3334,10 +3732,11 @@
         });
 
         // ==================== FINAL INITIALIZATION ====================
-        console.log('🚀 CashTrack v2.1 - Enhanced Storage System');
+        console.log('🚀 CashTrack v2.2 - Enhanced Storage System');
         console.log('📱 PWA ready for installation');
         console.log('💾 Storage system initialized');
         console.log('📊 Chart system ready');
+        console.log('🔊 Audio system ready');
         console.log('🔒 Security system active');
 
         // Tambahkan ke global scope untuk debugging
@@ -3352,6 +3751,13 @@
             exportBackup,
             importFromBackup
         };
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (financeChart) {
+                financeChart.resize();
+            }
+        });
     </script>
 </body>
 </html>
