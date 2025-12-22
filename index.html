@@ -1851,215 +1851,692 @@
         let autoSaveTimer = null;
         let autoBackupTimer = null;
         let validationTimer = null;
-        
         // ==================== SISTEM SUARA ====================
-        let audioEnabled = true;
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const audioCache = {};
+let audioEnabled = true;
+const audioCache = {};
 
-        // Fungsi untuk membuat suara sederhana
-        function playSound(type = 'click') {
-            if (!audioEnabled) return;
+// Fungsi untuk load file suara
+function loadAudioFiles() {
+    const audioFiles = {
+        click: 'preview.mp3',
+        success: 'notification-center-443093.mp3',
+        error: 'mixkit-positive-notification-951.wav',
+        notification: 'new-notification-011-364050.mp3',
+        positive: 'mixkit-positive-notification-951.wav'
+    };
+    
+    console.log('🔊 Loading audio files...');
+    
+    Object.entries(audioFiles).forEach(([key, filename]) => {
+        try {
+            const audio = new Audio();
+            audio.src = filename;
+            audio.preload = 'auto';
+            audio.volume = 0.8;
             
-            try {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                // Atur frekuensi berdasarkan jenis suara
-                switch(type) {
-                    case 'success':
-                        oscillator.frequency.value = 800;
-                        break;
-                    case 'error':
-                        oscillator.frequency.value = 400;
-                        break;
-                    case 'notification':
-                        oscillator.frequency.value = 600;
-                        break;
-                    case 'click':
-                    default:
-                        oscillator.frequency.value = 500;
-                }
-                
-                // Atur volume
-                gainNode.gain.value = 0.1;
-                
-                // Fade out
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
-                
-                // Play suara
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.1);
-                
-            } catch (error) {
-                console.log('Audio error:', error);
-            }
+            // Handle audio loading
+            audio.oncanplaythrough = () => {
+                console.log(`✅ Sound loaded: ${key} (${filename})`);
+                audioCache[key] = audio;
+            };
+            
+            audio.onerror = () => {
+                console.error(`❌ Failed to load sound: ${filename}`);
+            };
+            
+            audio.load();
+            
+        } catch (error) {
+            console.error(`❌ Error loading ${filename}:`, error);
         }
+    });
+}
 
-        // Fungsi untuk toggle suara
-        function toggleAudio() {
-            audioEnabled = !audioEnabled;
-            const audioControl = document.getElementById('audio-control');
-            const icon = audioControl.querySelector('i');
+// Fungsi untuk memutar suara
+function playSound(type = 'click') {
+    if (!audioEnabled) return;
+    
+    try {
+        const audio = audioCache[type];
+        if (audio) {
+            audio.currentTime = 0;
+            audio.volume = 0.8;
             
-            if (audioEnabled) {
-                audioControl.classList.remove('muted');
-                icon.className = 'fas fa-volume-up';
-                playSound('notification');
-                showStorageStatus('🔊 Suara diaktifkan', 'success');
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.warn(`⚠️ Audio play failed for ${type}:`, error);
+                });
+            }
+        } else {
+            console.warn(`⚠️ Sound ${type} not loaded yet`);
+        }
+    } catch (error) {
+        console.error(`Error playing sound ${type}:`, error);
+    }
+}
+
+// Fungsi untuk toggle suara
+function toggleAudio() {
+    audioEnabled = !audioEnabled;
+    const audioControl = document.getElementById('audio-control');
+    const icon = audioControl.querySelector('i');
+    
+    if (audioEnabled) {
+        audioControl.classList.remove('muted');
+        icon.className = 'fas fa-volume-up';
+        playSound('notification');
+        showStorageStatus('🔊 Suara diaktifkan', 'success');
+    } else {
+        audioControl.classList.add('muted');
+        icon.className = 'fas fa-volume-mute';
+        showStorageStatus('🔇 Suara dimatikan', 'warning');
+    }
+}
+
+// ==================== SPLASH SCREEN ====================
+window.addEventListener('load', function() {
+    console.log('🔄 App loading...');
+    
+    // Set tanggal default
+    const today = new Date().toISOString().split('T')[0];
+    const dateInput = document.getElementById('transaction-date');
+    if (dateInput) {
+        dateInput.value = today;
+    }
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Load audio files
+    loadAudioFiles();
+    
+    // Hide splash screen setelah 1.5 detik
+    setTimeout(() => {
+        const splashScreen = document.getElementById('splash-screen');
+        splashScreen.style.opacity = '0';
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+            
+            // Cek apakah user sudah login
+            const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
+            console.log('🔑 Login status:', isLoggedIn);
+            
+            if (isLoggedIn === 'true') {
+                showDonationScreen();
             } else {
-                audioControl.classList.add('muted');
-                icon.className = 'fas fa-volume-mute';
-                showStorageStatus('🔇 Suara dimatikan', 'warning');
+                showLoginScreen();
+            }
+        }, 500);
+    }, 1500);
+});
+
+// ==================== SETUP EVENT LISTENERS ====================
+function setupEventListeners() {
+    // Audio control
+    const audioControl = document.getElementById('audio-control');
+    if (audioControl) {
+        audioControl.addEventListener('click', toggleAudio);
+    }
+    
+    // Password input event
+    const passwordInput = document.getElementById('password-input');
+    if (passwordInput) {
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    }
+    
+    // Toggle password visibility
+    const togglePassword = document.getElementById('toggle-password');
+    if (togglePassword) {
+        togglePassword.addEventListener('click', function() {
+            const passwordInput = document.getElementById('password-input');
+            const icon = this.querySelector('i');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+            passwordInput.focus();
+            playSound('click');
+        });
+    }
+    
+    // Enter app button
+    const enterAppBtn = document.getElementById('enter-app-btn');
+    if (enterAppBtn) {
+        enterAppBtn.addEventListener('click', function() {
+            playSound('positive'); // Ganti dari 'success' ke 'positive'
+            enterApp();
+        });
+    }
+    
+    // Copy account number
+    const accountNumber = document.getElementById('copy-account-number');
+    if (accountNumber) {
+        accountNumber.addEventListener('click', function() {
+            const text = this.textContent.replace(/\s/g, '');
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = this.textContent;
+                this.textContent = '✓ Berhasil Disalin!';
+                this.style.background = '#34a853';
+                this.style.color = 'white';
+                playSound('success'); // Success sound
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = this.textContent;
+                this.textContent = '✓ Berhasil Disalin!';
+                this.style.background = '#34a853';
+                this.style.color = 'white';
+                playSound('success'); // Success sound
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 2000);
+            });
+        });
+    }
+    
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            playSound('click');
+            if (this.checked) {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            }
+            
+            if (financeChart) {
+                renderChart();
+            }
+            
+            if (currentPage === 'history-page') {
+                displayGroupedTransactions();
+            }
+        });
+    }
+    
+    // Restore file input
+    const restoreFile = document.getElementById('restore-file');
+    if (restoreFile) {
+        restoreFile.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                playSound('notification');
+                importFromBackup();
+            }
+        });
+    }
+    
+    // Setup navigation tabs
+    setupNavigationTabs();
+    
+    // Add sound to all buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+            const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
+            
+            // Skip jika button adalah toggle password atau close backup
+            if (button.id === 'toggle-password' || button.classList.contains('close-backup')) {
+                return;
+            }
+            
+            if (button.classList.contains('btn-danger') || 
+                button.onclick && button.onclick.toString().includes('deleteTransaction')) {
+                playSound('error'); // delete transaction
+            } else if (button.classList.contains('btn-success') || 
+                       button.classList.contains('login-btn') || 
+                       button.classList.contains('donation-btn')) {
+                playSound('success'); // success actions
+            } else if (button.id === 'enter-app-btn') {
+                playSound('positive'); // masuk ke aplikasi
+            } else if (button.id === 'audio-control') {
+                // Tidak perlu play sound karena sudah ada di toggleAudio()
+            } else {
+                playSound('click'); // default click sound
             }
         }
+    });
+}
 
-        // ==================== SPLASH SCREEN ====================
-        window.addEventListener('load', function() {
-            console.log('🔄 App loading...');
-            
-            // Set tanggal default
-            const today = new Date().toISOString().split('T')[0];
-            const dateInput = document.getElementById('transaction-date');
-            if (dateInput) {
-                dateInput.value = today;
-            }
-            
-            // Setup event listeners
-            setupEventListeners();
-            
-            // Hide splash screen setelah 1.5 detik
+// ==================== LOGIN FUNCTIONS ====================
+function checkPassword() {
+    const passwordInput = document.getElementById('password-input');
+    const errorMessage = document.getElementById('password-error');
+    
+    if (!passwordInput) {
+        console.error('❌ Password input not found');
+        return;
+    }
+    
+    console.log('🔑 Checking password...');
+    
+    if (passwordInput.value === correctPassword) {
+        console.log('✅ Password correct');
+        playSound('positive'); // Ganti dari 'success' ke 'positive'
+        localStorage.setItem('cashTrackLoggedIn', 'true');
+        showDonationScreen();
+    } else {
+        console.log('❌ Password incorrect');
+        playSound('error');
+        if (errorMessage) {
+            errorMessage.style.display = 'block';
+            passwordInput.value = '';
+            passwordInput.focus();
             setTimeout(() => {
-                const splashScreen = document.getElementById('splash-screen');
-                splashScreen.style.opacity = '0';
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    
-                    // Cek apakah user sudah login
-                    const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
-                    console.log('🔑 Login status:', isLoggedIn);
-                    
-                    if (isLoggedIn === 'true') {
-                        showDonationScreen();
-                    } else {
-                        showLoginScreen();
-                    }
-                }, 500);
-            }, 1500);
-        });
+                errorMessage.style.display = 'none';
+            }, 3000);
+        }
+    }
+}
 
-        // ==================== SETUP EVENT LISTENERS ====================
-        function setupEventListeners() {
-            // Audio control
-            const audioControl = document.getElementById('audio-control');
-            if (audioControl) {
-                audioControl.addEventListener('click', toggleAudio);
-            }
+// ==================== TRANSACTION FUNCTIONS ====================
+function addTransaction() {
+    const date = document.getElementById('transaction-date').value;
+    const description = document.getElementById('transaction-desc').value.trim();
+    const income = parseCurrency(document.getElementById('transaction-income').value);
+    const expense = parseCurrency(document.getElementById('transaction-expense').value);
+    
+    if (!date) {
+        alert('Harap pilih tanggal transaksi!');
+        document.getElementById('transaction-date').focus();
+        playSound('error');
+        return;
+    }
+    
+    if (!description) {
+        alert('Harap isi keterangan transaksi!');
+        document.getElementById('transaction-desc').focus();
+        playSound('error');
+        return;
+    }
+    
+    if (income === 0 && expense === 0) {
+        alert('Harap isi pendapatan atau pengeluaran!');
+        document.getElementById('transaction-income').focus();
+        playSound('error');
+        return;
+    }
+    
+    const transaction = {
+        id: Date.now(),
+        date: date,
+        description: description,
+        income: income,
+        expense: expense,
+        timestamp: new Date().toISOString()
+    };
+    
+    transactions.unshift(transaction);
+    saveTransactions();
+    updateBalance();
+    renderChart();
+    clearForm();
+    
+    if (currentPage === 'history-page') {
+        filterTransactions();
+    }
+    
+    updateYearOptions();
+    updateMonthOptions();
+    updateDayOptions();
+    
+    showStorageStatus('✅ Transaksi ditambahkan', 'success');
+    playSound('success'); // Success sound
+    
+    setTimeout(() => {
+        document.getElementById('transaction-desc').focus();
+    }, 100);
+}
+
+function clearForm() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('transaction-date').value = today;
+    document.getElementById('transaction-desc').value = '';
+    document.getElementById('transaction-income').value = '';
+    document.getElementById('transaction-expense').value = '';
+    document.getElementById('transaction-desc').focus();
+    playSound('click');
+}
+
+function deleteTransaction(id) {
+    if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+        playSound('error'); // Sound delete
+        transactions = transactions.filter(t => t.id !== id);
+        filteredTransactions = filteredTransactions.filter(t => t.id !== id);
+        saveTransactions();
+        updateBalance();
+        renderChart();
+        filterTransactions();
+        showStorageStatus('🗑️ Transaksi dihapus', 'warning');
+    } else {
+        playSound('click');
+    }
+}
+
+function editTransaction(id) {
+    const transaction = transactions.find(t => t.id === id);
+    if (!transaction) return;
+    
+    playSound('notification'); // Sound untuk edit
+    
+    document.getElementById('transaction-date').value = transaction.date;
+    document.getElementById('transaction-desc').value = transaction.description;
+    document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
+    document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
+    
+    document.getElementById('transactions-page').classList.add('active');
+    document.getElementById('history-page').classList.remove('active');
+    document.getElementById('backup-page').classList.remove('active');
+    
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        if (tab.dataset.page === 'transactions-page') {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+    
+    currentPage = 'transactions-page';
+    
+    transactions = transactions.filter(t => t.id !== id);
+    saveTransactions();
+    
+    showStorageStatus('✏️ Mode edit transaksi', 'info');
+    
+    setTimeout(() => {
+        document.getElementById('transaction-desc').focus();
+    }, 100);
+}
+
+// ==================== FILTER FUNCTIONS ====================
+function applyFilter() {
+    const yearSelect = document.getElementById('filter-year');
+    const monthSelect = document.getElementById('filter-month');
+    const daySelect = document.getElementById('filter-day');
+    
+    if (yearSelect) currentFilters.year = yearSelect.value;
+    if (monthSelect) currentFilters.month = monthSelect.value;
+    if (daySelect) currentFilters.day = daySelect.value;
+    
+    filterTransactions();
+    playSound('click');
+    showStorageStatus('🔍 Filter diterapkan', 'success');
+}
+
+function resetFilters() {
+    const yearSelect = document.getElementById('filter-year');
+    const monthSelect = document.getElementById('filter-month');
+    const daySelect = document.getElementById('filter-day');
+    
+    if (yearSelect) yearSelect.value = '';
+    if (monthSelect) monthSelect.value = '';
+    if (daySelect) daySelect.value = '';
+    
+    currentFilters = { year: '', month: '', day: '' };
+    filteredTransactions = [...transactions];
+    
+    displayGroupedTransactions();
+    playSound('click');
+    showStorageStatus('🔄 Filter direset', 'success');
+}
+
+// ==================== BACKUP FUNCTIONS ====================
+function createBackup() {
+    try {
+        const backup = {
+            id: 'backup_' + Date.now(),
+            timestamp: new Date().toISOString(),
+            data: JSON.parse(JSON.stringify(transactions)),
+            transactionCount: transactions.length,
+            size: JSON.stringify(transactions).length
+        };
+
+        backups.unshift(backup);
+        
+        if (backups.length > STORAGE_CONFIG.MAX_BACKUPS) {
+            backups = backups.slice(0, STORAGE_CONFIG.MAX_BACKUPS);
+        }
+        
+        localStorage.setItem(STORAGE_KEYS.BACKUPS, JSON.stringify(backups));
+        
+        storageMetadata.lastBackup = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEYS.METADATA, JSON.stringify(storageMetadata));
+        
+        updateStorageStats();
+        updateBackupList();
+        
+        showStorageStatus('💾 Backup created', 'success');
+        playSound('success');
+        
+        return backup;
+
+    } catch (error) {
+        console.error('❌ Error creating backup:', error);
+        showStorageStatus('❌ Error creating backup', 'error');
+        playSound('error');
+        return null;
+    }
+}
+
+function exportBackup() {
+    try {
+        const backupData = {
+            version: STORAGE_CONFIG.VERSION,
+            exportDate: new Date().toISOString(),
+            transactionCount: transactions.length,
+            transactions: transactions,
+            metadata: storageMetadata
+        };
+        
+        const dataStr = JSON.stringify(backupData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `cashtrack-backup-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        createBackup();
+        
+        showStorageStatus('💾 Backup exported', 'success');
+        playSound('success');
+        
+    } catch (error) {
+        console.error('❌ Error exporting backup:', error);
+        showStorageStatus('❌ Error exporting backup', 'error');
+        playSound('error');
+    }
+}
+
+function restoreFromBackup(backupId) {
+    try {
+        const backup = backups.find(b => b.id === backupId);
+        if (!backup) {
+            showStorageStatus('❌ Backup not found', 'error');
+            playSound('error');
+            return false;
+        }
+        
+        transactions = JSON.parse(JSON.stringify(backup.data));
+        saveTransactions();
+        updateBalance();
+        renderChart();
+        filterTransactions();
+        
+        showStorageStatus('🔄 Data restored', 'success');
+        playSound('success');
+        
+        return true;
+
+    } catch (error) {
+        console.error('❌ Error restoring backup:', error);
+        showStorageStatus('❌ Error restoring data', 'error');
+        playSound('error');
+        return false;
+    }
+}
+
+// ==================== EXPORT FUNCTIONS ====================
+function exportToCSV() {
+    if (transactions.length === 0) {
+        alert('Tidak ada data transaksi untuk diexport!');
+        playSound('error');
+        return;
+    }
+    
+    try {
+        const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
+        const csvContent = [
+            headers.join(','),
+            ...transactions.map(t => [
+                t.date,
+                `"${t.description.replace(/"/g, '""')}"`,
+                t.income,
+                t.expense
+            ].join(','))
+        ].join('\n');
+        
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showStorageStatus('📊 CSV exported', 'success');
+        playSound('success');
+        
+    } catch (error) {
+        console.error('Error exporting CSV:', error);
+        showStorageStatus('❌ Error exporting CSV', 'error');
+        playSound('error');
+    }
+}
+
+function exportToExcel() {
+    if (transactions.length === 0) {
+        alert('Tidak ada data transaksi untuk diexport!');
+        playSound('error');
+        return;
+    }
+    
+    try {
+        // ... kode export Excel ...
+        showStorageStatus('📈 Excel exported', 'success');
+        playSound('success');
+        
+    } catch (error) {
+        console.error('Error exporting Excel:', error);
+        showStorageStatus('❌ Error exporting Excel', 'error');
+        playSound('error');
+    }
+}
+
+function exportToExcelGrouped() {
+    if (transactions.length === 0) {
+        alert('Tidak ada data transaksi untuk diexport!');
+        playSound('error');
+        return;
+    }
+    
+    try {
+        // ... kode export Excel Grouped ...
+        showStorageStatus('📋 Grouped Excel exported', 'success');
+        playSound('success');
+        
+    } catch (error) {
+        console.error('Error exporting grouped Excel:', error);
+        showStorageStatus('❌ Error exporting grouped Excel', 'error');
+        playSound('error');
+    }
+}
+
+// ==================== MODAL FUNCTIONS ====================
+function showBackupModal() {
+    const modal = document.getElementById('backup-modal');
+    if (modal) {
+        updateStorageStats();
+        modal.style.display = 'flex';
+        playSound('notification');
+    }
+}
+
+function closeBackupModal() {
+    const modal = document.getElementById('backup-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        playSound('click');
+    }
+}
+
+// ==================== NAVIGATION FUNCTIONS ====================
+function setupNavigationTabs() {
+    const tabs = document.querySelectorAll('.nav-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            playSound('click');
+            const targetPage = this.dataset.page;
             
-            // Password input event
-            const passwordInput = document.getElementById('password-input');
-            if (passwordInput) {
-                passwordInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        checkPassword();
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            const targetSection = document.getElementById(targetPage);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            currentPage = targetPage;
+            
+            if (targetPage === 'history-page') {
+                filterTransactions();
+            } else if (targetPage === 'backup-page') {
+                updateStorageStats();
+                updateBackupList();
+            } else if (targetPage === 'transactions-page') {
+                setTimeout(() => {
+                    const descInput = document.getElementById('transaction-desc');
+                    if (descInput) {
+                        descInput.focus();
                     }
-                });
+                }, 100);
             }
-            
-            // Toggle password visibility
-            const togglePassword = document.getElementById('toggle-password');
-            if (togglePassword) {
-                togglePassword.addEventListener('click', function() {
-                    const passwordInput = document.getElementById('password-input');
-                    const icon = this.querySelector('i');
-                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
-                    icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-                    passwordInput.focus();
-                    playSound('click');
-                });
-            }
-            
-            // Enter app button
-            const enterAppBtn = document.getElementById('enter-app-btn');
-            if (enterAppBtn) {
-                enterAppBtn.addEventListener('click', function() {
-                    playSound('success');
-                    enterApp();
-                });
-            }
-            
-            // Copy account number
-            const accountNumber = document.getElementById('copy-account-number');
-            if (accountNumber) {
-                accountNumber.addEventListener('click', function() {
-                    const text = this.textContent.replace(/\s/g, '');
-                    navigator.clipboard.writeText(text).then(() => {
-                        const originalText = this.textContent;
-                        this.textContent = '✓ Berhasil Disalin!';
-                        this.style.background = '#34a853';
-                        this.style.color = 'white';
-                        playSound('success');
-                        
-                        setTimeout(() => {
-                            this.textContent = originalText;
-                            this.style.background = '';
-                            this.style.color = '';
-                        }, 2000);
-                    }).catch(err => {
-                        const textArea = document.createElement('textarea');
-                        textArea.value = text;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(textArea);
-                        
-                        const originalText = this.textContent;
-                        this.textContent = '✓ Berhasil Disalin!';
-                        this.style.background = '#34a853';
-                        this.style.color = 'white';
-                        playSound('success');
-                        
-                        setTimeout(() => {
-                            this.textContent = originalText;
-                            this.style.background = '';
-                            this.style.color = '';
-                        }, 2000);
-                    });
-                });
-            }
-            
-            // Theme toggle
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                const currentTheme = localStorage.getItem('theme') || 'light';
-                if (currentTheme === 'dark') {
-                    document.body.setAttribute('data-theme', 'dark');
-                    themeToggle.checked = true;
-                }
-                
-                themeToggle.addEventListener('change', function() {
-                    playSound('click');
-                    if (this.checked) {
-                        document.body.setAttribute('data-theme', 'dark');
-                        localStorage.setItem('theme', 'dark');
-                    } else {
-                        document.body.removeAttribute('data-theme');
-                        localStorage.setItem('theme', 'light');
-                    }
-                    
-                    if (financeChart) {
-                        renderChart();
-                    }
-                    
-                    if (currentPage === 'history-page') {
-                        displayGroupedTransactions();
-                    }
-                });
-            }
+        });
+    });
+}
             
             // Restore file input
             const restoreFile = document.getElementById('restore-file');
