@@ -7,17 +7,17 @@
     <meta name="description" content="Aplikasi manajemen keuangan pribadi">
     <meta name="theme-color" content="#1a73e8">
     
+    <!-- Font Awesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" id="app-manifest">
     
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNjAgMzVMMzUgNjAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIvPjwvc3ZnPg==">
     
     <!-- Tambahkan Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Tambahkan Font Awesome untuk icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
@@ -32,8 +32,8 @@
             --border-radius: 12px;
             --shadow: 0 2px 10px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
-            --safe-area-top: env(safe-area-inset-top, 0px);
-            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-area-top: env(safe-area-inset-top);
+            --safe-area-bottom: env(safe-area-inset-bottom);
         }
 
         [data-theme="dark"] {
@@ -52,199 +52,50 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             width: 100%;
             height: 100%;
-            overflow-x: hidden;
-            font-size: 14px;
-            -webkit-text-size-adjust: 100%;
         }
 
         body {
             background-color: var(--light);
             color: var(--dark);
-            line-height: 1.5;
+            line-height: 1.6;
             min-height: 100vh;
             transition: var(--transition);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
-            overflow-x: hidden;
         }
 
-        /* Storage Status Indicator */
-        .storage-status {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: var(--secondary);
+        /* Install Prompt */
+        .install-prompt {
+            background: var(--primary);
             color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 13px;
-            z-index: 1001;
-            display: none;
-            animation: slideIn 0.3s ease;
-            box-shadow: var(--shadow);
-            max-width: calc(100vw - 20px);
-            word-break: break-word;
+            padding: 15px 20px;
             text-align: center;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .storage-status.error {
-            background: var(--danger);
-        }
-
-        .storage-status.warning {
-            background: var(--warning);
-            color: var(--dark);
-        }
-
-        /* Backup Modal */
-        .backup-modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 15px;
-            backdrop-filter: blur(5px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            padding-top: calc(15px + var(--safe-area-top));
         }
 
-        .backup-content {
-            background: var(--light);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .backup-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--primary);
-        }
-
-        .backup-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .close-backup {
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: var(--gray);
-            cursor: pointer;
-            padding: 5px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            touch-action: manipulation;
-        }
-
-        .backup-section {
-            margin-bottom: 20px;
-            background: rgba(26, 115, 232, 0.05);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary);
-        }
-
-        .section-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .backup-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            padding: 10px;
-            background: var(--light);
-            border-radius: 8px;
-            border: 1px solid rgba(0,0,0,0.1);
-            font-size: 13px;
-        }
-
-        [data-theme="dark"] .backup-info {
-            background: #2d2d2d;
-            border-color: rgba(255,255,255,0.1);
-        }
-
-        .backup-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .storage-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .stat-card {
-            background: var(--light);
-            padding: 12px;
-            border-radius: var(--border-radius);
-            text-align: center;
-            box-shadow: var(--shadow);
-            min-height: 70px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .stat-value {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .install-btn {
+            background: white;
             color: var(--primary);
-            margin-bottom: 3px;
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--gray);
-            line-height: 1.2;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: 600;
         }
 
         /* Splash Screen */
@@ -266,137 +117,139 @@
         }
 
         .splash-logo {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             background: white;
-            border-radius: 18px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            font-size: 32px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            font-size: 40px;
             color: var(--primary);
             font-weight: bold;
         }
 
         .splash-title {
             color: white;
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             text-align: center;
-            padding: 0 15px;
+            padding: 0 20px;
         }
 
         .splash-subtitle {
             color: rgba(255,255,255,0.8);
-            font-size: 1rem;
-            margin-bottom: 30px;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
             text-align: center;
-            padding: 0 15px;
+            padding: 0 20px;
         }
 
         .splash-footer {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             left: 0;
             right: 0;
             text-align: center;
             color: rgba(255,255,255,0.7);
-            font-size: 0.8rem;
-            line-height: 1.4;
-            padding: 0 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding: 0 20px;
         }
 
         .splash-footer p {
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .splash-footer .version {
             font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
+            margin-bottom: 8px;
         }
 
         .splash-footer .copyright {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             opacity: 0.8;
         }
 
         /* Login Screen */
         #login-screen {
             min-height: 100vh;
-            display: none;
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 20px;
             background: var(--light);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
-            overflow-y: auto;
         }
 
         .login-container {
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
             background: var(--light);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 25px;
+            padding: 30px;
             animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .app-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .app-icon {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             background: white;
             border: 3px solid var(--primary);
-            border-radius: 16px;
-            margin: 0 auto 12px;
+            border-radius: 20px;
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 26px;
+            font-size: 30px;
             font-weight: bold;
         }
 
         .app-title {
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--dark);
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             text-align: center;
         }
 
         .app-subtitle {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 1rem;
             text-align: center;
         }
 
         .input-container {
             position: relative;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .password-input {
             width: 100%;
-            padding: 15px 45px 15px 12px;
+            padding: 15px 50px 15px 15px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             transition: var(--transition);
             background: var(--light);
             color: var(--dark);
-            min-height: 50px;
         }
 
         [data-theme="dark"] .password-input {
@@ -407,12 +260,12 @@
         .password-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
         }
 
         .toggle-password {
             position: absolute;
-            right: 12px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
@@ -420,13 +273,11 @@
             color: var(--gray);
             cursor: pointer;
             font-size: 18px;
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
-            touch-action: manipulation;
         }
 
         .login-btn {
@@ -434,15 +285,14 @@
             color: white;
             border: none;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             touch-action: manipulation;
-            min-height: 50px;
         }
 
         .login-btn:hover {
@@ -454,8 +304,8 @@
         .error-message {
             color: var(--danger);
             text-align: center;
-            margin-top: 8px;
-            font-size: 13px;
+            margin-top: 10px;
+            font-size: 14px;
             display: none;
         }
 
@@ -466,39 +316,38 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 20px;
             background: linear-gradient(135deg, #977dff 0%, #0033ff 50%, #0600ab 100%);
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
-            overflow-y: auto;
         }
 
         .donation-container {
             width: 100%;
-            max-width: 400px;
-            background: rgba(255, 255, 255, 0.95);
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.98);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 25px;
+            padding: 20px;
             animation: fadeIn 0.5s ease;
             text-align: center;
         }
 
         .donation-header {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .donation-icon {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #977dff, #0033ff);
-            border-radius: 16px;
-            margin: 0 auto 12px;
+            border-radius: 15px;
+            margin: 0 auto 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
         }
 
@@ -506,19 +355,19 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #1a73e8;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .donation-subtitle {
             color: var(--gray);
             font-size: 0.9rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .donation-message {
             color: #555;
             font-size: 0.85rem;
-            line-height: 1.5;
+            line-height: 1.4;
             margin-bottom: 15px;
             padding: 12px;
             background: rgba(151, 125, 255, 0.05);
@@ -530,14 +379,14 @@
             background: linear-gradient(145deg, #f8f9ff, #eef2ff);
             border-radius: 12px;
             padding: 20px;
-            margin: 20px 0;
+            margin: 15px 0;
             border: 2px solid #e0e7ff;
             box-shadow: 0 6px 15px rgba(151, 125, 255, 0.1);
             text-align: center;
         }
 
         .bank-name {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             color: #0033ff;
             margin-bottom: 8px;
@@ -548,12 +397,12 @@
         }
 
         .account-number {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 800;
             color: #0600ab;
             letter-spacing: 1px;
             margin: 12px 0;
-            padding: 15px;
+            padding: 12px;
             background: #ffffff;
             border-radius: 8px;
             border: 2px dashed #977dff;
@@ -561,8 +410,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             word-break: break-all;
-            touch-action: manipulation;
-            user-select: all;
         }
 
         .account-number:hover {
@@ -595,32 +442,45 @@
             background: linear-gradient(to right, #977dff, #0033ff);
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
-            box-shadow: 0 5px 15px rgba(151, 125, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(151, 125, 255, 0.4);
             position: relative;
             overflow: hidden;
-            letter-spacing: 0.5px;
-            touch-action: manipulation;
-            min-height: 56px;
+            letter-spacing: 0.3px;
         }
 
         .donation-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(151, 125, 255, 0.6);
+            box-shadow: 0 6px 20px rgba(151, 125, 255, 0.6);
         }
 
         .donation-btn:active {
             transform: translateY(-1px);
         }
 
+        .button-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
         .donation-footer {
-            margin-top: 25px;
+            margin-top: 20px;
             font-size: 11px;
             color: rgba(255, 255, 255, 0.9);
             text-align: center;
@@ -630,142 +490,135 @@
         /* Main App */
         #main-app {
             display: none;
-            height: 100vh;
+            min-height: 100vh;
             background: var(--light);
             position: relative;
-            overflow: hidden;
+            padding-bottom: 60px;
         }
 
         .main-header {
             background: var(--light);
-            padding: 12px 15px;
+            padding: 15px 20px;
             box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
             z-index: 100;
-            padding-top: calc(12px + var(--safe-area-top));
-            height: 60px;
-            min-height: 60px;
+            padding-top: calc(15px + var(--safe-area-top));
         }
 
         .header-title {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .header-icon {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             background: var(--primary);
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .header-title h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .header-actions {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             align-items: center;
         }
 
-        /* Theme Switch */
-        .theme-switch {
+        /* Modern Toggle Switch */
+        .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 52px;
-            height: 26px;
-            flex-shrink: 0;
+            width: 60px;
+            height: 30px;
         }
 
-        .theme-switch input {
+        .toggle-switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
 
-        .theme-slider {
+        .toggle-slider {
             position: absolute;
             cursor: pointer;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background: linear-gradient(145deg, #c5c5c5, #a0a0a0);
             transition: var(--transition);
             border-radius: 34px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        .theme-slider:before {
+        .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 20px;
-            width: 20px;
+            height: 24px;
+            width: 24px;
             left: 3px;
             bottom: 3px;
-            background-color: white;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
             transition: var(--transition);
             border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        input:checked + .theme-slider {
-            background-color: var(--primary);
+        input:checked + .toggle-slider {
+            background: linear-gradient(145deg, #4a90e2, #1c5bb5);
         }
 
-        input:checked + .theme-slider:before {
-            transform: translateX(26px);
-            background-color: white;
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        .theme-slider:after {
-            content: "🌙";
+        input:checked + .toggle-slider:after {
+            content: "☀️";
             position: absolute;
-            left: 7px;
+            left: 10px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 12px;
-            transition: var(--transition);
+            color: white;
         }
 
-        input:checked + .theme-slider:after {
-            content: "☀️";
-            left: 32px;
+        .toggle-slider:after {
+            content: "🌙";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #666;
         }
 
         .icon-btn {
             background: none;
             border: none;
-            font-size: 18px;
+            font-size: 20px;
             color: var(--gray);
             cursor: pointer;
-            padding: 6px;
+            padding: 8px;
             border-radius: 50%;
             transition: var(--transition);
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             touch-action: manipulation;
-            flex-shrink: 0;
         }
 
         .icon-btn:hover {
@@ -782,13 +635,9 @@
             display: flex;
             background: var(--light);
             border-bottom: 1px solid #e0e0e0;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
+            position: sticky;
+            top: 70px;
             z-index: 99;
-            height: 50px;
-            min-height: 50px;
         }
 
         [data-theme="dark"] .nav-tabs {
@@ -798,21 +647,17 @@
 
         .nav-tab {
             flex: 1;
-            padding: 12px 8px;
+            padding: 15px;
             text-align: center;
             background: none;
             border: none;
             border-bottom: 3px solid transparent;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 500;
             color: var(--gray);
             cursor: pointer;
             transition: var(--transition);
             touch-action: manipulation;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            min-height: 50px;
         }
 
         .nav-tab.active {
@@ -827,45 +672,17 @@
 
         /* App Content */
         .app-content {
-            position: absolute;
-            top: 110px;
-            left: 0;
-            right: 0;
-            bottom: 50px;
-            padding: 15px;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-        }
-
-        @media (max-width: 768px) {
-            .app-content {
-                top: 110px;
-                padding: 12px;
-            }
-            .nav-tabs {
-                display: flex;
-                height: 50px;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .app-content {
-                top: 60px;
-            }
-            .nav-tabs {
-                display: none;
-            }
+            min-height: calc(100vh - 140px);
         }
 
         /* Page Sections */
         .page-section {
             display: none;
             animation: fadeIn 0.3s ease;
-            min-height: 100%;
         }
 
         .page-section.active {
@@ -879,17 +696,12 @@
             right: 0;
             background: var(--light);
             border-top: 1px solid #e0e0e0;
-            padding: 10px 15px;
+            padding: 12px 20px;
             text-align: center;
             color: var(--gray);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             z-index: 99;
-            padding-bottom: calc(10px + var(--safe-area-bottom));
-            height: 50px;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding-bottom: calc(12px + var(--safe-area-bottom));
         }
 
         [data-theme="dark"] .app-footer {
@@ -901,70 +713,67 @@
         .balance-card {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: var(--border-radius);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             box-shadow: var(--shadow);
         }
 
         .balance-label {
-            font-size: 0.9rem;
+            font-size: 1rem;
             opacity: 0.9;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .balance-amount {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             word-break: break-word;
-            line-height: 1.2;
         }
 
         .balance-details {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             opacity: 0.9;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
 
-        /* Section Title */
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin: 20px 0 12px;
+            margin: 25px 0 15px;
             color: var(--dark);
         }
 
         /* Form Transaksi */
         .transaction-form {
             background: var(--light);
-            padding: 15px;
+            padding: 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .form-input {
             padding: 12px;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 16px;
             transition: var(--transition);
             background: var(--light);
             color: var(--dark);
             width: 100%;
             -webkit-appearance: none;
-            min-height: 46px;
         }
 
         [data-theme="dark"] .form-input {
@@ -975,17 +784,16 @@
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
         }
 
         .form-buttons {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 12px 15px;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -995,12 +803,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 5px;
             touch-action: manipulation;
             white-space: nowrap;
             flex: 1;
-            min-width: 100px;
-            min-height: 44px;
+            min-width: 120px;
         }
 
         .btn-primary {
@@ -1057,37 +864,27 @@
             background: #e0ac03;
         }
 
-        .btn-info {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .btn-info:hover {
-            background: #138496;
-        }
-
         /* Filter Section */
         .filter-section {
             background: var(--light);
-            padding: 15px;
+            padding: 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .filter-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .filter-label {
             font-weight: 500;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             color: var(--dark);
             display: block;
-            font-size: 13px;
         }
 
         .filter-select {
@@ -1095,11 +892,10 @@
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             background: var(--light);
-            font-size: 14px;
+            font-size: 16px;
             width: 100%;
             color: var(--dark);
             -webkit-appearance: none;
-            min-height: 46px;
         }
 
         [data-theme="dark"] .filter-select {
@@ -1114,44 +910,27 @@
 
         .filter-buttons {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             justify-content: flex-end;
             flex-wrap: wrap;
         }
 
-        /* Backup Section */
-        .backup-section-main {
-            background: var(--light);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-            border-left: 3px solid var(--warning);
-        }
-
-        .backup-actions-main {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 12px;
-        }
-
         /* Transactions Page */
         .transactions-page {
-            padding-bottom: 15px;
+            padding-bottom: 20px;
         }
 
         .export-section {
             display: flex;
             justify-content: flex-end;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
         /* Month Group untuk Riwayat Transaksi */
         .month-group {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -1160,20 +939,20 @@
         .month-group .month-header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 12px 15px;
-            font-size: 1rem;
+            padding: 15px 20px;
+            font-size: 1.1rem;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
 
         .month-totals {
             display: flex;
-            gap: 10px;
-            font-size: 0.8rem;
+            gap: 15px;
+            font-size: 0.9rem;
             opacity: 0.9;
             flex-wrap: wrap;
         }
@@ -1181,7 +960,7 @@
         .month-totals span {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
         }
 
         /* Transactions Table */
@@ -1191,18 +970,16 @@
             display: block;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            font-size: 13px;
-            overscroll-behavior: contain;
         }
 
         .transactions-table table {
             width: 100%;
-            min-width: 500px;
+            min-width: 600px;
         }
 
         .transactions-table th,
         .transactions-table td {
-            padding: 10px 8px;
+            padding: 12px 8px;
             text-align: left;
             border-bottom: 1px solid #f0f0f0;
             color: var(--dark);
@@ -1218,7 +995,7 @@
             background: #f8f9fa;
             font-weight: 600;
             color: var(--gray);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         [data-theme="dark"] .transactions-table th {
@@ -1249,30 +1026,23 @@
 
         .action-buttons {
             display: flex;
-            gap: 4px;
+            gap: 5px;
             flex-wrap: nowrap;
-        }
-
-        .action-buttons .btn {
-            padding: 8px 10px;
-            font-size: 13px;
-            min-width: auto;
-            min-height: 36px;
         }
 
         /* Chart Container */
         .chart-container {
             background: var(--light);
-            padding: 15px;
+            padding: 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .chart-wrapper {
             position: relative;
             width: 100%;
-            height: 250px;
+            height: 300px;
         }
 
         .chart-placeholder {
@@ -1281,11 +1051,10 @@
             align-items: center;
             justify-content: center;
             background: #f8f9fa;
-            border-radius: 6px;
+            border-radius: 8px;
             color: var(--gray);
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            font-size: 13px;
         }
 
         [data-theme="dark"] .chart-placeholder {
@@ -1297,444 +1066,374 @@
             height: 100% !important;
         }
 
-        /* Scrollbar Styling */
-        .app-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .app-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 3px;
-        }
-
-        .app-content::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 3px;
-        }
-
-        .app-content::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-
-        [data-theme="dark"] .app-content::-webkit-scrollbar-track {
-            background: #2d2d2d;
-        }
-
-        [data-theme="dark"] .app-content::-webkit-scrollbar-thumb {
-            background: #555;
-        }
-
-        [data-theme="dark"] .app-content::-webkit-scrollbar-thumb:hover {
-            background: #666;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 15px;
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        .empty-state div {
-            font-size: 48px;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-
         /* Responsive Design */
-        @media (max-width: 480px) {
-            html, body {
-                font-size: 13px;
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: flex;
+            }
+            
+            .login-container,
+            .donation-container {
+                padding: 20px;
+                margin: 10px;
+                max-width: 100%;
             }
             
             .app-content {
-                padding: 10px;
-                top: 110px;
+                padding: 15px;
             }
             
             .form-grid,
             .filter-grid {
                 grid-template-columns: 1fr;
-                gap: 8px;
+                gap: 12px;
             }
             
-            .backup-actions,
-            .backup-actions-main {
-                grid-template-columns: 1fr;
-            }
-            
-            .storage-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .backup-content {
-                padding: 15px;
+            .filter-buttons,
+            .form-buttons {
+                flex-direction: row;
+                justify-content: stretch;
             }
             
             .btn {
-                min-width: 80px;
-                padding: 10px 12px;
+                flex: 1;
+                min-width: 0;
+                padding: 12px 15px;
                 font-size: 13px;
-            }
-            
-            .balance-amount {
-                font-size: 1.6rem;
-            }
-            
-            .chart-wrapper {
-                height: 220px;
-            }
-            
-            .nav-tab {
-                font-size: 12px;
-                padding: 10px 5px;
-            }
-            
-            .main-header {
-                padding: 10px 12px;
-                height: 55px;
-            }
-            
-            .nav-tabs {
-                top: 55px;
-                height: 45px;
-            }
-            
-            .app-content {
-                top: 100px;
-            }
-            
-            .icon-btn {
-                width: 36px;
-                height: 36px;
-            }
-            
-            .month-header {
-                padding: 10px 12px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-            
-            .month-totals {
-                width: 100%;
-                justify-content: space-between;
             }
             
             .transactions-table th,
             .transactions-table td {
-                padding: 8px 6px;
-                font-size: 12px;
+                padding: 10px 6px;
+                font-size: 13px;
+            }
+            
+            .balance-amount {
+                font-size: 1.8rem;
+            }
+            
+            .balance-details {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .export-section {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            
+            .app-footer {
+                padding: 10px 15px;
+                font-size: 0.75rem;
+                line-height: 1.4;
+            }
+            
+            .month-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+                padding: 12px 15px;
+            }
+            
+            .month-totals {
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+            }
+            
+            .month-totals span {
+                justify-content: space-between;
+                width: 100%;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
             }
             
             .action-buttons .btn {
-                padding: 6px 8px;
-                min-height: 32px;
+                padding: 8px 10px;
+                font-size: 12px;
+                min-width: 0;
             }
             
-            .password-input {
-                font-size: 16px;
-                padding: 14px 45px 14px 12px;
-            }
-            
-            .login-btn {
-                font-size: 16px;
-                padding: 14px;
-            }
-            
-            .donation-btn {
-                font-size: 15px;
-                padding: 14px;
-            }
-        }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            .app-content {
-                padding: 12px;
-            }
-            
-            .chart-wrapper {
-                height: 230px;
-            }
-            
-            .storage-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .app-content {
+            .chart-container {
                 padding: 15px;
             }
             
             .chart-wrapper {
                 height: 250px;
             }
-        }
-
-        @media (min-width: 1025px) {
-            .app-content {
-                padding: 20px;
+            
+            .chart-placeholder {
+                font-size: 14px;
+                padding: 15px;
             }
             
-            .balance-amount {
-                font-size: 2rem;
+            .nav-tab {
+                padding: 12px;
+                font-size: 14px;
             }
             
-            .chart-wrapper {
-                height: 280px;
+            .section-title {
+                font-size: 1.2rem;
+                margin: 20px 0 12px;
             }
-        }
-
-        @media (min-width: 1200px) {
-            html, body {
+            
+            .donation-title {
+                font-size: 1.4rem;
+            }
+            
+            .account-number {
+                font-size: 18px;
+                padding: 10px;
+                letter-spacing: 1px;
+            }
+            
+            .donation-btn {
+                padding: 12px;
                 font-size: 15px;
             }
             
-            .app-content {
+            .toggle-switch {
+                width: 50px;
+                height: 25px;
+            }
+            
+            .toggle-slider:before {
+                height: 19px;
+                width: 19px;
+            }
+            
+            input:checked + .toggle-slider:before {
+                transform: translateX(25px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .splash-title {
+                font-size: 2rem;
+            }
+            
+            .splash-logo {
+                width: 100px;
+                height: 100px;
+                font-size: 30px;
+            }
+            
+            .app-title,
+            .donation-title {
+                font-size: 1.5rem;
+            }
+            
+            .app-footer {
+                padding: 8px 12px;
+                font-size: 0.7rem;
+            }
+            
+            .balance-card {
                 padding: 20px;
             }
             
             .balance-amount {
-                font-size: 2.2rem;
+                font-size: 1.6rem;
+            }
+            
+            .balance-details {
+                font-size: 0.8rem;
+            }
+            
+            .transaction-form,
+            .filter-section,
+            .chart-container {
+                padding: 15px;
+            }
+            
+            .form-input,
+            .filter-select {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            .btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+            
+            .month-header {
+                font-size: 1rem;
+                padding: 10px 12px;
+            }
+            
+            .month-totals {
+                font-size: 0.8rem;
             }
             
             .chart-wrapper {
-                height: 300px;
+                height: 200px;
             }
-        }
-
-        /* Audio Control */
-        .audio-control {
-            position: fixed;
-            bottom: 70px;
-            right: 15px;
-            z-index: 100;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: var(--transition);
-            touch-action: manipulation;
-        }
-
-        .audio-control:hover {
-            transform: scale(1.1);
-        }
-
-        .audio-control.muted {
-            background: var(--gray);
-        }
-
-        @media (max-width: 480px) {
-            .audio-control {
-                bottom: 65px;
-                right: 12px;
-                width: 44px;
-                height: 44px;
+            
+            .chart-placeholder {
+                font-size: 13px;
+            }
+            
+            .main-header {
+                padding: 12px 15px;
+            }
+            
+            .header-title h2 {
+                font-size: 1.2rem;
+            }
+            
+            .icon-btn {
+                width: 40px;
+                height: 40px;
+                padding: 6px;
                 font-size: 18px;
             }
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Touch Improvements */
-        button, input, select, textarea {
-            font-size: 16px; /* Prevent iOS zoom */
-        }
-
-        input[type="date"] {
-            min-height: 44px;
-        }
-
-        select {
-            min-height: 44px;
-        }
-
-        /* Better touch targets */
-        .nav-tab, .btn, .icon-btn {
-            min-height: 44px;
-        }
-
-        /* iOS specific fixes */
-        @supports (-webkit-touch-callout: none) {
-            .app-content {
-                padding-bottom: 30px;
+            
+            .header-actions {
+                gap: 10px;
             }
             
-            .audio-control {
-                bottom: calc(70px + env(safe-area-inset-bottom, 0px));
-            }
-        }
-
-        /* Android Chrome pull-to-refresh prevention */
-        body {
-            overscroll-behavior-y: contain;
-        }
-
-        /* Selection improvements */
-        ::selection {
-            background: rgba(26, 115, 232, 0.3);
-            color: inherit;
-        }
-
-        /* Focus styles for accessibility */
-        *:focus {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Prevent text size adjustment on orientation change */
-        body {
-            -webkit-text-size-adjust: 100%;
-        }
-
-        /* Improved modal for mobile */
-        @media (max-width: 768px) {
-            .backup-modal {
-                align-items: flex-end;
-                padding: 0;
+            .nav-tab {
+                padding: 10px;
+                font-size: 13px;
             }
             
-            .backup-content {
-                max-height: 85vh;
-                border-radius: var(--border-radius) var(--border-radius) 0 0;
-                animation: slideUp 0.3s ease;
-                margin-top: auto;
+            .account-number {
+                font-size: 16px;
+                padding: 8px;
             }
             
-            @keyframes slideUp {
-                from { transform: translateY(100%); opacity: 0; }
-                to { transform: translateY(0); opacity: 1; }
+            .donation-container {
+                padding: 15px;
             }
+        }
+
+        @media (min-width: 769px) {
+            .nav-tabs {
+                display: none;
+            }
+            
+            .page-section {
+                display: block !important;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .balance-amount {
+                font-size: 1.4rem;
+            }
+            
+            .btn {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+            
+            .chart-wrapper {
+                height: 180px;
+            }
+            
+            .nav-tab {
+                padding: 8px;
+                font-size: 12px;
+            }
+            
+            .account-number {
+                font-size: 15px;
+                letter-spacing: 0;
+            }
+            
+            .donation-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+
+        /* Touch Device Optimization */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover,
+            .icon-btn:hover,
+            .nav-tab:hover,
+            .donation-btn:hover {
+                transform: none;
+            }
+            
+            .btn:active,
+            .icon-btn:active,
+            .nav-tab:active,
+            .donation-btn:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease;
+            }
+            
+            .login-btn:active,
+            .donation-btn:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Scrollbar Styling */
+        .transactions-table::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .transactions-table::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .transactions-table::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .transactions-table::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- Storage Status Indicator -->
-    <div class="storage-status" id="storage-status"></div>
-
-    <!-- Audio Control -->
-    <button class="audio-control" id="audio-control" title="Toggle Sound" aria-label="Toggle sound">
-        <i class="fas fa-volume-up"></i>
-    </button>
-
-    <!-- Backup Modal -->
-    <div class="backup-modal" id="backup-modal">
-        <div class="backup-content">
-            <div class="backup-header">
-                <h3 class="backup-title"><i class="fas fa-database"></i> Backup & Restore Data</h3>
-                <button class="close-backup" onclick="closeBackupModal()" aria-label="Close">✕</button>
-            </div>
-            
-            <div class="storage-stats">
-                <div class="stat-card">
-                    <div class="stat-value" id="stat-transactions">0</div>
-                    <div class="stat-label">Transaksi</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="stat-storage">0 KB</div>
-                    <div class="stat-label">Ukuran Data</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="stat-backups">0</div>
-                    <div class="stat-label">Backup</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="stat-lastsave">-</div>
-                    <div class="stat-label">Terakhir Simpan</div>
-                </div>
-            </div>
-            
-            <div class="backup-section">
-                <h4 class="section-title"><i class="fas fa-upload"></i> Backup Data</h4>
-                <p style="font-size: 13px; margin-bottom: 10px;">Simpan data Anda ke file untuk mencegah kehilangan data.</p>
-                <div class="backup-actions">
-                    <button class="btn btn-success" onclick="exportBackup()">
-                        <i class="fas fa-save"></i> Backup ke File
-                    </button>
-                    <button class="btn btn-info" onclick="createAutoBackup()">
-                        <i class="fas fa-sync-alt"></i> Buat Backup Otomatis
-                    </button>
-                </div>
-            </div>
-            
-            <div class="backup-section">
-                <h4 class="section-title"><i class="fas fa-download"></i> Restore Data</h4>
-                <p style="font-size: 13px; margin-bottom: 10px;">Muat data dari file backup yang sebelumnya disimpan.</p>
-                <div class="backup-info">
-                    <span>Pilih file backup (.json):</span>
-                    <input type="file" id="restore-file" accept=".json" style="display: none">
-                    <button class="btn btn-warning" onclick="document.getElementById('restore-file').click()">
-                        <i class="fas fa-folder-open"></i> Pilih File
-                    </button>
-                </div>
-                <div class="backup-actions">
-                    <button class="btn btn-primary" onclick="importFromBackup()">
-                        <i class="fas fa-file-import"></i> Restore Data
-                    </button>
-                </div>
-            </div>
-            
-            <div class="backup-section">
-                <h4 class="section-title"><i class="fas fa-cog"></i> Pengaturan Storage</h4>
-                <p style="font-size: 13px; margin-bottom: 10px;">Kelola penyimpanan data lokal.</p>
-                <div class="backup-actions">
-                    <button class="btn btn-secondary" onclick="clearOldBackups()">
-                        <i class="fas fa-trash"></i> Hapus Backup Lama
-                    </button>
-                    <button class="btn btn-danger" onclick="showStorageInfo()">
-                        <i class="fas fa-info-circle"></i> Info Storage
-                    </button>
-                </div>
-            </div>
-        </div>
+    <!-- Install Prompt -->
+    <div class="install-prompt" id="install-prompt">
+        Pasang CashTrack di perangkat Anda untuk pengalaman terbaik
+        <button class="install-btn" id="install-btn">Pasang</button>
+        <button class="install-btn" onclick="hideInstallPrompt()" style="background: transparent; color: white;">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
     <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-logo">
-            <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100" height="100" rx="20" fill="#1a73e8"/>
-                <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                <path d="M35 40L60 65" stroke="white" stroke-width="3"/>
-                <path d="M60 35L35 60" stroke="white" stroke-width="3"/>
-                <rect x="30" y="45" width="40" height="10" rx="2" fill="white"/>
-            </svg>
+            <i class="fas fa-chart-line"></i>
         </div>
         <h1 class="splash-title">CashTrack</h1>
         <p class="splash-subtitle">Kelola Keuangan dengan Mudah</p>
         
+        <!-- Splash Footer -->
         <div class="splash-footer">
-            <p class="version">CashTrack Version 2.2</p>
-            <p>Dengan Sistem Penyimpanan Terjamin</p>
+            <p class="version">CashTrack Version 2.0</p>
+            <p>Karya Anak Bangsa – Buatan Indonesia</p>
             <p class="copyright">© 2025 CashTrack. All Rights Reserved.</p>
         </div>
     </div>
@@ -1744,22 +1443,15 @@
         <div class="login-container">
             <div class="app-header">
                 <div class="app-icon">
-                    <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="100" height="100" rx="20" fill="#1a73e8"/>
-                        <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M35 40L60 65" stroke="white" stroke-width="3"/>
-                        <path d="M60 35L35 60" stroke="white" stroke-width="3"/>
-                        <rect x="30" y="45" width="40" height="10" rx="2" fill="white"/>
-                    </svg>
+                    <i class="fas fa-chart-line"></i>
                 </div>
                 <h1 class="app-title">CashTrack</h1>
                 <p class="app-subtitle">Masukkan kata sandi untuk melanjutkan</p>
             </div>
 
             <div class="input-container">
-                <input type="password" class="password-input" placeholder="Masukkan password" id="password-input" autocomplete="current-password">
-                <button type="button" class="toggle-password" id="toggle-password" aria-label="Show password">
+                <input type="password" class="password-input" placeholder="Masukkan password" id="password-input">
+                <button type="button" class="toggle-password" id="toggle-password">
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
@@ -1777,14 +1469,7 @@
         <div class="donation-container">
             <div class="donation-header">
                 <div class="donation-icon">
-                    <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="100" height="100" rx="20" fill="#977dff"/>
-                        <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M35 40L60 65" stroke="white" stroke-width="3"/>
-                        <path d="M60 35L35 60" stroke="white" stroke-width="3"/>
-                        <rect x="30" y="45" width="40" height="10" rx="2" fill="white"/>
-                    </svg>
+                    <i class="fas fa-hand-holding-heart"></i>
                 </div>
                 <h1 class="donation-title">Support Developer</h1>
                 <p class="donation-subtitle">Bantu pengembangan aplikasi dengan donasi seikhlasnya</p>
@@ -1805,13 +1490,14 @@
 
             <div class="donation-buttons">
                 <button class="donation-btn" id="enter-app-btn">
-                    <i class="fas fa-sign-in-alt"></i> MASUK KE APLIKASI
+                    <span class="button-shine"></span>
+                    <i class="fas fa-arrow-right"></i> KLIK UNTUK MASUK KE APLIKASI
                 </button>
             </div>
         </div>
         
         <div class="donation-footer">
-            CashTrack © 2025 | Buatan Anak Indonesia 🇮🇩
+            CashTrack © 2025 | Buatan Anak Indonesia <i class="fas fa-flag"></i>
         </div>
     </div>
 
@@ -1820,65 +1506,55 @@
         <header class="main-header">
             <div class="header-title">
                 <div class="header-icon">
-                    <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="100" height="100" rx="20" fill="#1a73e8"/>
-                        <path d="M65 35H55V25H45" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M35 65H45V75H55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M35 40L60 65" stroke="white" stroke-width="3"/>
-                        <path d="M60 35L35 60" stroke="white" stroke-width="3"/>
-                        <rect x="30" y="45" width="40" height="10" rx="2" fill="white"/>
-                    </svg>
+                    <i class="fas fa-chart-line"></i>
                 </div>
                 <h2>CashTrack</h2>
             </div>
             <div class="header-actions">
-                <label class="theme-switch" aria-label="Toggle dark mode">
-                    <input type="checkbox" id="theme-toggle">
-                    <span class="theme-slider"></span>
+                <label class="toggle-switch" title="Toggle Dark Mode">
+                    <input type="checkbox" id="dark-mode-toggle">
+                    <span class="toggle-slider"></span>
                 </label>
-                
-                <button class="icon-btn" onclick="showBackupModal()" title="Backup Data" aria-label="Backup data">
-                    <i class="fas fa-save"></i>
+                <button class="icon-btn" onclick="showInstallPrompt()" title="Pasang Aplikasi">
+                    <i class="fas fa-mobile-alt"></i>
                 </button>
-                <button class="icon-btn" onclick="logout()" title="Keluar" aria-label="Logout">
+                <button class="icon-btn" onclick="logout()" title="Keluar">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
         </header>
 
-        <!-- Navigation Tabs -->
+        <!-- Navigation Tabs untuk Mobile -->
         <div class="nav-tabs">
-            <button class="nav-tab active" data-page="transactions-page" aria-label="Tambah transaksi">
-                <i class="fas fa-plus-circle"></i> Tambah
+            <button class="nav-tab active" data-page="transactions-page">
+                <i class="fas fa-plus-circle"></i> Tambah Transaksi
             </button>
-            <button class="nav-tab" data-page="history-page" aria-label="Riwayat transaksi">
-                <i class="fas fa-history"></i> Riwayat
-            </button>
-            <button class="nav-tab" data-page="backup-page" aria-label="Backup data">
-                <i class="fas fa-database"></i> Backup
+            <button class="nav-tab" data-page="history-page">
+                <i class="fas fa-history"></i> Riwayat Transaksi
             </button>
         </div>
 
         <div class="app-content">
             <!-- Page 1: Tambah Transaksi -->
             <div id="transactions-page" class="page-section active">
+                <!-- Balance Card -->
                 <div class="balance-card">
                     <div class="balance-label">Saldo Saat Ini</div>
                     <div class="balance-amount" id="balance-amount">Rp 0</div>
                     <div class="balance-details">
                         <span>Update: <span id="last-update">-</span></span>
-                        <span>Transaksi: <span id="total-transactions">0</span></span>
-                        <span>Backup: <span id="last-backup">Belum ada</span></span>
+                        <span>Total Transaksi: <span id="total-transactions">0</span></span>
                     </div>
                 </div>
 
-                <h3 class="section-title"><i class="fas fa-plus-circle"></i> Tambah Transaksi Baru</h3>
+                <!-- Transaction Form -->
+                <h3 class="section-title">Tambah Transaksi Baru</h3>
                 <div class="transaction-form">
                     <div class="form-grid">
                         <input type="date" class="form-input" id="transaction-date">
-                        <input type="text" class="form-input" id="transaction-desc" placeholder="Keterangan transaksi" autocomplete="off">
-                        <input type="text" class="form-input" id="transaction-income" placeholder="Pendapatan (Rp)" oninput="formatCurrencyInput(this)" autocomplete="off">
-                        <input type="text" class="form-input" id="transaction-expense" placeholder="Pengeluaran (Rp)" oninput="formatCurrencyInput(this)" autocomplete="off">
+                        <input type="text" class="form-input" id="transaction-desc" placeholder="Keterangan transaksi">
+                        <input type="text" class="form-input" id="transaction-income" placeholder="Pendapatan (Rp)" oninput="formatCurrencyInput(this)">
+                        <input type="text" class="form-input" id="transaction-expense" placeholder="Pengeluaran (Rp)" oninput="formatCurrencyInput(this)">
                     </div>
                     <div class="form-buttons">
                         <button class="btn btn-primary" onclick="addTransaction()">
@@ -1890,12 +1566,12 @@
                     </div>
                 </div>
 
-                <h3 class="section-title"><i class="fas fa-chart-bar"></i> Grafik Keuangan</h3>
+                <!-- Chart -->
+                <h3 class="section-title">Grafik Keuangan</h3>
                 <div class="chart-container">
                     <div class="chart-wrapper">
                         <div class="chart-placeholder" id="chart-placeholder">
-                            <i class="fas fa-chart-line"></i><br>
-                            Grafik akan ditampilkan di sini
+                            <i class="fas fa-chart-bar"></i> Grafik akan ditampilkan di sini
                         </div>
                         <canvas id="finance-chart"></canvas>
                     </div>
@@ -1905,7 +1581,8 @@
             <!-- Page 2: Riwayat Transaksi -->
             <div id="history-page" class="page-section">
                 <div class="transactions-page">
-                    <h3 class="section-title"><i class="fas fa-filter"></i> Filter Transaksi</h3>
+                    <!-- Filter Section -->
+                    <h3 class="section-title">Filter Transaksi</h3>
                     <div class="filter-section">
                         <div class="filter-grid">
                             <div>
@@ -1929,7 +1606,7 @@
                         </div>
                         <div class="filter-buttons">
                             <button class="btn btn-primary" onclick="applyFilter()">
-                                <i class="fas fa-search"></i> Terapkan Filter
+                                <i class="fas fa-filter"></i> Terapkan Filter
                             </button>
                             <button class="btn btn-secondary" onclick="resetFilters()">
                                 <i class="fas fa-redo"></i> Reset Filter
@@ -1937,6 +1614,7 @@
                         </div>
                     </div>
 
+                    <!-- Export Buttons -->
                     <div class="export-section">
                         <button class="btn btn-success" onclick="exportToCSV()">
                             <i class="fas fa-file-csv"></i> Export CSV
@@ -1945,496 +1623,467 @@
                             <i class="fas fa-file-excel"></i> Export Excel
                         </button>
                         <button class="btn btn-warning" onclick="exportToExcelGrouped()">
-                            <i class="fas fa-file-alt"></i> Export Excel Berkelompok
+                            <i class="fas fa-layer-group"></i> Export Excel Berkelompok
                         </button>
                     </div>
 
-                    <h3 class="section-title"><i class="fas fa-history"></i> Riwayat Transaksi</h3>
+                    <!-- Transactions Container -->
+                    <h3 class="section-title">Riwayat Transaksi</h3>
                     <div id="transactions-container">
-                        <!-- Transaksi akan ditampilkan di sini -->
+                        <!-- Transaksi akan ditampilkan berkelompok per bulan di sini -->
                     </div>
-                </div>
-            </div>
-
-            <!-- Page 3: Backup Data -->
-            <div id="backup-page" class="page-section">
-                <div class="backup-section-main">
-                    <h3 class="section-title"><i class="fas fa-database"></i> Sistem Backup Data</h3>
-                    <p style="font-size: 13px;">Lindungi data keuangan Anda dengan sistem backup yang kuat. Data disimpan di 3 tempat berbeda untuk keamanan maksimal.</p>
-                    
-                    <div class="storage-stats">
-                        <div class="stat-card">
-                            <div class="stat-value" id="backup-stat-transactions">0</div>
-                            <div class="stat-label">Total Transaksi</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="backup-stat-size">0 KB</div>
-                            <div class="stat-label">Ukuran Data</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="backup-stat-backups">0</div>
-                            <div class="stat-label">Jumlah Backup</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="backup-stat-status">🟢</div>
-                            <div class="stat-label">Status Storage</div>
-                        </div>
-                    </div>
-
-                    <div class="backup-actions-main">
-                        <button class="btn btn-success" onclick="exportBackup()">
-                            <i class="fas fa-save"></i> Backup Sekarang
-                        </button>
-                        <button class="btn btn-warning" onclick="restoreFromLatestBackup()">
-                            <i class="fas fa-download"></i> Restore Terakhir
-                        </button>
-                        <button class="btn btn-info" onclick="checkStorageHealth()">
-                            <i class="fas fa-search"></i> Cek Kesehatan
-                        </button>
-                        <button class="btn btn-danger" onclick="showBackupModal()">
-                            <i class="fas fa-cog"></i> Kelola Backup
-                        </button>
-                    </div>
-                </div>
-
-                <h3 class="section-title"><i class="fas fa-list"></i> Daftar Backup</h3>
-                <div id="backup-list">
-                    <!-- Daftar backup akan ditampilkan di sini -->
-                </div>
-
-                <h3 class="section-title"><i class="fas fa-shield-alt"></i> Tips Keamanan Data</h3>
-                <div class="backup-section-main">
-                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Lakukan backup reguler:</strong> Minimal seminggu sekali</p>
-                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Simpan file backup:</strong> Di cloud atau perangkat lain</p>
-                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Cek storage:</strong> Pastikan ada cukup space</p>
-                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Export data:</strong> Simpan file CSV/Excel secara berkala</p>
-                    <p style="font-size: 13px;"><strong><i class="fas fa-check-circle" style="color: #34a853;"></i> Auto-backup:</strong> Aktifkan di pengaturan backup</p>
                 </div>
             </div>
         </div>
 
+        <!-- App Footer -->
         <footer class="app-footer">
-            <i class="fas fa-lock"></i> © 2025 CashTrack — Sistem Penyimpanan Terjamin
+            © 2025 CashTrack — Buatan Anak Indonesia <i class="fas fa-flag"></i>
         </footer>
     </div>
 
     <script>
-        // ==================== KONFIGURASI ====================
-        const STORAGE_CONFIG = {
-            VERSION: '2.2',
-            MAX_BACKUPS: 10,
-            AUTO_SAVE_INTERVAL: 30000,
-            AUTO_BACKUP_INTERVAL: 3600000,
-            COMPRESSION_THRESHOLD: 100
+        // ==================== AUDIO MANAGER ====================
+        const AudioManager = {
+            sounds: {},
+            
+            init() {
+                // Create audio objects with fallback URLs
+                this.sounds = {
+                    click: this.createAudio(['mixkit-positive-notification-951.wav']),
+                    success: this.createAudio(['mixkit-positive-notification-951.wav']),
+                    error: this.createAudio(['new-notification-011-364050.mp3']),
+                    add: this.createAudio(['preview.mp3']),
+                    delete: this.createAudio(['preview.mp3']),
+                    notification: this.createAudio(['preview.mp3']),
+                    swipe: this.createAudio(['new-notification-011-364050.mp3'])
+                };
+                
+                // Set volume to 80%
+                Object.values(this.sounds).forEach(sound => {
+                    if (sound) sound.volume = 0.8;
+                });
+                
+                console.log('Audio Manager initialized');
+            },
+            
+            createAudio(sources) {
+                try {
+                    const audio = new Audio();
+                    sources.forEach(src => {
+                        const source = document.createElement('source');
+                        source.src = src;
+                        audio.appendChild(source);
+                    });
+                    return audio;
+                } catch (error) {
+                    console.warn('Audio creation failed:', error);
+                    return null;
+                }
+            },
+            
+            play(soundName) {
+                try {
+                    const sound = this.sounds[soundName];
+                    if (sound) {
+                        sound.currentTime = 0;
+                        return sound.play().catch(e => console.warn('Audio play failed:', e));
+                    }
+                } catch (error) {
+                    console.warn('Audio playback error:', error);
+                }
+            },
+            
+            playClick() {
+                this.play('click');
+            },
+            
+            playSuccess() {
+                this.play('success');
+            },
+            
+            playError() {
+                this.play('error');
+            },
+            
+            playAdd() {
+                this.play('add');
+            },
+            
+            playDelete() {
+                this.play('delete');
+            },
+            
+            playNotification() {
+                this.play('notification');
+            },
+            
+            playSwipe() {
+                this.play('swipe');
+            }
         };
 
-        const STORAGE_KEYS = {
-            TRANSACTIONS: 'cashTrackTransactions_v2',
-            BACKUPS: 'cashTrackBackups_v2',
-            SETTINGS: 'cashTrackSettings_v2',
-            METADATA: 'cashTrackMetadata_v2',
-            TEMP_BACKUP: 'cashTrackTempBackup_v2'
+        // ==================== STORAGE MANAGER ====================
+        const StorageManager = {
+            STORAGE_KEY: 'cashTrackData_v2',
+            BACKUP_KEY: 'cashTrackBackup',
+            
+            save(data) {
+                try {
+                    const saveData = {
+                        transactions: data.transactions || [],
+                        settings: data.settings || {},
+                        version: '2.0',
+                        lastBackup: new Date().toISOString()
+                    };
+                    
+                    // Save to localStorage
+                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(saveData));
+                    
+                    // Create backup
+                    this.createBackup(saveData);
+                    
+                    // Also save to sessionStorage for redundancy
+                    sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(saveData));
+                    
+                    console.log('Data saved successfully');
+                    return true;
+                } catch (error) {
+                    console.error('Save failed:', error);
+                    this.tryFallbackSave(data);
+                    return false;
+                }
+            },
+            
+            load() {
+                try {
+                    // Try main storage first
+                    let data = localStorage.getItem(this.STORAGE_KEY);
+                    
+                    if (!data) {
+                        // Try sessionStorage
+                        data = sessionStorage.getItem(this.STORAGE_KEY);
+                    }
+                    
+                    if (!data) {
+                        // Try backup
+                        data = localStorage.getItem(this.BACKUP_KEY);
+                    }
+                    
+                    if (data) {
+                        const parsed = JSON.parse(data);
+                        
+                        // Validate and migrate old data
+                        if (!parsed.version || parsed.version === '1.0') {
+                            return this.migrateOldData(parsed);
+                        }
+                        
+                        return parsed;
+                    }
+                    
+                    return { transactions: [], settings: {} };
+                } catch (error) {
+                    console.error('Load failed:', error);
+                    return this.loadBackup();
+                }
+            },
+            
+            createBackup(data) {
+                try {
+                    localStorage.setItem(this.BACKUP_KEY, JSON.stringify(data));
+                } catch (error) {
+                    console.warn('Backup creation failed:', error);
+                }
+            },
+            
+            loadBackup() {
+                try {
+                    const backup = localStorage.getItem(this.BACKUP_KEY);
+                    if (backup) {
+                        return JSON.parse(backup);
+                    }
+                } catch (error) {
+                    console.error('Backup load failed:', error);
+                }
+                return { transactions: [], settings: {} };
+            },
+            
+            tryFallbackSave(data) {
+                try {
+                    // Try indexedDB as fallback
+                    if (window.indexedDB) {
+                        this.saveToIndexedDB(data);
+                    }
+                    
+                    // Try compressed storage
+                    const compressed = this.compressData(data);
+                    localStorage.setItem('cashTrackCompressed', compressed);
+                } catch (error) {
+                    console.error('All storage methods failed:', error);
+                }
+            },
+            
+            compressData(data) {
+                return btoa(JSON.stringify(data));
+            },
+            
+            decompressData(compressed) {
+                try {
+                    return JSON.parse(atob(compressed));
+                } catch (error) {
+                    return { transactions: [], settings: {} };
+                }
+            },
+            
+            migrateOldData(oldData) {
+                // Migrate from old storage format
+                const migrated = {
+                    transactions: Array.isArray(oldData) ? oldData : (oldData.transactions || []),
+                    settings: oldData.settings || {},
+                    version: '2.0',
+                    migrated: new Date().toISOString()
+                };
+                
+                // Save migrated data
+                this.save(migrated);
+                
+                return migrated;
+            },
+            
+            saveToIndexedDB(data) {
+                if (!window.indexedDB) return;
+                
+                const request = indexedDB.open('CashTrackDB', 1);
+                
+                request.onupgradeneeded = function(event) {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains('transactions')) {
+                        db.createObjectStore('transactions', { keyPath: 'id' });
+                    }
+                };
+                
+                request.onsuccess = function(event) {
+                    const db = event.target.result;
+                    const transaction = db.transaction(['transactions'], 'readwrite');
+                    const store = transaction.objectStore('transactions');
+                    
+                    // Clear existing data
+                    store.clear();
+                    
+                    // Save all transactions
+                    data.transactions.forEach(item => {
+                        store.put(item);
+                    });
+                    
+                    transaction.oncomplete = function() {
+                        console.log('Data saved to IndexedDB');
+                    };
+                };
+            },
+            
+            clearAll() {
+                try {
+                    localStorage.removeItem(this.STORAGE_KEY);
+                    sessionStorage.removeItem(this.STORAGE_KEY);
+                    localStorage.removeItem(this.BACKUP_KEY);
+                    localStorage.removeItem('cashTrackCompressed');
+                    
+                    if (window.indexedDB) {
+                        indexedDB.deleteDatabase('CashTrackDB');
+                    }
+                } catch (error) {
+                    console.error('Clear storage failed:', error);
+                }
+            }
         };
 
-        // ==================== VARIABEL GLOBAL ====================
+        // ==================== APP STATE ====================
         let transactions = [];
-        let backups = [];
-        let settings = {};
-        let storageMetadata = {};
+        let appSettings = {};
+        const correctPassword = "free palestina";
+        let deferredPrompt;
         let financeChart = null;
         let filteredTransactions = [];
         let currentFilters = { year: '', month: '', day: '' };
         let currentPage = 'transactions-page';
-        const correctPassword = "free palestina";
-        
-        let autoSaveTimer = null;
-        let autoBackupTimer = null;
-        let validationTimer = null;
-        
-        // ==================== SISTEM SUARA YANG DIPERBAIKI ====================
-        let audioEnabled = true;
-        const audioElements = {};
-        let audioContext = null;
-        
-        // Inisialisasi audio elements
-        function initializeAudio() {
-            try {
-                // Buat audio elements untuk setiap jenis suara
-                const audioTypes = {
-                    'click': new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ'),
-                    'success': new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ'),
-                    'error': new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ'),
-                    'notification': new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ')
-                };
-                
-                // Atur properti audio
-                Object.keys(audioTypes).forEach(type => {
-                    const audio = audioTypes[type];
-                    audio.preload = 'auto';
-                    audio.volume = 0.3;
-                    audioElements[type] = audio;
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize audio manager
+            AudioManager.init();
+            
+            // Initialize storage and load data
+            const savedData = StorageManager.load();
+            transactions = savedData.transactions || [];
+            appSettings = savedData.settings || {};
+            
+            // Set today's date as default in transaction form
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
+            
+            // Enter key support for form inputs
+            ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
+                document.getElementById(id).addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addTransaction();
+                    }
                 });
-                
-                // Setup audio context jika tersedia
-                if (window.AudioContext || window.webkitAudioContext) {
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            });
+            
+            // Initialize password toggle
+            const togglePassword = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password-input');
+            
+            togglePassword.addEventListener('click', function() {
+                AudioManager.playClick();
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+            });
+            
+            // Enter key for password input
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    AudioManager.playClick();
+                    checkPassword();
+                }
+            });
+            
+            // Initialize dark mode toggle
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const currentTheme = appSettings.theme || 'light';
+            
+            if (currentTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                darkModeToggle.checked = true;
+            }
+            
+            darkModeToggle.addEventListener('change', function() {
+                AudioManager.playSwipe();
+                if (this.checked) {
+                    document.body.setAttribute('data-theme', 'dark');
+                    appSettings.theme = 'dark';
+                } else {
+                    document.body.removeAttribute('data-theme');
+                    appSettings.theme = 'light';
                 }
                 
-                console.log('🔊 Audio system initialized');
-            } catch (error) {
-                console.warn('Audio initialization failed:', error);
+                // Save settings
+                StorageManager.save({ transactions, settings: appSettings });
+                
+                if (financeChart) {
+                    renderChart();
+                }
+                
+                if (currentPage === 'history-page') {
+                    displayGroupedTransactions();
+                }
+            });
+        });
+
+        // ==================== PWA FUNCTIONS ====================
+        const manifest = {
+            "name": "CashTrack",
+            "short_name": "CashTrack",
+            "description": "Aplikasi manajemen keuangan pribadi",
+            "start_url": "/",
+            "display": "standalone",
+            "background_color": "#ffffff",
+            "theme_color": "#1a73e8",
+            "orientation": "portrait-primary",
+            "categories": ["finance", "productivity"],
+            "icons": [
+                {
+                    "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=",
+                    "sizes": "192x192",
+                    "type": "image/svg+xml"
+                }
+            ]
+        };
+
+        const manifestJson = JSON.stringify(manifest);
+        const manifestBlob = new Blob([manifestJson], { type: 'application/json' });
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        document.getElementById('app-manifest').href = manifestURL;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setTimeout(() => {
+                showInstallPrompt();
+            }, 3000);
+        });
+
+        function showInstallPrompt() {
+            AudioManager.playNotification();
+            if (deferredPrompt) {
+                const installPrompt = document.getElementById('install-prompt');
+                installPrompt.style.display = 'block';
             }
         }
-        
-        // Fungsi untuk memainkan suara
-        function playSound(type = 'click') {
-            if (!audioEnabled || !audioElements[type]) return;
-            
-            try {
-                // Jika menggunakan audio context, buat suara sederhana
-                if (audioContext && audioContext.state !== 'suspended') {
-                    playWebAudio(type);
-                    return;
+
+        function hideInstallPrompt() {
+            AudioManager.playClick();
+            const installPrompt = document.getElementById('install-prompt');
+            installPrompt.style.display = 'none';
+        }
+
+        document.getElementById('install-btn').addEventListener('click', async () => {
+            AudioManager.playClick();
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    AudioManager.playSuccess();
+                    console.log('User accepted the install prompt');
                 }
-                
-                // Fallback ke HTML5 Audio
-                const audio = audioElements[type];
-                audio.currentTime = 0;
-                audio.play().catch(error => {
-                    console.log('Audio play failed:', error);
-                    playWebAudio(type);
+                deferredPrompt = null;
+                hideInstallPrompt();
+            }
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
                 });
-                
-            } catch (error) {
-                console.log('Sound play error:', error);
-            }
-        }
-        
-        // Fungsi untuk membuat suara menggunakan Web Audio API
-        function playWebAudio(type) {
-            if (!audioContext || audioContext.state === 'suspended') return;
-            
-            try {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                // Atur frekuensi berdasarkan jenis suara
-                switch(type) {
-                    case 'success':
-                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                        break;
-                    case 'error':
-                        oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
-                        break;
-                    case 'notification':
-                        oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
-                        break;
-                    case 'click':
-                    default:
-                        oscillator.frequency.setValueAtTime(500, audioContext.currentTime);
-                }
-                
-                // Atur volume
-                gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
-                
-                // Play suara
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.15);
-                
-            } catch (error) {
-                console.log('Web Audio error:', error);
-            }
-        }
-        
-        // Fungsi untuk toggle suara
-        function toggleAudio() {
-            audioEnabled = !audioEnabled;
-            const audioControl = document.getElementById('audio-control');
-            const icon = audioControl.querySelector('i');
-            
-            if (audioEnabled) {
-                audioControl.classList.remove('muted');
-                icon.className = 'fas fa-volume-up';
-                playSound('notification');
-                showStorageStatus('🔊 Suara diaktifkan', 'success');
-            } else {
-                audioControl.classList.add('muted');
-                icon.className = 'fas fa-volume-mute';
-                showStorageStatus('🔇 Suara dimatikan', 'warning');
-            }
-            
-            // Simpan preferensi
-            localStorage.setItem('cashTrackAudioEnabled', audioEnabled.toString());
+            });
         }
 
         // ==================== SPLASH SCREEN ====================
-        window.addEventListener('load', function() {
-            console.log('🔄 App loading...');
-            
-            // Inisialisasi audio
-            initializeAudio();
-            
-            // Load audio preference
-            const savedAudioPref = localStorage.getItem('cashTrackAudioEnabled');
-            if (savedAudioPref !== null) {
-                audioEnabled = savedAudioPref === 'true';
-                const audioControl = document.getElementById('audio-control');
-                const icon = audioControl.querySelector('i');
-                
-                if (audioEnabled) {
-                    audioControl.classList.remove('muted');
-                    icon.className = 'fas fa-volume-up';
-                } else {
-                    audioControl.classList.add('muted');
-                    icon.className = 'fas fa-volume-mute';
-                }
-            }
-            
-            // Set tanggal default
-            const today = new Date();
-            today.setDate(today.getDate()); // Untuk memperbaiki timezone
-            const todayStr = today.toISOString().split('T')[0];
-            const dateInput = document.getElementById('transaction-date');
-            if (dateInput) {
-                dateInput.value = todayStr;
-            }
-            
-            // Setup event listeners
-            setupEventListeners();
-            
-            // Hide splash screen setelah 1.5 detik
+        window.addEventListener('load', () => {
             setTimeout(() => {
                 const splashScreen = document.getElementById('splash-screen');
                 splashScreen.style.opacity = '0';
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                     
-                    // Cek apakah user sudah login
+                    // Check if already logged in
                     const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
-                    console.log('🔑 Login status:', isLoggedIn);
-                    
-                    if (isLoggedIn === 'true') {
+                    if (isLoggedIn) {
                         showDonationScreen();
                     } else {
                         showLoginScreen();
                     }
                 }, 500);
-            }, 1500);
+            }, 2000);
         });
-
-        // ==================== SETUP EVENT LISTENERS ====================
-        function setupEventListeners() {
-            // Audio control
-            const audioControl = document.getElementById('audio-control');
-            if (audioControl) {
-                audioControl.addEventListener('click', toggleAudio);
-                audioControl.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    toggleAudio();
-                }, { passive: false });
-            }
-            
-            // Password input event
-            const passwordInput = document.getElementById('password-input');
-            if (passwordInput) {
-                passwordInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        checkPassword();
-                    }
-                });
-                
-                // Fix untuk iOS virtual keyboard
-                passwordInput.addEventListener('focus', function() {
-                    setTimeout(() => {
-                        this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
-                });
-            }
-            
-            // Toggle password visibility
-            const togglePassword = document.getElementById('toggle-password');
-            if (togglePassword) {
-                togglePassword.addEventListener('click', function() {
-                    const passwordInput = document.getElementById('password-input');
-                    const icon = this.querySelector('i');
-                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
-                    icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-                    passwordInput.focus();
-                    playSound('click');
-                });
-                
-                togglePassword.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    this.click();
-                }, { passive: false });
-            }
-            
-            // Enter app button
-            const enterAppBtn = document.getElementById('enter-app-btn');
-            if (enterAppBtn) {
-                enterAppBtn.addEventListener('click', function() {
-                    playSound('success');
-                    enterApp();
-                });
-                
-                enterAppBtn.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    this.click();
-                }, { passive: false });
-            }
-            
-            // Copy account number
-            const accountNumber = document.getElementById('copy-account-number');
-            if (accountNumber) {
-                accountNumber.addEventListener('click', function() {
-                    const text = this.textContent.replace(/\s/g, '');
-                    copyToClipboard(text);
-                });
-                
-                accountNumber.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    const text = this.textContent.replace(/\s/g, '');
-                    copyToClipboard(text);
-                }, { passive: false });
-            }
-            
-            // Theme toggle
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                const currentTheme = localStorage.getItem('theme') || 'light';
-                if (currentTheme === 'dark') {
-                    document.body.setAttribute('data-theme', 'dark');
-                    themeToggle.checked = true;
-                }
-                
-                themeToggle.addEventListener('change', function() {
-                    playSound('click');
-                    if (this.checked) {
-                        document.body.setAttribute('data-theme', 'dark');
-                        localStorage.setItem('theme', 'dark');
-                    } else {
-                        document.body.removeAttribute('data-theme');
-                        localStorage.setItem('theme', 'light');
-                    }
-                    
-                    if (financeChart) {
-                        renderChart();
-                    }
-                    
-                    if (currentPage === 'history-page') {
-                        displayGroupedTransactions();
-                    }
-                });
-            }
-            
-            // Restore file input
-            const restoreFile = document.getElementById('restore-file');
-            if (restoreFile) {
-                restoreFile.addEventListener('change', function() {
-                    if (this.files.length > 0) {
-                        playSound('notification');
-                        importFromBackup();
-                    }
-                });
-            }
-            
-            // Setup navigation tabs
-            setupNavigationTabs();
-            
-            // Add sound to all buttons
-            document.addEventListener('click', function(e) {
-                const button = e.target.closest('button');
-                if (button && !button.hasAttribute('data-no-sound')) {
-                    if (button.classList.contains('btn-danger')) {
-                        playSound('error');
-                    } else if (button.classList.contains('btn-success') || 
-                               button.classList.contains('login-btn') || 
-                               button.classList.contains('donation-btn')) {
-                        playSound('success');
-                    } else if (!button.id.includes('toggle') && 
-                               !button.classList.contains('close-backup')) {
-                        playSound('click');
-                    }
-                }
-            });
-            
-            // Touch improvements untuk mobile
-            document.addEventListener('touchstart', function() {}, { passive: true });
-            
-            // Prevent zoom on double tap
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, { passive: false });
-            
-            // Fix untuk input di iOS
-            document.addEventListener('touchstart', function(e) {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
-                    e.target.focus();
-                }
-            });
-        }
-        
-        // Fungsi untuk copy ke clipboard
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                const accountNumber = document.getElementById('copy-account-number');
-                const originalText = accountNumber.textContent;
-                accountNumber.textContent = '✓ Berhasil Disalin!';
-                accountNumber.style.background = '#34a853';
-                accountNumber.style.color = 'white';
-                playSound('success');
-                
-                setTimeout(() => {
-                    accountNumber.textContent = originalText;
-                    accountNumber.style.background = '';
-                    accountNumber.style.color = '';
-                }, 2000);
-            }).catch(err => {
-                // Fallback untuk browser yang tidak support clipboard API
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                const accountNumber = document.getElementById('copy-account-number');
-                const originalText = accountNumber.textContent;
-                accountNumber.textContent = '✓ Berhasil Disalin!';
-                accountNumber.style.background = '#34a853';
-                accountNumber.style.color = 'white';
-                playSound('success');
-                
-                setTimeout(() => {
-                    accountNumber.textContent = originalText;
-                    accountNumber.style.background = '';
-                    accountNumber.style.color = '';
-                }, 2000);
-            });
-        }
 
         // ==================== LOGIN FUNCTIONS ====================
         function showLoginScreen() {
-            console.log('🔐 Showing login screen');
             document.getElementById('login-screen').style.display = 'flex';
             document.getElementById('donation-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'none';
             
+            // Set today's date as default
+            document.getElementById('transaction-date').valueAsDate = new Date();
+            
+            // Focus on password input
             setTimeout(() => {
-                const passwordInput = document.getElementById('password-input');
-                if (passwordInput) {
-                    passwordInput.focus();
-                }
+                document.getElementById('password-input').focus();
             }, 100);
         }
 
@@ -2442,42 +2091,52 @@
             const passwordInput = document.getElementById('password-input');
             const errorMessage = document.getElementById('password-error');
             
-            if (!passwordInput) {
-                console.error('❌ Password input not found');
-                return;
-            }
-            
-            console.log('🔑 Checking password...');
-            
             if (passwordInput.value === correctPassword) {
-                console.log('✅ Password correct');
-                playSound('success');
+                AudioManager.playSuccess();
                 localStorage.setItem('cashTrackLoggedIn', 'true');
                 showDonationScreen();
             } else {
-                console.log('❌ Password incorrect');
-                playSound('error');
-                if (errorMessage) {
-                    errorMessage.style.display = 'block';
-                    passwordInput.value = '';
-                    passwordInput.focus();
-                    setTimeout(() => {
-                        errorMessage.style.display = 'none';
-                    }, 3000);
-                }
+                AudioManager.playError();
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
             }
         }
 
         // ==================== DONATION SCREEN ====================
         function showDonationScreen() {
-            console.log('💰 Showing donation screen');
+            AudioManager.playNotification();
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('donation-screen').style.display = 'flex';
             document.getElementById('main-app').style.display = 'none';
+            
+            // Copy account number functionality
+            const accountNumber = document.getElementById('copy-account-number');
+            accountNumber.addEventListener('click', function() {
+                AudioManager.playClick();
+                const text = this.textContent.replace(/\s/g, '');
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.textContent;
+                    this.innerHTML = '<i class="fas fa-check"></i> Berhasil Disalin!';
+                    this.style.background = '#34a853';
+                    this.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                    }, 2000);
+                });
+            });
+            
+            document.getElementById('enter-app-btn').addEventListener('click', enterApp);
         }
 
         function enterApp() {
-            console.log('🚀 Entering main app');
+            AudioManager.playSuccess();
             document.getElementById('donation-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             initializeApp();
@@ -2485,317 +2144,30 @@
 
         // ==================== APP INITIALIZATION ====================
         function initializeApp() {
-            console.log('🎯 Initializing app...');
+            AudioManager.playNotification();
             
-            try {
-                // Initialize storage
-                initializeStorage();
-                
-                // Setup UI
-                updateYearOptions();
-                updateMonthOptions();
-                updateDayOptions();
-                
-                const currentDate = new Date();
-                currentFilters.year = currentDate.getFullYear().toString();
-                currentFilters.month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-                
-                updateBalance();
-                renderChart();
-                filterTransactions();
-                updateBackupList();
-                
-                // Setup navigation
-                setupNavigationTabs();
-                
-                // Set focus
-                setTimeout(() => {
-                    const descInput = document.getElementById('transaction-desc');
-                    if (descInput) {
-                        descInput.focus();
-                    }
-                }, 100);
-                
-                console.log('✅ App initialized successfully');
-                showStorageStatus('✅ Aplikasi siap digunakan', 'success');
-                
-                // Resume audio context jika diperlukan
-                if (audioContext && audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
-                
-            } catch (error) {
-                console.error('❌ Error initializing app:', error);
-                showStorageStatus('❌ Error initializing app', 'error');
-            }
-        }
-
-        // ==================== STORAGE FUNCTIONS ====================
-        function initializeStorage() {
-            console.log('💾 Initializing storage...');
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
             
-            try {
-                // Load transactions
-                const transactionsData = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
-                if (transactionsData) {
-                    transactions = JSON.parse(transactionsData);
-                    console.log(`📊 Loaded ${transactions.length} transactions`);
-                }
-                
-                // Load backups
-                const backupsData = localStorage.getItem(STORAGE_KEYS.BACKUPS);
-                if (backupsData) {
-                    backups = JSON.parse(backupsData);
-                    console.log(`💾 Loaded ${backups.length} backups`);
-                }
-                
-                // Load settings
-                const settingsData = localStorage.getItem(STORAGE_KEYS.SETTINGS);
-                if (settingsData) {
-                    settings = JSON.parse(settingsData);
-                } else {
-                    settings = {
-                        autoSave: true,
-                        autoBackup: true,
-                        compression: true,
-                        backupCount: 0
-                    };
-                }
-                
-                // Load metadata
-                const metadataData = localStorage.getItem(STORAGE_KEYS.METADATA);
-                if (metadataData) {
-                    storageMetadata = JSON.parse(metadataData);
-                } else {
-                    storageMetadata = {
-                        created: new Date().toISOString(),
-                        lastSave: new Date().toISOString(),
-                        lastBackup: null,
-                        saveCount: 0,
-                        errorCount: 0
-                    };
-                }
-                
-                // Setup auto-save
-                setupAutoSave();
-                
-                // Setup auto-backup
-                setupAutoBackup();
-                
-                // Update stats
-                updateStorageStats();
-                
-                console.log('✅ Storage initialized');
-                
-            } catch (error) {
-                console.error('❌ Error initializing storage:', error);
-                showStorageStatus('❌ Error loading data', 'error');
-            }
-        }
-
-        function saveTransactions() {
-            try {
-                localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(transactions));
-                
-                // Update metadata
-                storageMetadata.lastSave = new Date().toISOString();
-                storageMetadata.saveCount++;
-                localStorage.setItem(STORAGE_KEYS.METADATA, JSON.stringify(storageMetadata));
-                
-                // Update UI
-                updateStorageStats();
-                updateLastBackupDisplay();
-                
-                return true;
-                
-            } catch (error) {
-                console.error('❌ Error saving transactions:', error);
-                storageMetadata.errorCount++;
-                showStorageStatus('❌ Error saving data', 'error');
-                return false;
-            }
-        }
-
-        function setupAutoSave() {
-            if (autoSaveTimer) clearInterval(autoSaveTimer);
+            // Initialize filter options
+            updateYearOptions();
+            updateMonthOptions();
+            updateDayOptions();
             
-            autoSaveTimer = setInterval(() => {
-                if (transactions.length > 0) {
-                    saveTransactions();
-                }
-            }, STORAGE_CONFIG.AUTO_SAVE_INTERVAL);
-        }
-
-        function setupAutoBackup() {
-            if (autoBackupTimer) clearInterval(autoBackupTimer);
+            // Set default filters
+            currentFilters.year = new Date().getFullYear().toString();
+            currentFilters.month = (new Date().getMonth() + 1).toString().padStart(2, '0');
             
-            autoBackupTimer = setInterval(() => {
-                if (transactions.length > 0) {
-                    createAutoBackup();
-                }
-            }, STORAGE_CONFIG.AUTO_BACKUP_INTERVAL);
-        }
-
-        // ==================== BACKUP FUNCTIONS ====================
-        function createBackup() {
-            try {
-                const backup = {
-                    id: 'backup_' + Date.now(),
-                    timestamp: new Date().toISOString(),
-                    data: JSON.parse(JSON.stringify(transactions)),
-                    transactionCount: transactions.length,
-                    size: JSON.stringify(transactions).length
-                };
-
-                backups.unshift(backup);
-                
-                if (backups.length > STORAGE_CONFIG.MAX_BACKUPS) {
-                    backups = backups.slice(0, STORAGE_CONFIG.MAX_BACKUPS);
-                }
-                
-                localStorage.setItem(STORAGE_KEYS.BACKUPS, JSON.stringify(backups));
-                
-                storageMetadata.lastBackup = new Date().toISOString();
-                localStorage.setItem(STORAGE_KEYS.METADATA, JSON.stringify(storageMetadata));
-                
-                updateStorageStats();
-                updateBackupList();
-                
-                showStorageStatus('💾 Backup created', 'success');
-                playSound('success');
-                
-                return backup;
-
-            } catch (error) {
-                console.error('❌ Error creating backup:', error);
-                showStorageStatus('❌ Error creating backup', 'error');
-                playSound('error');
-                return null;
-            }
-        }
-
-        function createAutoBackup() {
-            if (transactions.length === 0) return;
+            // Update UI
+            updateBalance();
+            renderChart();
             
-            const lastBackupTime = storageMetadata.lastBackup ? 
-                new Date(storageMetadata.lastBackup).getTime() : 0;
-            const now = Date.now();
+            // Load transactions based on current filters
+            filterTransactions();
             
-            if (now - lastBackupTime > STORAGE_CONFIG.AUTO_BACKUP_INTERVAL || 
-                storageMetadata.saveCount % 10 === 0) {
-                createBackup();
-            }
-        }
-
-        function exportBackup() {
-            try {
-                const backupData = {
-                    version: STORAGE_CONFIG.VERSION,
-                    exportDate: new Date().toISOString(),
-                    transactionCount: transactions.length,
-                    transactions: transactions,
-                    metadata: storageMetadata
-                };
-                
-                const dataStr = JSON.stringify(backupData, null, 2);
-                const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                const url = URL.createObjectURL(dataBlob);
-                
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `cashtrack-backup-${new Date().toISOString().split('T')[0]}.json`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                createBackup();
-                
-                showStorageStatus('💾 Backup exported', 'success');
-                playSound('success');
-                
-            } catch (error) {
-                console.error('❌ Error exporting backup:', error);
-                showStorageStatus('❌ Error exporting backup', 'error');
-                playSound('error');
-            }
-        }
-
-        function importFromBackup() {
-            const fileInput = document.getElementById('restore-file');
-            if (!fileInput || !fileInput.files.length) {
-                showStorageStatus('⚠️ Please select a backup file', 'warning');
-                return;
-            }
-            
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                try {
-                    const backupData = JSON.parse(e.target.result);
-                    
-                    if (!backupData.transactions || !Array.isArray(backupData.transactions)) {
-                        throw new Error('Invalid backup file format');
-                    }
-                    
-                    transactions = backupData.transactions;
-                    saveTransactions();
-                    updateBalance();
-                    renderChart();
-                    filterTransactions();
-                    
-                    fileInput.value = '';
-                    
-                    showStorageStatus('✅ Data imported', 'success');
-                    playSound('success');
-                    
-                } catch (error) {
-                    console.error('❌ Error importing backup:', error);
-                    showStorageStatus('❌ Error importing backup', 'error');
-                    playSound('error');
-                }
-            };
-            
-            reader.readAsText(file);
-        }
-
-        function restoreFromLatestBackup() {
-            if (backups.length === 0) {
-                showStorageStatus('⚠️ No backups available', 'warning');
-                playSound('error');
-                return false;
-            }
-            
-            const latestBackup = backups[0];
-            return restoreFromBackup(latestBackup.id);
-        }
-
-        function restoreFromBackup(backupId) {
-            try {
-                const backup = backups.find(b => b.id === backupId);
-                if (!backup) {
-                    showStorageStatus('❌ Backup not found', 'error');
-                    playSound('error');
-                    return false;
-                }
-                
-                transactions = JSON.parse(JSON.stringify(backup.data));
-                saveTransactions();
-                updateBalance();
-                renderChart();
-                filterTransactions();
-                
-                showStorageStatus('🔄 Data restored', 'success');
-                playSound('success');
-                
-                return true;
-
-            } catch (error) {
-                console.error('❌ Error restoring backup:', error);
-                showStorageStatus('❌ Error restoring data', 'error');
-                playSound('error');
-                return false;
-            }
+            // Setup navigation tabs
+            setupNavigationTabs();
         }
 
         // ==================== UTILITY FUNCTIONS ====================
@@ -2846,29 +2218,28 @@
 
         // ==================== TRANSACTION FUNCTIONS ====================
         function addTransaction() {
+            AudioManager.playAdd();
+            
             const date = document.getElementById('transaction-date').value;
             const description = document.getElementById('transaction-desc').value.trim();
             const income = parseCurrency(document.getElementById('transaction-income').value);
             const expense = parseCurrency(document.getElementById('transaction-expense').value);
             
             if (!date) {
+                AudioManager.playError();
                 alert('Harap pilih tanggal transaksi!');
-                document.getElementById('transaction-date').focus();
-                playSound('error');
                 return;
             }
             
             if (!description) {
+                AudioManager.playError();
                 alert('Harap isi keterangan transaksi!');
-                document.getElementById('transaction-desc').focus();
-                playSound('error');
                 return;
             }
             
             if (income === 0 && expense === 0) {
+                AudioManager.playError();
                 alert('Harap isi pendapatan atau pengeluaran!');
-                document.getElementById('transaction-income').focus();
-                playSound('error');
                 return;
             }
             
@@ -2882,69 +2253,62 @@
             };
             
             transactions.unshift(transaction);
-            saveTransactions();
+            saveData();
             updateBalance();
             renderChart();
             clearForm();
             
             if (currentPage === 'history-page') {
-                filterTransactions();
+                displayGroupedTransactions();
             }
             
+            // Update filter options
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
             
-            showStorageStatus('✅ Transaksi ditambahkan', 'success');
-            playSound('success');
-            
-            setTimeout(() => {
-                document.getElementById('transaction-desc').focus();
-            }, 100);
+            // Show success message
+            AudioManager.playSuccess();
+            alert('Transaksi berhasil ditambahkan!');
         }
 
         function clearForm() {
-            const today = new Date();
-            today.setDate(today.getDate());
-            const todayStr = today.toISOString().split('T')[0];
-            document.getElementById('transaction-date').value = todayStr;
+            AudioManager.playClick();
+            document.getElementById('transaction-date').valueAsDate = new Date();
             document.getElementById('transaction-desc').value = '';
             document.getElementById('transaction-income').value = '';
             document.getElementById('transaction-expense').value = '';
-            document.getElementById('transaction-desc').focus();
-            playSound('click');
         }
 
         function deleteTransaction(id) {
+            AudioManager.playDelete();
             if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
-                playSound('error');
                 transactions = transactions.filter(t => t.id !== id);
-                filteredTransactions = filteredTransactions.filter(t => t.id !== id);
-                saveTransactions();
+                saveData();
                 updateBalance();
                 renderChart();
-                filterTransactions();
-                showStorageStatus('🗑️ Transaksi dihapus', 'warning');
-            } else {
-                playSound('click');
+                
+                if (currentPage === 'history-page') {
+                    displayGroupedTransactions();
+                }
+                
+                AudioManager.playSuccess();
             }
         }
 
         function editTransaction(id) {
+            AudioManager.playClick();
             const transaction = transactions.find(t => t.id === id);
             if (!transaction) return;
-            
-            playSound('click');
             
             document.getElementById('transaction-date').value = transaction.date;
             document.getElementById('transaction-desc').value = transaction.description;
             document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
             document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
             
+            // Scroll to form
             document.getElementById('transactions-page').classList.add('active');
             document.getElementById('history-page').classList.remove('active');
-            document.getElementById('backup-page').classList.remove('active');
-            
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 if (tab.dataset.page === 'transactions-page') {
                     tab.classList.add('active');
@@ -2952,17 +2316,17 @@
                     tab.classList.remove('active');
                 }
             });
-            
             currentPage = 'transactions-page';
             
+            // Remove the transaction being edited
             transactions = transactions.filter(t => t.id !== id);
-            saveTransactions();
+            saveData();
             
-            showStorageStatus('✏️ Mode edit transaksi', 'info');
-            
-            setTimeout(() => {
-                document.getElementById('transaction-desc').focus();
-            }, 100);
+            AudioManager.playNotification();
+        }
+
+        function saveData() {
+            StorageManager.save({ transactions, settings: appSettings });
         }
 
         // ==================== BALANCE FUNCTIONS ====================
@@ -2979,60 +2343,37 @@
             
             const balance = totalIncome - totalExpense;
             
-            const balanceAmount = document.getElementById('balance-amount');
-            const totalTransactionsEl = document.getElementById('total-transactions');
+            document.getElementById('balance-amount').textContent = formatCurrency(balance);
+            document.getElementById('total-transactions').textContent = totalTransactions;
             
-            if (balanceAmount) {
-                balanceAmount.textContent = formatCurrency(balance);
-                // Beri warna berdasarkan saldo
-                if (balance < 0) {
-                    balanceAmount.style.color = '#ff6b6b';
-                } else if (balance > 0) {
-                    balanceAmount.style.color = '#51cf66';
-                } else {
-                    balanceAmount.style.color = 'white';
-                }
-            }
-            
-            if (totalTransactionsEl) {
-                totalTransactionsEl.textContent = totalTransactions;
-            }
-            
+            // Update last update time
             const now = new Date();
-            const lastUpdate = document.getElementById('last-update');
-            if (lastUpdate) {
-                lastUpdate.textContent = now.toLocaleTimeString('id-ID', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                });
-            }
+            document.getElementById('last-update').textContent = now.toLocaleTimeString('id-ID', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
         }
 
         // ==================== CHART FUNCTIONS ====================
         function renderChart() {
-            const ctx = document.getElementById('finance-chart');
+            const ctx = document.getElementById('finance-chart').getContext('2d');
             const placeholder = document.getElementById('chart-placeholder');
-            
-            if (!ctx) return;
             
             if (transactions.length === 0) {
                 if (financeChart) {
                     financeChart.destroy();
                     financeChart = null;
                 }
-                if (placeholder) {
-                    placeholder.style.display = 'flex';
-                }
+                placeholder.style.display = 'flex';
                 return;
             }
             
-            if (placeholder) {
-                placeholder.style.display = 'none';
-            }
+            placeholder.style.display = 'none';
             
+            // Group by month
             const monthlyData = {};
             transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7);
+                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
                 if (!monthlyData[monthKey]) {
                     monthlyData[monthKey] = { income: 0, expense: 0 };
                 }
@@ -3040,6 +2381,7 @@
                 monthlyData[monthKey].expense += transaction.expense;
             });
             
+            // Sort months
             const sortedMonths = Object.keys(monthlyData).sort();
             const labels = sortedMonths.map(month => {
                 const [year, monthNum] = month.split('-');
@@ -3057,117 +2399,99 @@
                 financeChart.destroy();
             }
             
-            try {
-                financeChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [
-                            {
-                                label: 'Pendapatan',
-                                data: incomeData,
-                                backgroundColor: '#34a853',
-                                borderColor: '#2d924a',
-                                borderWidth: 1
-                            },
-                            {
-                                label: 'Pengeluaran',
-                                data: expenseData,
-                                backgroundColor: '#ea4335',
-                                borderColor: '#d33426',
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    color: textColor,
-                                    font: {
-                                        size: 12
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        label += formatCurrency(context.raw);
-                                        return label;
-                                    }
-                                }
+            financeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Pendapatan',
+                            data: incomeData,
+                            backgroundColor: '#34a853',
+                            borderColor: '#2d924a',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Pengeluaran',
+                            data: expenseData,
+                            backgroundColor: '#ea4335',
+                            borderColor: '#d33426',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor
                             }
                         },
-                        scales: {
-                            x: {
-                                grid: {
-                                    color: gridColor
-                                },
-                                ticks: {
-                                    color: textColor,
-                                    maxRotation: 45,
-                                    minRotation: 45,
-                                    font: {
-                                        size: 11
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
                                     }
+                                    label += formatCurrency(context.raw);
+                                    return label;
                                 }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: gridColor
                             },
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: gridColor
-                                },
-                                ticks: {
-                                    color: textColor,
-                                    callback: function(value) {
-                                        if (value >= 1000000) {
-                                            return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
-                                        }
-                                        if (value >= 1000) {
-                                            return 'Rp' + (value / 1000).toFixed(0) + 'rb';
-                                        }
-                                        return 'Rp' + value;
-                                    },
-                                    font: {
-                                        size: 11
+                            ticks: {
+                                color: textColor
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor,
+                                callback: function(value) {
+                                    if (value >= 1000000) {
+                                        return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
                                     }
+                                    if (value >= 1000) {
+                                        return 'Rp' + (value / 1000).toFixed(0) + 'rb';
+                                    }
+                                    return 'Rp' + value;
                                 }
                             }
                         }
                     }
-                });
-            } catch (error) {
-                console.error('Error rendering chart:', error);
-                if (placeholder) {
-                    placeholder.style.display = 'flex';
-                    placeholder.innerHTML = '<i class="fas fa-exclamation-triangle"></i><br>Error loading chart';
                 }
-            }
+            });
         }
 
         // ==================== FILTER FUNCTIONS ====================
         function updateYearOptions() {
             const yearSelect = document.getElementById('filter-year');
-            if (!yearSelect) return;
-            
             const years = new Set();
             
             transactions.forEach(transaction => {
                 years.add(getYearFromDate(transaction.date));
             });
             
+            // Get current year and next year
             const currentYear = new Date().getFullYear();
             years.add(currentYear.toString());
             years.add((currentYear + 1).toString());
             
+            // Sort years descending
             const sortedYears = Array.from(years).sort((a, b) => b - a);
             
+            // Update options
             yearSelect.innerHTML = '<option value="">Semua Tahun</option>';
             sortedYears.forEach(year => {
                 const option = document.createElement('option');
@@ -3176,6 +2500,7 @@
                 yearSelect.appendChild(option);
             });
             
+            // Set to current year by default
             yearSelect.value = currentYear.toString();
             currentFilters.year = currentYear.toString();
         }
@@ -3183,9 +2508,8 @@
         function updateMonthOptions() {
             const yearSelect = document.getElementById('filter-year');
             const monthSelect = document.getElementById('filter-month');
-            if (!yearSelect || !monthSelect) return;
-            
             const selectedYear = yearSelect.value;
+            
             const months = new Set();
             
             if (selectedYear) {
@@ -3196,6 +2520,7 @@
                 });
             }
             
+            // Update options
             monthSelect.innerHTML = '<option value="">Semua Bulan</option>';
             for (let i = 1; i <= 12; i++) {
                 const month = i.toString().padStart(2, '0');
@@ -3207,6 +2532,7 @@
                 }
             }
             
+            // Set to current month by default if year is current year
             const currentYear = new Date().getFullYear().toString();
             if (selectedYear === currentYear) {
                 const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
@@ -3219,10 +2545,9 @@
             const yearSelect = document.getElementById('filter-year');
             const monthSelect = document.getElementById('filter-month');
             const daySelect = document.getElementById('filter-day');
-            if (!yearSelect || !monthSelect || !daySelect) return;
-            
             const selectedYear = yearSelect.value;
             const selectedMonth = monthSelect.value;
+            
             const days = new Set();
             
             if (selectedYear && selectedMonth) {
@@ -3235,8 +2560,10 @@
                 });
             }
             
+            // Update options
             daySelect.innerHTML = '<option value="">Semua Tanggal</option>';
             if (selectedYear && selectedMonth) {
+                // Get number of days in month
                 const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
                 for (let i = 1; i <= daysInMonth; i++) {
                     const day = i.toString().padStart(2, '0');
@@ -3271,45 +2598,34 @@
         }
 
         function applyFilter() {
-            const yearSelect = document.getElementById('filter-year');
-            const monthSelect = document.getElementById('filter-month');
-            const daySelect = document.getElementById('filter-day');
-            
-            if (yearSelect) currentFilters.year = yearSelect.value;
-            if (monthSelect) currentFilters.month = monthSelect.value;
-            if (daySelect) currentFilters.day = daySelect.value;
+            AudioManager.playClick();
+            currentFilters.year = document.getElementById('filter-year').value;
+            currentFilters.month = document.getElementById('filter-month').value;
+            currentFilters.day = document.getElementById('filter-day').value;
             
             filterTransactions();
-            playSound('click');
-            showStorageStatus('🔍 Filter diterapkan', 'success');
         }
 
         function resetFilters() {
-            const yearSelect = document.getElementById('filter-year');
-            const monthSelect = document.getElementById('filter-month');
-            const daySelect = document.getElementById('filter-day');
-            
-            if (yearSelect) yearSelect.value = '';
-            if (monthSelect) monthSelect.value = '';
-            if (daySelect) daySelect.value = '';
+            AudioManager.playClick();
+            document.getElementById('filter-year').value = '';
+            document.getElementById('filter-month').value = '';
+            document.getElementById('filter-day').value = '';
             
             currentFilters = { year: '', month: '', day: '' };
             filteredTransactions = [...transactions];
             
             displayGroupedTransactions();
-            playSound('click');
-            showStorageStatus('🔄 Filter direset', 'success');
         }
 
         // ==================== DISPLAY FUNCTIONS ====================
         function displayGroupedTransactions() {
             const container = document.getElementById('transactions-container');
-            if (!container) return;
             
             if (filteredTransactions.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div><i class="fas fa-receipt"></i></div>
+                        <i class="fas fa-chart-bar"></i>
                         <p>Tidak ada transaksi ditemukan</p>
                         <p>Tambahkan transaksi baru di halaman "Tambah Transaksi"</p>
                     </div>
@@ -3317,15 +2633,17 @@
                 return;
             }
             
+            // Group by month
             const grouped = {};
             filteredTransactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7);
+                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
                 if (!grouped[monthKey]) {
                     grouped[monthKey] = [];
                 }
                 grouped[monthKey].push(transaction);
             });
             
+            // Sort months descending
             const sortedMonths = Object.keys(grouped).sort().reverse();
             
             let html = '';
@@ -3335,6 +2653,7 @@
                 const monthName = getMonthName(month);
                 const monthTransactions = grouped[monthKey];
                 
+                // Calculate month totals
                 let monthIncome = 0;
                 let monthExpense = 0;
                 
@@ -3345,6 +2664,7 @@
                 
                 const monthBalance = monthIncome - monthExpense;
                 
+                // Sort transactions by date descending
                 monthTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
                 
                 let transactionsHtml = `
@@ -3366,16 +2686,16 @@
                     transactionsHtml += `
                         <tr>
                             <td>${formatDate(transaction.date)}</td>
-                            <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${transaction.description}</td>
+                            <td>${transaction.description}</td>
                             <td class="income-amount">${transaction.income > 0 ? formatCurrency(transaction.income) : '-'}</td>
                             <td class="expense-amount">${transaction.expense > 0 ? formatCurrency(transaction.expense) : '-'}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})" title="Edit" aria-label="Edit transaksi">
-                                        <i class="fas fa-edit"></i>
+                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})">
+                                        <i class="fas fa-edit"></i> Edit
                                     </button>
-                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})" title="Hapus" aria-label="Hapus transaksi">
-                                        <i class="fas fa-trash"></i>
+                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})">
+                                        <i class="fas fa-trash"></i> Hapus
                                     </button>
                                 </div>
                             </td>
@@ -3392,11 +2712,11 @@
                 html += `
                     <div class="month-group">
                         <div class="month-header">
-                            <span>${monthName} ${year}</span>
+                            <span><i class="fas fa-calendar-alt"></i> ${monthName} ${year}</span>
                             <div class="month-totals">
-                                <span><i class="fas fa-arrow-up" style="color: #34a853;"></i> ${formatCurrency(monthIncome)}</span>
-                                <span><i class="fas fa-arrow-down" style="color: #ea4335;"></i> ${formatCurrency(monthExpense)}</span>
-                                <span><i class="fas fa-balance-scale"></i> <strong style="color: ${monthBalance >= 0 ? '#34a853' : '#ea4335'}">${formatCurrency(monthBalance)}</strong></span>
+                                <span><i class="fas fa-arrow-up" style="color: #34a853"></i> Pendapatan: <strong>${formatCurrency(monthIncome)}</strong></span>
+                                <span><i class="fas fa-arrow-down" style="color: #ea4335"></i> Pengeluaran: <strong>${formatCurrency(monthExpense)}</strong></span>
+                                <span><i class="fas fa-wallet"></i> Saldo: <strong style="color: ${monthBalance >= 0 ? '#34a853' : '#ea4335'}">${formatCurrency(monthBalance)}</strong></span>
                             </div>
                         </div>
                         ${transactionsHtml}
@@ -3407,739 +2727,195 @@
             container.innerHTML = html;
         }
 
-        // ==================== NAVIGATION FUNCTIONS ====================
-        function setupNavigationTabs() {
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    playSound('click');
-                    const targetPage = this.dataset.page;
-                    
-                    tabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    document.querySelectorAll('.page-section').forEach(section => {
-                        section.classList.remove('active');
-                    });
-                    
-                    const targetSection = document.getElementById(targetPage);
-                    if (targetSection) {
-                        targetSection.classList.add('active');
-                    }
-                    currentPage = targetPage;
-                    
-                    if (targetPage === 'history-page') {
-                        filterTransactions();
-                    } else if (targetPage === 'backup-page') {
-                        updateStorageStats();
-                        updateBackupList();
-                    } else if (targetPage === 'transactions-page') {
-                        setTimeout(() => {
-                            const descInput = document.getElementById('transaction-desc');
-                            if (descInput) {
-                                descInput.focus();
-                            }
-                        }, 100);
-                    }
-                });
-                
-                // Touch support untuk mobile
-                tab.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    this.click();
-                }, { passive: false });
-            });
-        }
-
         // ==================== EXPORT FUNCTIONS ====================
         function exportToCSV() {
+            AudioManager.playClick();
             if (transactions.length === 0) {
+                AudioManager.playError();
                 alert('Tidak ada data transaksi untuk diexport!');
-                playSound('error');
                 return;
             }
             
-            try {
-                const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
-                const csvContent = [
-                    headers.join(','),
-                    ...transactions.map(t => [
-                        t.date,
-                        `"${t.description.replace(/"/g, '""')}"`,
-                        t.income,
-                        t.expense
-                    ].join(','))
-                ].join('\n');
-                
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                link.setAttribute('href', url);
-                link.setAttribute('download', `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showStorageStatus('📊 CSV exported', 'success');
-                playSound('success');
-                
-            } catch (error) {
-                console.error('Error exporting CSV:', error);
-                showStorageStatus('❌ Error exporting CSV', 'error');
-                playSound('error');
-            }
+            const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
+            const csvContent = [
+                headers.join(','),
+                ...transactions.map(t => [
+                    t.date,
+                    `"${t.description.replace(/"/g, '""')}"`,
+                    t.income,
+                    t.expense
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            AudioManager.playSuccess();
         }
 
         function exportToExcel() {
+            AudioManager.playClick();
             if (transactions.length === 0) {
+                AudioManager.playError();
                 alert('Tidak ada data transaksi untuk diexport!');
-                playSound('error');
                 return;
             }
             
-            try {
-                const grouped = {};
-                transactions.forEach(transaction => {
-                    const monthKey = transaction.date.substring(0, 7);
-                    if (!grouped[monthKey]) {
-                        grouped[monthKey] = [];
-                    }
-                    grouped[monthKey].push(transaction);
+            // Group by month for Excel export
+            const grouped = {};
+            transactions.forEach(transaction => {
+                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                if (!grouped[monthKey]) {
+                    grouped[monthKey] = [];
+                }
+                grouped[monthKey].push(transaction);
+            });
+            
+            // Sort months descending
+            const sortedMonths = Object.keys(grouped).sort().reverse();
+            
+            let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
+            
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const monthName = getMonthName(month);
+                const monthTransactions = grouped[monthKey];
+                
+                // Calculate month totals
+                let monthIncome = 0;
+                let monthExpense = 0;
+                
+                monthTransactions.forEach(t => {
+                    monthIncome += t.income || 0;
+                    monthExpense += t.expense || 0;
                 });
                 
-                const sortedMonths = Object.keys(grouped).sort().reverse();
-                
-                let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
-                
-                sortedMonths.forEach(monthKey => {
-                    const [year, month] = monthKey.split('-');
-                    const monthName = getMonthName(month);
-                    const monthTransactions = grouped[monthKey];
-                    
-                    let monthIncome = 0;
-                    let monthExpense = 0;
-                    
-                    monthTransactions.forEach(t => {
-                        monthIncome += t.income || 0;
-                        monthExpense += t.expense || 0;
-                    });
-                    
-                    const monthBalance = monthIncome - monthExpense;
-                    
-                    excelContent += `
-                        <tr style="background-color: #f0f0f0;">
-                            <td colspan="4"><strong>${monthName} ${year}</strong></td>
-                        </tr>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>Keterangan</th>
-                            <th>Pendapatan</th>
-                            <th>Pengeluaran</th>
-                        </tr>
-                    `;
-                    
-                    monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
-                        excelContent += `
-                            <tr>
-                                <td>${formatDate(t.date)}</td>
-                                <td>${t.description}</td>
-                                <td>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                                <td>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    excelContent += `
-                        <tr style="background-color: #e8f5e9;">
-                            <td colspan="2"><strong>Total ${monthName}</strong></td>
-                            <td><strong>${formatCurrency(monthIncome)}</strong></td>
-                            <td><strong>${formatCurrency(monthExpense)}</strong></td>
-                        </tr>
-                        <tr style="background-color: #fff3e0;">
-                            <td colspan="3"><strong>Saldo Bulan ${monthName}</strong></td>
-                            <td><strong style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</strong></td>
-                        </tr>
-                        <tr><td colspan="4" style="height: 20px;"></td></tr>
-                    `;
-                });
-                
-                let totalIncome = 0;
-                let totalExpense = 0;
-                transactions.forEach(t => {
-                    totalIncome += t.income || 0;
-                    totalExpense += t.expense || 0;
-                });
-                const totalBalance = totalIncome - totalExpense;
+                const monthBalance = monthIncome - monthExpense;
                 
                 excelContent += `
-                    <tr style="background-color: #e3f2fd;">
-                        <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
-                        <td><strong>${formatCurrency(totalIncome)}</strong></td>
-                        <td><strong>${formatCurrency(totalExpense)}</strong></td>
+                    <tr style="background-color: #f0f0f0;">
+                        <td colspan="4"><strong>${monthName} ${year}</strong></td>
                     </tr>
-                    <tr style="background-color: #fce4ec;">
-                        <td colspan="3"><strong>SALDO AKHIR</strong></td>
-                        <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Keterangan</th>
+                        <th>Pendapatan</th>
+                        <th>Pengeluaran</th>
                     </tr>
-                </table>
                 `;
                 
-                const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                link.setAttribute('href', url);
-                link.setAttribute('download', `cash-track-excel-${new Date().toISOString().split('T')[0]}.xls`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                    excelContent += `
+                        <tr>
+                            <td>${formatDate(t.date)}</td>
+                            <td>${t.description}</td>
+                            <td>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                            <td>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                        </tr>
+                    `;
+                });
                 
-                showStorageStatus('📈 Excel exported', 'success');
-                playSound('success');
-                
-            } catch (error) {
-                console.error('Error exporting Excel:', error);
-                showStorageStatus('❌ Error exporting Excel', 'error');
-                playSound('error');
-            }
+                excelContent += `
+                    <tr style="background-color: #e8f5e9;">
+                        <td colspan="2"><strong>Total ${monthName}</strong></td>
+                        <td><strong>${formatCurrency(monthIncome)}</strong></td>
+                        <td><strong>${formatCurrency(monthExpense)}</strong></td>
+                    </tr>
+                    <tr style="background-color: #fff3e0;">
+                        <td colspan="3"><strong>Saldo Bulan ${monthName}</strong></td>
+                        <td><strong style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</strong></td>
+                    </tr>
+                    <tr><td colspan="4" style="height: 20px;"></td></tr>
+                `;
+            });
+            
+            // Add overall summary
+            let totalIncome = 0;
+            let totalExpense = 0;
+            transactions.forEach(t => {
+                totalIncome += t.income || 0;
+                totalExpense += t.expense || 0;
+            });
+            const totalBalance = totalIncome - totalExpense;
+            
+            excelContent += `
+                <tr style="background-color: #e3f2fd;">
+                    <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
+                    <td><strong>${formatCurrency(totalIncome)}</strong></td>
+                    <td><strong>${formatCurrency(totalExpense)}</strong></td>
+                </tr>
+                <tr style="background-color: #fce4ec;">
+                    <td colspan="3"><strong>SALDO AKHIR</strong></td>
+                    <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
+                </tr>
+            </table>
+            
+            <style>
+                td { padding: 5px; }
+                th { background-color: #4CAF50; color: white; padding: 8px; }
+            </style>
+            `;
+            
+            const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cash-track-report-${new Date().toISOString().split('T')[0]}.xls`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            AudioManager.playSuccess();
         }
 
         function exportToExcelGrouped() {
-            if (transactions.length === 0) {
-                alert('Tidak ada data transaksi untuk diexport!');
-                playSound('error');
-                return;
-            }
-            
-            try {
-                const grouped = {};
-                transactions.forEach(transaction => {
-                    const monthKey = transaction.date.substring(0, 7);
-                    if (!grouped[monthKey]) {
-                        grouped[monthKey] = [];
-                    }
-                    grouped[monthKey].push(transaction);
-                });
-                
-                const sortedMonths = Object.keys(grouped).sort().reverse();
-                
-                let workbookContent = `
-                    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                    <head>
-                        <meta charset="UTF-8">
-                        <style>
-                            td { mso-number-format:\\@; }
-                            .header { background-color: #1a73e8; color: white; font-size: 14px; font-weight: bold; }
-                            .month-header { background-color: #f0f0f0; font-weight: bold; font-size: 13px; }
-                            .total-row { background-color: #e8f5e9; font-weight: bold; }
-                            .balance-row { background-color: #fff3e0; font-weight: bold; }
-                            .income { color: #34a853; }
-                            .expense { color: #ea4335; }
-                        </style>
-                    </head>
-                    <body>
-                `;
-                
-                sortedMonths.forEach(monthKey => {
-                    const [year, month] = monthKey.split('-');
-                    const monthName = getMonthName(month);
-                    const monthTransactions = grouped[monthKey];
+            exportToExcel(); // Same function for now
+        }
+
+        // ==================== NAVIGATION ====================
+        function setupNavigationTabs() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    AudioManager.playSwipe();
                     
-                    let monthIncome = 0;
-                    let monthExpense = 0;
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
                     
-                    monthTransactions.forEach(t => {
-                        monthIncome += t.income || 0;
-                        monthExpense += t.expense || 0;
+                    // Show corresponding page
+                    const pageId = tab.dataset.page;
+                    document.querySelectorAll('.page-section').forEach(page => {
+                        page.classList.remove('active');
                     });
+                    document.getElementById(pageId).classList.add('active');
                     
-                    const monthBalance = monthIncome - monthExpense;
+                    currentPage = pageId;
                     
-                    workbookContent += `
-                        <table border="1" cellpadding="4" cellspacing="0" width="100%">
-                            <tr class="month-header">
-                                <td colspan="5">${monthName} ${year}</td>
-                            </tr>
-                            <tr>
-                                <th width="15%">Tanggal</th>
-                                <th width="40%">Keterangan</th>
-                                <th width="15%">Pendapatan</th>
-                                <th width="15%">Pengeluaran</th>
-                                <th width="15%">Saldo Harian</th>
-                            </tr>
-                    `;
-                    
-                    let runningBalance = 0;
-                    monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
-                        const dailyBalance = (t.income || 0) - (t.expense || 0);
-                        runningBalance += dailyBalance;
-                        
-                        workbookContent += `
-                            <tr>
-                                <td>${formatDate(t.date)}</td>
-                                <td>${t.description}</td>
-                                <td class="income">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                                <td class="expense">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                                <td>${formatCurrency(dailyBalance)}</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    workbookContent += `
-                            <tr class="total-row">
-                                <td colspan="2">Total ${monthName}</td>
-                                <td class="income">${formatCurrency(monthIncome)}</td>
-                                <td class="expense">${formatCurrency(monthExpense)}</td>
-                                <td></td>
-                            </tr>
-                            <tr class="balance-row">
-                                <td colspan="4">Saldo Bulan ${monthName}</td>
-                                <td style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</td>
-                            </tr>
-                        </table>
-                        <br><br>
-                    `;
-                });
-                
-                let totalIncome = 0;
-                let totalExpense = 0;
-                transactions.forEach(t => {
-                    totalIncome += t.income || 0;
-                    totalExpense += t.expense || 0;
-                });
-                const totalBalance = totalIncome - totalExpense;
-                
-                workbookContent += `
-                    <table border="1" cellpadding="4" cellspacing="0" width="100%">
-                        <tr style="background-color: #e3f2fd;">
-                            <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
-                            <td><strong>${formatCurrency(totalIncome)}</strong></td>
-                            <td><strong>${formatCurrency(totalExpense)}</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color: #fce4ec;">
-                            <td colspan="4"><strong>SALDO AKHIR</strong></td>
-                            <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
-                        </tr>
-                    </table>
-                `;
-                
-                workbookContent += '</body></html>';
-                
-                const blob = new Blob([workbookContent], { type: 'application/vnd.ms-excel' });
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                link.setAttribute('href', url);
-                link.setAttribute('download', `cash-track-grouped-${new Date().toISOString().split('T')[0]}.xls`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showStorageStatus('📋 Grouped Excel exported', 'success');
-                playSound('success');
-                
-            } catch (error) {
-                console.error('Error exporting grouped Excel:', error);
-                showStorageStatus('❌ Error exporting grouped Excel', 'error');
-                playSound('error');
-            }
-        }
-
-        // ==================== STORAGE UTILITIES ====================
-        function updateStorageStats() {
-            // Hitung storage usage
-            let storageUsed = 0;
-            Object.values(STORAGE_KEYS).forEach(key => {
-                const data = localStorage.getItem(key);
-                if (data) storageUsed += data.length * 2;
-            });
-            
-            const storageUsedKB = (storageUsed / 1024).toFixed(2);
-            const storageLimit = 5 * 1024 * 1024;
-            const storagePercent = (storageUsed / storageLimit * 100).toFixed(1);
-            
-            // Update stats di modal
-            const statTransactions = document.getElementById('stat-transactions');
-            const statStorage = document.getElementById('stat-storage');
-            const statBackups = document.getElementById('stat-backups');
-            const statLastsave = document.getElementById('stat-lastsave');
-            
-            if (statTransactions) statTransactions.textContent = transactions.length;
-            if (statStorage) statStorage.textContent = `${storageUsedKB} KB`;
-            if (statBackups) statBackups.textContent = backups.length;
-            if (statLastsave) {
-                statLastsave.textContent = storageMetadata.lastSave ? 
-                    new Date(storageMetadata.lastSave).toLocaleTimeString() : '-';
-            }
-            
-            // Update stats di backup page
-            const backupStatTransactions = document.getElementById('backup-stat-transactions');
-            const backupStatSize = document.getElementById('backup-stat-size');
-            const backupStatBackups = document.getElementById('backup-stat-backups');
-            const backupStatStatus = document.getElementById('backup-stat-status');
-            
-            if (backupStatTransactions) backupStatTransactions.textContent = transactions.length;
-            if (backupStatSize) backupStatSize.textContent = `${storageUsedKB} KB`;
-            if (backupStatBackups) backupStatBackups.textContent = backups.length;
-            if (backupStatStatus) {
-                if (storagePercent > 90) {
-                    backupStatStatus.textContent = '🔴';
-                    backupStatStatus.style.color = '#ea4335';
-                } else if (storagePercent > 70) {
-                    backupStatStatus.textContent = '🟡';
-                    backupStatStatus.style.color = '#fbbc04';
-                } else {
-                    backupStatStatus.textContent = '🟢';
-                    backupStatStatus.style.color = '#34a853';
-                }
-            }
-            
-            updateLastBackupDisplay();
-        }
-
-        function updateLastBackupDisplay() {
-            const lastBackupEl = document.getElementById('last-backup');
-            if (lastBackupEl) {
-                if (storageMetadata.lastBackup) {
-                    const lastBackupDate = new Date(storageMetadata.lastBackup);
-                    const now = new Date();
-                    const diffHours = Math.floor((now - lastBackupDate) / (1000 * 60 * 60));
-                    
-                    if (diffHours < 1) {
-                        lastBackupEl.textContent = 'Baru saja';
-                    } else if (diffHours < 24) {
-                        lastBackupEl.textContent = `${diffHours} jam lalu`;
-                    } else {
-                        lastBackupEl.textContent = lastBackupDate.toLocaleDateString();
+                    // If going to history page, refresh the transactions display
+                    if (pageId === 'history-page') {
+                        displayGroupedTransactions();
                     }
-                } else {
-                    lastBackupEl.textContent = 'Belum ada';
-                }
-            }
-        }
-
-        function updateBackupList() {
-            const backupListEl = document.getElementById('backup-list');
-            if (!backupListEl) return;
-            
-            if (backups.length === 0) {
-                backupListEl.innerHTML = `
-                    <div class="empty-state">
-                        <div><i class="fas fa-database"></i></div>
-                        <p>📭 Belum ada backup</p>
-                        <p>Buat backup pertama Anda untuk melindungi data</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let html = '<div class="backup-list-container">';
-            
-            backups.forEach((backup, index) => {
-                const date = new Date(backup.timestamp);
-                const sizeKB = (backup.size / 1024).toFixed(2);
-                
-                html += `
-                    <div class="backup-item" style="
-                        background: var(--light);
-                        padding: 12px;
-                        border-radius: var(--border-radius);
-                        margin-bottom: 8px;
-                        border-left: 4px solid ${index === 0 ? '#34a853' : '#fbbc04'};
-                        box-shadow: var(--shadow);
-                        font-size: 13px;
-                    ">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <div>
-                                <strong><i class="fas fa-save"></i> Backup ${index + 1}</strong>
-                                <div style="font-size: 11px; color: var(--gray);">
-                                    ${date.toLocaleString()}
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-size: 12px; color: var(--dark);">
-                                    ${backup.transactionCount} transaksi
-                                </div>
-                                <div style="font-size: 11px; color: var(--gray);">
-                                    ${sizeKB} KB
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 8px;">
-                            <button class="btn btn-secondary" onclick="restoreFromBackup('${backup.id}')" style="flex: 1; padding: 6px; font-size: 12px;">
-                                <i class="fas fa-redo"></i> Restore
-                            </button>
-                            <button class="btn btn-info" onclick="downloadBackup('${backup.id}')" style="flex: 1; padding: 6px; font-size: 12px;">
-                                <i class="fas fa-download"></i> Export
-                            </button>
-                        </div>
-                    </div>
-                `;
+                });
             });
-            
-            html += '</div>';
-            backupListEl.innerHTML = html;
         }
 
-        function downloadBackup(backupId) {
-            const backup = backups.find(b => b.id === backupId);
-            if (!backup) return;
-            
-            try {
-                const backupData = {
-                    version: STORAGE_CONFIG.VERSION,
-                    exportDate: new Date().toISOString(),
-                    backupId: backup.id,
-                    backupTimestamp: backup.timestamp,
-                    transactions: backup.data
-                };
-                
-                const dataStr = JSON.stringify(backupData, null, 2);
-                const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                const url = URL.createObjectURL(dataBlob);
-                
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `cashtrack-backup-${backupId}.json`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showStorageStatus('💾 Backup downloaded', 'success');
-                playSound('success');
-                
-            } catch (error) {
-                console.error('Error downloading backup:', error);
-                showStorageStatus('❌ Error downloading backup', 'error');
-                playSound('error');
-            }
-        }
-
-        function clearOldBackups() {
-            if (backups.length <= 3) {
-                showStorageStatus('⚠️ Minimal 3 backup diperlukan', 'warning');
-                playSound('error');
-                return;
-            }
-            
-            if (confirm(`Hapus ${backups.length - 3} backup lama?`)) {
-                backups = backups.slice(0, 3);
-                localStorage.setItem(STORAGE_KEYS.BACKUPS, JSON.stringify(backups));
-                updateStorageStats();
-                updateBackupList();
-                showStorageStatus('🗑️ Old backups cleared', 'success');
-                playSound('success');
-            } else {
-                playSound('click');
-            }
-        }
-
-        function showStorageInfo() {
-            let storageUsed = 0;
-            Object.values(STORAGE_KEYS).forEach(key => {
-                const data = localStorage.getItem(key);
-                if (data) storageUsed += data.length * 2;
-            });
-            
-            const storageUsedKB = (storageUsed / 1024).toFixed(2);
-            const storageLimit = 5 * 1024 * 1024;
-            const storagePercent = (storageUsed / storageLimit * 100).toFixed(1);
-            
-            let info = `📊 **Storage Information**\n\n`;
-            info += `• Total Transaksi: ${transactions.length}\n`;
-            info += `• Jumlah Backup: ${backups.length}\n`;
-            info += `• Storage Used: ${storageUsedKB} KB\n`;
-            info += `• Storage Usage: ${storagePercent}%\n`;
-            info += `• Last Save: ${storageMetadata.lastSave ? new Date(storageMetadata.lastSave).toLocaleString() : '-'}\n`;
-            info += `• Last Backup: ${storageMetadata.lastBackup ? new Date(storageMetadata.lastBackup).toLocaleString() : '-'}\n`;
-            info += `• Save Count: ${storageMetadata.saveCount}\n`;
-            
-            alert(info);
-            playSound('notification');
-        }
-
-        function checkStorageHealth() {
-            let storageUsed = 0;
-            Object.values(STORAGE_KEYS).forEach(key => {
-                const data = localStorage.getItem(key);
-                if (data) storageUsed += data.length * 2;
-            });
-            
-            const storageUsedKB = (storageUsed / 1024).toFixed(2);
-            const storageLimit = 5 * 1024 * 1024;
-            const storagePercent = (storageUsed / storageLimit * 100).toFixed(1);
-            
-            const status = storagePercent > 90 ? 'critical' : storagePercent > 70 ? 'warning' : 'healthy';
-            
-            showStorageStatus(`Storage: ${storageUsedKB} KB (${storagePercent}%) - ${status}`, 
-                storagePercent > 90 ? 'error' : storagePercent > 70 ? 'warning' : 'success');
-            
-            playSound('notification');
-            
-            return { storageUsedKB, storagePercent, status };
-        }
-
-        // ==================== MODAL FUNCTIONS ====================
-        function showBackupModal() {
-            const modal = document.getElementById('backup-modal');
-            if (modal) {
-                updateStorageStats();
-                modal.style.display = 'flex';
-                playSound('notification');
-                
-                // Scroll ke atas modal
-                setTimeout(() => {
-                    modal.querySelector('.backup-content').scrollTop = 0;
-                }, 50);
-            }
-        }
-
-        function closeBackupModal() {
-            const modal = document.getElementById('backup-modal');
-            if (modal) {
-                modal.style.display = 'none';
-                playSound('click');
-            }
-        }
-
-        // Close modal when clicking outside
-        document.addEventListener('click', function(event) {
-            const modal = document.getElementById('backup-modal');
-            if (modal && modal.style.display === 'flex') {
-                if (event.target === modal) {
-                    closeBackupModal();
-                }
-            }
-        });
-
-        // ==================== STATUS FUNCTIONS ====================
-        function showStorageStatus(message, type = 'info') {
-            const statusEl = document.getElementById('storage-status');
-            if (!statusEl) return;
-            
-            statusEl.textContent = message;
-            statusEl.className = 'storage-status';
-            
-            switch(type) {
-                case 'success':
-                    statusEl.style.background = '#34a853';
-                    break;
-                case 'error':
-                    statusEl.style.background = '#ea4335';
-                    statusEl.classList.add('error');
-                    break;
-                case 'warning':
-                    statusEl.style.background = '#fbbc04';
-                    statusEl.classList.add('warning');
-                    break;
-                default:
-                    statusEl.style.background = '#1a73e8';
-            }
-            
-            statusEl.style.display = 'block';
-            
-            setTimeout(() => {
-                statusEl.style.display = 'none';
-            }, 3000);
-        }
-
-        // ==================== LOGOUT FUNCTION ====================
+        // ==================== LOGOUT ====================
         function logout() {
+            AudioManager.playClick();
             if (confirm('Apakah Anda yakin ingin keluar?')) {
-                playSound('notification');
                 localStorage.removeItem('cashTrackLoggedIn');
-                clearInterval(autoSaveTimer);
-                clearInterval(autoBackupTimer);
-                clearInterval(validationTimer);
-                
-                autoSaveTimer = null;
-                autoBackupTimer = null;
-                validationTimer = null;
-                
                 showLoginScreen();
-            } else {
-                playSound('click');
+                document.getElementById('password-input').value = '';
             }
         }
-
-        // ==================== PWA FUNCTIONS ====================
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(error => {
-                    console.log('ServiceWorker registration failed:', error);
-                });
-            });
-        }
-
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            setTimeout(() => {
-                if (confirm('Ingin menginstal CashTrack sebagai aplikasi di perangkat Anda?')) {
-                    deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then((choiceResult) => {
-                        deferredPrompt = null;
-                    });
-                }
-            }, 5000);
-        });
-
-        // ==================== FINAL INITIALIZATION ====================
-        console.log('🚀 CashTrack v2.2 - Enhanced Storage System');
-        console.log('📱 PWA ready for installation');
-        console.log('💾 Storage system initialized');
-        console.log('📊 Chart system ready');
-        console.log('🔊 Audio system ready');
-        console.log('🔒 Security system active');
-
-        // Tambahkan ke global scope untuk debugging
-        window.CashTrack = {
-            transactions,
-            backups,
-            settings,
-            storageMetadata,
-            saveTransactions,
-            createBackup,
-            restoreFromBackup,
-            exportBackup,
-            importFromBackup,
-            audioEnabled,
-            toggleAudio
-        };
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (financeChart) {
-                financeChart.resize();
-            }
-        });
-        
-        // Handle orientation change
-        window.addEventListener('orientationchange', function() {
-            setTimeout(() => {
-                if (financeChart) {
-                    financeChart.resize();
-                }
-            }, 300);
-        });
-        
-        // Handle page visibility
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'visible' && audioContext && audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
-        });
-        
-        // Handle app resume
-        window.addEventListener('focus', function() {
-            if (audioContext && audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
-        });
     </script>
 </body>
-</html>
