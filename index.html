@@ -52,7 +52,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -61,6 +61,7 @@
             height: 100%;
             overflow-x: hidden;
             font-size: 14px;
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
@@ -81,13 +82,16 @@
             right: 10px;
             background: var(--secondary);
             color: white;
-            padding: 5px 10px;
+            padding: 8px 15px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             z-index: 1001;
             display: none;
             animation: slideIn 0.3s ease;
             box-shadow: var(--shadow);
+            max-width: calc(100vw - 20px);
+            word-break: break-word;
+            text-align: center;
         }
 
         @keyframes slideIn {
@@ -117,6 +121,7 @@
             align-items: center;
             z-index: 2000;
             padding: 15px;
+            backdrop-filter: blur(5px);
         }
 
         .backup-content {
@@ -125,7 +130,7 @@
             padding: 20px;
             max-width: 500px;
             width: 100%;
-            max-height: 85vh;
+            max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow);
             animation: fadeIn 0.3s ease;
@@ -158,11 +163,13 @@
             color: var(--gray);
             cursor: pointer;
             padding: 5px;
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
+            touch-action: manipulation;
         }
 
         .backup-section {
@@ -203,14 +210,14 @@
         .backup-actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 8px;
+            gap: 10px;
             margin-top: 15px;
         }
 
         .storage-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 15px;
         }
 
@@ -220,6 +227,10 @@
             border-radius: var(--border-radius);
             text-align: center;
             box-shadow: var(--shadow);
+            min-height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .stat-value {
@@ -227,11 +238,13 @@
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 3px;
+            line-height: 1.2;
         }
 
         .stat-label {
             font-size: 0.75rem;
             color: var(--gray);
+            line-height: 1.2;
         }
 
         /* Splash Screen */
@@ -376,13 +389,14 @@
 
         .password-input {
             width: 100%;
-            padding: 12px 45px 12px 12px;
+            padding: 15px 45px 15px 12px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 16px;
             transition: var(--transition);
             background: var(--light);
             color: var(--dark);
+            min-height: 50px;
         }
 
         [data-theme="dark"] .password-input {
@@ -393,7 +407,7 @@
         .password-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
         }
 
         .toggle-password {
@@ -405,28 +419,30 @@
             border: none;
             color: var(--gray);
             cursor: pointer;
-            font-size: 16px;
-            width: 26px;
-            height: 26px;
+            font-size: 18px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
+            touch-action: manipulation;
         }
 
         .login-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
             margin-bottom: 15px;
             touch-action: manipulation;
+            min-height: 50px;
         }
 
         .login-btn:hover {
@@ -532,12 +548,12 @@
         }
 
         .account-number {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
             color: #0600ab;
             letter-spacing: 1px;
             margin: 12px 0;
-            padding: 12px;
+            padding: 15px;
             background: #ffffff;
             border-radius: 8px;
             border: 2px dashed #977dff;
@@ -545,7 +561,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             word-break: break-all;
-            font-size: 18px;
+            touch-action: manipulation;
+            user-select: all;
         }
 
         .account-number:hover {
@@ -578,7 +595,7 @@
             background: linear-gradient(to right, #977dff, #0033ff);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 16px;
             border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
@@ -589,6 +606,8 @@
             position: relative;
             overflow: hidden;
             letter-spacing: 0.5px;
+            touch-action: manipulation;
+            min-height: 56px;
         }
 
         .donation-btn:hover {
@@ -631,6 +650,7 @@
             z-index: 100;
             padding-top: calc(12px + var(--safe-area-top));
             height: 60px;
+            min-height: 60px;
         }
 
         .header-title {
@@ -739,8 +759,8 @@
             padding: 6px;
             border-radius: 50%;
             transition: var(--transition);
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -768,6 +788,7 @@
             right: 0;
             z-index: 99;
             height: 50px;
+            min-height: 50px;
         }
 
         [data-theme="dark"] .nav-tabs {
@@ -791,6 +812,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            min-height: 50px;
         }
 
         .nav-tab.active {
@@ -816,6 +838,7 @@
             width: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
         }
 
         @media (max-width: 768px) {
@@ -863,6 +886,7 @@
             z-index: 99;
             padding-bottom: calc(10px + var(--safe-area-bottom));
             height: 50px;
+            min-height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -931,15 +955,16 @@
         }
 
         .form-input {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 13px;
+            border-radius: 8px;
+            font-size: 15px;
             transition: var(--transition);
             background: var(--light);
             color: var(--dark);
             width: 100%;
             -webkit-appearance: none;
+            min-height: 46px;
         }
 
         [data-theme="dark"] .form-input {
@@ -950,6 +975,7 @@
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
         }
 
         .form-buttons {
@@ -959,21 +985,22 @@
         }
 
         .btn {
-            padding: 10px 15px;
+            padding: 12px 15px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
             touch-action: manipulation;
             white-space: nowrap;
             flex: 1;
             min-width: 100px;
+            min-height: 44px;
         }
 
         .btn-primary {
@@ -1064,14 +1091,15 @@
         }
 
         .filter-select {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #e0e0e0;
-            border-radius: 6px;
+            border-radius: 8px;
             background: var(--light);
-            font-size: 13px;
+            font-size: 14px;
             width: 100%;
             color: var(--dark);
             -webkit-appearance: none;
+            min-height: 46px;
         }
 
         [data-theme="dark"] .filter-select {
@@ -1104,7 +1132,7 @@
         .backup-actions-main {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 8px;
+            gap: 10px;
             margin-top: 12px;
         }
 
@@ -1164,6 +1192,7 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             font-size: 13px;
+            overscroll-behavior: contain;
         }
 
         .transactions-table table {
@@ -1173,7 +1202,7 @@
 
         .transactions-table th,
         .transactions-table td {
-            padding: 8px 6px;
+            padding: 10px 8px;
             text-align: left;
             border-bottom: 1px solid #f0f0f0;
             color: var(--dark);
@@ -1225,9 +1254,10 @@
         }
 
         .action-buttons .btn {
-            padding: 6px 8px;
-            font-size: 12px;
+            padding: 8px 10px;
+            font-size: 13px;
             min-width: auto;
+            min-height: 36px;
         }
 
         /* Chart Container */
@@ -1300,14 +1330,14 @@
 
         .empty-state {
             text-align: center;
-            padding: 30px 15px;
+            padding: 40px 15px;
             color: var(--gray);
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .empty-state div {
-            font-size: 32px;
-            margin-bottom: 10px;
+            font-size: 48px;
+            margin-bottom: 15px;
             opacity: 0.5;
         }
 
@@ -1343,7 +1373,8 @@
             
             .btn {
                 min-width: 80px;
-                padding: 8px 10px;
+                padding: 10px 12px;
+                font-size: 13px;
             }
             
             .balance-amount {
@@ -1351,7 +1382,7 @@
             }
             
             .chart-wrapper {
-                height: 200px;
+                height: 220px;
             }
             
             .nav-tab {
@@ -1372,6 +1403,87 @@
             .app-content {
                 top: 100px;
             }
+            
+            .icon-btn {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .month-header {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .month-totals {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .transactions-table th,
+            .transactions-table td {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
+            
+            .action-buttons .btn {
+                padding: 6px 8px;
+                min-height: 32px;
+            }
+            
+            .password-input {
+                font-size: 16px;
+                padding: 14px 45px 14px 12px;
+            }
+            
+            .login-btn {
+                font-size: 16px;
+                padding: 14px;
+            }
+            
+            .donation-btn {
+                font-size: 15px;
+                padding: 14px;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .app-content {
+                padding: 12px;
+            }
+            
+            .chart-wrapper {
+                height: 230px;
+            }
+            
+            .storage-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .app-content {
+                padding: 15px;
+            }
+            
+            .chart-wrapper {
+                height: 250px;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .app-content {
+                padding: 20px;
+            }
+            
+            .balance-amount {
+                font-size: 2rem;
+            }
+            
+            .chart-wrapper {
+                height: 280px;
+            }
         }
 
         @media (min-width: 1200px) {
@@ -1384,7 +1496,7 @@
             }
             
             .balance-amount {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .chart-wrapper {
@@ -1395,22 +1507,23 @@
         /* Audio Control */
         .audio-control {
             position: fixed;
-            bottom: 60px;
+            bottom: 70px;
             right: 15px;
             z-index: 100;
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             transition: var(--transition);
+            touch-action: manipulation;
         }
 
         .audio-control:hover {
@@ -1419,6 +1532,16 @@
 
         .audio-control.muted {
             background: var(--gray);
+        }
+
+        @media (max-width: 480px) {
+            .audio-control {
+                bottom: 65px;
+                right: 12px;
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
         }
 
         /* Loading Animation */
@@ -1435,6 +1558,82 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* Touch Improvements */
+        button, input, select, textarea {
+            font-size: 16px; /* Prevent iOS zoom */
+        }
+
+        input[type="date"] {
+            min-height: 44px;
+        }
+
+        select {
+            min-height: 44px;
+        }
+
+        /* Better touch targets */
+        .nav-tab, .btn, .icon-btn {
+            min-height: 44px;
+        }
+
+        /* iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .app-content {
+                padding-bottom: 30px;
+            }
+            
+            .audio-control {
+                bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+            }
+        }
+
+        /* Android Chrome pull-to-refresh prevention */
+        body {
+            overscroll-behavior-y: contain;
+        }
+
+        /* Selection improvements */
+        ::selection {
+            background: rgba(26, 115, 232, 0.3);
+            color: inherit;
+        }
+
+        /* Focus styles for accessibility */
+        *:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Prevent text size adjustment on orientation change */
+        body {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Improved modal for mobile */
+        @media (max-width: 768px) {
+            .backup-modal {
+                align-items: flex-end;
+                padding: 0;
+            }
+            
+            .backup-content {
+                max-height: 85vh;
+                border-radius: var(--border-radius) var(--border-radius) 0 0;
+                animation: slideUp 0.3s ease;
+                margin-top: auto;
+            }
+            
+            @keyframes slideUp {
+                from { transform: translateY(100%); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        }
     </style>
 </head>
 <body>
@@ -1442,7 +1641,7 @@
     <div class="storage-status" id="storage-status"></div>
 
     <!-- Audio Control -->
-    <button class="audio-control" id="audio-control" title="Toggle Sound">
+    <button class="audio-control" id="audio-control" title="Toggle Sound" aria-label="Toggle sound">
         <i class="fas fa-volume-up"></i>
     </button>
 
@@ -1451,7 +1650,7 @@
         <div class="backup-content">
             <div class="backup-header">
                 <h3 class="backup-title"><i class="fas fa-database"></i> Backup & Restore Data</h3>
-                <button class="close-backup" onclick="closeBackupModal()">✕</button>
+                <button class="close-backup" onclick="closeBackupModal()" aria-label="Close">✕</button>
             </div>
             
             <div class="storage-stats">
@@ -1475,7 +1674,7 @@
             
             <div class="backup-section">
                 <h4 class="section-title"><i class="fas fa-upload"></i> Backup Data</h4>
-                <p style="font-size: 13px;">Simpan data Anda ke file untuk mencegah kehilangan data.</p>
+                <p style="font-size: 13px; margin-bottom: 10px;">Simpan data Anda ke file untuk mencegah kehilangan data.</p>
                 <div class="backup-actions">
                     <button class="btn btn-success" onclick="exportBackup()">
                         <i class="fas fa-save"></i> Backup ke File
@@ -1488,7 +1687,7 @@
             
             <div class="backup-section">
                 <h4 class="section-title"><i class="fas fa-download"></i> Restore Data</h4>
-                <p style="font-size: 13px;">Muat data dari file backup yang sebelumnya disimpan.</p>
+                <p style="font-size: 13px; margin-bottom: 10px;">Muat data dari file backup yang sebelumnya disimpan.</p>
                 <div class="backup-info">
                     <span>Pilih file backup (.json):</span>
                     <input type="file" id="restore-file" accept=".json" style="display: none">
@@ -1505,7 +1704,7 @@
             
             <div class="backup-section">
                 <h4 class="section-title"><i class="fas fa-cog"></i> Pengaturan Storage</h4>
-                <p style="font-size: 13px;">Kelola penyimpanan data lokal.</p>
+                <p style="font-size: 13px; margin-bottom: 10px;">Kelola penyimpanan data lokal.</p>
                 <div class="backup-actions">
                     <button class="btn btn-secondary" onclick="clearOldBackups()">
                         <i class="fas fa-trash"></i> Hapus Backup Lama
@@ -1559,8 +1758,8 @@
             </div>
 
             <div class="input-container">
-                <input type="password" class="password-input" placeholder="Masukkan password" id="password-input">
-                <button type="button" class="toggle-password" id="toggle-password">
+                <input type="password" class="password-input" placeholder="Masukkan password" id="password-input" autocomplete="current-password">
+                <button type="button" class="toggle-password" id="toggle-password" aria-label="Show password">
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
@@ -1633,15 +1832,15 @@
                 <h2>CashTrack</h2>
             </div>
             <div class="header-actions">
-                <label class="theme-switch">
+                <label class="theme-switch" aria-label="Toggle dark mode">
                     <input type="checkbox" id="theme-toggle">
                     <span class="theme-slider"></span>
                 </label>
                 
-                <button class="icon-btn" onclick="showBackupModal()" title="Backup Data">
+                <button class="icon-btn" onclick="showBackupModal()" title="Backup Data" aria-label="Backup data">
                     <i class="fas fa-save"></i>
                 </button>
-                <button class="icon-btn" onclick="logout()" title="Keluar">
+                <button class="icon-btn" onclick="logout()" title="Keluar" aria-label="Logout">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
@@ -1649,13 +1848,13 @@
 
         <!-- Navigation Tabs -->
         <div class="nav-tabs">
-            <button class="nav-tab active" data-page="transactions-page">
+            <button class="nav-tab active" data-page="transactions-page" aria-label="Tambah transaksi">
                 <i class="fas fa-plus-circle"></i> Tambah
             </button>
-            <button class="nav-tab" data-page="history-page">
+            <button class="nav-tab" data-page="history-page" aria-label="Riwayat transaksi">
                 <i class="fas fa-history"></i> Riwayat
             </button>
-            <button class="nav-tab" data-page="backup-page">
+            <button class="nav-tab" data-page="backup-page" aria-label="Backup data">
                 <i class="fas fa-database"></i> Backup
             </button>
         </div>
@@ -1677,9 +1876,9 @@
                 <div class="transaction-form">
                     <div class="form-grid">
                         <input type="date" class="form-input" id="transaction-date">
-                        <input type="text" class="form-input" id="transaction-desc" placeholder="Keterangan transaksi">
-                        <input type="text" class="form-input" id="transaction-income" placeholder="Pendapatan (Rp)" oninput="formatCurrencyInput(this)">
-                        <input type="text" class="form-input" id="transaction-expense" placeholder="Pengeluaran (Rp)" oninput="formatCurrencyInput(this)">
+                        <input type="text" class="form-input" id="transaction-desc" placeholder="Keterangan transaksi" autocomplete="off">
+                        <input type="text" class="form-input" id="transaction-income" placeholder="Pendapatan (Rp)" oninput="formatCurrencyInput(this)" autocomplete="off">
+                        <input type="text" class="form-input" id="transaction-expense" placeholder="Pengeluaran (Rp)" oninput="formatCurrencyInput(this)" autocomplete="off">
                     </div>
                     <div class="form-buttons">
                         <button class="btn btn-primary" onclick="addTransaction()">
@@ -1852,14 +2051,68 @@
         let autoBackupTimer = null;
         let validationTimer = null;
         
-        // ==================== SISTEM SUARA ====================
+        // ==================== SISTEM SUARA YANG DIPERBAIKI ====================
         let audioEnabled = true;
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const audioCache = {};
-
-        // Fungsi untuk membuat suara sederhana
+        const audioElements = {};
+        let audioContext = null;
+        
+        // Inisialisasi audio elements
+        function initializeAudio() {
+            try {
+                // Buat audio elements untuk setiap jenis suara
+                const audioTypes = {
+                    'click': new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ'),
+                    'success': new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ'),
+                    'error': new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ'),
+                    'notification': new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ')
+                };
+                
+                // Atur properti audio
+                Object.keys(audioTypes).forEach(type => {
+                    const audio = audioTypes[type];
+                    audio.preload = 'auto';
+                    audio.volume = 0.3;
+                    audioElements[type] = audio;
+                });
+                
+                // Setup audio context jika tersedia
+                if (window.AudioContext || window.webkitAudioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                
+                console.log('🔊 Audio system initialized');
+            } catch (error) {
+                console.warn('Audio initialization failed:', error);
+            }
+        }
+        
+        // Fungsi untuk memainkan suara
         function playSound(type = 'click') {
-            if (!audioEnabled) return;
+            if (!audioEnabled || !audioElements[type]) return;
+            
+            try {
+                // Jika menggunakan audio context, buat suara sederhana
+                if (audioContext && audioContext.state !== 'suspended') {
+                    playWebAudio(type);
+                    return;
+                }
+                
+                // Fallback ke HTML5 Audio
+                const audio = audioElements[type];
+                audio.currentTime = 0;
+                audio.play().catch(error => {
+                    console.log('Audio play failed:', error);
+                    playWebAudio(type);
+                });
+                
+            } catch (error) {
+                console.log('Sound play error:', error);
+            }
+        }
+        
+        // Fungsi untuk membuat suara menggunakan Web Audio API
+        function playWebAudio(type) {
+            if (!audioContext || audioContext.state === 'suspended') return;
             
             try {
                 const oscillator = audioContext.createOscillator();
@@ -1871,34 +2124,32 @@
                 // Atur frekuensi berdasarkan jenis suara
                 switch(type) {
                     case 'success':
-                        oscillator.frequency.value = 800;
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
                         break;
                     case 'error':
-                        oscillator.frequency.value = 400;
+                        oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
                         break;
                     case 'notification':
-                        oscillator.frequency.value = 600;
+                        oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
                         break;
                     case 'click':
                     default:
-                        oscillator.frequency.value = 500;
+                        oscillator.frequency.setValueAtTime(500, audioContext.currentTime);
                 }
                 
                 // Atur volume
-                gainNode.gain.value = 0.1;
-                
-                // Fade out
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
                 
                 // Play suara
                 oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.1);
+                oscillator.stop(audioContext.currentTime + 0.15);
                 
             } catch (error) {
-                console.log('Audio error:', error);
+                console.log('Web Audio error:', error);
             }
         }
-
+        
         // Fungsi untuk toggle suara
         function toggleAudio() {
             audioEnabled = !audioEnabled;
@@ -1915,17 +2166,41 @@
                 icon.className = 'fas fa-volume-mute';
                 showStorageStatus('🔇 Suara dimatikan', 'warning');
             }
+            
+            // Simpan preferensi
+            localStorage.setItem('cashTrackAudioEnabled', audioEnabled.toString());
         }
 
         // ==================== SPLASH SCREEN ====================
         window.addEventListener('load', function() {
             console.log('🔄 App loading...');
             
+            // Inisialisasi audio
+            initializeAudio();
+            
+            // Load audio preference
+            const savedAudioPref = localStorage.getItem('cashTrackAudioEnabled');
+            if (savedAudioPref !== null) {
+                audioEnabled = savedAudioPref === 'true';
+                const audioControl = document.getElementById('audio-control');
+                const icon = audioControl.querySelector('i');
+                
+                if (audioEnabled) {
+                    audioControl.classList.remove('muted');
+                    icon.className = 'fas fa-volume-up';
+                } else {
+                    audioControl.classList.add('muted');
+                    icon.className = 'fas fa-volume-mute';
+                }
+            }
+            
             // Set tanggal default
-            const today = new Date().toISOString().split('T')[0];
+            const today = new Date();
+            today.setDate(today.getDate()); // Untuk memperbaiki timezone
+            const todayStr = today.toISOString().split('T')[0];
             const dateInput = document.getElementById('transaction-date');
             if (dateInput) {
-                dateInput.value = today;
+                dateInput.value = todayStr;
             }
             
             // Setup event listeners
@@ -1957,6 +2232,10 @@
             const audioControl = document.getElementById('audio-control');
             if (audioControl) {
                 audioControl.addEventListener('click', toggleAudio);
+                audioControl.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    toggleAudio();
+                }, { passive: false });
             }
             
             // Password input event
@@ -1966,6 +2245,13 @@
                     if (e.key === 'Enter') {
                         checkPassword();
                     }
+                });
+                
+                // Fix untuk iOS virtual keyboard
+                passwordInput.addEventListener('focus', function() {
+                    setTimeout(() => {
+                        this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
                 });
             }
             
@@ -1981,6 +2267,11 @@
                     passwordInput.focus();
                     playSound('click');
                 });
+                
+                togglePassword.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.click();
+                }, { passive: false });
             }
             
             // Enter app button
@@ -1990,6 +2281,11 @@
                     playSound('success');
                     enterApp();
                 });
+                
+                enterAppBtn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.click();
+                }, { passive: false });
             }
             
             // Copy account number
@@ -1997,39 +2293,14 @@
             if (accountNumber) {
                 accountNumber.addEventListener('click', function() {
                     const text = this.textContent.replace(/\s/g, '');
-                    navigator.clipboard.writeText(text).then(() => {
-                        const originalText = this.textContent;
-                        this.textContent = '✓ Berhasil Disalin!';
-                        this.style.background = '#34a853';
-                        this.style.color = 'white';
-                        playSound('success');
-                        
-                        setTimeout(() => {
-                            this.textContent = originalText;
-                            this.style.background = '';
-                            this.style.color = '';
-                        }, 2000);
-                    }).catch(err => {
-                        const textArea = document.createElement('textarea');
-                        textArea.value = text;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(textArea);
-                        
-                        const originalText = this.textContent;
-                        this.textContent = '✓ Berhasil Disalin!';
-                        this.style.background = '#34a853';
-                        this.style.color = 'white';
-                        playSound('success');
-                        
-                        setTimeout(() => {
-                            this.textContent = originalText;
-                            this.style.background = '';
-                            this.style.color = '';
-                        }, 2000);
-                    });
+                    copyToClipboard(text);
                 });
+                
+                accountNumber.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    const text = this.textContent.replace(/\s/g, '');
+                    copyToClipboard(text);
+                }, { passive: false });
             }
             
             // Theme toggle
@@ -2077,9 +2348,8 @@
             
             // Add sound to all buttons
             document.addEventListener('click', function(e) {
-                if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                    const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
-                    
+                const button = e.target.closest('button');
+                if (button && !button.hasAttribute('data-no-sound')) {
                     if (button.classList.contains('btn-danger')) {
                         playSound('error');
                     } else if (button.classList.contains('btn-success') || 
@@ -2091,6 +2361,65 @@
                         playSound('click');
                     }
                 }
+            });
+            
+            // Touch improvements untuk mobile
+            document.addEventListener('touchstart', function() {}, { passive: true });
+            
+            // Prevent zoom on double tap
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
+            
+            // Fix untuk input di iOS
+            document.addEventListener('touchstart', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+                    e.target.focus();
+                }
+            });
+        }
+        
+        // Fungsi untuk copy ke clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const accountNumber = document.getElementById('copy-account-number');
+                const originalText = accountNumber.textContent;
+                accountNumber.textContent = '✓ Berhasil Disalin!';
+                accountNumber.style.background = '#34a853';
+                accountNumber.style.color = 'white';
+                playSound('success');
+                
+                setTimeout(() => {
+                    accountNumber.textContent = originalText;
+                    accountNumber.style.background = '';
+                    accountNumber.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                // Fallback untuk browser yang tidak support clipboard API
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const accountNumber = document.getElementById('copy-account-number');
+                const originalText = accountNumber.textContent;
+                accountNumber.textContent = '✓ Berhasil Disalin!';
+                accountNumber.style.background = '#34a853';
+                accountNumber.style.color = 'white';
+                playSound('success');
+                
+                setTimeout(() => {
+                    accountNumber.textContent = originalText;
+                    accountNumber.style.background = '';
+                    accountNumber.style.color = '';
+                }, 2000);
             });
         }
 
@@ -2189,6 +2518,11 @@
                 
                 console.log('✅ App initialized successfully');
                 showStorageStatus('✅ Aplikasi siap digunakan', 'success');
+                
+                // Resume audio context jika diperlukan
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
                 
             } catch (error) {
                 console.error('❌ Error initializing app:', error);
@@ -2570,8 +2904,10 @@
         }
 
         function clearForm() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transaction-date').value = today;
+            const today = new Date();
+            today.setDate(today.getDate());
+            const todayStr = today.toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = todayStr;
             document.getElementById('transaction-desc').value = '';
             document.getElementById('transaction-income').value = '';
             document.getElementById('transaction-expense').value = '';
@@ -3035,10 +3371,10 @@
                             <td class="expense-amount">${transaction.expense > 0 ? formatCurrency(transaction.expense) : '-'}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})" title="Edit">
+                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})" title="Edit" aria-label="Edit transaksi">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})" title="Hapus">
+                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})" title="Hapus" aria-label="Hapus transaksi">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -3106,6 +3442,12 @@
                         }, 100);
                     }
                 });
+                
+                // Touch support untuk mobile
+                tab.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.click();
+                }, { passive: false });
             });
         }
 
@@ -3646,6 +3988,11 @@
                 updateStorageStats();
                 modal.style.display = 'flex';
                 playSound('notification');
+                
+                // Scroll ke atas modal
+                setTimeout(() => {
+                    modal.querySelector('.backup-content').scrollTop = 0;
+                }, 50);
             }
         }
 
@@ -3656,6 +4003,16 @@
                 playSound('click');
             }
         }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('backup-modal');
+            if (modal && modal.style.display === 'flex') {
+                if (event.target === modal) {
+                    closeBackupModal();
+                }
+            }
+        });
 
         // ==================== STATUS FUNCTIONS ====================
         function showStorageStatus(message, type = 'info') {
@@ -3749,13 +4106,38 @@
             createBackup,
             restoreFromBackup,
             exportBackup,
-            importFromBackup
+            importFromBackup,
+            audioEnabled,
+            toggleAudio
         };
 
         // Handle window resize
         window.addEventListener('resize', function() {
             if (financeChart) {
                 financeChart.resize();
+            }
+        });
+        
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                if (financeChart) {
+                    financeChart.resize();
+                }
+            }, 300);
+        });
+        
+        // Handle page visibility
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible' && audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        });
+        
+        // Handle app resume
+        window.addEventListener('focus', function() {
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
             }
         });
     </script>
