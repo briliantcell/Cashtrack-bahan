@@ -14,7 +14,7 @@
     <link rel="manifest" id="app-manifest">
     
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNNjAgMzVMMzUgNjAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIvPjwvc3ZnPg==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
     
     <!-- Tambahkan Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -383,6 +383,7 @@
             border: 2px solid #e0e7ff;
             box-shadow: 0 6px 15px rgba(151, 125, 255, 0.1);
             text-align: center;
+            position: relative;
         }
 
         .bank-name {
@@ -410,11 +411,42 @@
             cursor: pointer;
             transition: all 0.3s ease;
             word-break: break-all;
+            position: relative;
+            user-select: all;
         }
 
         .account-number:hover {
             background: #f9f9ff;
             transform: scale(1.02);
+        }
+
+        .account-number.copied {
+            background: #34a853;
+            color: white;
+            border-color: #2d924a;
+        }
+
+        .copy-indicator {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #34a853;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            animation: popIn 0.3s ease;
+            z-index: 2;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         .account-name {
@@ -429,6 +461,33 @@
             color: #666;
             font-style: italic;
             margin-top: 8px;
+        }
+
+        .copy-btn {
+            margin-top: 10px;
+            background: linear-gradient(to right, #977dff, #0033ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(151, 125, 255, 0.3);
+        }
+
+        .copy-btn.copied {
+            background: #34a853;
         }
 
         .donation-buttons {
@@ -485,6 +544,34 @@
             color: rgba(255, 255, 255, 0.9);
             text-align: center;
             line-height: 1.4;
+        }
+
+        /* Sound Control */
+        .sound-control {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .sound-control:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .sound-control.muted {
+            background: var(--gray);
         }
 
         /* Main App */
@@ -1209,6 +1296,13 @@
             input:checked + .toggle-slider:before {
                 transform: translateX(25px);
             }
+            
+            .sound-control {
+                bottom: 70px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1413,6 +1507,11 @@
     </style>
 </head>
 <body>
+    <!-- Sound Control -->
+    <div class="sound-control" id="sound-control" title="Mute/Unmute Sound">
+        <i class="fas fa-volume-up" id="sound-icon"></i>
+    </div>
+
     <!-- Install Prompt -->
     <div class="install-prompt" id="install-prompt">
         Pasang CashTrack di perangkat Anda untuk pengalaman terbaik
@@ -1484,8 +1583,11 @@
                     <i class="fas fa-university"></i> Bank Seabank
                 </div>
                 <div class="account-name">Muhamad Abid kalkautsar</div>
-                <div class="account-number" id="copy-account-number">9018 9866 1823</div>
-                <div class="copy-notice">Klik untuk menyalin nomor rekening</div>
+                <div class="account-number" id="copy-account-number" onclick="copyAccountNumber()">9018 9866 1823</div>
+                <button class="copy-btn" onclick="copyAccountNumber()">
+                    <i class="far fa-copy"></i> Salin Nomor Rekening
+                </button>
+                <div class="copy-notice">Klik nomor rekening atau tombol di atas untuk menyalin</div>
             </div>
 
             <div class="donation-buttons">
@@ -1511,13 +1613,10 @@
                 <h2>CashTrack</h2>
             </div>
             <div class="header-actions">
-                <label class="toggle-switch" title="Toggle Dark Mode">
+                <label class="toggle-switch" title="Mode Gelap/Terang">
                     <input type="checkbox" id="dark-mode-toggle">
                     <span class="toggle-slider"></span>
                 </label>
-                <button class="icon-btn" onclick="showInstallPrompt()" title="Pasang Aplikasi">
-                    <i class="fas fa-mobile-alt"></i>
-                </button>
                 <button class="icon-btn" onclick="logout()" title="Keluar">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
@@ -1643,83 +1742,75 @@
     </div>
 
     <script>
-        // ==================== AUDIO MANAGER ====================
-        const AudioManager = {
+        // ==================== SOUND MANAGER ====================
+        const SoundManager = {
+            isMuted: false,
             sounds: {},
             
             init() {
-                // Create audio objects with fallback URLs
+                // Create audio elements
                 this.sounds = {
-                    click: this.createAudio(['mixkit-positive-notification-951.wav']),
-                    success: this.createAudio(['mixkit-positive-notification-951.wav']),
-                    error: this.createAudio(['new-notification-011-364050.mp3']),
-                    add: this.createAudio(['preview.mp3']),
-                    delete: this.createAudio(['preview.mp3']),
-                    notification: this.createAudio(['preview.mp3']),
-                    swipe: this.createAudio(['new-notification-011-364050.mp3'])
+                    click: new Audio('mixkit-positive-notification-951.wav'),
+                    success: new Audio('mixkit-positive-notification-951.wav'),
+                    error: new Audio('new-notification-011-364050.mp3'),
+                    notification: new Audio('notification-center-443093.mp3'),
+                    preview: new Audio('preview.mp3'),
+                    positive: new Audio('preview.mp3')
                 };
                 
-                // Set volume to 80%
+                // Set volume
                 Object.values(this.sounds).forEach(sound => {
-                    if (sound) sound.volume = 0.8;
+                    sound.volume = 0.5;
                 });
                 
-                console.log('Audio Manager initialized');
-            },
-            
-            createAudio(sources) {
-                try {
-                    const audio = new Audio();
-                    sources.forEach(src => {
-                        const source = document.createElement('source');
-                        source.src = src;
-                        audio.appendChild(source);
-                    });
-                    return audio;
-                } catch (error) {
-                    console.warn('Audio creation failed:', error);
-                    return null;
+                // Load sound settings from storage
+                const savedSettings = localStorage.getItem('cashTrackSoundSettings');
+                if (savedSettings) {
+                    const settings = JSON.parse(savedSettings);
+                    this.isMuted = settings.isMuted || false;
                 }
+                
+                // Update UI
+                this.updateSoundIcon();
             },
             
             play(soundName) {
-                try {
-                    const sound = this.sounds[soundName];
-                    if (sound) {
-                        sound.currentTime = 0;
-                        return sound.play().catch(e => console.warn('Audio play failed:', e));
-                    }
-                } catch (error) {
-                    console.warn('Audio playback error:', error);
+                if (this.isMuted) return;
+                
+                const sound = this.sounds[soundName];
+                if (sound) {
+                    sound.currentTime = 0;
+                    sound.play().catch(e => console.log('Sound play failed:', e));
                 }
             },
             
-            playClick() {
-                this.play('click');
+            toggleMute() {
+                this.isMuted = !this.isMuted;
+                this.updateSoundIcon();
+                
+                // Play click sound when unmuting
+                if (!this.isMuted) {
+                    this.play('click');
+                }
+                
+                // Save settings
+                localStorage.setItem('cashTrackSoundSettings', JSON.stringify({
+                    isMuted: this.isMuted,
+                    volume: 0.5
+                }));
             },
             
-            playSuccess() {
-                this.play('success');
-            },
-            
-            playError() {
-                this.play('error');
-            },
-            
-            playAdd() {
-                this.play('add');
-            },
-            
-            playDelete() {
-                this.play('delete');
-            },
-            
-            playNotification() {
-                this.play('notification');
-            },
-            
-            playSwipe() {
-                this.play('swipe');
+            updateSoundIcon() {
+                const soundIcon = document.getElementById('sound-icon');
+                const soundControl = document.getElementById('sound-control');
+                
+                if (this.isMuted) {
+                    soundIcon.className = 'fas fa-volume-mute';
+                    soundControl.classList.add('muted');
+                } else {
+                    soundIcon.className = 'fas fa-volume-up';
+                    soundControl.classList.remove('muted');
+                }
             }
         };
 
@@ -1747,9 +1838,11 @@
                     sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(saveData));
                     
                     console.log('Data saved successfully');
+                    SoundManager.play('success');
                     return true;
                 } catch (error) {
                     console.error('Save failed:', error);
+                    SoundManager.play('error');
                     this.tryFallbackSave(data);
                     return false;
                 }
@@ -1778,12 +1871,14 @@
                             return this.migrateOldData(parsed);
                         }
                         
+                        SoundManager.play('notification');
                         return parsed;
                     }
                     
                     return { transactions: [], settings: {} };
                 } catch (error) {
                     console.error('Load failed:', error);
+                    SoundManager.play('error');
                     return this.loadBackup();
                 }
             },
@@ -1800,10 +1895,12 @@
                 try {
                     const backup = localStorage.getItem(this.BACKUP_KEY);
                     if (backup) {
+                        SoundManager.play('notification');
                         return JSON.parse(backup);
                     }
                 } catch (error) {
                     console.error('Backup load failed:', error);
+                    SoundManager.play('error');
                 }
                 return { transactions: [], settings: {} };
             },
@@ -1818,8 +1915,10 @@
                     // Try compressed storage
                     const compressed = this.compressData(data);
                     localStorage.setItem('cashTrackCompressed', compressed);
+                    SoundManager.play('success');
                 } catch (error) {
                     console.error('All storage methods failed:', error);
+                    SoundManager.play('error');
                 }
             },
             
@@ -1846,6 +1945,7 @@
                 
                 // Save migrated data
                 this.save(migrated);
+                SoundManager.play('positive');
                 
                 return migrated;
             },
@@ -1877,6 +1977,7 @@
                     
                     transaction.oncomplete = function() {
                         console.log('Data saved to IndexedDB');
+                        SoundManager.play('success');
                     };
                 };
             },
@@ -1891,8 +1992,10 @@
                     if (window.indexedDB) {
                         indexedDB.deleteDatabase('CashTrackDB');
                     }
+                    SoundManager.play('notification');
                 } catch (error) {
                     console.error('Clear storage failed:', error);
+                    SoundManager.play('error');
                 }
             }
         };
@@ -1909,8 +2012,8 @@
 
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize audio manager
-            AudioManager.init();
+            // Initialize sound manager
+            SoundManager.init();
             
             // Initialize storage and load data
             const savedData = StorageManager.load();
@@ -1920,6 +2023,12 @@
             // Set today's date as default in transaction form
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('transaction-date').value = today;
+            
+            // Setup sound control
+            document.getElementById('sound-control').addEventListener('click', () => {
+                SoundManager.toggleMute();
+                SoundManager.play('click');
+            });
             
             // Enter key support for form inputs
             ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
@@ -1935,16 +2044,15 @@
             const passwordInput = document.getElementById('password-input');
             
             togglePassword.addEventListener('click', function() {
-                AudioManager.playClick();
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
                 this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                SoundManager.play('click');
             });
             
             // Enter key for password input
             passwordInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    AudioManager.playClick();
                     checkPassword();
                 }
             });
@@ -1959,7 +2067,7 @@
             }
             
             darkModeToggle.addEventListener('change', function() {
-                AudioManager.playSwipe();
+                SoundManager.play('click');
                 if (this.checked) {
                     document.body.setAttribute('data-theme', 'dark');
                     appSettings.theme = 'dark';
@@ -2015,27 +2123,27 @@
         });
 
         function showInstallPrompt() {
-            AudioManager.playNotification();
             if (deferredPrompt) {
                 const installPrompt = document.getElementById('install-prompt');
                 installPrompt.style.display = 'block';
+                SoundManager.play('notification');
             }
         }
 
         function hideInstallPrompt() {
-            AudioManager.playClick();
             const installPrompt = document.getElementById('install-prompt');
             installPrompt.style.display = 'none';
+            SoundManager.play('click');
         }
 
         document.getElementById('install-btn').addEventListener('click', async () => {
-            AudioManager.playClick();
+            SoundManager.play('click');
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    AudioManager.playSuccess();
                     console.log('User accepted the install prompt');
+                    SoundManager.play('success');
                 }
                 deferredPrompt = null;
                 hideInstallPrompt();
@@ -2047,14 +2155,21 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then(registration => {
                     console.log('SW registered: ', registration);
+                    SoundManager.play('success');
                 }).catch(registrationError => {
                     console.log('SW registration failed: ', registrationError);
+                    SoundManager.play('error');
                 });
             });
         }
 
         // ==================== SPLASH SCREEN ====================
         window.addEventListener('load', () => {
+            // Play preview sound when app starts
+            setTimeout(() => {
+                SoundManager.play('preview');
+            }, 500);
+            
             setTimeout(() => {
                 const splashScreen = document.getElementById('splash-screen');
                 splashScreen.style.opacity = '0';
@@ -2088,55 +2203,163 @@
         }
 
         function checkPassword() {
+            SoundManager.play('click');
             const passwordInput = document.getElementById('password-input');
             const errorMessage = document.getElementById('password-error');
             
             if (passwordInput.value === correctPassword) {
-                AudioManager.playSuccess();
                 localStorage.setItem('cashTrackLoggedIn', 'true');
+                SoundManager.play('success');
                 showDonationScreen();
             } else {
-                AudioManager.playError();
                 errorMessage.style.display = 'block';
                 passwordInput.value = '';
                 passwordInput.focus();
+                SoundManager.play('error');
                 setTimeout(() => {
                     errorMessage.style.display = 'none';
                 }, 3000);
             }
         }
 
-        // ==================== DONATION SCREEN ====================
+        // ==================== DONATION SCREEN FUNCTIONS ====================
+        function copyAccountNumber() {
+            SoundManager.play('click');
+            const accountNumber = document.getElementById('copy-account-number');
+            const copyBtn = document.querySelector('.copy-btn');
+            const text = accountNumber.textContent.replace(/\s/g, '');
+            
+            // Create a temporary textarea element
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-999999px';
+            textarea.style.top = '-999999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    // Show success state
+                    accountNumber.classList.add('copied');
+                    copyBtn.classList.add('copied');
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Berhasil Disalin!';
+                    
+                    // Create copy indicator
+                    const indicator = document.createElement('div');
+                    indicator.className = 'copy-indicator';
+                    indicator.innerHTML = '<i class="fas fa-check"></i>';
+                    accountNumber.parentElement.appendChild(indicator);
+                    
+                    SoundManager.play('success');
+                    
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        accountNumber.classList.remove('copied');
+                        copyBtn.classList.remove('copied');
+                        copyBtn.innerHTML = '<i class="far fa-copy"></i> Salin Nomor Rekening';
+                        if (indicator.parentElement) {
+                            indicator.parentElement.removeChild(indicator);
+                        }
+                    }, 2000);
+                    
+                    // Fallback: Copy to clipboard API
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(text).catch(err => {
+                            console.log('Clipboard API failed:', err);
+                        });
+                    }
+                } else {
+                    throw new Error('execCommand failed');
+                }
+            } catch (err) {
+                console.log('Copy failed:', err);
+                
+                // Fallback method for mobile devices
+                try {
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            accountNumber.classList.add('copied');
+                            copyBtn.classList.add('copied');
+                            copyBtn.innerHTML = '<i class="fas fa-check"></i> Berhasil Disalin!';
+                            SoundManager.play('success');
+                            
+                            setTimeout(() => {
+                                accountNumber.classList.remove('copied');
+                                copyBtn.classList.remove('copied');
+                                copyBtn.innerHTML = '<i class="far fa-copy"></i> Salin Nomor Rekening';
+                            }, 2000);
+                        }).catch(fallbackErr => {
+                            console.log('Clipboard API fallback failed:', fallbackErr);
+                            showCopyFallback(text);
+                        });
+                    } else {
+                        showCopyFallback(text);
+                    }
+                } catch (fallbackErr) {
+                    console.log('All copy methods failed:', fallbackErr);
+                    showCopyFallback(text);
+                }
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+        
+        function showCopyFallback(text) {
+            SoundManager.play('error');
+            const accountNumber = document.getElementById('copy-account-number');
+            const copyBtn = document.querySelector('.copy-btn');
+            
+            // Show fallback message
+            accountNumber.style.background = '#ffebee';
+            accountNumber.style.color = '#c62828';
+            copyBtn.style.background = '#c62828';
+            copyBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Gagal, salin manual';
+            
+            // Select text for manual copy
+            accountNumber.style.userSelect = 'text';
+            const range = document.createRange();
+            range.selectNodeContents(accountNumber);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            setTimeout(() => {
+                accountNumber.style.background = '';
+                accountNumber.style.color = '';
+                accountNumber.style.userSelect = 'all';
+                copyBtn.style.background = '';
+                copyBtn.innerHTML = '<i class="far fa-copy"></i> Salin Nomor Rekening';
+                selection.removeAllRanges();
+            }, 3000);
+        }
+
         function showDonationScreen() {
-            AudioManager.playNotification();
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('donation-screen').style.display = 'flex';
             document.getElementById('main-app').style.display = 'none';
             
-            // Copy account number functionality
+            // Play positive notification
+            SoundManager.play('positive');
+            
+            // Setup copy functionality
             const accountNumber = document.getElementById('copy-account-number');
-            accountNumber.addEventListener('click', function() {
-                AudioManager.playClick();
-                const text = this.textContent.replace(/\s/g, '');
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = this.textContent;
-                    this.innerHTML = '<i class="fas fa-check"></i> Berhasil Disalin!';
-                    this.style.background = '#34a853';
-                    this.style.color = 'white';
-                    
-                    setTimeout(() => {
-                        this.textContent = originalText;
-                        this.style.background = '';
-                        this.style.color = '';
-                    }, 2000);
-                });
-            });
+            const copyBtn = document.querySelector('.copy-btn');
+            
+            // Remove any existing event listeners
+            accountNumber.onclick = null;
+            copyBtn.onclick = null;
+            
+            // Add new event listeners
+            accountNumber.addEventListener('click', copyAccountNumber);
+            copyBtn.addEventListener('click', copyAccountNumber);
             
             document.getElementById('enter-app-btn').addEventListener('click', enterApp);
         }
 
         function enterApp() {
-            AudioManager.playSuccess();
+            SoundManager.play('click');
             document.getElementById('donation-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             initializeApp();
@@ -2144,7 +2367,8 @@
 
         // ==================== APP INITIALIZATION ====================
         function initializeApp() {
-            AudioManager.playNotification();
+            // Play notification sound
+            SoundManager.play('notification');
             
             // Set today's date as default
             const today = new Date().toISOString().split('T')[0];
@@ -2218,28 +2442,27 @@
 
         // ==================== TRANSACTION FUNCTIONS ====================
         function addTransaction() {
-            AudioManager.playAdd();
-            
+            SoundManager.play('click');
             const date = document.getElementById('transaction-date').value;
             const description = document.getElementById('transaction-desc').value.trim();
             const income = parseCurrency(document.getElementById('transaction-income').value);
             const expense = parseCurrency(document.getElementById('transaction-expense').value);
             
             if (!date) {
-                AudioManager.playError();
                 alert('Harap pilih tanggal transaksi!');
+                SoundManager.play('error');
                 return;
             }
             
             if (!description) {
-                AudioManager.playError();
                 alert('Harap isi keterangan transaksi!');
+                SoundManager.play('error');
                 return;
             }
             
             if (income === 0 && expense === 0) {
-                AudioManager.playError();
                 alert('Harap isi pendapatan atau pengeluaran!');
+                SoundManager.play('error');
                 return;
             }
             
@@ -2258,22 +2481,21 @@
             renderChart();
             clearForm();
             
-            if (currentPage === 'history-page') {
-                displayGroupedTransactions();
-            }
+            // PERBAIKAN: Selalu update riwayat transaksi terlepas dari halaman aktif
+            displayGroupedTransactions();
             
             // Update filter options
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
             
-            // Show success message
-            AudioManager.playSuccess();
+            // Show success message and play sound
             alert('Transaksi berhasil ditambahkan!');
+            SoundManager.play('success');
         }
 
         function clearForm() {
-            AudioManager.playClick();
+            SoundManager.play('click');
             document.getElementById('transaction-date').valueAsDate = new Date();
             document.getElementById('transaction-desc').value = '';
             document.getElementById('transaction-income').value = '';
@@ -2281,25 +2503,29 @@
         }
 
         function deleteTransaction(id) {
-            AudioManager.playDelete();
+            SoundManager.play('click');
             if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+                SoundManager.play('notification');
                 transactions = transactions.filter(t => t.id !== id);
                 saveData();
                 updateBalance();
                 renderChart();
                 
-                if (currentPage === 'history-page') {
-                    displayGroupedTransactions();
-                }
-                
-                AudioManager.playSuccess();
+                // PERBAIKAN: Selalu update riwayat transaksi
+                displayGroupedTransactions();
+                SoundManager.play('success');
+            } else {
+                SoundManager.play('error');
             }
         }
 
         function editTransaction(id) {
-            AudioManager.playClick();
+            SoundManager.play('click');
             const transaction = transactions.find(t => t.id === id);
-            if (!transaction) return;
+            if (!transaction) {
+                SoundManager.play('error');
+                return;
+            }
             
             document.getElementById('transaction-date').value = transaction.date;
             document.getElementById('transaction-desc').value = transaction.description;
@@ -2318,11 +2544,12 @@
             });
             currentPage = 'transactions-page';
             
+            // Play success sound
+            SoundManager.play('positive');
+            
             // Remove the transaction being edited
             transactions = transactions.filter(t => t.id !== id);
             saveData();
-            
-            AudioManager.playNotification();
         }
 
         function saveData() {
@@ -2352,6 +2579,11 @@
                 hour: '2-digit', 
                 minute: '2-digit' 
             });
+            
+            // Play notification sound on significant balance update
+            if (transactions.length > 0) {
+                SoundManager.play('notification');
+            }
         }
 
         // ==================== CHART FUNCTIONS ====================
@@ -2472,6 +2704,9 @@
                     }
                 }
             });
+            
+            // Play preview sound when chart is rendered
+            SoundManager.play('preview');
         }
 
         // ==================== FILTER FUNCTIONS ====================
@@ -2595,10 +2830,11 @@
             });
             
             displayGroupedTransactions();
+            SoundManager.play('notification');
         }
 
         function applyFilter() {
-            AudioManager.playClick();
+            SoundManager.play('click');
             currentFilters.year = document.getElementById('filter-year').value;
             currentFilters.month = document.getElementById('filter-month').value;
             currentFilters.day = document.getElementById('filter-day').value;
@@ -2607,7 +2843,7 @@
         }
 
         function resetFilters() {
-            AudioManager.playClick();
+            SoundManager.play('click');
             document.getElementById('filter-year').value = '';
             document.getElementById('filter-month').value = '';
             document.getElementById('filter-day').value = '';
@@ -2616,13 +2852,14 @@
             filteredTransactions = [...transactions];
             
             displayGroupedTransactions();
+            SoundManager.play('positive');
         }
 
         // ==================== DISPLAY FUNCTIONS ====================
         function displayGroupedTransactions() {
             const container = document.getElementById('transactions-container');
             
-            if (filteredTransactions.length === 0) {
+            if (transactions.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-chart-bar"></i>
@@ -2633,9 +2870,12 @@
                 return;
             }
             
+            // Gunakan filteredTransactions untuk tampilan
+            const transactionsToDisplay = filteredTransactions.length > 0 ? filteredTransactions : transactions;
+            
             // Group by month
             const grouped = {};
-            filteredTransactions.forEach(transaction => {
+            transactionsToDisplay.forEach(transaction => {
                 const monthKey = transaction.date.substring(0, 7); // YYYY-MM
                 if (!grouped[monthKey]) {
                     grouped[monthKey] = [];
@@ -2725,14 +2965,15 @@
             });
             
             container.innerHTML = html;
+            SoundManager.play('preview');
         }
 
         // ==================== EXPORT FUNCTIONS ====================
         function exportToCSV() {
-            AudioManager.playClick();
+            SoundManager.play('click');
             if (transactions.length === 0) {
-                AudioManager.playError();
                 alert('Tidak ada data transaksi untuk diexport!');
+                SoundManager.play('error');
                 return;
             }
             
@@ -2756,15 +2997,14 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
-            AudioManager.playSuccess();
+            SoundManager.play('success');
         }
 
         function exportToExcel() {
-            AudioManager.playClick();
+            SoundManager.play('click');
             if (transactions.length === 0) {
-                AudioManager.playError();
                 alert('Tidak ada data transaksi untuk diexport!');
+                SoundManager.play('error');
                 return;
             }
             
@@ -2872,11 +3112,11 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
-            AudioManager.playSuccess();
+            SoundManager.play('positive');
         }
 
         function exportToExcelGrouped() {
+            SoundManager.play('click');
             exportToExcel(); // Same function for now
         }
 
@@ -2885,8 +3125,7 @@
             const tabs = document.querySelectorAll('.nav-tab');
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    AudioManager.playSwipe();
-                    
+                    SoundManager.play('click');
                     // Update active tab
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
@@ -2900,22 +3139,29 @@
                     
                     currentPage = pageId;
                     
-                    // If going to history page, refresh the transactions display
+                    // PERBAIKAN: Selalu refresh riwayat transaksi saat pindah ke halaman riwayat
                     if (pageId === 'history-page') {
                         displayGroupedTransactions();
                     }
+                    
+                    // Play notification sound
+                    SoundManager.play('notification');
                 });
             });
         }
 
         // ==================== LOGOUT ====================
         function logout() {
-            AudioManager.playClick();
+            SoundManager.play('click');
             if (confirm('Apakah Anda yakin ingin keluar?')) {
                 localStorage.removeItem('cashTrackLoggedIn');
+                SoundManager.play('notification');
                 showLoginScreen();
                 document.getElementById('password-input').value = '';
+            } else {
+                SoundManager.play('error');
             }
         }
     </script>
 </body>
+</html>
