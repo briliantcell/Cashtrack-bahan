@@ -335,7 +335,6 @@
 
         .header-actions { display: flex; gap: 15px; align-items: center; }
 
-        /* Toggle switch - mobile friendly */
         .toggle-switch {
             position: relative;
             display: inline-block;
@@ -686,6 +685,7 @@
 
         .month-totals span { display: flex; align-items: center; gap: 5px; }
 
+        /* ============ TRANSACTIONS TABLE - LEBIH LEBAR ============ */
         .transactions-table {
             width: 100%;
             border-collapse: collapse;
@@ -694,19 +694,26 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        .transactions-table table { width: 100%; min-width: 600px; }
+        .transactions-table table {
+            width: 100%;
+            min-width: 720px;
+            table-layout: auto;
+        }
 
         .transactions-table th,
         .transactions-table td {
-            padding: 12px 8px;
+            padding: 14px 16px;
             text-align: left;
             border-bottom: 1px solid #f0f0f0;
             color: var(--dark);
             white-space: nowrap;
+            font-size: 14px;
         }
 
         [data-theme="dark"] .transactions-table th,
-        [data-theme="dark"] .transactions-table td { border-color: #444; }
+        [data-theme="dark"] .transactions-table td {
+            border-color: #444;
+        }
 
         .transactions-table th {
             background: #f8f9fa;
@@ -715,14 +722,56 @@
             font-size: 0.9rem;
         }
 
-        [data-theme="dark"] .transactions-table th { background: #2d2d2d; }
-        .transactions-table tr:last-child td { border-bottom: none; }
-        .transactions-table tr:hover { background: #f8f9fa; }
-        [data-theme="dark"] .transactions-table tr:hover { background: #2d2d2d; }
+        [data-theme="dark"] .transactions-table th {
+            background: #2d2d2d;
+        }
 
-        .income-amount { color: var(--secondary); font-weight: 500; }
-        .expense-amount { color: var(--danger); font-weight: 500; }
-        .action-buttons { display: flex; gap: 5px; flex-wrap: nowrap; }
+        .transactions-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .transactions-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        [data-theme="dark"] .transactions-table tr:hover {
+            background: #2d2d2d;
+        }
+
+        /* Kolom Tanggal - sempit & center */
+        .transactions-table th.col-tanggal,
+        .transactions-table td.col-tanggal {
+            width: 70px;
+            min-width: 70px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Kolom Keterangan - lebar & wrap */
+        .transactions-table th.col-ket,
+        .transactions-table td.col-ket {
+            min-width: 220px;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        /* Kolom angka - rata kanan */
+        .transactions-table th.col-angka,
+        .transactions-table td.col-angka {
+            min-width: 140px;
+            text-align: right;
+        }
+
+        /* Kolom aksi */
+        .transactions-table th.col-aksi,
+        .transactions-table td.col-aksi {
+            min-width: 180px;
+        }
+
+        .income-amount { color: var(--secondary); font-weight: 600; }
+        .expense-amount { color: var(--danger); font-weight: 600; }
+        .action-buttons { display: flex; gap: 6px; flex-wrap: nowrap; }
 
         .chart-container {
             background: var(--light);
@@ -773,7 +822,20 @@
             .form-grid, .filter-grid { grid-template-columns: 1fr; gap: 12px; }
             .filter-buttons, .form-buttons { flex-direction: row; justify-content: stretch; }
             .btn { flex: 1; min-width: 0; padding: 12px 15px; font-size: 13px; }
-            .transactions-table th, .transactions-table td { padding: 10px 6px; font-size: 13px; }
+            .transactions-table th,
+            .transactions-table td {
+                padding: 12px 12px;
+                font-size: 13px;
+            }
+            .transactions-table table { min-width: 680px; }
+            .transactions-table th.col-tanggal,
+            .transactions-table td.col-tanggal { width: 56px; min-width: 56px; }
+            .transactions-table th.col-ket,
+            .transactions-table td.col-ket { min-width: 180px; }
+            .transactions-table th.col-angka,
+            .transactions-table td.col-angka { min-width: 120px; }
+            .transactions-table th.col-aksi,
+            .transactions-table td.col-aksi { min-width: 160px; }
             .balance-amount { font-size: 1.8rem; }
             .balance-details { flex-direction: column; gap: 8px; }
             .export-section { flex-direction: column; align-items: stretch; gap: 8px; }
@@ -1339,6 +1401,10 @@
             const d = new Date(dateString + 'T00:00:00');
             return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
         }
+        // Ambil angka tanggal saja (01-31) dari string YYYY-MM-DD
+        function formatDayOnly(dateString) {
+            return dateString.substring(8, 10);
+        }
         function getMonthName(monthNumber) {
             const m = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
             return m[parseInt(monthNumber) - 1] || monthNumber;
@@ -1347,7 +1413,6 @@
         function getYearFromDate(d) { return d.substring(0, 4); }
 
         // ==================== GET FILTERED DATA FOR EXPORT ====================
-        // Menentukan data mana yang akan diexport berdasarkan filter aktif
         function getExportData() {
             const { year, month, day } = currentFilters;
             const hasFilter = year || month || day;
@@ -1356,8 +1421,8 @@
             }
             let label = '';
             if (year) label += year;
-            if (month) label += ' - ' + getMonthName(month);
-            if (day) label += ' - ' + day;
+            if (month) label += (year ? ' - ' : '') + getMonthName(month);
+            if (day) label += ' - Tanggal ' + day;
             const data = transactions.filter(t => {
                 if (year && getYearFromDate(t.date) !== year) return false;
                 if (month && getMonthFromDate(t.date) !== month) return false;
@@ -1666,11 +1731,11 @@
                 let rows = '';
                 mTx.forEach(t => {
                     rows += `<tr>
-                        <td>${formatDate(t.date)}</td>
-                        <td>${t.description}</td>
-                        <td class="income-amount">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                        <td class="expense-amount">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                        <td><div class="action-buttons">
+                        <td class="col-tanggal">${formatDayOnly(t.date)}</td>
+                        <td class="col-ket">${t.description}</td>
+                        <td class="col-angka income-amount">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                        <td class="col-angka expense-amount">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                        <td class="col-aksi"><div class="action-buttons">
                             <button class="btn btn-secondary" onclick="editTransaction(${t.id})"><i class="fas fa-edit"></i> Edit</button>
                             <button class="btn btn-danger" onclick="deleteTransaction(${t.id})"><i class="fas fa-trash"></i> Hapus</button>
                         </div></td>
@@ -1687,7 +1752,13 @@
                     </div>
                     <div class="transactions-table">
                         <table>
-                            <thead><tr><th>Tanggal</th><th>Keterangan</th><th>Pendapatan</th><th>Pengeluaran</th><th>Aksi</th></tr></thead>
+                            <thead><tr>
+                                <th class="col-tanggal">Tgl</th>
+                                <th class="col-ket">Keterangan</th>
+                                <th class="col-angka">Pendapatan</th>
+                                <th class="col-angka">Pengeluaran</th>
+                                <th class="col-aksi">Aksi</th>
+                            </tr></thead>
                             <tbody>${rows}</tbody>
                         </table>
                     </div>
@@ -1696,7 +1767,7 @@
             container.innerHTML = html;
         }
 
-        // ==================== EXPORT CSV (mengikuti filter) ====================
+        // ==================== EXPORT CSV ====================
         function exportToCSV() {
             SoundManager.play('click');
             const { data, label } = getExportData();
@@ -1713,7 +1784,7 @@
                 '',
                 headers.join(','),
                 ...data.map(t => [
-                    t.date,
+                    formatDayOnly(t.date),
                     `"${t.description.replace(/"/g, '""')}"`,
                     t.income,
                     t.expense
@@ -1729,7 +1800,7 @@
             SoundManager.play('success');
         }
 
-        // ==================== EXPORT EXCEL (mengikuti filter, dengan jarak) ====================
+        // ==================== EXPORT EXCEL ====================
         function exportToExcel() {
             SoundManager.play('click');
             const { data, label } = getExportData();
@@ -1739,7 +1810,6 @@
                 return;
             }
 
-            // Group data per bulan
             const grouped = {};
             data.forEach(t => {
                 const k = t.date.substring(0, 7);
@@ -1748,7 +1818,6 @@
             });
             const sortedMonths = Object.keys(grouped).sort().reverse();
 
-            // Styling dengan JARAK yang lebih lega
             const cell = 'padding:12px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;';
             const header = 'padding:14px 20px;border:1px solid #cfcfcf;background:#1a73e8;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
             const monthHdr = 'padding:18px 20px;border:1px solid #cfcfcf;background:#0d47a1;color:#ffffff;font-family:Arial,sans-serif;font-size:13pt;font-weight:bold;vertical-align:middle;';
@@ -1759,6 +1828,8 @@
             const balStyle = 'padding:14px 20px;border:1px solid #cfcfcf;background:#e8f0fe;color:#1a73e8;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;';
             const spacer = 'height:28px;border:none;background:transparent;';
             const infoRow = 'padding:10px 20px;background:#f8f9fa;color:#555;font-size:10pt;text-align:center;border:1px solid #cfcfcf;';
+            const dateCell = 'padding:12px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;font-weight:bold;color:#1a73e8;width:60px;vertical-align:middle;';
+            const dateHeader = 'padding:14px 20px;border:1px solid #cfcfcf;background:#1a73e8;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;width:60px;';
 
             let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
 <head><meta charset="UTF-8">
@@ -1799,7 +1870,7 @@
                     <td colspan="4" style="${monthHdr}">📅 ${mn} ${year}</td>
                 </tr>
                 <tr>
-                    <td style="${header}">Tanggal</td>
+                    <td style="${dateHeader}">Tgl</td>
                     <td style="${header}">Keterangan</td>
                     <td style="${header}">Pendapatan</td>
                     <td style="${header}">Pengeluaran</td>
@@ -1807,7 +1878,7 @@
 
                 mTx.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
                     html += `<tr>
-                        <td style="${cell}">${formatDate(t.date)}</td>
+                        <td style="${dateCell}">${formatDayOnly(t.date)}</td>
                         <td style="${cell}">${t.description}</td>
                         <td style="${incStyle}">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
                         <td style="${expStyle}">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
