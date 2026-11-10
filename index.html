@@ -7,16 +7,11 @@
     <meta name="description" content="Aplikasi manajemen keuangan pribadi">
     <meta name="theme-color" content="#1a73e8">
     
-    <!-- Font Awesome 6.4.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
     
-    <!-- Tambahkan Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
@@ -71,7 +66,6 @@
             padding-bottom: var(--safe-area-bottom);
         }
 
-        /* Install Prompt */
         .install-prompt {
             background: var(--primary);
             color: white;
@@ -85,6 +79,7 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             padding-top: calc(15px + var(--safe-area-top));
+            font-size: 14px;
         }
 
         .install-btn {
@@ -98,7 +93,6 @@
             font-weight: 600;
         }
 
-        /* Splash Screen */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -160,21 +154,10 @@
             padding: 0 20px;
         }
 
-        .splash-footer p {
-            margin-bottom: 5px;
-        }
+        .splash-footer p { margin-bottom: 5px; }
+        .splash-footer .version { font-weight: 600; margin-bottom: 8px; }
+        .splash-footer .copyright { font-size: 0.8rem; opacity: 0.8; }
 
-        .splash-footer .version {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .splash-footer .copyright {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
-        /* Login Screen */
         #login-screen {
             min-height: 100vh;
             display: none;
@@ -202,10 +185,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .app-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        .app-header { text-align: center; margin-bottom: 30px; }
 
         .app-icon {
             width: 80px;
@@ -222,9 +202,7 @@
             font-weight: bold;
         }
 
-        [data-theme="dark"] .app-icon {
-            background: #2d2d2d;
-        }
+        [data-theme="dark"] .app-icon { background: #2d2d2d; }
 
         .app-title {
             font-size: 2rem;
@@ -234,16 +212,9 @@
             text-align: center;
         }
 
-        .app-subtitle {
-            color: var(--gray);
-            font-size: 1rem;
-            text-align: center;
-        }
+        .app-subtitle { color: var(--gray); font-size: 1rem; text-align: center; }
 
-        .input-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
+        .input-container { position: relative; margin-bottom: 20px; }
 
         .password-input {
             width: 100%;
@@ -256,10 +227,7 @@
             color: var(--dark);
         }
 
-        [data-theme="dark"] .password-input {
-            border-color: #444;
-            background: #2d2d2d;
-        }
+        [data-theme="dark"] .password-input { border-color: #444; background: #2d2d2d; }
 
         .password-input:focus {
             outline: none;
@@ -299,9 +267,7 @@
             touch-action: manipulation;
         }
 
-        .login-btn:hover {
-            background: var(--primary-dark);
-        }
+        .login-btn:hover { background: var(--primary-dark); }
 
         .error-message {
             color: var(--danger);
@@ -311,7 +277,6 @@
             display: none;
         }
 
-        /* Sound Control */
         .sound-control {
             position: fixed;
             bottom: 80px;
@@ -330,16 +295,9 @@
             transition: var(--transition);
         }
 
-        .sound-control:hover {
-            transform: scale(1.1);
-            background: var(--primary-dark);
-        }
+        .sound-control:hover { transform: scale(1.1); background: var(--primary-dark); }
+        .sound-control.muted { background: var(--gray); }
 
-        .sound-control.muted {
-            background: var(--gray);
-        }
-
-        /* Main App */
         #main-app {
             display: none;
             min-height: 100vh;
@@ -361,11 +319,7 @@
             padding-top: calc(15px + var(--safe-area-top));
         }
 
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .header-title { display: flex; align-items: center; gap: 10px; }
 
         .header-icon {
             width: 40px;
@@ -380,29 +334,45 @@
             font-weight: bold;
         }
 
-        .header-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
+        .header-actions { display: flex; gap: 15px; align-items: center; }
 
-        /* Modern Toggle Switch */
+        /* ================================================================
+           TOGGLE SWITCH - FIXED UNTUK MOBILE
+           PERBAIKAN UTAMA:
+           - TIDAK pakai pointer-events:none pada slider (ini yang bikin HP gagal)
+           - input diposisikan absolute full-size di atas (transparan)
+           - label membungkus semuanya, tap di mana saja akan toggle
+           - z-index dipastikan benar
+           ================================================================ */
         .toggle-switch {
             position: relative;
             display: inline-block;
             width: 60px;
             height: 30px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            flex-shrink: 0;
+            cursor: pointer;
+            vertical-align: middle;
         }
 
-        .toggle-switch input {
+        .toggle-switch input[type="checkbox"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
             opacity: 0;
-            width: 0;
-            height: 0;
+            cursor: pointer;
+            z-index: 5;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .toggle-slider {
             position: absolute;
-            cursor: pointer;
             top: 0;
             left: 0;
             right: 0;
@@ -411,6 +381,8 @@
             transition: var(--transition);
             border-radius: 34px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1;
+            /* PENTING: JANGAN pointer-events:none */
         }
 
         .toggle-slider:before {
@@ -424,36 +396,36 @@
             transition: var(--transition);
             border-radius: 50%;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        input:checked + .toggle-slider {
-            background: linear-gradient(145deg, #4a90e2, #1c5bb5);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(30px);
-            background: linear-gradient(145deg, #ffffff, #f5f5f5);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
-        input:checked + .toggle-slider:after {
-            content: "☀️";
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 12px;
-            color: white;
+            z-index: 2;
         }
 
         .toggle-slider:after {
             content: "🌙";
             position: absolute;
-            right: 10px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 12px;
             color: #666;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: linear-gradient(145deg, #4a90e2, #1c5bb5);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:after {
+            content: "☀️";
+            right: auto;
+            left: 8px;
+            color: white;
         }
 
         .icon-btn {
@@ -473,16 +445,9 @@
             touch-action: manipulation;
         }
 
-        .icon-btn:hover {
-            background: #f1f3f4;
-            color: var(--dark);
-        }
+        .icon-btn:hover { background: #f1f3f4; color: var(--dark); }
+        [data-theme="dark"] .icon-btn:hover { background: #3d3d3d; }
 
-        [data-theme="dark"] .icon-btn:hover {
-            background: #3d3d3d;
-        }
-
-        /* Navigation Tabs untuk Mobile */
         .nav-tabs {
             display: flex;
             background: var(--light);
@@ -492,10 +457,7 @@
             z-index: 99;
         }
 
-        [data-theme="dark"] .nav-tabs {
-            background: #1a1a1a;
-            border-bottom-color: #444;
-        }
+        [data-theme="dark"] .nav-tabs { background: #1a1a1a; border-bottom-color: #444; }
 
         .nav-tab {
             flex: 1;
@@ -518,11 +480,8 @@
             background: rgba(26, 115, 232, 0.05);
         }
 
-        [data-theme="dark"] .nav-tab.active {
-            background: rgba(74, 144, 226, 0.1);
-        }
+        [data-theme="dark"] .nav-tab.active { background: rgba(74, 144, 226, 0.1); }
 
-        /* App Content */
         .app-content {
             padding: 20px;
             max-width: 1200px;
@@ -531,15 +490,8 @@
             min-height: calc(100vh - 140px);
         }
 
-        /* Page Sections */
-        .page-section {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .page-section.active {
-            display: block;
-        }
+        .page-section { display: none; animation: fadeIn 0.3s ease; }
+        .page-section.active { display: block; }
 
         .app-footer {
             position: fixed;
@@ -556,12 +508,8 @@
             padding-bottom: calc(12px + var(--safe-area-bottom));
         }
 
-        [data-theme="dark"] .app-footer {
-            border-top-color: #444;
-            background: #1a1a1a;
-        }
+        [data-theme="dark"] .app-footer { border-top-color: #444; background: #1a1a1a; }
 
-        /* Balance Card */
         .balance-card {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
@@ -571,11 +519,7 @@
             box-shadow: var(--shadow);
         }
 
-        .balance-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
+        .balance-label { font-size: 1rem; opacity: 0.9; margin-bottom: 5px; }
 
         .balance-amount {
             font-size: 2.2rem;
@@ -600,7 +544,6 @@
             color: var(--dark);
         }
 
-        /* Form Transaksi */
         .transaction-form {
             background: var(--light);
             padding: 20px;
@@ -628,21 +571,10 @@
             -webkit-appearance: none;
         }
 
-        [data-theme="dark"] .form-input {
-            border-color: #444;
-            background: #2d2d2d;
-        }
+        [data-theme="dark"] .form-input { border-color: #444; background: #2d2d2d; }
+        .form-input:focus { outline: none; border-color: var(--primary); }
 
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .form-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .form-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
 
         .btn {
             padding: 12px 20px;
@@ -662,61 +594,23 @@
             min-width: 120px;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
 
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
+        .btn-secondary { background: #f1f3f4; color: var(--dark); }
+        .btn-secondary:hover { background: #e8eaed; }
+        [data-theme="dark"] .btn-secondary { background: #2d2d2d; color: var(--dark); }
+        [data-theme="dark"] .btn-secondary:hover { background: #3d3d3d; }
 
-        .btn-secondary {
-            background: #f1f3f4;
-            color: var(--dark);
-        }
+        .btn-success { background: var(--secondary); color: white; }
+        .btn-success:hover { background: #2d924a; }
 
-        .btn-secondary:hover {
-            background: #e8eaed;
-        }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { background: #d33426; }
 
-        [data-theme="dark"] .btn-secondary {
-            background: #2d2d2d;
-            color: var(--dark);
-        }
+        .btn-warning { background: var(--warning); color: var(--dark); }
+        .btn-warning:hover { background: #e0ac03; }
 
-        [data-theme="dark"] .btn-secondary:hover {
-            background: #3d3d3d;
-        }
-
-        .btn-success {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #2d924a;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #d33426;
-        }
-
-        .btn-warning {
-            background: var(--warning);
-            color: var(--dark);
-        }
-
-        .btn-warning:hover {
-            background: #e0ac03;
-        }
-
-        /* Filter Section */
         .filter-section {
             background: var(--light);
             padding: 20px;
@@ -750,15 +644,8 @@
             -webkit-appearance: none;
         }
 
-        [data-theme="dark"] .filter-select {
-            border-color: #444;
-            background: #2d2d2d;
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
+        [data-theme="dark"] .filter-select { border-color: #444; background: #2d2d2d; }
+        .filter-select:focus { outline: none; border-color: var(--primary); }
 
         .filter-buttons {
             display: flex;
@@ -767,10 +654,7 @@
             flex-wrap: wrap;
         }
 
-        /* Transactions Page */
-        .transactions-page {
-            padding-bottom: 20px;
-        }
+        .transactions-page { padding-bottom: 20px; }
 
         .export-section {
             display: flex;
@@ -780,7 +664,6 @@
             flex-wrap: wrap;
         }
 
-        /* Month Group untuk Riwayat Transaksi */
         .month-group {
             margin-bottom: 30px;
             border-radius: var(--border-radius);
@@ -809,13 +692,8 @@
             flex-wrap: wrap;
         }
 
-        .month-totals span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+        .month-totals span { display: flex; align-items: center; gap: 5px; }
 
-        /* Transactions Table */
         .transactions-table {
             width: 100%;
             border-collapse: collapse;
@@ -824,10 +702,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        .transactions-table table {
-            width: 100%;
-            min-width: 600px;
-        }
+        .transactions-table table { width: 100%; min-width: 600px; }
 
         .transactions-table th,
         .transactions-table td {
@@ -839,9 +714,7 @@
         }
 
         [data-theme="dark"] .transactions-table th,
-        [data-theme="dark"] .transactions-table td {
-            border-color: #444;
-        }
+        [data-theme="dark"] .transactions-table td { border-color: #444; }
 
         .transactions-table th {
             background: #f8f9fa;
@@ -850,39 +723,15 @@
             font-size: 0.9rem;
         }
 
-        [data-theme="dark"] .transactions-table th {
-            background: #2d2d2d;
-        }
+        [data-theme="dark"] .transactions-table th { background: #2d2d2d; }
+        .transactions-table tr:last-child td { border-bottom: none; }
+        .transactions-table tr:hover { background: #f8f9fa; }
+        [data-theme="dark"] .transactions-table tr:hover { background: #2d2d2d; }
 
-        .transactions-table tr:last-child td {
-            border-bottom: none;
-        }
+        .income-amount { color: var(--secondary); font-weight: 500; }
+        .expense-amount { color: var(--danger); font-weight: 500; }
+        .action-buttons { display: flex; gap: 5px; flex-wrap: nowrap; }
 
-        .transactions-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        [data-theme="dark"] .transactions-table tr:hover {
-            background: #2d2d2d;
-        }
-
-        .income-amount {
-            color: var(--secondary);
-            font-weight: 500;
-        }
-
-        .expense-amount {
-            color: var(--danger);
-            font-weight: 500;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-            flex-wrap: nowrap;
-        }
-
-        /* Chart Container */
         .chart-container {
             background: var(--light);
             padding: 20px;
@@ -909,339 +758,103 @@
             text-align: center;
         }
 
-        [data-theme="dark"] .chart-placeholder {
-            background: #2d2d2d;
-        }
+        [data-theme="dark"] .chart-placeholder { background: #2d2d2d; }
+        #finance-chart { width: 100% !important; height: 100% !important; }
 
-        #finance-chart {
-            width: 100% !important;
-            height: 100% !important;
-        }
-
-        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
             color: var(--gray);
         }
 
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
+        .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
+        .empty-state p { font-size: 1.1rem; margin-bottom: 10px; }
 
-        .empty-state p {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
+        .transactions-table::-webkit-scrollbar { height: 6px; }
+        .transactions-table::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
+        .transactions-table::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
+        .transactions-table::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        /* Scrollbar Styling */
-        .transactions-table::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .transactions-table::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 3px;
-        }
-
-        .transactions-table::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 3px;
-        }
-
-        .transactions-table::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .login-container {
-                padding: 20px;
-                margin: 10px;
-                max-width: 100%;
-            }
-            
-            .app-content {
-                padding: 15px;
-            }
-            
-            .form-grid,
-            .filter-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            .filter-buttons,
-            .form-buttons {
-                flex-direction: row;
-                justify-content: stretch;
-            }
-            
-            .btn {
-                flex: 1;
-                min-width: 0;
-                padding: 12px 15px;
-                font-size: 13px;
-            }
-            
-            .transactions-table th,
-            .transactions-table td {
-                padding: 10px 6px;
-                font-size: 13px;
-            }
-            
-            .balance-amount {
-                font-size: 1.8rem;
-            }
-            
-            .balance-details {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .export-section {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            
-            .app-footer {
-                padding: 10px 15px;
-                font-size: 0.75rem;
-                line-height: 1.4;
-            }
-            
-            .month-header {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
-                padding: 12px 15px;
-            }
-            
-            .month-totals {
-                flex-direction: column;
-                gap: 8px;
-                width: 100%;
-            }
-            
-            .month-totals span {
-                justify-content: space-between;
-                width: 100%;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .action-buttons .btn {
-                padding: 8px 10px;
-                font-size: 12px;
-                min-width: 0;
-            }
-            
-            .chart-container {
-                padding: 15px;
-            }
-            
-            .chart-wrapper {
-                height: 250px;
-            }
-            
-            .chart-placeholder {
-                font-size: 14px;
-                padding: 15px;
-            }
-            
-            .nav-tab {
-                padding: 12px;
-                font-size: 14px;
-            }
-            
-            .section-title {
-                font-size: 1.2rem;
-                margin: 20px 0 12px;
-            }
-            
-            .toggle-switch {
-                width: 50px;
-                height: 25px;
-            }
-            
-            .toggle-slider:before {
-                height: 19px;
-                width: 19px;
-            }
-            
-            input:checked + .toggle-slider:before {
-                transform: translateX(25px);
-            }
-            
-            .sound-control {
-                bottom: 70px;
-                right: 15px;
-                width: 45px;
-                height: 45px;
-            }
+            .login-container { padding: 20px; margin: 10px; max-width: 100%; }
+            .app-content { padding: 15px; }
+            .form-grid, .filter-grid { grid-template-columns: 1fr; gap: 12px; }
+            .filter-buttons, .form-buttons { flex-direction: row; justify-content: stretch; }
+            .btn { flex: 1; min-width: 0; padding: 12px 15px; font-size: 13px; }
+            .transactions-table th, .transactions-table td { padding: 10px 6px; font-size: 13px; }
+            .balance-amount { font-size: 1.8rem; }
+            .balance-details { flex-direction: column; gap: 8px; }
+            .export-section { flex-direction: column; align-items: stretch; gap: 8px; }
+            .app-footer { padding: 10px 15px; font-size: 0.75rem; line-height: 1.4; }
+            .month-header { flex-direction: column; gap: 10px; align-items: flex-start; padding: 12px 15px; }
+            .month-totals { flex-direction: column; gap: 8px; width: 100%; }
+            .month-totals span { justify-content: space-between; width: 100%; }
+            .action-buttons { flex-direction: column; gap: 5px; }
+            .action-buttons .btn { padding: 8px 10px; font-size: 12px; min-width: 0; }
+            .chart-container { padding: 15px; }
+            .chart-wrapper { height: 250px; }
+            .chart-placeholder { font-size: 14px; padding: 15px; }
+            .nav-tab { padding: 12px; font-size: 14px; }
+            .section-title { font-size: 1.2rem; margin: 20px 0 12px; }
+            .sound-control { bottom: 70px; right: 15px; width: 45px; height: 45px; }
         }
 
         @media (max-width: 480px) {
-            .splash-title {
-                font-size: 2rem;
-            }
-            
-            .splash-logo {
-                width: 100px;
-                height: 100px;
-                font-size: 30px;
-            }
-            
-            .app-title {
-                font-size: 1.5rem;
-            }
-            
-            .app-footer {
-                padding: 8px 12px;
-                font-size: 0.7rem;
-            }
-            
-            .balance-card {
-                padding: 20px;
-            }
-            
-            .balance-amount {
-                font-size: 1.6rem;
-            }
-            
-            .balance-details {
-                font-size: 0.8rem;
-            }
-            
-            .transaction-form,
-            .filter-section,
-            .chart-container {
-                padding: 15px;
-            }
-            
-            .form-input,
-            .filter-select {
-                padding: 10px;
-                font-size: 15px;
-            }
-            
-            .btn {
-                padding: 10px 12px;
-                font-size: 12px;
-            }
-            
-            .month-header {
-                font-size: 1rem;
-                padding: 10px 12px;
-            }
-            
-            .month-totals {
-                font-size: 0.8rem;
-            }
-            
-            .chart-wrapper {
-                height: 200px;
-            }
-            
-            .chart-placeholder {
-                font-size: 13px;
-            }
-            
-            .main-header {
-                padding: 12px 15px;
-            }
-            
-            .header-title h2 {
-                font-size: 1.2rem;
-            }
-            
-            .icon-btn {
-                width: 40px;
-                height: 40px;
-                padding: 6px;
-                font-size: 18px;
-            }
-            
-            .header-actions {
-                gap: 10px;
-            }
-            
-            .nav-tab {
-                padding: 10px;
-                font-size: 13px;
-            }
+            .splash-title { font-size: 2rem; }
+            .splash-logo { width: 100px; height: 100px; font-size: 30px; }
+            .app-title { font-size: 1.5rem; }
+            .app-footer { padding: 8px 12px; font-size: 0.7rem; }
+            .balance-card { padding: 20px; }
+            .balance-amount { font-size: 1.6rem; }
+            .balance-details { font-size: 0.8rem; }
+            .transaction-form, .filter-section, .chart-container { padding: 15px; }
+            .form-input, .filter-select { padding: 10px; font-size: 15px; }
+            .btn { padding: 10px 12px; font-size: 12px; }
+            .month-header { font-size: 1rem; padding: 10px 12px; }
+            .month-totals { font-size: 0.8rem; }
+            .chart-wrapper { height: 200px; }
+            .chart-placeholder { font-size: 13px; }
+            .main-header { padding: 12px 15px; }
+            .header-title h2 { font-size: 1.2rem; }
+            .icon-btn { width: 40px; height: 40px; padding: 6px; font-size: 18px; }
+            .header-actions { gap: 10px; }
+            .nav-tab { padding: 10px; font-size: 13px; }
         }
 
         @media (max-width: 360px) {
-            .balance-amount {
-                font-size: 1.4rem;
-            }
-            
-            .btn {
-                padding: 8px 10px;
-                font-size: 11px;
-            }
-            
-            .chart-wrapper {
-                height: 180px;
-            }
-            
-            .nav-tab {
-                padding: 8px;
-                font-size: 12px;
-            }
+            .balance-amount { font-size: 1.4rem; }
+            .btn { padding: 8px 10px; font-size: 11px; }
+            .chart-wrapper { height: 180px; }
+            .nav-tab { padding: 8px; font-size: 12px; }
         }
 
-        /* Touch Device Optimization */
         @media (hover: none) and (pointer: coarse) {
-            .btn:hover,
-            .icon-btn:hover,
-            .nav-tab:hover {
-                transform: none;
-            }
-            
-            .btn:active,
-            .icon-btn:active,
-            .nav-tab:active {
+            .btn:hover, .icon-btn:hover, .nav-tab:hover { transform: none; }
+            .btn:active, .icon-btn:active, .nav-tab:active {
                 transform: scale(0.95);
                 transition: transform 0.1s ease;
             }
-            
-            .login-btn:active {
-                transform: scale(0.98);
-            }
+            .login-btn:active { transform: scale(0.98); }
         }
     </style>
 </head>
 <body>
-    <!-- Sound Control -->
     <div class="sound-control" id="sound-control" title="Mute/Unmute Sound">
         <i class="fas fa-volume-up" id="sound-icon"></i>
     </div>
 
-    <!-- Install Prompt -->
     <div class="install-prompt" id="install-prompt">
-        Pasang CashTrack di perangkat Anda
+        <span id="install-text">Pasang CashTrack di perangkat Anda</span>
         <button class="install-btn" id="install-btn">Pasang</button>
         <button class="install-btn" onclick="hideInstallPrompt()" style="background: transparent; color: white;">
             <i class="fas fa-times"></i>
         </button>
     </div>
 
-    <!-- Splash Screen -->
     <div id="splash-screen">
-        <div class="splash-logo">
-            <i class="fas fa-chart-line"></i>
-        </div>
+        <div class="splash-logo"><i class="fas fa-chart-line"></i></div>
         <h1 class="splash-title">CashTrack</h1>
         <p class="splash-subtitle">Kelola Keuangan dengan Mudah</p>
-        
         <div class="splash-footer">
             <p class="version">CashTrack Version 2.0</p>
             <p>Karya Muhammad Abid – Buatan Indonesia</p>
@@ -1249,43 +862,32 @@
         </div>
     </div>
 
-    <!-- Login Screen -->
     <div id="login-screen">
         <div class="login-container">
             <div class="app-header">
-                <div class="app-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
+                <div class="app-icon"><i class="fas fa-chart-line"></i></div>
                 <h1 class="app-title">CashTrack</h1>
                 <p class="app-subtitle">Masukkan kata sandi untuk melanjutkan</p>
             </div>
-
             <div class="input-container">
                 <input type="password" class="password-input" placeholder="Masukkan password" id="password-input">
                 <button type="button" class="toggle-password" id="toggle-password">
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
-
-            <button class="login-btn" onclick="checkPassword()">
-                <span>Lanjutkan</span>
-            </button>
-
+            <button class="login-btn" onclick="checkPassword()"><span>Lanjutkan</span></button>
             <div class="error-message" id="password-error">Password salah!</div>
         </div>
     </div>
 
-    <!-- Main Application -->
     <div id="main-app">
         <header class="main-header">
             <div class="header-title">
-                <div class="header-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
+                <div class="header-icon"><i class="fas fa-chart-line"></i></div>
                 <h2>CashTrack</h2>
             </div>
             <div class="header-actions">
-                <label class="toggle-switch" title="Mode Gelap/Terang">
+                <label class="toggle-switch" for="dark-mode-toggle" title="Mode Gelap/Terang">
                     <input type="checkbox" id="dark-mode-toggle">
                     <span class="toggle-slider"></span>
                 </label>
@@ -1295,7 +897,6 @@
             </div>
         </header>
 
-        <!-- Navigation Tabs untuk Mobile -->
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="transactions-page">
                 <i class="fas fa-plus-circle"></i> Tambah Transaksi
@@ -1306,9 +907,7 @@
         </div>
 
         <div class="app-content">
-            <!-- Page 1: Tambah Transaksi -->
             <div id="transactions-page" class="page-section active">
-                <!-- Balance Card -->
                 <div class="balance-card">
                     <div class="balance-label">Saldo Saat Ini</div>
                     <div class="balance-amount" id="balance-amount">Rp 0</div>
@@ -1318,7 +917,6 @@
                     </div>
                 </div>
 
-                <!-- Transaction Form -->
                 <h3 class="section-title">Tambah Transaksi Baru</h3>
                 <div class="transaction-form">
                     <div class="form-grid">
@@ -1337,7 +935,6 @@
                     </div>
                 </div>
 
-                <!-- Chart -->
                 <h3 class="section-title">Grafik Keuangan</h3>
                 <div class="chart-container">
                     <div class="chart-wrapper">
@@ -1349,10 +946,8 @@
                 </div>
             </div>
 
-            <!-- Page 2: Riwayat Transaksi -->
             <div id="history-page" class="page-section">
                 <div class="transactions-page">
-                    <!-- Filter Section -->
                     <h3 class="section-title">Filter Transaksi</h3>
                     <div class="filter-section">
                         <div class="filter-grid">
@@ -1385,7 +980,6 @@
                         </div>
                     </div>
 
-                    <!-- Export Buttons -->
                     <div class="export-section">
                         <button class="btn btn-success" onclick="exportToCSV()">
                             <i class="fas fa-file-csv"></i> Export CSV
@@ -1398,71 +992,105 @@
                         </button>
                     </div>
 
-                    <!-- Transactions Container -->
                     <h3 class="section-title">Riwayat Transaksi</h3>
-                    <div id="transactions-container">
-                        <!-- Transaksi akan ditampilkan berkelompok per bulan di sini -->
-                    </div>
+                    <div id="transactions-container"></div>
                 </div>
             </div>
         </div>
 
-        <!-- App Footer -->
         <footer class="app-footer">
             © 2027 CashTrack — Buatan Anak Indonesia <i class="fas fa-flag"></i>
         </footer>
     </div>
 
     <script>
-        // ==================== SOUND MANAGER ====================
+        // ================================================================
+        // SOUND MANAGER - KEMBALI KE AUDIO OBJECT (seperti aslinya)
+        // File audio di folder yang sama. Jika tidak ada, tidak error.
+        // ================================================================
         const SoundManager = {
             isMuted: false,
             sounds: {},
+            unlocked: false,
             
             init() {
-                this.sounds = {
-                    click: new Audio('mixkit-positive-notification-951.wav'),
-                    success: new Audio('mixkit-positive-notification-951.wav'),
-                    error: new Audio('new-notification-011-364050.mp3'),
-                    notification: new Audio('notification-center-443093.mp3')
+                // Buat Audio object - akan silent jika file tidak ada (tidak crash)
+                const soundFiles = {
+                    click: 'mixkit-positive-notification-951.wav',
+                    success: 'mixkit-positive-notification-951.wav',
+                    error: 'new-notification-011-364050.mp3',
+                    notification: 'notification-center-443093.mp3'
                 };
                 
-                Object.values(this.sounds).forEach(sound => {
-                    sound.volume = 0.5;
+                Object.keys(soundFiles).forEach(key => {
+                    try {
+                        const audio = new Audio(soundFiles[key]);
+                        audio.volume = 0.5;
+                        audio.preload = 'auto';
+                        // Abaikan error load (file mungkin tidak ada)
+                        audio.addEventListener('error', () => {}, { once: true });
+                        this.sounds[key] = audio;
+                    } catch(e) {
+                        this.sounds[key] = null;
+                    }
                 });
                 
-                const savedSettings = localStorage.getItem('cashTrackSoundSettings');
-                if (savedSettings) {
-                    try {
-                        const settings = JSON.parse(savedSettings);
+                // Load setting mute
+                try {
+                    const saved = localStorage.getItem('cashTrackSoundSettings');
+                    if (saved) {
+                        const settings = JSON.parse(saved);
                         this.isMuted = settings.isMuted || false;
-                    } catch(e) {}
-                }
+                    }
+                } catch(e) {}
                 
-                this.updateSoundIcon();
+                this.updateIcon();
             },
             
-            play(soundName) {
+            // Unlock audio pada interaksi pertama user (wajib untuk mobile)
+            unlock() {
+                if (this.unlocked) return;
+                this.unlocked = true;
+                Object.values(this.sounds).forEach(sound => {
+                    if (!sound) return;
+                    try {
+                        // Play muted untuk unlock
+                        const originalVolume = sound.volume;
+                        sound.volume = 0;
+                        const p = sound.play();
+                        if (p && p.catch) p.catch(() => {});
+                        setTimeout(() => {
+                            try { sound.pause(); sound.currentTime = 0; } catch(e) {}
+                            sound.volume = originalVolume;
+                        }, 100);
+                    } catch(e) {}
+                });
+            },
+            
+            play(name) {
                 if (this.isMuted) return;
-                const sound = this.sounds[soundName];
-                if (sound) {
+                const sound = this.sounds[name];
+                if (!sound) return;
+                try {
                     sound.currentTime = 0;
-                    sound.play().catch(() => {});
-                }
+                    const p = sound.play();
+                    if (p && p.catch) p.catch(() => {});
+                } catch(e) {}
             },
             
             toggleMute() {
                 this.isMuted = !this.isMuted;
-                this.updateSoundIcon();
+                this.updateIcon();
                 if (!this.isMuted) this.play('click');
-                localStorage.setItem('cashTrackSoundSettings', JSON.stringify({ isMuted: this.isMuted }));
+                try {
+                    localStorage.setItem('cashTrackSoundSettings', JSON.stringify({ isMuted: this.isMuted }));
+                } catch(e) {}
             },
             
-            updateSoundIcon() {
+            updateIcon() {
                 const soundIcon = document.getElementById('sound-icon');
                 const soundControl = document.getElementById('sound-control');
                 if (!soundIcon || !soundControl) return;
-                
                 if (this.isMuted) {
                     soundIcon.className = 'fas fa-volume-mute';
                     soundControl.classList.add('muted');
@@ -1473,10 +1101,11 @@
             }
         };
 
-        // ==================== STORAGE MANAGER ====================
+        // ================================================================
+        // STORAGE MANAGER
+        // ================================================================
         const StorageManager = {
             STORAGE_KEY: 'cashTrackData_v2',
-            
             save(data) {
                 try {
                     const saveData = {
@@ -1492,7 +1121,6 @@
                     return false;
                 }
             },
-            
             load() {
                 try {
                     const data = localStorage.getItem(this.STORAGE_KEY);
@@ -1510,17 +1138,50 @@
             }
         };
 
-        // ==================== APP STATE ====================
+        // ================================================================
+        // APP STATE
+        // ================================================================
         let transactions = [];
         let appSettings = {};
         const correctPassword = "free palestina";
-        let deferredPrompt;
+        let deferredPrompt = null;
         let financeChart = null;
         let filteredTransactions = [];
         let currentFilters = { year: '', month: '', day: '' };
         let currentPage = 'transactions-page';
 
-        // ==================== INITIALIZATION ====================
+        // ================================================================
+        // THEME HELPER - DIPANGGIL DI MANA SAJA
+        // ================================================================
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.body.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                document.body.removeAttribute('data-theme');
+            }
+            appSettings.theme = theme;
+            const toggle = document.getElementById('dark-mode-toggle');
+            if (toggle) toggle.checked = (theme === 'dark');
+        }
+
+        // Apply theme IMMEDIATELY sebelum paint (hindari flash)
+        (function() {
+            try {
+                const saved = localStorage.getItem('cashTrackData_v2');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.settings && parsed.settings.theme === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                    }
+                }
+            } catch(e) {}
+        })();
+
+        // ================================================================
+        // DOM READY
+        // ================================================================
         document.addEventListener('DOMContentLoaded', function() {
             SoundManager.init();
             
@@ -1528,16 +1189,29 @@
             transactions = savedData.transactions || [];
             appSettings = savedData.settings || {};
             
-            // Set today's date
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transaction-date').value = today;
+            // Set today
+            const dateEl = document.getElementById('transaction-date');
+            if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
             
-            // Setup sound control
-            document.getElementById('sound-control').addEventListener('click', () => {
-                SoundManager.toggleMute();
-            });
+            // Sound control
+            const soundCtrl = document.getElementById('sound-control');
+            if (soundCtrl) {
+                soundCtrl.addEventListener('click', () => {
+                    SoundManager.unlock();
+                    SoundManager.toggleMute();
+                });
+            }
             
-            // Enter key support for form inputs
+            // Unlock audio pada interaksi pertama di mana saja
+            const unlockAudio = () => {
+                SoundManager.unlock();
+                document.removeEventListener('touchstart', unlockAudio);
+                document.removeEventListener('click', unlockAudio);
+            };
+            document.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
+            document.addEventListener('click', unlockAudio, { once: true });
+            
+            // Enter key pada form
             ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
@@ -1550,118 +1224,123 @@
             // Password toggle
             const togglePassword = document.getElementById('toggle-password');
             const passwordInput = document.getElementById('password-input');
-            
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-                SoundManager.play('click');
-            });
-            
-            passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') checkPassword();
-            });
-            
-            // ==================== FIXED DARK MODE ====================
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const currentTheme = appSettings.theme || 'light';
-            
-            // Apply initial theme safely
-            function applyTheme(theme) {
-                if (theme === 'dark') {
-                    document.body.setAttribute('data-theme', 'dark');
-                    if (darkModeToggle) darkModeToggle.checked = true;
-                } else {
-                    document.body.removeAttribute('data-theme');
-                    if (darkModeToggle) darkModeToggle.checked = false;
-                }
-                appSettings.theme = theme;
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                    SoundManager.play('click');
+                });
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') checkPassword();
+                });
             }
             
-            // Apply theme after a small delay to ensure DOM is ready
-            setTimeout(() => {
-                applyTheme(currentTheme);
-            }, 50);
+            // ============ DARK MODE TOGGLE ============
+            // Gunakan event 'change' pada input checkbox - paling reliable
+            // Karena input sekarang full-size di atas label, tap di mana saja akan trigger
+            const darkToggle = document.getElementById('dark-mode-toggle');
+            if (darkToggle) {
+                // Set initial state
+                darkToggle.checked = (appSettings.theme === 'dark');
+                
+                darkToggle.addEventListener('change', function() {
+                    const newTheme = this.checked ? 'dark' : 'light';
+                    applyTheme(newTheme);
+                    SoundManager.play('click');
+                    StorageManager.save({ transactions, settings: appSettings });
+                    
+                    if (transactions.length > 0) {
+                        setTimeout(renderChart, 60);
+                    }
+                    if (currentPage === 'history-page') {
+                        setTimeout(displayGroupedTransactions, 60);
+                    }
+                });
+            }
             
-            // Dark mode toggle handler - FIXED
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('change', function() {
-                    try {
-                        SoundManager.play('click');
-                        const newTheme = this.checked ? 'dark' : 'light';
-                        applyTheme(newTheme);
-                        
-                        // Save settings
-                        StorageManager.save({ transactions, settings: appSettings });
-                        
-                        // Re-render chart with new theme colors
-                        if (transactions.length > 0) {
-                            renderChart();
-                        }
-                        
-                        // Re-render history if on history page
-                        if (currentPage === 'history-page') {
-                            displayGroupedTransactions();
-                        }
-                    } catch(e) {
-                        console.error('Dark mode toggle error:', e);
-                        // Fallback: reset toggle
-                        this.checked = !this.checked;
+            // Apply theme yang tersimpan
+            applyTheme(appSettings.theme || 'light');
+        });
+
+        // ================================================================
+        // PWA INSTALL - EVENT BOUNDING DI DALAM DOMContentLoaded
+        // Bug sebelumnya: getElementById('install-btn') dijalankan sebelum DOM ready
+        // ================================================================
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setTimeout(showInstallPrompt, 2000);
+        });
+
+        // iOS detection untuk instruksi manual
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+        window.addEventListener('load', () => {
+            if (isIOS && !isStandalone) {
+                setTimeout(() => {
+                    const promptEl = document.getElementById('install-prompt');
+                    const textEl = document.getElementById('install-text');
+                    const btnEl = document.getElementById('install-btn');
+                    if (promptEl && textEl) {
+                        textEl.innerHTML = '📱 Tap <b>Share</b> → <b>Add to Home Screen</b>';
+                        if (btnEl) btnEl.style.display = 'none';
+                        promptEl.style.display = 'block';
+                    }
+                }, 4000);
+            }
+        });
+
+        function showInstallPrompt() {
+            const el = document.getElementById('install-prompt');
+            if (deferredPrompt && el && !isStandalone) {
+                el.style.display = 'block';
+            }
+        }
+
+        function hideInstallPrompt() {
+            const el = document.getElementById('install-prompt');
+            if (el) el.style.display = 'none';
+            SoundManager.play('click');
+        }
+
+        // Bind install button setelah DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const installBtn = document.getElementById('install-btn');
+            if (installBtn) {
+                installBtn.addEventListener('click', async () => {
+                    SoundManager.play('click');
+                    if (deferredPrompt) {
+                        try {
+                            deferredPrompt.prompt();
+                            const { outcome } = await deferredPrompt.userChoice;
+                            if (outcome === 'accepted') SoundManager.play('success');
+                        } catch(e) {}
+                        deferredPrompt = null;
+                        hideInstallPrompt();
                     }
                 });
             }
         });
 
-        // ==================== PWA ====================
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            setTimeout(() => {
-                showInstallPrompt();
-            }, 3000);
-        });
-
-        function showInstallPrompt() {
-            if (deferredPrompt) {
-                const installPrompt = document.getElementById('install-prompt');
-                if (installPrompt) installPrompt.style.display = 'block';
-            }
-        }
-
-        function hideInstallPrompt() {
-            const installPrompt = document.getElementById('install-prompt');
-            if (installPrompt) installPrompt.style.display = 'none';
-            SoundManager.play('click');
-        }
-
-        document.getElementById('install-btn').addEventListener('click', async () => {
-            SoundManager.play('click');
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    SoundManager.play('success');
-                }
-                deferredPrompt = null;
-                hideInstallPrompt();
-            }
-        });
-
-        // Service Worker Registration
+        // Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch(() => {});
             });
         }
 
-        // ==================== SPLASH SCREEN ====================
+        // ================================================================
+        // SPLASH
+        // ================================================================
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const splashScreen = document.getElementById('splash-screen');
-                splashScreen.style.opacity = '0';
+                const splash = document.getElementById('splash-screen');
+                if (!splash) return;
+                splash.style.opacity = '0';
                 setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    
+                    splash.style.display = 'none';
                     const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
                     if (isLoggedIn) {
                         enterApp();
@@ -1672,13 +1351,14 @@
             }, 2000);
         });
 
-        // ==================== LOGIN FUNCTIONS ====================
+        // ================================================================
+        // LOGIN
+        // ================================================================
         function showLoginScreen() {
             document.getElementById('login-screen').style.display = 'flex';
             document.getElementById('main-app').style.display = 'none';
-            
-            document.getElementById('transaction-date').valueAsDate = new Date();
-            
+            const dateEl = document.getElementById('transaction-date');
+            if (dateEl) dateEl.valueAsDate = new Date();
             setTimeout(() => {
                 const pwd = document.getElementById('password-input');
                 if (pwd) pwd.focus();
@@ -1689,7 +1369,6 @@
             SoundManager.play('click');
             const passwordInput = document.getElementById('password-input');
             const errorMessage = document.getElementById('password-error');
-            
             if (passwordInput.value === correctPassword) {
                 localStorage.setItem('cashTrackLoggedIn', 'true');
                 SoundManager.play('success');
@@ -1699,9 +1378,7 @@
                 passwordInput.value = '';
                 passwordInput.focus();
                 SoundManager.play('error');
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000);
+                setTimeout(() => { errorMessage.style.display = 'none'; }, 3000);
             }
         }
 
@@ -1711,10 +1388,9 @@
             initializeApp();
         }
 
-        // ==================== APP INITIALIZATION ====================
         function initializeApp() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transaction-date').value = today;
+            const dateEl = document.getElementById('transaction-date');
+            if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
             
             updateYearOptions();
             updateMonthOptions();
@@ -1729,7 +1405,9 @@
             setupNavigationTabs();
         }
 
-        // ==================== UTILITY FUNCTIONS ====================
+        // ================================================================
+        // UTILITIES
+        // ================================================================
         function formatCurrency(amount) {
             if (!amount && amount !== 0) return '-';
             return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -1738,8 +1416,7 @@
         function formatCurrencyInput(input) {
             let value = input.value.replace(/[^\d]/g, '');
             if (value) {
-                value = parseInt(value).toLocaleString('id-ID');
-                input.value = value;
+                input.value = parseInt(value).toLocaleString('id-ID');
             } else {
                 input.value = '';
             }
@@ -1752,30 +1429,20 @@
 
         function formatDate(dateString) {
             const date = new Date(dateString + 'T00:00:00');
-            return date.toLocaleDateString('id-ID', { 
-                day: '2-digit', 
-                month: 'long', 
-                year: 'numeric' 
-            });
+            return date.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
         }
 
         function getMonthName(monthNumber) {
-            const months = [
-                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-            ];
+            const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
             return months[parseInt(monthNumber) - 1] || monthNumber;
         }
 
-        function getMonthFromDate(dateString) {
-            return dateString.substring(5, 7);
-        }
+        function getMonthFromDate(d) { return d.substring(5, 7); }
+        function getYearFromDate(d) { return d.substring(0, 4); }
 
-        function getYearFromDate(dateString) {
-            return dateString.substring(0, 4);
-        }
-
-        // ==================== TRANSACTION FUNCTIONS ====================
+        // ================================================================
+        // TRANSACTIONS
+        // ================================================================
         function addTransaction() {
             SoundManager.play('click');
             const date = document.getElementById('transaction-date').value;
@@ -1783,45 +1450,23 @@
             const income = parseCurrency(document.getElementById('transaction-income').value);
             const expense = parseCurrency(document.getElementById('transaction-expense').value);
             
-            if (!date) {
-                alert('Harap pilih tanggal transaksi!');
-                SoundManager.play('error');
-                return;
-            }
+            if (!date) { alert('Harap pilih tanggal transaksi!'); SoundManager.play('error'); return; }
+            if (!description) { alert('Harap isi keterangan transaksi!'); SoundManager.play('error'); return; }
+            if (income === 0 && expense === 0) { alert('Harap isi pendapatan atau pengeluaran!'); SoundManager.play('error'); return; }
             
-            if (!description) {
-                alert('Harap isi keterangan transaksi!');
-                SoundManager.play('error');
-                return;
-            }
-            
-            if (income === 0 && expense === 0) {
-                alert('Harap isi pendapatan atau pengeluaran!');
-                SoundManager.play('error');
-                return;
-            }
-            
-            const transaction = {
+            transactions.unshift({
                 id: Date.now(),
-                date: date,
-                description: description,
-                income: income,
-                expense: expense,
+                date, description, income, expense,
                 timestamp: new Date().toISOString()
-            };
-            
-            transactions.unshift(transaction);
+            });
             saveData();
             updateBalance();
             renderChart();
             clearForm();
-            
             displayGroupedTransactions();
-            
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
-            
             alert('Transaksi berhasil ditambahkan!');
             SoundManager.play('success');
         }
@@ -1851,31 +1496,20 @@
 
         function editTransaction(id) {
             SoundManager.play('click');
-            const transaction = transactions.find(t => t.id === id);
-            if (!transaction) {
-                SoundManager.play('error');
-                return;
-            }
-            
-            document.getElementById('transaction-date').value = transaction.date;
-            document.getElementById('transaction-desc').value = transaction.description;
-            document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
-            document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
-            
+            const t = transactions.find(x => x.id === id);
+            if (!t) { SoundManager.play('error'); return; }
+            document.getElementById('transaction-date').value = t.date;
+            document.getElementById('transaction-desc').value = t.description;
+            document.getElementById('transaction-income').value = t.income ? t.income.toLocaleString('id-ID') : '';
+            document.getElementById('transaction-expense').value = t.expense ? t.expense.toLocaleString('id-ID') : '';
             document.getElementById('transactions-page').classList.add('active');
             document.getElementById('history-page').classList.remove('active');
             document.querySelectorAll('.nav-tab').forEach(tab => {
-                if (tab.dataset.page === 'transactions-page') {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
+                tab.classList.toggle('active', tab.dataset.page === 'transactions-page');
             });
             currentPage = 'transactions-page';
-            
             SoundManager.play('success');
-            
-            transactions = transactions.filter(t => t.id !== id);
+            transactions = transactions.filter(x => x.id !== id);
             saveData();
         }
 
@@ -1883,255 +1517,171 @@
             StorageManager.save({ transactions, settings: appSettings });
         }
 
-        // ==================== BALANCE FUNCTIONS ====================
+        // ================================================================
+        // BALANCE
+        // ================================================================
         function updateBalance() {
-            let totalIncome = 0;
-            let totalExpense = 0;
-            
-            transactions.forEach(transaction => {
-                totalIncome += transaction.income || 0;
-                totalExpense += transaction.expense || 0;
-            });
-            
-            const balance = totalIncome - totalExpense;
-            
-            document.getElementById('balance-amount').textContent = formatCurrency(balance);
+            let inc = 0, exp = 0;
+            transactions.forEach(t => { inc += t.income || 0; exp += t.expense || 0; });
+            document.getElementById('balance-amount').textContent = formatCurrency(inc - exp);
             document.getElementById('total-transactions').textContent = transactions.length;
-            
-            const now = new Date();
-            document.getElementById('last-update').textContent = now.toLocaleTimeString('id-ID', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
+            document.getElementById('last-update').textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
         }
 
-        // ==================== CHART FUNCTIONS ====================
+        // ================================================================
+        // CHART
+        // ================================================================
         function renderChart() {
             const canvas = document.getElementById('finance-chart');
             const placeholder = document.getElementById('chart-placeholder');
-            
             if (!canvas || !placeholder) return;
             
             if (transactions.length === 0) {
-                if (financeChart) {
-                    financeChart.destroy();
-                    financeChart = null;
-                }
+                if (financeChart) { financeChart.destroy(); financeChart = null; }
                 placeholder.style.display = 'flex';
                 return;
             }
-            
             placeholder.style.display = 'none';
             
-            const monthlyData = {};
-            transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7);
-                if (!monthlyData[monthKey]) {
-                    monthlyData[monthKey] = { income: 0, expense: 0 };
-                }
-                monthlyData[monthKey].income += transaction.income || 0;
-                monthlyData[monthKey].expense += transaction.expense || 0;
+            const monthly = {};
+            transactions.forEach(t => {
+                const k = t.date.substring(0, 7);
+                if (!monthly[k]) monthly[k] = { income: 0, expense: 0 };
+                monthly[k].income += t.income || 0;
+                monthly[k].expense += t.expense || 0;
             });
-            
-            const sortedMonths = Object.keys(monthlyData).sort();
-            const labels = sortedMonths.map(month => {
-                const [year, monthNum] = month.split('-');
-                return `${getMonthName(monthNum)} ${year}`;
+            const sorted = Object.keys(monthly).sort();
+            const labels = sorted.map(m => {
+                const [y, mo] = m.split('-');
+                return `${getMonthName(mo)} ${y}`;
             });
+            const incomeData = sorted.map(m => monthly[m].income);
+            const expenseData = sorted.map(m => monthly[m].expense);
             
-            const incomeData = sortedMonths.map(month => monthlyData[month].income);
-            const expenseData = sortedMonths.map(month => monthlyData[month].expense);
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+            const textColor = isDark ? '#e0e0e0' : '#202124';
             
-            const isDarkMode = document.body.getAttribute('data-theme') === 'dark';
-            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-            const textColor = isDarkMode ? '#e0e0e0' : '#202124';
-            
-            if (financeChart) {
-                financeChart.destroy();
-            }
+            if (financeChart) financeChart.destroy();
             
             try {
-                const ctx = canvas.getContext('2d');
-                financeChart = new Chart(ctx, {
+                financeChart = new Chart(canvas.getContext('2d'), {
                     type: 'bar',
                     data: {
-                        labels: labels,
+                        labels,
                         datasets: [
-                            {
-                                label: 'Pendapatan',
-                                data: incomeData,
-                                backgroundColor: '#34a853',
-                                borderColor: '#2d924a',
-                                borderWidth: 1
-                            },
-                            {
-                                label: 'Pengeluaran',
-                                data: expenseData,
-                                backgroundColor: '#ea4335',
-                                borderColor: '#d33426',
-                                borderWidth: 1
-                            }
+                            { label: 'Pendapatan', data: incomeData, backgroundColor: '#34a853', borderColor: '#2d924a', borderWidth: 1 },
+                            { label: 'Pengeluaran', data: expenseData, backgroundColor: '#ea4335', borderColor: '#d33426', borderWidth: 1 }
                         ]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                labels: { color: textColor }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.dataset.label || '';
-                                        if (label) label += ': ';
-                                        label += formatCurrency(context.raw);
-                                        return label;
-                                    }
-                                }
-                            }
+                            legend: { labels: { color: textColor } },
+                            tooltip: { callbacks: { label: c => (c.dataset.label || '') + ': ' + formatCurrency(c.raw) } }
                         },
                         scales: {
-                            x: {
-                                grid: { color: gridColor },
-                                ticks: { color: textColor }
-                            },
+                            x: { grid: { color: gridColor }, ticks: { color: textColor } },
                             y: {
                                 beginAtZero: true,
                                 grid: { color: gridColor },
                                 ticks: {
                                     color: textColor,
-                                    callback: function(value) {
-                                        if (value >= 1000000) return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
-                                        if (value >= 1000) return 'Rp' + (value / 1000).toFixed(0) + 'rb';
-                                        return 'Rp' + value;
+                                    callback: v => {
+                                        if (v >= 1000000) return 'Rp' + (v/1000000).toFixed(1) + 'Jt';
+                                        if (v >= 1000) return 'Rp' + (v/1000).toFixed(0) + 'rb';
+                                        return 'Rp' + v;
                                     }
                                 }
                             }
                         }
                     }
                 });
-            } catch(e) {
-                console.error('Chart render error:', e);
-            }
+            } catch(e) { console.error('Chart error:', e); }
         }
 
-        // ==================== FILTER FUNCTIONS ====================
+        // ================================================================
+        // FILTERS
+        // ================================================================
         function updateYearOptions() {
-            const yearSelect = document.getElementById('filter-year');
-            if (!yearSelect) return;
-            
+            const sel = document.getElementById('filter-year');
+            if (!sel) return;
             const years = new Set();
-            transactions.forEach(transaction => {
-                years.add(getYearFromDate(transaction.date));
+            transactions.forEach(t => years.add(getYearFromDate(t.date)));
+            const cy = new Date().getFullYear();
+            years.add(cy.toString());
+            years.add((cy + 1).toString());
+            const sorted = Array.from(years).sort((a,b) => b - a);
+            sel.innerHTML = '<option value="">Semua Tahun</option>';
+            sorted.forEach(y => {
+                const o = document.createElement('option');
+                o.value = y; o.textContent = y;
+                sel.appendChild(o);
             });
-            
-            const currentYear = new Date().getFullYear();
-            years.add(currentYear.toString());
-            years.add((currentYear + 1).toString());
-            
-            const sortedYears = Array.from(years).sort((a, b) => b - a);
-            
-            yearSelect.innerHTML = '<option value="">Semua Tahun</option>';
-            sortedYears.forEach(year => {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
-            });
-            
-            yearSelect.value = currentYear.toString();
-            currentFilters.year = currentYear.toString();
+            sel.value = cy.toString();
+            currentFilters.year = cy.toString();
         }
 
         function updateMonthOptions() {
-            const yearSelect = document.getElementById('filter-year');
-            const monthSelect = document.getElementById('filter-month');
-            if (!yearSelect || !monthSelect) return;
-            
-            const selectedYear = yearSelect.value;
+            const yearSel = document.getElementById('filter-year');
+            const monthSel = document.getElementById('filter-month');
+            if (!yearSel || !monthSel) return;
+            const sy = yearSel.value;
             const months = new Set();
-            
-            if (selectedYear) {
-                transactions.forEach(transaction => {
-                    if (getYearFromDate(transaction.date) === selectedYear) {
-                        months.add(getMonthFromDate(transaction.date));
-                    }
-                });
-            }
-            
-            monthSelect.innerHTML = '<option value="">Semua Bulan</option>';
+            if (sy) transactions.forEach(t => {
+                if (getYearFromDate(t.date) === sy) months.add(getMonthFromDate(t.date));
+            });
+            monthSel.innerHTML = '<option value="">Semua Bulan</option>';
             for (let i = 1; i <= 12; i++) {
-                const month = i.toString().padStart(2, '0');
-                if (!selectedYear || months.has(month)) {
-                    const option = document.createElement('option');
-                    option.value = month;
-                    option.textContent = getMonthName(month);
-                    monthSelect.appendChild(option);
+                const m = i.toString().padStart(2, '0');
+                if (!sy || months.has(m)) {
+                    const o = document.createElement('option');
+                    o.value = m; o.textContent = getMonthName(m);
+                    monthSel.appendChild(o);
                 }
             }
-            
-            const currentYear = new Date().getFullYear().toString();
-            if (selectedYear === currentYear) {
-                const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
-                monthSelect.value = currentMonth;
-                currentFilters.month = currentMonth;
+            if (sy === new Date().getFullYear().toString()) {
+                const cm = (new Date().getMonth() + 1).toString().padStart(2, '0');
+                monthSel.value = cm;
+                currentFilters.month = cm;
             }
         }
 
         function updateDayOptions() {
-            const yearSelect = document.getElementById('filter-year');
-            const monthSelect = document.getElementById('filter-month');
-            const daySelect = document.getElementById('filter-day');
-            if (!yearSelect || !monthSelect || !daySelect) return;
-            
-            const selectedYear = yearSelect.value;
-            const selectedMonth = monthSelect.value;
-            
+            const yearSel = document.getElementById('filter-year');
+            const monthSel = document.getElementById('filter-month');
+            const daySel = document.getElementById('filter-day');
+            if (!yearSel || !monthSel || !daySel) return;
+            const sy = yearSel.value, sm = monthSel.value;
             const days = new Set();
-            
-            if (selectedYear && selectedMonth) {
-                transactions.forEach(transaction => {
-                    const year = getYearFromDate(transaction.date);
-                    const month = getMonthFromDate(transaction.date);
-                    if (year === selectedYear && month === selectedMonth) {
-                        days.add(transaction.date.substring(8, 10));
-                    }
-                });
-            }
-            
-            daySelect.innerHTML = '<option value="">Semua Tanggal</option>';
-            if (selectedYear && selectedMonth) {
-                const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const day = i.toString().padStart(2, '0');
-                    if (days.has(day)) {
-                        const option = document.createElement('option');
-                        option.value = day;
-                        option.textContent = day;
-                        daySelect.appendChild(option);
+            if (sy && sm) transactions.forEach(t => {
+                if (getYearFromDate(t.date) === sy && getMonthFromDate(t.date) === sm) {
+                    days.add(t.date.substring(8, 10));
+                }
+            });
+            daySel.innerHTML = '<option value="">Semua Tanggal</option>';
+            if (sy && sm) {
+                const dim = new Date(sy, sm, 0).getDate();
+                for (let i = 1; i <= dim; i++) {
+                    const d = i.toString().padStart(2, '0');
+                    if (days.has(d)) {
+                        const o = document.createElement('option');
+                        o.value = d; o.textContent = d;
+                        daySel.appendChild(o);
                     }
                 }
             }
         }
 
         function filterTransactions() {
-            const year = currentFilters.year;
-            const month = currentFilters.month;
-            const day = currentFilters.day;
-            
-            filteredTransactions = transactions.filter(transaction => {
-                const transactionYear = getYearFromDate(transaction.date);
-                const transactionMonth = getMonthFromDate(transaction.date);
-                const transactionDay = transaction.date.substring(8, 10);
-                
-                if (year && transactionYear !== year) return false;
-                if (month && transactionMonth !== month) return false;
-                if (day && transactionDay !== day) return false;
-                
+            const { year, month, day } = currentFilters;
+            filteredTransactions = transactions.filter(t => {
+                if (year && getYearFromDate(t.date) !== year) return false;
+                if (month && getMonthFromDate(t.date) !== month) return false;
+                if (day && t.date.substring(8, 10) !== day) return false;
                 return true;
             });
-            
             displayGroupedTransactions();
         }
 
@@ -2140,7 +1690,6 @@
             currentFilters.year = document.getElementById('filter-year').value;
             currentFilters.month = document.getElementById('filter-month').value;
             currentFilters.day = document.getElementById('filter-day').value;
-            
             filterTransactions();
         }
 
@@ -2149,159 +1698,96 @@
             document.getElementById('filter-year').value = '';
             document.getElementById('filter-month').value = '';
             document.getElementById('filter-day').value = '';
-            
             currentFilters = { year: '', month: '', day: '' };
             filteredTransactions = [...transactions];
-            
             displayGroupedTransactions();
             SoundManager.play('success');
         }
 
-        // ==================== DISPLAY FUNCTIONS ====================
+        // ================================================================
+        // DISPLAY
+        // ================================================================
         function displayGroupedTransactions() {
             const container = document.getElementById('transactions-container');
             if (!container) return;
             
             if (transactions.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-chart-bar"></i>
-                        <p>Tidak ada transaksi ditemukan</p>
-                        <p>Tambahkan transaksi baru di halaman "Tambah Transaksi"</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-chart-bar"></i><p>Tidak ada transaksi ditemukan</p><p>Tambahkan transaksi baru di halaman "Tambah Transaksi"</p></div>`;
                 return;
             }
             
-            const transactionsToDisplay = filteredTransactions.length > 0 ? filteredTransactions : transactions;
-            
-            if (transactionsToDisplay.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-filter"></i>
-                        <p>Tidak ada transaksi sesuai filter</p>
-                        <p>Coba ubah atau reset filter Anda</p>
-                    </div>
-                `;
+            const toShow = filteredTransactions.length > 0 ? filteredTransactions : transactions;
+            if (toShow.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-filter"></i><p>Tidak ada transaksi sesuai filter</p><p>Coba ubah atau reset filter Anda</p></div>`;
                 return;
             }
             
             const grouped = {};
-            transactionsToDisplay.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7);
-                if (!grouped[monthKey]) {
-                    grouped[monthKey] = [];
-                }
-                grouped[monthKey].push(transaction);
+            toShow.forEach(t => {
+                const k = t.date.substring(0, 7);
+                if (!grouped[k]) grouped[k] = [];
+                grouped[k].push(t);
             });
-            
-            const sortedMonths = Object.keys(grouped).sort().reverse();
             
             let html = '';
-            
-            sortedMonths.forEach(monthKey => {
+            Object.keys(grouped).sort().reverse().forEach(monthKey => {
                 const [year, month] = monthKey.split('-');
                 const monthName = getMonthName(month);
-                const monthTransactions = grouped[monthKey];
+                const mTx = grouped[monthKey];
+                let mInc = 0, mExp = 0;
+                mTx.forEach(t => { mInc += t.income || 0; mExp += t.expense || 0; });
+                const mBal = mInc - mExp;
+                mTx.sort((a, b) => new Date(b.date) - new Date(a.date));
                 
-                let monthIncome = 0;
-                let monthExpense = 0;
-                
-                monthTransactions.forEach(t => {
-                    monthIncome += t.income || 0;
-                    monthExpense += t.expense || 0;
+                let rows = '';
+                mTx.forEach(t => {
+                    rows += `<tr>
+                        <td>${formatDate(t.date)}</td>
+                        <td>${t.description}</td>
+                        <td class="income-amount">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                        <td class="expense-amount">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                        <td><div class="action-buttons">
+                            <button class="btn btn-secondary" onclick="editTransaction(${t.id})"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn btn-danger" onclick="deleteTransaction(${t.id})"><i class="fas fa-trash"></i> Hapus</button>
+                        </div></td>
+                    </tr>`;
                 });
                 
-                const monthBalance = monthIncome - monthExpense;
-                
-                monthTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
-                
-                let transactionsHtml = `
+                html += `<div class="month-group">
+                    <div class="month-header">
+                        <span><i class="fas fa-calendar-alt"></i> ${monthName} ${year}</span>
+                        <div class="month-totals">
+                            <span><i class="fas fa-arrow-up" style="color:#34a853"></i> Pendapatan: <strong>${formatCurrency(mInc)}</strong></span>
+                            <span><i class="fas fa-arrow-down" style="color:#ea4335"></i> Pengeluaran: <strong>${formatCurrency(mExp)}</strong></span>
+                            <span><i class="fas fa-wallet"></i> Saldo: <strong style="color:${mBal>=0?'#34a853':'#ea4335'}">${formatCurrency(mBal)}</strong></span>
+                        </div>
+                    </div>
                     <div class="transactions-table">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Keterangan</th>
-                                    <th>Pendapatan</th>
-                                    <th>Pengeluaran</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                `;
-                
-                monthTransactions.forEach(transaction => {
-                    transactionsHtml += `
-                        <tr>
-                            <td>${formatDate(transaction.date)}</td>
-                            <td>${transaction.description}</td>
-                            <td class="income-amount">${transaction.income > 0 ? formatCurrency(transaction.income) : '-'}</td>
-                            <td class="expense-amount">${transaction.expense > 0 ? formatCurrency(transaction.expense) : '-'}</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </button>
-                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                });
-                
-                transactionsHtml += `
-                            </tbody>
+                            <thead><tr><th>Tanggal</th><th>Keterangan</th><th>Pendapatan</th><th>Pengeluaran</th><th>Aksi</th></tr></thead>
+                            <tbody>${rows}</tbody>
                         </table>
                     </div>
-                `;
-                
-                html += `
-                    <div class="month-group">
-                        <div class="month-header">
-                            <span><i class="fas fa-calendar-alt"></i> ${monthName} ${year}</span>
-                            <div class="month-totals">
-                                <span><i class="fas fa-arrow-up" style="color: #34a853"></i> Pendapatan: <strong>${formatCurrency(monthIncome)}</strong></span>
-                                <span><i class="fas fa-arrow-down" style="color: #ea4335"></i> Pengeluaran: <strong>${formatCurrency(monthExpense)}</strong></span>
-                                <span><i class="fas fa-wallet"></i> Saldo: <strong style="color: ${monthBalance >= 0 ? '#34a853' : '#ea4335'}">${formatCurrency(monthBalance)}</strong></span>
-                            </div>
-                        </div>
-                        ${transactionsHtml}
-                    </div>
-                `;
+                </div>`;
             });
-            
             container.innerHTML = html;
         }
 
-        // ==================== EXPORT FUNCTIONS ====================
+        // ================================================================
+        // EXPORT
+        // ================================================================
         function exportToCSV() {
             SoundManager.play('click');
-            if (transactions.length === 0) {
-                alert('Tidak ada data transaksi untuk diexport!');
-                SoundManager.play('error');
-                return;
-            }
-            
+            if (transactions.length === 0) { alert('Tidak ada data transaksi untuk diexport!'); SoundManager.play('error'); return; }
             const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
-            const csvContent = [
+            const csv = [
                 headers.join(','),
-                ...transactions.map(t => [
-                    t.date,
-                    `"${t.description.replace(/"/g, '""')}"`,
-                    t.income,
-                    t.expense
-                ].join(','))
+                ...transactions.map(t => [t.date, `"${t.description.replace(/"/g, '""')}"`, t.income, t.expense].join(','))
             ].join('\n');
-            
-            const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`);
-            link.style.visibility = 'hidden';
+            link.href = URL.createObjectURL(blob);
+            link.download = `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -2310,144 +1796,105 @@
 
         function exportToExcel() {
             SoundManager.play('click');
-            if (transactions.length === 0) {
-                alert('Tidak ada data transaksi untuk diexport!');
-                SoundManager.play('error');
-                return;
-            }
+            if (transactions.length === 0) { alert('Tidak ada data transaksi untuk diexport!'); SoundManager.play('error'); return; }
             
             const grouped = {};
-            transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7);
-                if (!grouped[monthKey]) {
-                    grouped[monthKey] = [];
-                }
-                grouped[monthKey].push(transaction);
+            transactions.forEach(t => {
+                const k = t.date.substring(0, 7);
+                if (!grouped[k]) grouped[k] = [];
+                grouped[k].push(t);
             });
-            
             const sortedMonths = Object.keys(grouped).sort().reverse();
             
-            let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
+            // Styling inline lengkap untuk Excel rapi
+            const cell = 'padding:8px 14px;border:1px solid #d0d0d0;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;';
+            const header = 'padding:10px 14px;border:1px solid #d0d0d0;background:#1a73e8;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
+            const monthHdr = 'padding:12px 14px;border:1px solid #d0d0d0;background:#0d47a1;color:#ffffff;font-family:Arial,sans-serif;font-size:12pt;font-weight:bold;vertical-align:middle;';
+            const inc = 'padding:8px 14px;border:1px solid #d0d0d0;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;';
+            const exp = 'padding:8px 14px;border:1px solid #d0d0d0;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;';
+            const totInc = 'padding:10px 14px;border:1px solid #d0d0d0;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;';
+            const totExp = 'padding:10px 14px;border:1px solid #d0d0d0;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;';
+            const bal = 'padding:10px 14px;border:1px solid #d0d0d0;background:#e8f0fe;color:#1a73e8;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;';
+            const spacer = 'height:22px;border:none;';
             
-            sortedMonths.forEach(monthKey => {
-                const [year, month] = monthKey.split('-');
-                const monthName = getMonthName(month);
-                const monthTransactions = grouped[monthKey];
+            let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="UTF-8">
+<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Laporan CashTrack</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+</head><body>
+<table style="border-collapse:collapse;font-family:Arial,sans-serif;">
+<tr><td colspan="4" style="padding:20px;background:#1a73e8;color:#ffffff;font-size:16pt;font-weight:bold;text-align:center;border:1px solid #d0d0d0;">💰 CashTrack - Laporan Keuangan</td></tr>
+<tr><td colspan="4" style="padding:10px 14px;background:#f8f9fa;color:#555;font-size:10pt;text-align:center;border:1px solid #d0d0d0;">Diekspor: ${new Date().toLocaleString('id-ID')}</td></tr>
+<tr><td colspan="4" style="${spacer}"></td></tr>`;
+            
+            let gInc = 0, gExp = 0;
+            sortedMonths.forEach(k => {
+                const [year, month] = k.split('-');
+                const mn = getMonthName(month);
+                const mTx = grouped[k];
+                let mi = 0, me = 0;
+                mTx.forEach(t => { mi += t.income || 0; me += t.expense || 0; });
+                gInc += mi; gExp += me;
+                const mb = mi - me;
                 
-                let monthIncome = 0;
-                let monthExpense = 0;
+                html += `<tr><td colspan="4" style="${monthHdr}">📅 ${mn} ${year}</td></tr>
+                <tr><td style="${header}">Tanggal</td><td style="${header}">Keterangan</td><td style="${header}">Pendapatan</td><td style="${header}">Pengeluaran</td></tr>`;
                 
-                monthTransactions.forEach(t => {
-                    monthIncome += t.income || 0;
-                    monthExpense += t.expense || 0;
+                mTx.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                    html += `<tr>
+                        <td style="${cell}">${formatDate(t.date)}</td>
+                        <td style="${cell}">${t.description}</td>
+                        <td style="${inc}">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                        <td style="${exp}">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                    </tr>`;
                 });
                 
-                const monthBalance = monthIncome - monthExpense;
-                
-                excelContent += `
-                    <tr style="background-color: #f0f0f0;">
-                        <td colspan="4"><strong>${monthName} ${year}</strong></td>
-                    </tr>
-                    <tr>
-                        <th>Tanggal</th>
-                        <th>Keterangan</th>
-                        <th>Pendapatan</th>
-                        <th>Pengeluaran</th>
-                    </tr>
-                `;
-                
-                monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
-                    excelContent += `
-                        <tr>
-                            <td>${formatDate(t.date)}</td>
-                            <td>${t.description}</td>
-                            <td>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                            <td>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                        </tr>
-                    `;
-                });
-                
-                excelContent += `
-                    <tr style="background-color: #e8f5e9;">
-                        <td colspan="2"><strong>Total ${monthName}</strong></td>
-                        <td><strong>${formatCurrency(monthIncome)}</strong></td>
-                        <td><strong>${formatCurrency(monthExpense)}</strong></td>
-                    </tr>
-                    <tr style="background-color: #fff3e0;">
-                        <td colspan="3"><strong>Saldo Bulan ${monthName}</strong></td>
-                        <td><strong style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</strong></td>
-                    </tr>
-                    <tr><td colspan="4" style="height: 20px;"></td></tr>
-                `;
+                html += `<tr><td colspan="2" style="${cell}"><b>Total ${mn}</b></td><td style="${totInc}">${formatCurrency(mi)}</td><td style="${totExp}">${formatCurrency(me)}</td></tr>
+                <tr><td colspan="3" style="${cell}"><b>Saldo ${mn}</b></td><td style="${bal}">${formatCurrency(mb)}</td></tr>
+                <tr><td colspan="4" style="${spacer}"></td></tr>`;
             });
             
-            let totalIncome = 0;
-            let totalExpense = 0;
-            transactions.forEach(t => {
-                totalIncome += t.income || 0;
-                totalExpense += t.expense || 0;
-            });
-            const totalBalance = totalIncome - totalExpense;
+            const gb = gInc - gExp;
+            html += `<tr><td colspan="4" style="padding:14px;background:#1a73e8;color:#ffffff;font-size:12pt;font-weight:bold;text-align:center;border:1px solid #d0d0d0;">📊 REKAP KESELURUHAN</td></tr>
+            <tr><td colspan="2" style="${cell}"><b>Total Pendapatan</b></td><td colspan="2" style="${totInc}">${formatCurrency(gInc)}</td></tr>
+            <tr><td colspan="2" style="${cell}"><b>Total Pengeluaran</b></td><td colspan="2" style="${totExp}">${formatCurrency(gExp)}</td></tr>
+            <tr><td colspan="2" style="${cell}"><b>SALDO AKHIR</b></td><td colspan="2" style="${bal}">${formatCurrency(gb)}</td></tr>
+            <tr><td colspan="4" style="${spacer}"></td></tr>
+            <tr><td colspan="4" style="padding:10px;text-align:center;color:#888;font-size:9pt;border:none;">© 2027 CashTrack — Buatan Anak Indonesia 🇮🇩</td></tr>
+            </table></body></html>`;
             
-            excelContent += `
-                <tr style="background-color: #e3f2fd;">
-                    <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
-                    <td><strong>${formatCurrency(totalIncome)}</strong></td>
-                    <td><strong>${formatCurrency(totalExpense)}</strong></td>
-                </tr>
-                <tr style="background-color: #fce4ec;">
-                    <td colspan="3"><strong>SALDO AKHIR</strong></td>
-                    <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
-                </tr>
-            </table>
-            
-            <style>
-                td { padding: 5px; }
-                th { background-color: #4CAF50; color: white; padding: 8px; }
-            </style>
-            `;
-            
-            const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+            const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
             const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `cash-track-report-${new Date().toISOString().split('T')[0]}.xls`);
-            link.style.visibility = 'hidden';
+            link.href = URL.createObjectURL(blob);
+            link.download = `cash-track-report-${new Date().toISOString().split('T')[0]}.xls`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             SoundManager.play('success');
         }
 
-        function exportToExcelGrouped() {
-            exportToExcel();
-        }
+        function exportToExcelGrouped() { exportToExcel(); }
 
-        // ==================== NAVIGATION ====================
+        // ================================================================
+        // NAVIGATION
+        // ================================================================
         function setupNavigationTabs() {
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => {
+            document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     SoundManager.play('click');
-                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-                    
                     const pageId = tab.dataset.page;
-                    document.querySelectorAll('.page-section').forEach(page => {
-                        page.classList.remove('active');
-                    });
+                    document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
                     document.getElementById(pageId).classList.add('active');
-                    
                     currentPage = pageId;
-                    
-                    if (pageId === 'history-page') {
-                        displayGroupedTransactions();
-                    }
+                    if (pageId === 'history-page') displayGroupedTransactions();
                 });
             });
         }
 
-        // ==================== LOGOUT ====================
+        // ================================================================
+        // LOGOUT
+        // ================================================================
         function logout() {
             SoundManager.play('click');
             if (confirm('Apakah Anda yakin ingin keluar?')) {
