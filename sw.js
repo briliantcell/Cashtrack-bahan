@@ -1,41 +1,59 @@
-const CACHE_VERSION = 'cashtrack-v2.1';
-const CACHE_FILES = [
-  './',
-  './index.html',
-  './manifest.json',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-  'https://cdn.jsdelivr.net/npm/chart.js'
+const CACHE_NAME = 'cashtrack-v2';
+const urlsToCache = [
+    './',
+    './index.html',
+    './manifest.json'
 ];
 
+// Install event
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_VERSION)
-      .then(cache => cache.addAll(CACHE_FILES).catch(() => {}))
-      .then(() => self.skipWaiting())
-  );
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(urlsToCache))
+            .catch(err => console.log('Cache addAll failed:', err))
+    );
+    self.skipWaiting();
 });
 
+// Activate event
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_VERSION).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
-  );
+    event.waitUntil(
+        caches.keys().then(keys => 
+            Promise.all(
+                keys.filter(key => key !== CACHE_NAME)
+                    .map(key => caches.delete(key))
+            )
+        )
+    );
+    self.clients.claim();
 });
 
+// Fetch event - Network first, fallback to cache
 self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request).then(response => {
-        if (response && response.status === 200) {
-          const clone = response.clone();
-          caches.open(CACHE_VERSION).then(cache => cache.put(event.request, clone));
-        }
-        return response;
-      }).catch(() => caches.match('./index.html'));
-    })
-  );
+    // Skip non-GET requests
+    if (event.request.method !== 'GET') return;
+    
+    // Skip external requests (fonts, CDN) - let them go to network
+    const url = new URL(event.request.url);
+    if (url.origin !== self.location.origin) {
+        return;
+    }
+    
+    event.respondWith(
+        fetch(event.request)
+            .then(response => {
+                // Cache successful responses
+                if (response && response.status === 200) {
+                    const responseClone = response.clone();
+                    caches.open(CACHE_NAME).then(cache => {
+                        cache.put(event.request, responseClone);
+                    });
+                }
+                return response;
+            })
+            .catch(() => {
+                // Fallback to cache if offline
+                return caches.match(event.request);
+            })
+    );
 });
