@@ -16,7 +16,7 @@
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
     
-    <!-- Tambahkan Chart.js -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
@@ -85,6 +85,7 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             padding-top: calc(15px + var(--safe-area-top));
+            font-size: 14px;
         }
 
         .install-btn {
@@ -386,18 +387,28 @@
             align-items: center;
         }
 
-        /* Modern Toggle Switch */
+        /* ============ MODERN TOGGLE SWITCH - MOBILE FIXED ============ */
         .toggle-switch {
             position: relative;
             display: inline-block;
             width: 60px;
             height: 30px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            flex-shrink: 0;
+            vertical-align: middle;
         }
 
         .toggle-switch input {
+            position: absolute;
             opacity: 0;
-            width: 0;
-            height: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            margin: 0;
+            cursor: pointer;
+            z-index: 3;
         }
 
         .toggle-slider {
@@ -411,6 +422,8 @@
             transition: var(--transition);
             border-radius: 34px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            pointer-events: none;
+            z-index: 1;
         }
 
         .toggle-slider:before {
@@ -424,6 +437,7 @@
             transition: var(--transition);
             border-radius: 50%;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 2;
         }
 
         input:checked + .toggle-slider {
@@ -1065,18 +1079,26 @@
                 margin: 20px 0 12px;
             }
             
+            /* MOBILE TOGGLE FIX */
             .toggle-switch {
                 width: 50px;
-                height: 25px;
+                height: 26px;
             }
             
             .toggle-slider:before {
-                height: 19px;
-                width: 19px;
+                height: 20px;
+                width: 20px;
+                left: 3px;
+                bottom: 3px;
             }
             
             input:checked + .toggle-slider:before {
-                transform: translateX(25px);
+                transform: translateX(24px);
+            }
+            
+            .toggle-slider:after,
+            input:checked + .toggle-slider:after {
+                font-size: 10px;
             }
             
             .sound-control {
@@ -1227,7 +1249,7 @@
 
     <!-- Install Prompt -->
     <div class="install-prompt" id="install-prompt">
-        Pasang CashTrack di perangkat Anda
+        <span id="install-text">Pasang CashTrack di perangkat Anda</span>
         <button class="install-btn" id="install-btn">Pasang</button>
         <button class="install-btn" onclick="hideInstallPrompt()" style="background: transparent; color: white;">
             <i class="fas fa-times"></i>
@@ -1420,16 +1442,14 @@
             sounds: {},
             
             init() {
+                // Gunakan audio dari base64 agar tidak 404 jika file tidak ada
+                // Kita buat sound sederhana menggunakan Web Audio API sebagai fallback
                 this.sounds = {
-                    click: new Audio('mixkit-positive-notification-951.wav'),
-                    success: new Audio('mixkit-positive-notification-951.wav'),
-                    error: new Audio('new-notification-011-364050.mp3'),
-                    notification: new Audio('notification-center-443093.mp3')
+                    click: { type: 'click' },
+                    success: { type: 'success' },
+                    error: { type: 'error' },
+                    notification: { type: 'notification' }
                 };
-                
-                Object.values(this.sounds).forEach(sound => {
-                    sound.volume = 0.5;
-                });
                 
                 const savedSettings = localStorage.getItem('cashTrackSoundSettings');
                 if (savedSettings) {
@@ -1440,15 +1460,60 @@
                 }
                 
                 this.updateSoundIcon();
+                this.initAudioContext();
+            },
+            
+            initAudioContext() {
+                try {
+                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch(e) {
+                    this.audioCtx = null;
+                }
             },
             
             play(soundName) {
                 if (this.isMuted) return;
-                const sound = this.sounds[soundName];
-                if (sound) {
-                    sound.currentTime = 0;
-                    sound.play().catch(() => {});
+                if (!this.audioCtx) return;
+                
+                // Resume audio context if suspended (mobile requirement)
+                if (this.audioCtx.state === 'suspended') {
+                    this.audioCtx.resume().catch(() => {});
                 }
+                
+                try {
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
+                    
+                    let freq = 800;
+                    let duration = 0.1;
+                    let type = 'sine';
+                    
+                    switch(soundName) {
+                        case 'click':
+                            freq = 800; duration = 0.08; type = 'sine';
+                            break;
+                        case 'success':
+                            freq = 1200; duration = 0.15; type = 'sine';
+                            break;
+                        case 'error':
+                            freq = 300; duration = 0.2; type = 'sawtooth';
+                            break;
+                        case 'notification':
+                            freq = 1000; duration = 0.12; type = 'triangle';
+                            break;
+                    }
+                    
+                    osc.type = type;
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.15, this.audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + duration);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+                    
+                    osc.start();
+                    osc.stop(this.audioCtx.currentTime + duration);
+                } catch(e) {}
             },
             
             toggleMute() {
@@ -1520,6 +1585,20 @@
         let currentFilters = { year: '', month: '', day: '' };
         let currentPage = 'transactions-page';
 
+        // ==================== INSTANT THEME INIT (sebelum DOMContentLoaded) ====================
+        (function initThemeImmediately() {
+            try {
+                const saved = localStorage.getItem('cashTrackData_v2');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    const theme = parsed.settings && parsed.settings.theme;
+                    if (theme === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                    }
+                }
+            } catch(e) {}
+        })();
+
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', function() {
             SoundManager.init();
@@ -1562,95 +1641,119 @@
                 if (e.key === 'Enter') checkPassword();
             });
             
-            // ==================== FIXED DARK MODE ====================
+            // ==================== DARK MODE - FIXED FOR MOBILE ====================
             const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const currentTheme = appSettings.theme || 'light';
             
-            // Apply initial theme safely
+            // Apply initial theme
             function applyTheme(theme) {
                 if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
                     document.body.setAttribute('data-theme', 'dark');
-                    if (darkModeToggle) darkModeToggle.checked = true;
                 } else {
+                    document.documentElement.removeAttribute('data-theme');
                     document.body.removeAttribute('data-theme');
-                    if (darkModeToggle) darkModeToggle.checked = false;
                 }
                 appSettings.theme = theme;
+                
+                if (darkModeToggle) {
+                    darkModeToggle.checked = (theme === 'dark');
+                }
             }
             
-            // Apply theme after a small delay to ensure DOM is ready
-            setTimeout(() => {
-                applyTheme(currentTheme);
-            }, 50);
+            // Terapkan tema dari settings
+            applyTheme(appSettings.theme || 'light');
             
-            // Dark mode toggle handler - FIXED
+            // Handler toggle - menggunakan click event yang lebih reliable di mobile
             if (darkModeToggle) {
                 darkModeToggle.addEventListener('change', function() {
                     try {
                         SoundManager.play('click');
                         const newTheme = this.checked ? 'dark' : 'light';
                         applyTheme(newTheme);
-                        
-                        // Save settings
                         StorageManager.save({ transactions, settings: appSettings });
                         
-                        // Re-render chart with new theme colors
+                        // Re-render chart dengan warna baru
                         if (transactions.length > 0) {
-                            renderChart();
+                            setTimeout(() => renderChart(), 50);
                         }
                         
-                        // Re-render history if on history page
+                        // Re-render history jika di halaman history
                         if (currentPage === 'history-page') {
-                            displayGroupedTransactions();
+                            setTimeout(() => displayGroupedTransactions(), 50);
                         }
                     } catch(e) {
                         console.error('Dark mode toggle error:', e);
-                        // Fallback: reset toggle
-                        this.checked = !this.checked;
                     }
                 });
             }
         });
 
-        // ==================== PWA ====================
+        // ==================== PWA INSTALL - FIXED ====================
+        const installPromptEl = document.getElementById('install-prompt');
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            setTimeout(() => {
-                showInstallPrompt();
-            }, 3000);
+            if (!isStandalone && installPromptEl) {
+                setTimeout(() => {
+                    installPromptEl.style.display = 'block';
+                }, 2500);
+            }
         });
 
+        // Untuk iOS - tampilkan instruksi manual karena iOS tidak support beforeinstallprompt
+        if (isIOS && !isStandalone) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    if (installPromptEl) {
+                        const installText = document.getElementById('install-text');
+                        if (installText) {
+                            installText.innerHTML = '📱 Tap <strong>Share</strong> <i class="fas fa-arrow-up-from-bracket"></i> → <strong>Add to Home Screen</strong>';
+                        }
+                        const installBtn = document.getElementById('install-btn');
+                        if (installBtn) installBtn.style.display = 'none';
+                        installPromptEl.style.display = 'block';
+                    }
+                }, 4000);
+            });
+        }
+
         function showInstallPrompt() {
-            if (deferredPrompt) {
-                const installPrompt = document.getElementById('install-prompt');
-                if (installPrompt) installPrompt.style.display = 'block';
+            if (deferredPrompt && installPromptEl) {
+                installPromptEl.style.display = 'block';
             }
         }
 
         function hideInstallPrompt() {
-            const installPrompt = document.getElementById('install-prompt');
-            if (installPrompt) installPrompt.style.display = 'none';
+            if (installPromptEl) installPromptEl.style.display = 'none';
             SoundManager.play('click');
         }
 
-        document.getElementById('install-btn').addEventListener('click', async () => {
-            SoundManager.play('click');
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    SoundManager.play('success');
+        // Install button handler
+        document.addEventListener('click', async (e) => {
+            const btn = e.target.closest('#install-btn');
+            if (btn) {
+                SoundManager.play('click');
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    try {
+                        const { outcome } = await deferredPrompt.userChoice;
+                        if (outcome === 'accepted') SoundManager.play('success');
+                    } catch(err) {}
+                    deferredPrompt = null;
+                    hideInstallPrompt();
                 }
-                deferredPrompt = null;
-                hideInstallPrompt();
             }
         });
 
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(() => {});
+                navigator.serviceWorker.register('sw.js').catch(err => {
+                    console.log('SW registration failed:', err);
+                });
             });
         }
 
@@ -1942,7 +2045,7 @@
             const incomeData = sortedMonths.map(month => monthlyData[month].income);
             const expenseData = sortedMonths.map(month => monthlyData[month].expense);
             
-            const isDarkMode = document.body.getAttribute('data-theme') === 'dark';
+            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
             const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
             const textColor = isDarkMode ? '#e0e0e0' : '#202124';
             
@@ -2317,102 +2420,146 @@
             }
             
             const grouped = {};
-            transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7);
-                if (!grouped[monthKey]) {
-                    grouped[monthKey] = [];
-                }
-                grouped[monthKey].push(transaction);
+            transactions.forEach(t => {
+                const key = t.date.substring(0, 7);
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push(t);
             });
             
             const sortedMonths = Object.keys(grouped).sort().reverse();
             
-            let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
+            // Styling helpers untuk Excel yang rapi
+            const cellStyle = 'style="padding:8px 12px; border:1px solid #d0d0d0; font-family:Arial,sans-serif; font-size:11pt; vertical-align:middle;"';
+            const headerStyle = 'style="padding:10px 12px; border:1px solid #d0d0d0; background:#1a73e8; color:#ffffff; font-family:Arial,sans-serif; font-size:11pt; font-weight:bold; text-align:center; vertical-align:middle;"';
+            const monthHeaderStyle = 'style="padding:12px; border:1px solid #d0d0d0; background:#0d47a1; color:#ffffff; font-family:Arial,sans-serif; font-size:12pt; font-weight:bold; vertical-align:middle;"';
+            const incomeStyle = 'style="padding:8px 12px; border:1px solid #d0d0d0; color:#0a7d32; font-family:Arial,sans-serif; font-size:11pt; text-align:right; vertical-align:middle;"';
+            const expenseStyle = 'style="padding:8px 12px; border:1px solid #d0d0d0; color:#c5221f; font-family:Arial,sans-serif; font-size:11pt; text-align:right; vertical-align:middle;"';
+            const totalIncomeStyle = 'style="padding:10px 12px; border:1px solid #d0d0d0; background:#e6f4ea; color:#0a7d32; font-family:Arial,sans-serif; font-size:11pt; font-weight:bold; text-align:right; vertical-align:middle;"';
+            const totalExpenseStyle = 'style="padding:10px 12px; border:1px solid #d0d0d0; background:#fce8e6; color:#c5221f; font-family:Arial,sans-serif; font-size:11pt; font-weight:bold; text-align:right; vertical-align:middle;"';
+            const balanceStyle = 'style="padding:10px 12px; border:1px solid #d0d0d0; background:#e8f0fe; color:#1a73e8; font-family:Arial,sans-serif; font-size:11pt; font-weight:bold; text-align:right; vertical-align:middle;"';
+            const spacerStyle = 'style="height:20px; border:none; mso-height-rule:exactly;"';
+            
+            let html = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" 
+                  xmlns:x="urn:schemas-microsoft-com:office:excel" 
+                  xmlns="http://www.w3.org/TR/REC-html40">
+            <head>
+                <meta charset="UTF-8">
+                <!--[if gte mso 9]>
+                <xml>
+                    <x:ExcelWorkbook>
+                        <x:ExcelWorksheets>
+                            <x:ExcelWorksheet>
+                                <x:Name>Laporan CashTrack</x:Name>
+                                <x:WorksheetOptions>
+                                    <x:DisplayGridlines/>
+                                </x:WorksheetOptions>
+                            </x:ExcelWorksheet>
+                        </x:ExcelWorksheets>
+                    </x:ExcelWorkbook>
+                </xml>
+                <![endif]-->
+                <style>
+                    td { mso-number-format:"\\@"; }
+                </style>
+            </head>
+            <body>
+            <table style="border-collapse:collapse; font-family:Arial,sans-serif; width:100%;">
+                <tr>
+                    <td colspan="4" style="padding:18px; background:#1a73e8; color:#fff; font-size:16pt; font-weight:bold; text-align:center; border:1px solid #d0d0d0;">
+                        💰 CashTrack - Laporan Keuangan
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="padding:10px 12px; background:#f8f9fa; color:#555; font-size:10pt; text-align:center; border:1px solid #d0d0d0;">
+                        Diekspor: ${new Date().toLocaleString('id-ID')}
+                    </td>
+                </tr>
+                <tr><td colspan="4" ${spacerStyle}></td></tr>
+            `;
+            
+            let grandIncome = 0, grandExpense = 0;
             
             sortedMonths.forEach(monthKey => {
                 const [year, month] = monthKey.split('-');
                 const monthName = getMonthName(month);
-                const monthTransactions = grouped[monthKey];
+                const monthTx = grouped[monthKey];
                 
-                let monthIncome = 0;
-                let monthExpense = 0;
+                let mIncome = 0, mExpense = 0;
+                monthTx.forEach(t => { mIncome += t.income||0; mExpense += t.expense||0; });
+                grandIncome += mIncome; grandExpense += mExpense;
+                const mBalance = mIncome - mExpense;
                 
-                monthTransactions.forEach(t => {
-                    monthIncome += t.income || 0;
-                    monthExpense += t.expense || 0;
-                });
-                
-                const monthBalance = monthIncome - monthExpense;
-                
-                excelContent += `
-                    <tr style="background-color: #f0f0f0;">
-                        <td colspan="4"><strong>${monthName} ${year}</strong></td>
+                html += `
+                    <tr>
+                        <td colspan="4" ${monthHeaderStyle}>📅 ${monthName} ${year}</td>
                     </tr>
                     <tr>
-                        <th>Tanggal</th>
-                        <th>Keterangan</th>
-                        <th>Pendapatan</th>
-                        <th>Pengeluaran</th>
+                        <td ${headerStyle}>Tanggal</td>
+                        <td ${headerStyle}>Keterangan</td>
+                        <td ${headerStyle}>Pendapatan</td>
+                        <td ${headerStyle}>Pengeluaran</td>
                     </tr>
                 `;
                 
-                monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
-                    excelContent += `
+                monthTx.sort((a,b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                    html += `
                         <tr>
-                            <td>${formatDate(t.date)}</td>
-                            <td>${t.description}</td>
-                            <td>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                            <td>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                            <td ${cellStyle}>${formatDate(t.date)}</td>
+                            <td ${cellStyle}>${t.description}</td>
+                            <td ${incomeStyle}>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                            <td ${expenseStyle}>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
                         </tr>
                     `;
                 });
                 
-                excelContent += `
-                    <tr style="background-color: #e8f5e9;">
-                        <td colspan="2"><strong>Total ${monthName}</strong></td>
-                        <td><strong>${formatCurrency(monthIncome)}</strong></td>
-                        <td><strong>${formatCurrency(monthExpense)}</strong></td>
+                html += `
+                    <tr>
+                        <td colspan="2" ${cellStyle}><strong>Total ${monthName}</strong></td>
+                        <td ${totalIncomeStyle}>${formatCurrency(mIncome)}</td>
+                        <td ${totalExpenseStyle}>${formatCurrency(mExpense)}</td>
                     </tr>
-                    <tr style="background-color: #fff3e0;">
-                        <td colspan="3"><strong>Saldo Bulan ${monthName}</strong></td>
-                        <td><strong style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</strong></td>
+                    <tr>
+                        <td colspan="3" ${cellStyle}><strong>Saldo ${monthName}</strong></td>
+                        <td ${balanceStyle}>${formatCurrency(mBalance)}</td>
                     </tr>
-                    <tr><td colspan="4" style="height: 20px;"></td></tr>
+                    <tr><td colspan="4" ${spacerStyle}></td></tr>
                 `;
             });
             
-            let totalIncome = 0;
-            let totalExpense = 0;
-            transactions.forEach(t => {
-                totalIncome += t.income || 0;
-                totalExpense += t.expense || 0;
-            });
-            const totalBalance = totalIncome - totalExpense;
-            
-            excelContent += `
-                <tr style="background-color: #e3f2fd;">
-                    <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
-                    <td><strong>${formatCurrency(totalIncome)}</strong></td>
-                    <td><strong>${formatCurrency(totalExpense)}</strong></td>
+            const grandBalance = grandIncome - grandExpense;
+            html += `
+                <tr>
+                    <td colspan="4" style="padding:14px; background:#1a73e8; color:#fff; font-size:12pt; font-weight:bold; text-align:center; border:1px solid #d0d0d0;">
+                        📊 REKAP KESELURUHAN
+                    </td>
                 </tr>
-                <tr style="background-color: #fce4ec;">
-                    <td colspan="3"><strong>SALDO AKHIR</strong></td>
-                    <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
+                <tr>
+                    <td colspan="2" ${cellStyle}><strong>Total Pendapatan</strong></td>
+                    <td colspan="2" ${totalIncomeStyle}>${formatCurrency(grandIncome)}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" ${cellStyle}><strong>Total Pengeluaran</strong></td>
+                    <td colspan="2" ${totalExpenseStyle}>${formatCurrency(grandExpense)}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" ${cellStyle}><strong>SALDO AKHIR</strong></td>
+                    <td colspan="2" ${balanceStyle}>${formatCurrency(grandBalance)}</td>
+                </tr>
+                <tr><td colspan="4" ${spacerStyle}></td></tr>
+                <tr>
+                    <td colspan="4" style="padding:10px; text-align:center; color:#888; font-size:9pt; border:none;">
+                        © 2027 CashTrack — Buatan Anak Indonesia 🇮🇩
+                    </td>
                 </tr>
             </table>
-            
-            <style>
-                td { padding: 5px; }
-                th { background-color: #4CAF50; color: white; padding: 8px; }
-            </style>
+            </body></html>
             `;
             
-            const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+            const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
             const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `cash-track-report-${new Date().toISOString().split('T')[0]}.xls`);
-            link.style.visibility = 'hidden';
+            link.href = URL.createObjectURL(blob);
+            link.download = `cash-track-report-${new Date().toISOString().split('T')[0]}.xls`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
