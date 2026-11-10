@@ -2,21 +2,23 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CashTrack - Kelola Keuangan</title>
     <meta name="description" content="Aplikasi manajemen keuangan pribadi">
     <meta name="theme-color" content="#1a73e8">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="CashTrack">
-
+    
+    <!-- Font Awesome 6.4.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
-
+    
+    <!-- Tambahkan Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    
     <style>
         :root {
             --primary: #1a73e8;
@@ -24,15 +26,14 @@
             --secondary: #34a853;
             --danger: #ea4335;
             --warning: #fbbc04;
-            --bg: #f8f9fa;
-            --surface: #ffffff;
-            --text: #202124;
+            --light: #f8f9fa;
+            --dark: #202124;
             --gray: #5f6368;
-            --border: #e0e0e0;
             --border-radius: 12px;
             --shadow: 0 2px 10px rgba(0,0,0,0.1);
-            --safe-top: env(safe-area-inset-top, 0px);
-            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --transition: all 0.3s ease;
+            --safe-area-top: env(safe-area-inset-top);
+            --safe-area-bottom: env(safe-area-inset-bottom);
         }
 
         [data-theme="dark"] {
@@ -41,42 +42,40 @@
             --secondary: #4caf50;
             --danger: #f44336;
             --warning: #ff9800;
-            --bg: #121212;
-            --surface: #1e1e1e;
-            --text: #e0e0e0;
+            --light: #121212;
+            --dark: #e0e0e0;
             --gray: #b0b0b0;
-            --border: #333333;
-            --shadow: 0 2px 10px rgba(0,0,0,0.4);
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Tahoma, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        html {
-            overflow-x: hidden;
-            -webkit-text-size-adjust: 100%;
+        html, body {
+            width: 100%;
+            height: 100%;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--light);
+            color: var(--dark);
             line-height: 1.6;
-            min-height: 100dvh;
-            overflow-x: hidden;
-            padding-top: var(--safe-top);
-            padding-bottom: var(--safe-bottom);
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-top: var(--safe-area-top);
+            padding-bottom: var(--safe-area-bottom);
         }
 
         /* Install Prompt */
         .install-prompt {
             background: var(--primary);
             color: white;
-            padding: 12px 15px;
+            padding: 15px 20px;
             text-align: center;
             display: none;
             position: fixed;
@@ -85,145 +84,192 @@
             right: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            padding-top: calc(12px + var(--safe-top));
-            font-size: 14px;
+            padding-top: calc(15px + var(--safe-area-top));
         }
 
         .install-btn {
             background: white;
             color: var(--primary);
             border: none;
-            padding: 6px 14px;
+            padding: 8px 15px;
             border-radius: 20px;
-            margin-left: 8px;
+            margin-left: 10px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 13px;
         }
 
         /* Splash Screen */
         #splash-screen {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            padding-top: var(--safe-top);
-            padding-bottom: var(--safe-bottom);
+            transition: opacity 0.5s ease;
+            padding-top: var(--safe-area-top);
+            padding-bottom: var(--safe-area-bottom);
         }
 
         .splash-logo {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             background: white;
-            border-radius: 22px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            font-size: 36px;
+            font-size: 40px;
             color: var(--primary);
+            font-weight: bold;
         }
 
         .splash-title {
             color: white;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             text-align: center;
+            padding: 0 20px;
         }
 
         .splash-subtitle {
-            color: rgba(255,255,255,0.85);
-            font-size: 1.05rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
             text-align: center;
             padding: 0 20px;
         }
 
         .splash-footer {
             position: absolute;
-            bottom: 25px;
+            bottom: 30px;
             left: 0;
             right: 0;
             text-align: center;
             color: rgba(255,255,255,0.7);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             line-height: 1.5;
             padding: 0 20px;
         }
 
-        .splash-footer .version { font-weight: 600; margin-bottom: 6px; }
-        .splash-footer .copyright { font-size: 0.75rem; opacity: 0.8; }
+        .splash-footer p {
+            margin-bottom: 5px;
+        }
+
+        .splash-footer .version {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .splash-footer .copyright {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
 
         /* Login Screen */
         #login-screen {
-            min-height: 100dvh;
+            min-height: 100vh;
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background: var(--bg);
+            background: var(--light);
+            padding-top: var(--safe-area-top);
+            padding-bottom: var(--safe-area-bottom);
         }
 
         .login-container {
             width: 100%;
             max-width: 400px;
-            background: var(--surface);
+            background: var(--light);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 30px 25px;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
         }
 
-        .app-header { text-align: center; margin-bottom: 25px; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
         .app-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--surface);
+            width: 80px;
+            height: 80px;
+            background: white;
             border: 3px solid var(--primary);
-            border-radius: 18px;
-            margin: 0 auto 14px;
+            border-radius: 20px;
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 28px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        [data-theme="dark"] .app-icon {
+            background: #2d2d2d;
         }
 
         .app-title {
-            font-size: 1.7rem;
+            font-size: 2rem;
             font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
+            color: var(--dark);
+            margin-bottom: 5px;
+            text-align: center;
         }
 
-        .app-subtitle { color: var(--gray); font-size: 0.9rem; }
+        .app-subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+            text-align: center;
+        }
 
-        .input-container { position: relative; margin-bottom: 18px; }
+        .input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
 
         .password-input {
             width: 100%;
-            padding: 14px 50px 14px 14px;
-            border: 2px solid var(--border);
+            padding: 15px 50px 15px 15px;
+            border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 16px;
-            background: var(--bg);
-            color: var(--text);
+            transition: var(--transition);
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        [data-theme="dark"] .password-input {
+            border-color: #444;
+            background: #2d2d2d;
         }
 
         .password-input:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
         }
 
         .toggle-password {
             position: absolute;
-            right: 8px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
@@ -231,8 +277,8 @@
             color: var(--gray);
             cursor: pointer;
             font-size: 18px;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -242,15 +288,20 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 15px;
             border-radius: 10px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
+            transition: var(--transition);
             width: 100%;
+            margin-bottom: 20px;
+            touch-action: manipulation;
         }
 
-        .login-btn:active { transform: scale(0.98); }
+        .login-btn:hover {
+            background: var(--primary-dark);
+        }
 
         .error-message {
             color: var(--danger);
@@ -263,35 +314,43 @@
         /* Sound Control */
         .sound-control {
             position: fixed;
-            bottom: calc(75px + var(--safe-bottom));
-            right: 15px;
+            bottom: 80px;
+            right: 20px;
             z-index: 1000;
             background: var(--primary);
             color: white;
             border-radius: 50%;
-            width: 46px;
-            height: 46px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             box-shadow: var(--shadow);
+            transition: var(--transition);
         }
 
-        .sound-control.muted { background: var(--gray); }
+        .sound-control:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .sound-control.muted {
+            background: var(--gray);
+        }
 
         /* Main App */
         #main-app {
             display: none;
-            min-height: 100dvh;
-            background: var(--bg);
+            min-height: 100vh;
+            background: var(--light);
             position: relative;
-            padding-bottom: 70px;
+            padding-bottom: 60px;
         }
 
         .main-header {
-            background: var(--surface);
-            padding: 12px 18px;
+            background: var(--light);
+            padding: 15px 20px;
             box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
@@ -299,49 +358,59 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            padding-top: calc(12px + var(--safe-top));
+            padding-top: calc(15px + var(--safe-area-top));
         }
 
-        .header-title { display: flex; align-items: center; gap: 10px; }
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
         .header-icon {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             background: var(--primary);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 17px;
+            font-size: 18px;
+            font-weight: bold;
         }
 
-        .header-title h2 { font-size: 1.15rem; }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
 
-        .header-actions { display: flex; gap: 10px; align-items: center; }
-
-        /* Toggle Switch */
+        /* Modern Toggle Switch */
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 56px;
+            width: 60px;
             height: 30px;
-            flex-shrink: 0;
         }
 
         .toggle-switch input {
             opacity: 0;
             width: 0;
             height: 0;
-            position: absolute;
         }
 
         .toggle-slider {
             position: absolute;
             cursor: pointer;
-            inset: 0;
-            background: #a0a0a0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, #c5c5c5, #a0a0a0);
+            transition: var(--transition);
             border-radius: 34px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .toggle-slider:before {
@@ -351,290 +420,481 @@
             width: 24px;
             left: 3px;
             bottom: 3px;
-            background: white;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            transition: var(--transition);
             border-radius: 50%;
-            transition: transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        input:checked + .toggle-slider { background: var(--primary); }
-        input:checked + .toggle-slider:before { transform: translateX(26px); }
+        input:checked + .toggle-slider {
+            background: linear-gradient(145deg, #4a90e2, #1c5bb5);
+        }
 
-        .toggle-slider:after {
-            content: "🌙";
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 11px;
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         input:checked + .toggle-slider:after {
             content: "☀️";
-            left: 8px;
-            right: auto;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: white;
+        }
+
+        .toggle-slider:after {
+            content: "🌙";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #666;
         }
 
         .icon-btn {
             background: none;
             border: none;
-            font-size: 18px;
+            font-size: 20px;
             color: var(--gray);
             cursor: pointer;
             padding: 8px;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            transition: var(--transition);
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
+            touch-action: manipulation;
         }
 
-        .icon-btn:active { background: rgba(128,128,128,0.15); }
+        .icon-btn:hover {
+            background: #f1f3f4;
+            color: var(--dark);
+        }
 
-        /* Navigation Tabs */
+        [data-theme="dark"] .icon-btn:hover {
+            background: #3d3d3d;
+        }
+
+        /* Navigation Tabs untuk Mobile */
         .nav-tabs {
             display: flex;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+            background: var(--light);
+            border-bottom: 1px solid #e0e0e0;
             position: sticky;
-            top: calc(62px + var(--safe-top));
+            top: 70px;
             z-index: 99;
+        }
+
+        [data-theme="dark"] .nav-tabs {
+            background: #1a1a1a;
+            border-bottom-color: #444;
         }
 
         .nav-tab {
             flex: 1;
-            padding: 13px 8px;
+            padding: 15px;
             text-align: center;
             background: none;
             border: none;
             border-bottom: 3px solid transparent;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
             color: var(--gray);
             cursor: pointer;
+            transition: var(--transition);
+            touch-action: manipulation;
         }
 
         .nav-tab.active {
             color: var(--primary);
             border-bottom-color: var(--primary);
-            background: rgba(26, 115, 232, 0.06);
+            background: rgba(26, 115, 232, 0.05);
+        }
+
+        [data-theme="dark"] .nav-tab.active {
+            background: rgba(74, 144, 226, 0.1);
         }
 
         /* App Content */
         .app-content {
-            padding: 16px;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
+            min-height: calc(100vh - 140px);
         }
 
-        .page-section { display: none; }
-        .page-section.active { display: block; }
+        /* Page Sections */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
 
         .app-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 10px 15px;
+            background: var(--light);
+            border-top: 1px solid #e0e0e0;
+            padding: 12px 20px;
             text-align: center;
             color: var(--gray);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             z-index: 99;
-            padding-bottom: calc(10px + var(--safe-bottom));
+            padding-bottom: calc(12px + var(--safe-area-bottom));
+        }
+
+        [data-theme="dark"] .app-footer {
+            border-top-color: #444;
+            background: #1a1a1a;
         }
 
         /* Balance Card */
         .balance-card {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 22px;
+            padding: 25px;
             border-radius: var(--border-radius);
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             box-shadow: var(--shadow);
         }
 
-        .balance-label { font-size: 0.9rem; opacity: 0.9; margin-bottom: 4px; }
+        .balance-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
         .balance-amount {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 10px;
             word-break: break-word;
-            line-height: 1.2;
         }
+
         .balance-details {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             opacity: 0.9;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 10px;
         }
 
         .section-title {
-            font-size: 1.15rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin: 20px 0 12px;
-            color: var(--text);
+            margin: 25px 0 15px;
+            color: var(--dark);
         }
 
-        /* Form */
-        .transaction-form, .filter-section, .chart-container {
-            background: var(--surface);
-            padding: 16px;
+        /* Form Transaksi */
+        .transaction-form {
+            background: var(--light);
+            padding: 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
-        .form-grid, .filter-grid {
+        .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
-        .form-input, .filter-select {
+        .form-input {
             padding: 12px;
-            border: 1px solid var(--border);
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 15px;
-            background: var(--bg);
-            color: var(--text);
+            font-size: 16px;
+            transition: var(--transition);
+            background: var(--light);
+            color: var(--dark);
             width: 100%;
             -webkit-appearance: none;
-            appearance: none;
         }
 
-        .form-input:focus, .filter-select:focus {
+        [data-theme="dark"] .form-input {
+            border-color: #444;
+            background: #2d2d2d;
+        }
+
+        .form-input:focus {
             outline: none;
             border-color: var(--primary);
         }
 
-        .form-buttons, .filter-buttons {
+        .form-buttons {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 11px 16px;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
+            touch-action: manipulation;
+            white-space: nowrap;
             flex: 1;
-            min-width: 110px;
+            min-width: 120px;
         }
 
-        .btn:active { transform: scale(0.97); }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-secondary { background: var(--border); color: var(--text); }
-        .btn-success { background: var(--secondary); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-warning { background: var(--warning); color: #202124; }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: #f1f3f4;
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #e8eaed;
+        }
+
+        [data-theme="dark"] .btn-secondary {
+            background: #2d2d2d;
+            color: var(--dark);
+        }
+
+        [data-theme="dark"] .btn-secondary:hover {
+            background: #3d3d3d;
+        }
+
+        .btn-success {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #2d924a;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d33426;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .btn-warning:hover {
+            background: #e0ac03;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: var(--light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
 
         .filter-label {
             font-weight: 500;
             margin-bottom: 5px;
-            color: var(--text);
+            color: var(--dark);
             display: block;
-            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: var(--light);
+            font-size: 16px;
+            width: 100%;
+            color: var(--dark);
+            -webkit-appearance: none;
+        }
+
+        [data-theme="dark"] .filter-select {
+            border-color: #444;
+            background: #2d2d2d;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        /* Transactions Page */
+        .transactions-page {
+            padding-bottom: 20px;
         }
 
         .export-section {
             display: flex;
             justify-content: flex-end;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
-        /* Month Group */
+        /* Month Group untuk Riwayat Transaksi */
         .month-group {
-            margin-bottom: 22px;
+            margin-bottom: 30px;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            background: var(--surface);
         }
 
-        .month-header {
+        .month-group .month-header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 13px 16px;
-            font-size: 1rem;
+            padding: 15px 20px;
+            font-size: 1.1rem;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
 
         .month-totals {
             display: flex;
-            gap: 12px;
-            font-size: 0.8rem;
+            gap: 15px;
+            font-size: 0.9rem;
+            opacity: 0.9;
             flex-wrap: wrap;
         }
 
-        .month-totals span { display: flex; align-items: center; gap: 4px; }
+        .month-totals span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
-        /* Table */
+        /* Transactions Table */
         .transactions-table {
             width: 100%;
+            border-collapse: collapse;
+            display: block;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
 
         .transactions-table table {
             width: 100%;
-            min-width: 560px;
-            border-collapse: collapse;
+            min-width: 600px;
         }
 
-        .transactions-table th, .transactions-table td {
-            padding: 10px 8px;
+        .transactions-table th,
+        .transactions-table td {
+            padding: 12px 8px;
             text-align: left;
-            border-bottom: 1px solid var(--border);
-            color: var(--text);
+            border-bottom: 1px solid #f0f0f0;
+            color: var(--dark);
             white-space: nowrap;
-            font-size: 13px;
+        }
+
+        [data-theme="dark"] .transactions-table th,
+        [data-theme="dark"] .transactions-table td {
+            border-color: #444;
         }
 
         .transactions-table th {
-            background: var(--bg);
+            background: #f8f9fa;
             font-weight: 600;
             color: var(--gray);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
-        .transactions-table tr:last-child td { border-bottom: none; }
-
-        .income-amount { color: var(--secondary); font-weight: 500; }
-        .expense-amount { color: var(--danger); font-weight: 500; }
-
-        .action-buttons { display: flex; gap: 4px; }
-        .action-buttons .btn {
-            padding: 6px 10px;
-            font-size: 11px;
-            min-width: 0;
-            flex: none;
+        [data-theme="dark"] .transactions-table th {
+            background: #2d2d2d;
         }
 
-        /* Chart */
+        .transactions-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .transactions-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        [data-theme="dark"] .transactions-table tr:hover {
+            background: #2d2d2d;
+        }
+
+        .income-amount {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .expense-amount {
+            color: var(--danger);
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: nowrap;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
         .chart-wrapper {
             position: relative;
             width: 100%;
-            height: 280px;
+            height: 300px;
         }
 
         .chart-placeholder {
@@ -642,119 +902,332 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--bg);
+            background: #f8f9fa;
             border-radius: 8px;
             color: var(--gray);
             padding: 20px;
             text-align: center;
-            font-size: 14px;
         }
 
-        #finance-chart { width: 100% !important; height: 100% !important; }
+        [data-theme="dark"] .chart-placeholder {
+            background: #2d2d2d;
+        }
 
+        #finance-chart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
             color: var(--gray);
         }
 
-        .empty-state i { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
-        .empty-state p { font-size: 1rem; margin-bottom: 8px; }
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
 
-        /* ============ MOBILE SPECIFIC FIXES ============ */
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        /* Scrollbar Styling */
+        .transactions-table::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .transactions-table::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .transactions-table::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .transactions-table::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .header-title h2 { font-size: 1.05rem; }
+            .login-container {
+                padding: 20px;
+                margin: 10px;
+                max-width: 100%;
+            }
             
-            .app-content { padding: 12px; }
+            .app-content {
+                padding: 15px;
+            }
             
-            .form-grid, .filter-grid {
+            .form-grid,
+            .filter-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
+                gap: 12px;
+            }
+            
+            .filter-buttons,
+            .form-buttons {
+                flex-direction: row;
+                justify-content: stretch;
             }
             
             .btn {
-                padding: 11px 12px;
-                font-size: 12px;
+                flex: 1;
                 min-width: 0;
+                padding: 12px 15px;
+                font-size: 13px;
+            }
+            
+            .transactions-table th,
+            .transactions-table td {
+                padding: 10px 6px;
+                font-size: 13px;
+            }
+            
+            .balance-amount {
+                font-size: 1.8rem;
+            }
+            
+            .balance-details {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .export-section {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            
+            .app-footer {
+                padding: 10px 15px;
+                font-size: 0.75rem;
+                line-height: 1.4;
             }
             
             .month-header {
                 flex-direction: column;
+                gap: 10px;
                 align-items: flex-start;
-                padding: 12px 14px;
-                font-size: 0.95rem;
+                padding: 12px 15px;
             }
             
             .month-totals {
                 flex-direction: column;
+                gap: 8px;
                 width: 100%;
-                gap: 6px;
             }
             
             .month-totals span {
                 justify-content: space-between;
                 width: 100%;
-                font-size: 0.78rem;
             }
-            
-            .chart-wrapper { height: 240px; }
-            
-            .export-section { flex-direction: column; }
-            
-            .export-section .btn { width: 100%; }
             
             .action-buttons {
                 flex-direction: column;
-                gap: 4px;
+                gap: 5px;
             }
             
             .action-buttons .btn {
-                width: 100%;
-                padding: 7px 8px;
+                padding: 8px 10px;
+                font-size: 12px;
+                min-width: 0;
             }
             
-            .balance-amount { font-size: 1.6rem; }
+            .chart-container {
+                padding: 15px;
+            }
+            
+            .chart-wrapper {
+                height: 250px;
+            }
+            
+            .chart-placeholder {
+                font-size: 14px;
+                padding: 15px;
+            }
             
             .nav-tab {
-                font-size: 12px;
-                padding: 12px 4px;
+                padding: 12px;
+                font-size: 14px;
             }
             
-            .nav-tab i { display: block; margin-bottom: 3px; font-size: 14px; }
-        }
-
-        @media (max-width: 380px) {
-            .app-content { padding: 10px; }
-            .balance-amount { font-size: 1.4rem; }
-            .chart-wrapper { height: 210px; }
-            .header-title h2 { font-size: 1rem; }
-            .toggle-switch { width: 50px; height: 27px; }
-            .toggle-slider:before { height: 21px; width: 21px; }
-            input:checked + .toggle-slider:before { transform: translateX(23px); }
-        }
-
-        /* Fix for iOS input zoom */
-        @supports (-webkit-touch-callout: none) {
-            .form-input, .filter-select, .password-input {
-                font-size: 16px;
+            .section-title {
+                font-size: 1.2rem;
+                margin: 20px 0 12px;
+            }
+            
+            .toggle-switch {
+                width: 50px;
+                height: 25px;
+            }
+            
+            .toggle-slider:before {
+                height: 19px;
+                width: 19px;
+            }
+            
+            input:checked + .toggle-slider:before {
+                transform: translateX(25px);
+            }
+            
+            .sound-control {
+                bottom: 70px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
             }
         }
 
-        /* Disable hover effects on touch */
-        @media (hover: none) {
-            .btn:hover, .icon-btn:hover, .nav-tab:hover { transform: none; }
+        @media (max-width: 480px) {
+            .splash-title {
+                font-size: 2rem;
+            }
+            
+            .splash-logo {
+                width: 100px;
+                height: 100px;
+                font-size: 30px;
+            }
+            
+            .app-title {
+                font-size: 1.5rem;
+            }
+            
+            .app-footer {
+                padding: 8px 12px;
+                font-size: 0.7rem;
+            }
+            
+            .balance-card {
+                padding: 20px;
+            }
+            
+            .balance-amount {
+                font-size: 1.6rem;
+            }
+            
+            .balance-details {
+                font-size: 0.8rem;
+            }
+            
+            .transaction-form,
+            .filter-section,
+            .chart-container {
+                padding: 15px;
+            }
+            
+            .form-input,
+            .filter-select {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            .btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+            
+            .month-header {
+                font-size: 1rem;
+                padding: 10px 12px;
+            }
+            
+            .month-totals {
+                font-size: 0.8rem;
+            }
+            
+            .chart-wrapper {
+                height: 200px;
+            }
+            
+            .chart-placeholder {
+                font-size: 13px;
+            }
+            
+            .main-header {
+                padding: 12px 15px;
+            }
+            
+            .header-title h2 {
+                font-size: 1.2rem;
+            }
+            
+            .icon-btn {
+                width: 40px;
+                height: 40px;
+                padding: 6px;
+                font-size: 18px;
+            }
+            
+            .header-actions {
+                gap: 10px;
+            }
+            
+            .nav-tab {
+                padding: 10px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .balance-amount {
+                font-size: 1.4rem;
+            }
+            
+            .btn {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+            
+            .chart-wrapper {
+                height: 180px;
+            }
+            
+            .nav-tab {
+                padding: 8px;
+                font-size: 12px;
+            }
+        }
+
+        /* Touch Device Optimization */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover,
+            .icon-btn:hover,
+            .nav-tab:hover {
+                transform: none;
+            }
+            
+            .btn:active,
+            .icon-btn:active,
+            .nav-tab:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease;
+            }
+            
+            .login-btn:active {
+                transform: scale(0.98);
+            }
         }
     </style>
 </head>
 <body>
     <!-- Sound Control -->
-    <div class="sound-control" id="sound-control" title="Mute/Unmute">
+    <div class="sound-control" id="sound-control" title="Mute/Unmute Sound">
         <i class="fas fa-volume-up" id="sound-icon"></i>
     </div>
 
     <!-- Install Prompt -->
     <div class="install-prompt" id="install-prompt">
-        Pasang CashTrack
+        Pasang CashTrack di perangkat Anda
         <button class="install-btn" id="install-btn">Pasang</button>
         <button class="install-btn" onclick="hideInstallPrompt()" style="background: transparent; color: white;">
             <i class="fas fa-times"></i>
@@ -768,8 +1241,9 @@
         </div>
         <h1 class="splash-title">CashTrack</h1>
         <p class="splash-subtitle">Kelola Keuangan dengan Mudah</p>
+        
         <div class="splash-footer">
-            <p class="version">CashTrack Version 2.1</p>
+            <p class="version">CashTrack Version 2.0</p>
             <p>Karya Muhammad Abid – Buatan Indonesia</p>
             <p class="copyright">© 2027 CashTrack. All Rights Reserved.</p>
         </div>
@@ -779,26 +1253,35 @@
     <div id="login-screen">
         <div class="login-container">
             <div class="app-header">
-                <div class="app-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="app-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
                 <h1 class="app-title">CashTrack</h1>
                 <p class="app-subtitle">Masukkan kata sandi untuk melanjutkan</p>
             </div>
+
             <div class="input-container">
-                <input type="password" class="password-input" placeholder="Masukkan password" id="password-input" autocomplete="off">
+                <input type="password" class="password-input" placeholder="Masukkan password" id="password-input">
                 <button type="button" class="toggle-password" id="toggle-password">
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
-            <button class="login-btn" onclick="checkPassword()">Lanjutkan</button>
+
+            <button class="login-btn" onclick="checkPassword()">
+                <span>Lanjutkan</span>
+            </button>
+
             <div class="error-message" id="password-error">Password salah!</div>
         </div>
     </div>
 
-    <!-- Main App -->
+    <!-- Main Application -->
     <div id="main-app">
         <header class="main-header">
             <div class="header-title">
-                <div class="header-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="header-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
                 <h2>CashTrack</h2>
             </div>
             <div class="header-actions">
@@ -812,115 +1295,130 @@
             </div>
         </header>
 
+        <!-- Navigation Tabs untuk Mobile -->
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="transactions-page">
-                <i class="fas fa-plus-circle"></i> Tambah
+                <i class="fas fa-plus-circle"></i> Tambah Transaksi
             </button>
             <button class="nav-tab" data-page="history-page">
-                <i class="fas fa-history"></i> Riwayat
+                <i class="fas fa-history"></i> Riwayat Transaksi
             </button>
         </div>
 
         <div class="app-content">
+            <!-- Page 1: Tambah Transaksi -->
             <div id="transactions-page" class="page-section active">
+                <!-- Balance Card -->
                 <div class="balance-card">
                     <div class="balance-label">Saldo Saat Ini</div>
                     <div class="balance-amount" id="balance-amount">Rp 0</div>
                     <div class="balance-details">
                         <span>Update: <span id="last-update">-</span></span>
-                        <span>Total: <span id="total-transactions">0</span></span>
+                        <span>Total Transaksi: <span id="total-transactions">0</span></span>
                     </div>
                 </div>
 
+                <!-- Transaction Form -->
                 <h3 class="section-title">Tambah Transaksi Baru</h3>
                 <div class="transaction-form">
                     <div class="form-grid">
                         <input type="date" class="form-input" id="transaction-date">
                         <input type="text" class="form-input" id="transaction-desc" placeholder="Keterangan transaksi">
-                        <input type="text" class="form-input" id="transaction-income" placeholder="Pendapatan (Rp)" inputmode="numeric" oninput="formatCurrencyInput(this)">
-                        <input type="text" class="form-input" id="transaction-expense" placeholder="Pengeluaran (Rp)" inputmode="numeric" oninput="formatCurrencyInput(this)">
+                        <input type="text" class="form-input" id="transaction-income" placeholder="Pendapatan (Rp)" oninput="formatCurrencyInput(this)">
+                        <input type="text" class="form-input" id="transaction-expense" placeholder="Pengeluaran (Rp)" oninput="formatCurrencyInput(this)">
                     </div>
                     <div class="form-buttons">
                         <button class="btn btn-primary" onclick="addTransaction()">
-                            <i class="fas fa-plus"></i> Tambah
+                            <i class="fas fa-plus"></i> Tambah Transaksi
                         </button>
                         <button class="btn btn-secondary" onclick="clearForm()">
-                            <i class="fas fa-trash"></i> Bersihkan
+                            <i class="fas fa-trash"></i> Bersihkan Form
                         </button>
                     </div>
                 </div>
 
+                <!-- Chart -->
                 <h3 class="section-title">Grafik Keuangan</h3>
                 <div class="chart-container">
                     <div class="chart-wrapper">
                         <div class="chart-placeholder" id="chart-placeholder">
-                            <i class="fas fa-chart-bar"></i>&nbsp; Grafik akan ditampilkan di sini
+                            <i class="fas fa-chart-bar"></i> Grafik akan ditampilkan di sini
                         </div>
                         <canvas id="finance-chart"></canvas>
                     </div>
                 </div>
             </div>
 
+            <!-- Page 2: Riwayat Transaksi -->
             <div id="history-page" class="page-section">
-                <h3 class="section-title">Filter Transaksi</h3>
-                <div class="filter-section">
-                    <div class="filter-grid">
-                        <div>
-                            <label class="filter-label">Tahun</label>
-                            <select class="filter-select" id="filter-year" onchange="updateMonthOptions()">
-                                <option value="">Semua Tahun</option>
-                            </select>
+                <div class="transactions-page">
+                    <!-- Filter Section -->
+                    <h3 class="section-title">Filter Transaksi</h3>
+                    <div class="filter-section">
+                        <div class="filter-grid">
+                            <div>
+                                <label class="filter-label">Tahun</label>
+                                <select class="filter-select" id="filter-year" onchange="updateMonthOptions()">
+                                    <option value="">Semua Tahun</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="filter-label">Bulan</label>
+                                <select class="filter-select" id="filter-month" onchange="updateDayOptions()">
+                                    <option value="">Semua Bulan</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="filter-label">Tanggal</label>
+                                <select class="filter-select" id="filter-day">
+                                    <option value="">Semua Tanggal</option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <label class="filter-label">Bulan</label>
-                            <select class="filter-select" id="filter-month" onchange="updateDayOptions()">
-                                <option value="">Semua Bulan</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="filter-label">Tanggal</label>
-                            <select class="filter-select" id="filter-day">
-                                <option value="">Semua Tanggal</option>
-                            </select>
+                        <div class="filter-buttons">
+                            <button class="btn btn-primary" onclick="applyFilter()">
+                                <i class="fas fa-filter"></i> Terapkan Filter
+                            </button>
+                            <button class="btn btn-secondary" onclick="resetFilters()">
+                                <i class="fas fa-redo"></i> Reset Filter
+                            </button>
                         </div>
                     </div>
-                    <div class="filter-buttons">
-                        <button class="btn btn-primary" onclick="applyFilter()">
-                            <i class="fas fa-filter"></i> Filter
+
+                    <!-- Export Buttons -->
+                    <div class="export-section">
+                        <button class="btn btn-success" onclick="exportToCSV()">
+                            <i class="fas fa-file-csv"></i> Export CSV
                         </button>
-                        <button class="btn btn-secondary" onclick="resetFilters()">
-                            <i class="fas fa-redo"></i> Reset
+                        <button class="btn btn-success" onclick="exportToExcel()">
+                            <i class="fas fa-file-excel"></i> Export Excel
+                        </button>
+                        <button class="btn btn-warning" onclick="exportToExcelGrouped()">
+                            <i class="fas fa-layer-group"></i> Export Excel Berkelompok
                         </button>
                     </div>
-                </div>
 
-                <div class="export-section">
-                    <button class="btn btn-success" onclick="exportToCSV()">
-                        <i class="fas fa-file-csv"></i> CSV
-                    </button>
-                    <button class="btn btn-success" onclick="exportToExcel()">
-                        <i class="fas fa-file-excel"></i> Excel Rapi
-                    </button>
-                    <button class="btn btn-warning" onclick="exportToExcelGrouped()">
-                        <i class="fas fa-layer-group"></i> Excel Berkelompok
-                    </button>
+                    <!-- Transactions Container -->
+                    <h3 class="section-title">Riwayat Transaksi</h3>
+                    <div id="transactions-container">
+                        <!-- Transaksi akan ditampilkan berkelompok per bulan di sini -->
+                    </div>
                 </div>
-
-                <h3 class="section-title">Riwayat Transaksi</h3>
-                <div id="transactions-container"></div>
             </div>
         </div>
 
+        <!-- App Footer -->
         <footer class="app-footer">
             © 2027 CashTrack — Buatan Anak Indonesia <i class="fas fa-flag"></i>
         </footer>
     </div>
 
     <script>
-        // ============= SOUND =============
+        // ==================== SOUND MANAGER ====================
         const SoundManager = {
             isMuted: false,
             sounds: {},
+            
             init() {
                 this.sounds = {
                     click: new Audio('mixkit-positive-notification-951.wav'),
@@ -928,51 +1426,91 @@
                     error: new Audio('new-notification-011-364050.mp3'),
                     notification: new Audio('notification-center-443093.mp3')
                 };
-                Object.values(this.sounds).forEach(s => s.volume = 0.5);
-                try {
-                    const s = JSON.parse(localStorage.getItem('cashTrackSoundSettings') || '{}');
-                    this.isMuted = s.isMuted || false;
-                } catch(e) {}
-                this.updateIcon();
+                
+                Object.values(this.sounds).forEach(sound => {
+                    sound.volume = 0.5;
+                });
+                
+                const savedSettings = localStorage.getItem('cashTrackSoundSettings');
+                if (savedSettings) {
+                    try {
+                        const settings = JSON.parse(savedSettings);
+                        this.isMuted = settings.isMuted || false;
+                    } catch(e) {}
+                }
+                
+                this.updateSoundIcon();
             },
-            play(n) {
+            
+            play(soundName) {
                 if (this.isMuted) return;
-                const s = this.sounds[n];
-                if (s) { s.currentTime = 0; s.play().catch(() => {}); }
+                const sound = this.sounds[soundName];
+                if (sound) {
+                    sound.currentTime = 0;
+                    sound.play().catch(() => {});
+                }
             },
-            toggle() {
+            
+            toggleMute() {
                 this.isMuted = !this.isMuted;
-                this.updateIcon();
+                this.updateSoundIcon();
                 if (!this.isMuted) this.play('click');
                 localStorage.setItem('cashTrackSoundSettings', JSON.stringify({ isMuted: this.isMuted }));
             },
-            updateIcon() {
-                const i = document.getElementById('sound-icon');
-                const c = document.getElementById('sound-control');
-                if (!i || !c) return;
-                i.className = this.isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
-                c.classList.toggle('muted', this.isMuted);
+            
+            updateSoundIcon() {
+                const soundIcon = document.getElementById('sound-icon');
+                const soundControl = document.getElementById('sound-control');
+                if (!soundIcon || !soundControl) return;
+                
+                if (this.isMuted) {
+                    soundIcon.className = 'fas fa-volume-mute';
+                    soundControl.classList.add('muted');
+                } else {
+                    soundIcon.className = 'fas fa-volume-up';
+                    soundControl.classList.remove('muted');
+                }
             }
         };
 
-        // ============= STORAGE =============
-        const STORAGE_KEY = 'cashTrackData_v2';
-        function saveData() {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify({
-                    transactions, settings: appSettings, version: '2.1'
-                }));
-            } catch(e) { console.error(e); }
-        }
-        function loadData() {
-            try {
-                const d = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-                if (d) return { transactions: d.transactions || [], settings: d.settings || {} };
-            } catch(e) {}
-            return { transactions: [], settings: {} };
-        }
+        // ==================== STORAGE MANAGER ====================
+        const StorageManager = {
+            STORAGE_KEY: 'cashTrackData_v2',
+            
+            save(data) {
+                try {
+                    const saveData = {
+                        transactions: data.transactions || [],
+                        settings: data.settings || {},
+                        version: '2.0',
+                        lastSave: new Date().toISOString()
+                    };
+                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(saveData));
+                    return true;
+                } catch (error) {
+                    console.error('Save failed:', error);
+                    return false;
+                }
+            },
+            
+            load() {
+                try {
+                    const data = localStorage.getItem(this.STORAGE_KEY);
+                    if (data) {
+                        const parsed = JSON.parse(data);
+                        return {
+                            transactions: parsed.transactions || [],
+                            settings: parsed.settings || {}
+                        };
+                    }
+                } catch (error) {
+                    console.error('Load failed:', error);
+                }
+                return { transactions: [], settings: {} };
+            }
+        };
 
-        // ============= STATE =============
+        // ==================== APP STATE ====================
         let transactions = [];
         let appSettings = {};
         const correctPassword = "free palestina";
@@ -982,135 +1520,188 @@
         let currentFilters = { year: '', month: '', day: '' };
         let currentPage = 'transactions-page';
 
-        // ============= INIT =============
+        // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', function() {
             SoundManager.init();
-            const d = loadData();
-            transactions = d.transactions;
-            appSettings = d.settings;
-
-            document.getElementById('transaction-date').value = new Date().toISOString().split('T')[0];
-
-            document.getElementById('sound-control').addEventListener('click', () => SoundManager.toggle());
-
+            
+            const savedData = StorageManager.load();
+            transactions = savedData.transactions || [];
+            appSettings = savedData.settings || {};
+            
+            // Set today's date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
+            
+            // Setup sound control
+            document.getElementById('sound-control').addEventListener('click', () => {
+                SoundManager.toggleMute();
+            });
+            
+            // Enter key support for form inputs
             ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.addEventListener('keypress', e => { if (e.key === 'Enter') addTransaction(); });
-            });
-
-            const togglePwd = document.getElementById('toggle-password');
-            const pwdInput = document.getElementById('password-input');
-            togglePwd.addEventListener('click', function() {
-                const t = pwdInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                pwdInput.setAttribute('type', t);
-                this.innerHTML = t === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-            });
-            pwdInput.addEventListener('keypress', e => { if (e.key === 'Enter') checkPassword(); });
-
-            // ===== FIXED DARK MODE - no transition, safe toggle =====
-            const toggle = document.getElementById('dark-mode-toggle');
-            
-            // Set initial state WITHOUT transition
-            const initialDark = appSettings.theme === 'dark';
-            if (initialDark) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                document.body.setAttribute('data-theme', 'dark');
-                toggle.checked = true;
-            }
-            
-            toggle.addEventListener('change', function(e) {
-                e.stopPropagation();
-                try {
-                    const isDark = this.checked;
-                    // Apply directly to both html and body for consistency
-                    if (isDark) {
-                        document.documentElement.setAttribute('data-theme', 'dark');
-                        document.body.setAttribute('data-theme', 'dark');
-                    } else {
-                        document.documentElement.removeAttribute('data-theme');
-                        document.body.removeAttribute('data-theme');
-                    }
-                    appSettings.theme = isDark ? 'dark' : 'light';
-                    saveData();
-                    SoundManager.play('click');
-                    
-                    // Re-render chart after theme change (with small delay for mobile)
-                    setTimeout(() => {
-                        if (transactions.length > 0) renderChart();
-                    }, 100);
-                } catch(err) {
-                    console.error('Theme toggle error:', err);
+                if (el) {
+                    el.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') addTransaction();
+                    });
                 }
             });
+            
+            // Password toggle
+            const togglePassword = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password-input');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                SoundManager.play('click');
+            });
+            
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkPassword();
+            });
+            
+            // ==================== FIXED DARK MODE ====================
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const currentTheme = appSettings.theme || 'light';
+            
+            // Apply initial theme safely
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.setAttribute('data-theme', 'dark');
+                    if (darkModeToggle) darkModeToggle.checked = true;
+                } else {
+                    document.body.removeAttribute('data-theme');
+                    if (darkModeToggle) darkModeToggle.checked = false;
+                }
+                appSettings.theme = theme;
+            }
+            
+            // Apply theme after a small delay to ensure DOM is ready
+            setTimeout(() => {
+                applyTheme(currentTheme);
+            }, 50);
+            
+            // Dark mode toggle handler - FIXED
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', function() {
+                    try {
+                        SoundManager.play('click');
+                        const newTheme = this.checked ? 'dark' : 'light';
+                        applyTheme(newTheme);
+                        
+                        // Save settings
+                        StorageManager.save({ transactions, settings: appSettings });
+                        
+                        // Re-render chart with new theme colors
+                        if (transactions.length > 0) {
+                            renderChart();
+                        }
+                        
+                        // Re-render history if on history page
+                        if (currentPage === 'history-page') {
+                            displayGroupedTransactions();
+                        }
+                    } catch(e) {
+                        console.error('Dark mode toggle error:', e);
+                        // Fallback: reset toggle
+                        this.checked = !this.checked;
+                    }
+                });
+            }
         });
 
-        // ============= PWA =============
-        window.addEventListener('beforeinstallprompt', e => {
+        // ==================== PWA ====================
+        window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             setTimeout(() => {
-                const p = document.getElementById('install-prompt');
-                if (p) p.style.display = 'block';
-            }, 2500);
+                showInstallPrompt();
+            }, 3000);
         });
 
+        function showInstallPrompt() {
+            if (deferredPrompt) {
+                const installPrompt = document.getElementById('install-prompt');
+                if (installPrompt) installPrompt.style.display = 'block';
+            }
+        }
+
         function hideInstallPrompt() {
-            document.getElementById('install-prompt').style.display = 'none';
+            const installPrompt = document.getElementById('install-prompt');
+            if (installPrompt) installPrompt.style.display = 'none';
+            SoundManager.play('click');
         }
 
         document.getElementById('install-btn').addEventListener('click', async () => {
+            SoundManager.play('click');
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                await deferredPrompt.userChoice;
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    SoundManager.play('success');
+                }
                 deferredPrompt = null;
                 hideInstallPrompt();
             }
         });
 
+        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch(() => {});
             });
         }
 
-        // ============= SPLASH =============
+        // ==================== SPLASH SCREEN ====================
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const sp = document.getElementById('splash-screen');
-                sp.style.opacity = '0';
+                const splashScreen = document.getElementById('splash-screen');
+                splashScreen.style.opacity = '0';
                 setTimeout(() => {
-                    sp.style.display = 'none';
-                    if (localStorage.getItem('cashTrackLoggedIn')) {
+                    splashScreen.style.display = 'none';
+                    
+                    const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
+                    if (isLoggedIn) {
                         enterApp();
                     } else {
                         showLoginScreen();
                     }
-                }, 400);
-            }, 1800);
+                }, 500);
+            }, 2000);
         });
 
-        // ============= LOGIN =============
+        // ==================== LOGIN FUNCTIONS ====================
         function showLoginScreen() {
             document.getElementById('login-screen').style.display = 'flex';
             document.getElementById('main-app').style.display = 'none';
-            setTimeout(() => document.getElementById('password-input').focus(), 100);
+            
+            document.getElementById('transaction-date').valueAsDate = new Date();
+            
+            setTimeout(() => {
+                const pwd = document.getElementById('password-input');
+                if (pwd) pwd.focus();
+            }, 100);
         }
 
         function checkPassword() {
             SoundManager.play('click');
-            const input = document.getElementById('password-input');
-            const err = document.getElementById('password-error');
+            const passwordInput = document.getElementById('password-input');
+            const errorMessage = document.getElementById('password-error');
             
-            if (input.value === correctPassword) {
+            if (passwordInput.value === correctPassword) {
                 localStorage.setItem('cashTrackLoggedIn', 'true');
                 SoundManager.play('success');
                 enterApp();
             } else {
-                err.style.display = 'block';
-                input.value = '';
-                input.focus();
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
                 SoundManager.play('error');
-                setTimeout(() => err.style.display = 'none', 3000);
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
             }
         }
 
@@ -1120,265 +1711,427 @@
             initializeApp();
         }
 
+        // ==================== APP INITIALIZATION ====================
         function initializeApp() {
-            document.getElementById('transaction-date').value = new Date().toISOString().split('T')[0];
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').value = today;
+            
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
+            
             currentFilters.year = new Date().getFullYear().toString();
             currentFilters.month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+            
             updateBalance();
             renderChart();
             filterTransactions();
             setupNavigationTabs();
         }
 
-        // ============= UTILS =============
-        function formatCurrency(n) {
-            if (!n && n !== 0) return '-';
-            return 'Rp ' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        // ==================== UTILITY FUNCTIONS ====================
+        function formatCurrency(amount) {
+            if (!amount && amount !== 0) return '-';
+            return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
-        function formatCurrencyInput(input) {
-            let v = input.value.replace(/[^\d]/g, '');
-            input.value = v ? parseInt(v).toLocaleString('id-ID') : '';
-        }
-        function parseCurrency(v) { return v ? parseInt(v.replace(/[^\d]/g, '') || 0) : 0; }
-        function formatDate(d) {
-            const dt = new Date(d + 'T00:00:00');
-            return dt.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
-        }
-        function getMonthName(m) {
-            return ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][parseInt(m)-1] || m;
-        }
-        function getMonthFromDate(d) { return d.substring(5, 7); }
-        function getYearFromDate(d) { return d.substring(0, 4); }
 
-        // ============= TRANSACTIONS =============
+        function formatCurrencyInput(input) {
+            let value = input.value.replace(/[^\d]/g, '');
+            if (value) {
+                value = parseInt(value).toLocaleString('id-ID');
+                input.value = value;
+            } else {
+                input.value = '';
+            }
+        }
+
+        function parseCurrency(value) {
+            if (!value) return 0;
+            return parseInt(value.replace(/[^\d]/g, '') || 0);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString + 'T00:00:00');
+            return date.toLocaleDateString('id-ID', { 
+                day: '2-digit', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+        }
+
+        function getMonthName(monthNumber) {
+            const months = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+            return months[parseInt(monthNumber) - 1] || monthNumber;
+        }
+
+        function getMonthFromDate(dateString) {
+            return dateString.substring(5, 7);
+        }
+
+        function getYearFromDate(dateString) {
+            return dateString.substring(0, 4);
+        }
+
+        // ==================== TRANSACTION FUNCTIONS ====================
         function addTransaction() {
             SoundManager.play('click');
             const date = document.getElementById('transaction-date').value;
-            const desc = document.getElementById('transaction-desc').value.trim();
+            const description = document.getElementById('transaction-desc').value.trim();
             const income = parseCurrency(document.getElementById('transaction-income').value);
             const expense = parseCurrency(document.getElementById('transaction-expense').value);
-
-            if (!date) { alert('Pilih tanggal!'); return; }
-            if (!desc) { alert('Isi keterangan!'); return; }
-            if (income === 0 && expense === 0) { alert('Isi pendapatan atau pengeluaran!'); return; }
-
-            transactions.unshift({
-                id: Date.now(), date, description: desc, income, expense,
+            
+            if (!date) {
+                alert('Harap pilih tanggal transaksi!');
+                SoundManager.play('error');
+                return;
+            }
+            
+            if (!description) {
+                alert('Harap isi keterangan transaksi!');
+                SoundManager.play('error');
+                return;
+            }
+            
+            if (income === 0 && expense === 0) {
+                alert('Harap isi pendapatan atau pengeluaran!');
+                SoundManager.play('error');
+                return;
+            }
+            
+            const transaction = {
+                id: Date.now(),
+                date: date,
+                description: description,
+                income: income,
+                expense: expense,
                 timestamp: new Date().toISOString()
-            });
+            };
+            
+            transactions.unshift(transaction);
             saveData();
             updateBalance();
             renderChart();
             clearForm();
+            
             displayGroupedTransactions();
+            
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
+            
             alert('Transaksi berhasil ditambahkan!');
             SoundManager.play('success');
         }
 
         function clearForm() {
             SoundManager.play('click');
-            document.getElementById('transaction-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-date').valueAsDate = new Date();
             document.getElementById('transaction-desc').value = '';
             document.getElementById('transaction-income').value = '';
             document.getElementById('transaction-expense').value = '';
         }
 
         function deleteTransaction(id) {
-            if (confirm('Yakin ingin menghapus?')) {
+            SoundManager.play('click');
+            if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+                SoundManager.play('notification');
                 transactions = transactions.filter(t => t.id !== id);
                 saveData();
                 updateBalance();
                 renderChart();
                 displayGroupedTransactions();
                 SoundManager.play('success');
+            } else {
+                SoundManager.play('error');
             }
         }
 
         function editTransaction(id) {
-            const t = transactions.find(x => x.id === id);
-            if (!t) return;
-            document.getElementById('transaction-date').value = t.date;
-            document.getElementById('transaction-desc').value = t.description;
-            document.getElementById('transaction-income').value = t.income ? t.income.toLocaleString('id-ID') : '';
-            document.getElementById('transaction-expense').value = t.expense ? t.expense.toLocaleString('id-ID') : '';
+            SoundManager.play('click');
+            const transaction = transactions.find(t => t.id === id);
+            if (!transaction) {
+                SoundManager.play('error');
+                return;
+            }
             
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.toggle('active', tab.dataset.page === 'transactions-page');
-            });
+            document.getElementById('transaction-date').value = transaction.date;
+            document.getElementById('transaction-desc').value = transaction.description;
+            document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
+            document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
+            
             document.getElementById('transactions-page').classList.add('active');
             document.getElementById('history-page').classList.remove('active');
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                if (tab.dataset.page === 'transactions-page') {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
             currentPage = 'transactions-page';
             
-            transactions = transactions.filter(x => x.id !== id);
-            saveData();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
             SoundManager.play('success');
+            
+            transactions = transactions.filter(t => t.id !== id);
+            saveData();
         }
 
+        function saveData() {
+            StorageManager.save({ transactions, settings: appSettings });
+        }
+
+        // ==================== BALANCE FUNCTIONS ====================
         function updateBalance() {
-            let inc = 0, exp = 0;
-            transactions.forEach(t => { inc += t.income || 0; exp += t.expense || 0; });
-            document.getElementById('balance-amount').textContent = formatCurrency(inc - exp);
+            let totalIncome = 0;
+            let totalExpense = 0;
+            
+            transactions.forEach(transaction => {
+                totalIncome += transaction.income || 0;
+                totalExpense += transaction.expense || 0;
+            });
+            
+            const balance = totalIncome - totalExpense;
+            
+            document.getElementById('balance-amount').textContent = formatCurrency(balance);
             document.getElementById('total-transactions').textContent = transactions.length;
-            document.getElementById('last-update').textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            
+            const now = new Date();
+            document.getElementById('last-update').textContent = now.toLocaleTimeString('id-ID', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
         }
 
-        // ============= CHART =============
+        // ==================== CHART FUNCTIONS ====================
         function renderChart() {
             const canvas = document.getElementById('finance-chart');
             const placeholder = document.getElementById('chart-placeholder');
+            
             if (!canvas || !placeholder) return;
-
+            
             if (transactions.length === 0) {
-                if (financeChart) { financeChart.destroy(); financeChart = null; }
+                if (financeChart) {
+                    financeChart.destroy();
+                    financeChart = null;
+                }
                 placeholder.style.display = 'flex';
                 return;
             }
+            
             placeholder.style.display = 'none';
-
-            const monthly = {};
-            transactions.forEach(t => {
-                const k = t.date.substring(0, 7);
-                if (!monthly[k]) monthly[k] = { income: 0, expense: 0 };
-                monthly[k].income += t.income || 0;
-                monthly[k].expense += t.expense || 0;
+            
+            const monthlyData = {};
+            transactions.forEach(transaction => {
+                const monthKey = transaction.date.substring(0, 7);
+                if (!monthlyData[monthKey]) {
+                    monthlyData[monthKey] = { income: 0, expense: 0 };
+                }
+                monthlyData[monthKey].income += transaction.income || 0;
+                monthlyData[monthKey].expense += transaction.expense || 0;
             });
-
-            const months = Object.keys(monthly).sort();
-            const labels = months.map(m => {
-                const [y, mn] = m.split('-');
-                return `${getMonthName(mn)} ${y}`;
+            
+            const sortedMonths = Object.keys(monthlyData).sort();
+            const labels = sortedMonths.map(month => {
+                const [year, monthNum] = month.split('-');
+                return `${getMonthName(monthNum)} ${year}`;
             });
-            const incData = months.map(m => monthly[m].income);
-            const expData = months.map(m => monthly[m].expense);
-
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-            const textColor = isDark ? '#e0e0e0' : '#202124';
-
-            if (financeChart) financeChart.destroy();
-
+            
+            const incomeData = sortedMonths.map(month => monthlyData[month].income);
+            const expenseData = sortedMonths.map(month => monthlyData[month].expense);
+            
+            const isDarkMode = document.body.getAttribute('data-theme') === 'dark';
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            const textColor = isDarkMode ? '#e0e0e0' : '#202124';
+            
+            if (financeChart) {
+                financeChart.destroy();
+            }
+            
             try {
-                financeChart = new Chart(canvas.getContext('2d'), {
+                const ctx = canvas.getContext('2d');
+                financeChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels,
+                        labels: labels,
                         datasets: [
-                            { label: 'Pendapatan', data: incData, backgroundColor: '#34a853' },
-                            { label: 'Pengeluaran', data: expData, backgroundColor: '#ea4335' }
+                            {
+                                label: 'Pendapatan',
+                                data: incomeData,
+                                backgroundColor: '#34a853',
+                                borderColor: '#2d924a',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Pengeluaran',
+                                data: expenseData,
+                                backgroundColor: '#ea4335',
+                                borderColor: '#d33426',
+                                borderWidth: 1
+                            }
                         ]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        animation: { duration: 400 },
                         plugins: {
-                            legend: { labels: { color: textColor } },
+                            legend: {
+                                labels: { color: textColor }
+                            },
                             tooltip: {
                                 callbacks: {
-                                    label: c => `${c.dataset.label}: ${formatCurrency(c.raw)}`
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) label += ': ';
+                                        label += formatCurrency(context.raw);
+                                        return label;
+                                    }
                                 }
                             }
                         },
                         scales: {
-                            x: { grid: { color: gridColor }, ticks: { color: textColor } },
+                            x: {
+                                grid: { color: gridColor },
+                                ticks: { color: textColor }
+                            },
                             y: {
                                 beginAtZero: true,
                                 grid: { color: gridColor },
                                 ticks: {
                                     color: textColor,
-                                    callback: v => v >= 1000000 ? 'Rp' + (v/1000000).toFixed(1) + 'Jt'
-                                            : v >= 1000 ? 'Rp' + (v/1000).toFixed(0) + 'rb' : 'Rp' + v
+                                    callback: function(value) {
+                                        if (value >= 1000000) return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
+                                        if (value >= 1000) return 'Rp' + (value / 1000).toFixed(0) + 'rb';
+                                        return 'Rp' + value;
+                                    }
                                 }
                             }
                         }
                     }
                 });
-            } catch(e) { console.error('Chart error:', e); }
+            } catch(e) {
+                console.error('Chart render error:', e);
+            }
         }
 
-        // ============= FILTERS =============
+        // ==================== FILTER FUNCTIONS ====================
         function updateYearOptions() {
-            const sel = document.getElementById('filter-year');
-            if (!sel) return;
+            const yearSelect = document.getElementById('filter-year');
+            if (!yearSelect) return;
+            
             const years = new Set();
-            transactions.forEach(t => years.add(getYearFromDate(t.date)));
-            const cy = new Date().getFullYear();
-            years.add(cy.toString());
-            years.add((cy + 1).toString());
-            const sorted = Array.from(years).sort((a, b) => b - a);
-            sel.innerHTML = '<option value="">Semua Tahun</option>';
-            sorted.forEach(y => {
-                const o = document.createElement('option');
-                o.value = y; o.textContent = y;
-                sel.appendChild(o);
+            transactions.forEach(transaction => {
+                years.add(getYearFromDate(transaction.date));
             });
-            sel.value = cy.toString();
-            currentFilters.year = cy.toString();
+            
+            const currentYear = new Date().getFullYear();
+            years.add(currentYear.toString());
+            years.add((currentYear + 1).toString());
+            
+            const sortedYears = Array.from(years).sort((a, b) => b - a);
+            
+            yearSelect.innerHTML = '<option value="">Semua Tahun</option>';
+            sortedYears.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            });
+            
+            yearSelect.value = currentYear.toString();
+            currentFilters.year = currentYear.toString();
         }
 
         function updateMonthOptions() {
-            const ySel = document.getElementById('filter-year');
-            const mSel = document.getElementById('filter-month');
-            if (!ySel || !mSel) return;
-            const y = ySel.value;
+            const yearSelect = document.getElementById('filter-year');
+            const monthSelect = document.getElementById('filter-month');
+            if (!yearSelect || !monthSelect) return;
+            
+            const selectedYear = yearSelect.value;
             const months = new Set();
-            if (y) transactions.forEach(t => { if (getYearFromDate(t.date) === y) months.add(getMonthFromDate(t.date)); });
-            mSel.innerHTML = '<option value="">Semua Bulan</option>';
+            
+            if (selectedYear) {
+                transactions.forEach(transaction => {
+                    if (getYearFromDate(transaction.date) === selectedYear) {
+                        months.add(getMonthFromDate(transaction.date));
+                    }
+                });
+            }
+            
+            monthSelect.innerHTML = '<option value="">Semua Bulan</option>';
             for (let i = 1; i <= 12; i++) {
-                const m = i.toString().padStart(2, '0');
-                if (!y || months.has(m)) {
-                    const o = document.createElement('option');
-                    o.value = m; o.textContent = getMonthName(m);
-                    mSel.appendChild(o);
+                const month = i.toString().padStart(2, '0');
+                if (!selectedYear || months.has(month)) {
+                    const option = document.createElement('option');
+                    option.value = month;
+                    option.textContent = getMonthName(month);
+                    monthSelect.appendChild(option);
                 }
             }
-            const cy = new Date().getFullYear().toString();
-            if (y === cy) {
-                const cm = (new Date().getMonth() + 1).toString().padStart(2, '0');
-                mSel.value = cm;
-                currentFilters.month = cm;
+            
+            const currentYear = new Date().getFullYear().toString();
+            if (selectedYear === currentYear) {
+                const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
+                monthSelect.value = currentMonth;
+                currentFilters.month = currentMonth;
             }
         }
 
         function updateDayOptions() {
-            const ySel = document.getElementById('filter-year');
-            const mSel = document.getElementById('filter-month');
-            const dSel = document.getElementById('filter-day');
-            if (!ySel || !mSel || !dSel) return;
-            const y = ySel.value, m = mSel.value;
+            const yearSelect = document.getElementById('filter-year');
+            const monthSelect = document.getElementById('filter-month');
+            const daySelect = document.getElementById('filter-day');
+            if (!yearSelect || !monthSelect || !daySelect) return;
+            
+            const selectedYear = yearSelect.value;
+            const selectedMonth = monthSelect.value;
+            
             const days = new Set();
-            if (y && m) transactions.forEach(t => {
-                if (getYearFromDate(t.date) === y && getMonthFromDate(t.date) === m) days.add(t.date.substring(8, 10));
-            });
-            dSel.innerHTML = '<option value="">Semua Tanggal</option>';
-            if (y && m) {
-                const max = new Date(y, m, 0).getDate();
-                for (let i = 1; i <= max; i++) {
-                    const d = i.toString().padStart(2, '0');
-                    if (days.has(d)) {
-                        const o = document.createElement('option');
-                        o.value = d; o.textContent = d;
-                        dSel.appendChild(o);
+            
+            if (selectedYear && selectedMonth) {
+                transactions.forEach(transaction => {
+                    const year = getYearFromDate(transaction.date);
+                    const month = getMonthFromDate(transaction.date);
+                    if (year === selectedYear && month === selectedMonth) {
+                        days.add(transaction.date.substring(8, 10));
+                    }
+                });
+            }
+            
+            daySelect.innerHTML = '<option value="">Semua Tanggal</option>';
+            if (selectedYear && selectedMonth) {
+                const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const day = i.toString().padStart(2, '0');
+                    if (days.has(day)) {
+                        const option = document.createElement('option');
+                        option.value = day;
+                        option.textContent = day;
+                        daySelect.appendChild(option);
                     }
                 }
             }
         }
 
         function filterTransactions() {
-            const { year, month, day } = currentFilters;
-            filteredTransactions = transactions.filter(t => {
-                if (year && getYearFromDate(t.date) !== year) return false;
-                if (month && getMonthFromDate(t.date) !== month) return false;
-                if (day && t.date.substring(8, 10) !== day) return false;
+            const year = currentFilters.year;
+            const month = currentFilters.month;
+            const day = currentFilters.day;
+            
+            filteredTransactions = transactions.filter(transaction => {
+                const transactionYear = getYearFromDate(transaction.date);
+                const transactionMonth = getMonthFromDate(transaction.date);
+                const transactionDay = transaction.date.substring(8, 10);
+                
+                if (year && transactionYear !== year) return false;
+                if (month && transactionMonth !== month) return false;
+                if (day && transactionDay !== day) return false;
+                
                 return true;
             });
+            
             displayGroupedTransactions();
         }
 
@@ -1387,6 +2140,7 @@
             currentFilters.year = document.getElementById('filter-year').value;
             currentFilters.month = document.getElementById('filter-month').value;
             currentFilters.day = document.getElementById('filter-day').value;
+            
             filterTransactions();
         }
 
@@ -1395,405 +2149,308 @@
             document.getElementById('filter-year').value = '';
             document.getElementById('filter-month').value = '';
             document.getElementById('filter-day').value = '';
+            
             currentFilters = { year: '', month: '', day: '' };
             filteredTransactions = [...transactions];
+            
             displayGroupedTransactions();
+            SoundManager.play('success');
         }
 
-        // ============= DISPLAY =============
+        // ==================== DISPLAY FUNCTIONS ====================
         function displayGroupedTransactions() {
-            const c = document.getElementById('transactions-container');
-            if (!c) return;
-
+            const container = document.getElementById('transactions-container');
+            if (!container) return;
+            
             if (transactions.length === 0) {
-                c.innerHTML = `<div class="empty-state"><i class="fas fa-chart-bar"></i><p>Tidak ada transaksi</p><p>Tambahkan transaksi baru</p></div>`;
-                return;
-            }
-
-            const list = filteredTransactions.length > 0 ? filteredTransactions : transactions;
-            if (list.length === 0) {
-                c.innerHTML = `<div class="empty-state"><i class="fas fa-filter"></i><p>Tidak ada transaksi sesuai filter</p><p>Coba reset filter</p></div>`;
-                return;
-            }
-
-            const grouped = {};
-            list.forEach(t => {
-                const k = t.date.substring(0, 7);
-                if (!grouped[k]) grouped[k] = [];
-                grouped[k].push(t);
-            });
-
-            const months = Object.keys(grouped).sort().reverse();
-            let html = '';
-
-            months.forEach(mk => {
-                const [y, m] = mk.split('-');
-                const name = getMonthName(m);
-                const list = grouped[mk];
-                let inc = 0, exp = 0;
-                list.forEach(t => { inc += t.income || 0; exp += t.expense || 0; });
-                const bal = inc - exp;
-                list.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-                let rows = '';
-                list.forEach(t => {
-                    rows += `<tr>
-                        <td>${formatDate(t.date)}</td>
-                        <td>${t.description}</td>
-                        <td class="income-amount">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                        <td class="expense-amount">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn btn-secondary" onclick="editTransaction(${t.id})"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger" onclick="deleteTransaction(${t.id})"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>`;
-                });
-
-                html += `<div class="month-group">
-                    <div class="month-header">
-                        <span><i class="fas fa-calendar-alt"></i> ${name} ${y}</span>
-                        <div class="month-totals">
-                            <span><i class="fas fa-arrow-up" style="color:#34a853"></i> Masuk: <strong>${formatCurrency(inc)}</strong></span>
-                            <span><i class="fas fa-arrow-down" style="color:#ea4335"></i> Keluar: <strong>${formatCurrency(exp)}</strong></span>
-                            <span><i class="fas fa-wallet"></i> Saldo: <strong style="color:${bal>=0?'#34a853':'#ea4335'}">${formatCurrency(bal)}</strong></span>
-                        </div>
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Tidak ada transaksi ditemukan</p>
+                        <p>Tambahkan transaksi baru di halaman "Tambah Transaksi"</p>
                     </div>
+                `;
+                return;
+            }
+            
+            const transactionsToDisplay = filteredTransactions.length > 0 ? filteredTransactions : transactions;
+            
+            if (transactionsToDisplay.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-filter"></i>
+                        <p>Tidak ada transaksi sesuai filter</p>
+                        <p>Coba ubah atau reset filter Anda</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const grouped = {};
+            transactionsToDisplay.forEach(transaction => {
+                const monthKey = transaction.date.substring(0, 7);
+                if (!grouped[monthKey]) {
+                    grouped[monthKey] = [];
+                }
+                grouped[monthKey].push(transaction);
+            });
+            
+            const sortedMonths = Object.keys(grouped).sort().reverse();
+            
+            let html = '';
+            
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const monthName = getMonthName(month);
+                const monthTransactions = grouped[monthKey];
+                
+                let monthIncome = 0;
+                let monthExpense = 0;
+                
+                monthTransactions.forEach(t => {
+                    monthIncome += t.income || 0;
+                    monthExpense += t.expense || 0;
+                });
+                
+                const monthBalance = monthIncome - monthExpense;
+                
+                monthTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                let transactionsHtml = `
                     <div class="transactions-table">
                         <table>
-                            <thead><tr><th>Tanggal</th><th>Keterangan</th><th>Pendapatan</th><th>Pengeluaran</th><th>Aksi</th></tr></thead>
-                            <tbody>${rows}</tbody>
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Keterangan</th>
+                                    <th>Pendapatan</th>
+                                    <th>Pengeluaran</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                monthTransactions.forEach(transaction => {
+                    transactionsHtml += `
+                        <tr>
+                            <td>${formatDate(transaction.date)}</td>
+                            <td>${transaction.description}</td>
+                            <td class="income-amount">${transaction.income > 0 ? formatCurrency(transaction.income) : '-'}</td>
+                            <td class="expense-amount">${transaction.expense > 0 ? formatCurrency(transaction.expense) : '-'}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-secondary" onclick="editTransaction(${transaction.id})">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                transactionsHtml += `
+                            </tbody>
                         </table>
                     </div>
-                </div>`;
+                `;
+                
+                html += `
+                    <div class="month-group">
+                        <div class="month-header">
+                            <span><i class="fas fa-calendar-alt"></i> ${monthName} ${year}</span>
+                            <div class="month-totals">
+                                <span><i class="fas fa-arrow-up" style="color: #34a853"></i> Pendapatan: <strong>${formatCurrency(monthIncome)}</strong></span>
+                                <span><i class="fas fa-arrow-down" style="color: #ea4335"></i> Pengeluaran: <strong>${formatCurrency(monthExpense)}</strong></span>
+                                <span><i class="fas fa-wallet"></i> Saldo: <strong style="color: ${monthBalance >= 0 ? '#34a853' : '#ea4335'}">${formatCurrency(monthBalance)}</strong></span>
+                            </div>
+                        </div>
+                        ${transactionsHtml}
+                    </div>
+                `;
             });
-
-            c.innerHTML = html;
+            
+            container.innerHTML = html;
         }
 
-        // ============= EXPORT CSV =============
+        // ==================== EXPORT FUNCTIONS ====================
         function exportToCSV() {
             SoundManager.play('click');
-            if (transactions.length === 0) { alert('Tidak ada data!'); return; }
-
+            if (transactions.length === 0) {
+                alert('Tidak ada data transaksi untuk diexport!');
+                SoundManager.play('error');
+                return;
+            }
+            
             const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
-            const rows = [headers.join(',')];
-            transactions.forEach(t => {
-                rows.push([
+            const csvContent = [
+                headers.join(','),
+                ...transactions.map(t => [
                     t.date,
                     `"${t.description.replace(/"/g, '""')}"`,
                     t.income,
                     t.expense
-                ].join(','));
-            });
-
-            const blob = new Blob(["\uFEFF" + rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `cash-track-${new Date().toISOString().split('T')[0]}.csv`;
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cash-track-export-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             SoundManager.play('success');
         }
 
-        // ============= EXPORT EXCEL (RAPI + JARAK) =============
         function exportToExcel() {
             SoundManager.play('click');
-            if (transactions.length === 0) { alert('Tidak ada data!'); return; }
-
-            // Group by month
+            if (transactions.length === 0) {
+                alert('Tidak ada data transaksi untuk diexport!');
+                SoundManager.play('error');
+                return;
+            }
+            
             const grouped = {};
-            transactions.forEach(t => {
-                const k = t.date.substring(0, 7);
-                if (!grouped[k]) grouped[k] = [];
-                grouped[k].push(t);
+            transactions.forEach(transaction => {
+                const monthKey = transaction.date.substring(0, 7);
+                if (!grouped[monthKey]) {
+                    grouped[monthKey] = [];
+                }
+                grouped[monthKey].push(transaction);
             });
-            const months = Object.keys(grouped).sort().reverse();
-
-            // ====== STYLE CSS UNTUK JARAK & RAPI ======
-            let html = `
-            <html xmlns:o="urn:schemas-microsoft-com:office:office"
-                  xmlns:x="urn:schemas-microsoft-com:office:excel"
-                  xmlns="http://www.w3.org/TR/REC-html40">
-            <head>
-            <meta charset="UTF-8">
-            <style>
-                table { border-collapse: collapse; font-family: Calibri, Arial, sans-serif; font-size: 11pt; }
-                td, th { padding: 8px 12px; vertical-align: middle; }
-                .title { 
-                    font-size: 18pt; font-weight: bold; color: #1a73e8; 
-                    text-align: center; padding: 15px 0;
-                }
-                .subtitle {
-                    font-size: 10pt; color: #666; text-align: center; padding-bottom: 15px;
-                }
-                .month-header { 
-                    background-color: #1a73e8; color: white; 
-                    font-size: 13pt; font-weight: bold;
-                    padding: 12px 15px; text-align: left;
-                }
-                .header-row th {
-                    background-color: #e8f0fe; color: #1a73e8;
-                    font-weight: bold; text-align: center;
-                    border: 1px solid #c5d5f0;
-                }
-                .data-row td { 
-                    border: 1px solid #e0e0e0; 
-                    padding: 8px 12px;
-                }
-                .income-col { color: #1e7e34; text-align: right; font-weight: 500; }
-                .expense-col { color: #c62828; text-align: right; font-weight: 500; }
-                .date-col { text-align: center; white-space: nowrap; }
-                .desc-col { text-align: left; }
-                
-                .total-row td {
-                    background-color: #e8f5e9; font-weight: bold;
-                    border: 1px solid #81c784; padding: 10px 12px;
-                }
-                .total-row-income { color: #1e7e34; text-align: right; }
-                .total-row-expense { color: #c62828; text-align: right; }
-                
-                .balance-row td {
-                    background-color: #fff3e0; font-weight: bold;
-                    border: 1px solid #ffb74d; padding: 10px 12px;
-                }
-                .balance-positive { color: #1e7e34; text-align: right; }
-                .balance-negative { color: #c62828; text-align: right; }
-                
-                .spacer { height: 25px; border: none; background: white; }
-                .spacer-td { height: 25px; border: none; background: white; }
-                
-                .grand-total td {
-                    background-color: #1a73e8; color: white;
-                    font-weight: bold; font-size: 12pt;
-                    padding: 14px 15px; border: 1px solid #0d47a1;
-                }
-                .grand-total-label { text-align: left; }
-                .grand-total-value { text-align: right; }
-                
-                .final-balance td {
-                    background-color: #0d47a1; color: white;
-                    font-weight: bold; font-size: 12pt;
-                    padding: 14px 15px; border: 1px solid #062c6b;
-                }
-            </style>
-            </head>
-            <body>
-            <table>
-                <tr><td colspan="4" class="title">💰 CashTrack - Laporan Keuangan</td></tr>
-                <tr><td colspan="4" class="subtitle">Dibuat pada: ${new Date().toLocaleString('id-ID')}</td></tr>
-                <tr><td colspan="4" class="spacer-td"></td></tr>
-            `;
-
-            // Data per bulan
-            months.forEach((mk, idx) => {
-                const [year, month] = mk.split('-');
+            
+            const sortedMonths = Object.keys(grouped).sort().reverse();
+            
+            let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
+            
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
                 const monthName = getMonthName(month);
-                const list = grouped[mk];
+                const monthTransactions = grouped[monthKey];
                 
-                let monthIncome = 0, monthExpense = 0;
-                list.forEach(t => { monthIncome += t.income || 0; monthExpense += t.expense || 0; });
+                let monthIncome = 0;
+                let monthExpense = 0;
+                
+                monthTransactions.forEach(t => {
+                    monthIncome += t.income || 0;
+                    monthExpense += t.expense || 0;
+                });
+                
                 const monthBalance = monthIncome - monthExpense;
                 
-                list.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-                // Header bulan
-                html += `<tr><td colspan="4" class="month-header">📅 ${monthName} ${year}</td></tr>`;
+                excelContent += `
+                    <tr style="background-color: #f0f0f0;">
+                        <td colspan="4"><strong>${monthName} ${year}</strong></td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Keterangan</th>
+                        <th>Pendapatan</th>
+                        <th>Pengeluaran</th>
+                    </tr>
+                `;
                 
-                // Header tabel
-                html += `<tr class="header-row">
-                    <th style="width:120px">Tanggal</th>
-                    <th style="width:300px">Keterangan</th>
-                    <th style="width:150px">Pendapatan</th>
-                    <th style="width:150px">Pengeluaran</th>
-                </tr>`;
-
-                // Data rows
-                list.forEach(t => {
-                    html += `<tr class="data-row">
-                        <td class="date-col">${formatDate(t.date)}</td>
-                        <td class="desc-col">${t.description}</td>
-                        <td class="income-col">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                        <td class="expense-col">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                    </tr>`;
+                monthTransactions.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                    excelContent += `
+                        <tr>
+                            <td>${formatDate(t.date)}</td>
+                            <td>${t.description}</td>
+                            <td>${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                            <td>${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                        </tr>
+                    `;
                 });
-
-                // Total bulan
-                html += `<tr class="total-row">
-                    <td colspan="2" style="text-align:left">📊 Total ${monthName}</td>
-                    <td class="total-row-income">${formatCurrency(monthIncome)}</td>
-                    <td class="total-row-expense">${formatCurrency(monthExpense)}</td>
-                </tr>`;
                 
-                // Saldo bulan
-                html += `<tr class="balance-row">
-                    <td colspan="3" style="text-align:left">💵 Saldo Bulan ${monthName}</td>
-                    <td class="${monthBalance >= 0 ? 'balance-positive' : 'balance-negative'}">${formatCurrency(monthBalance)}</td>
-                </tr>`;
-                
-                // SPACER antar bulan (JARAK!)
-                if (idx < months.length - 1) {
-                    html += `<tr><td colspan="4" class="spacer-td"></td></tr>`;
-                    html += `<tr><td colspan="4" class="spacer-td"></td></tr>`;
-                }
+                excelContent += `
+                    <tr style="background-color: #e8f5e9;">
+                        <td colspan="2"><strong>Total ${monthName}</strong></td>
+                        <td><strong>${formatCurrency(monthIncome)}</strong></td>
+                        <td><strong>${formatCurrency(monthExpense)}</strong></td>
+                    </tr>
+                    <tr style="background-color: #fff3e0;">
+                        <td colspan="3"><strong>Saldo Bulan ${monthName}</strong></td>
+                        <td><strong style="color: ${monthBalance >= 0 ? 'green' : 'red'}">${formatCurrency(monthBalance)}</strong></td>
+                    </tr>
+                    <tr><td colspan="4" style="height: 20px;"></td></tr>
+                `;
             });
-
-            // Grand total
-            let totalIncome = 0, totalExpense = 0;
-            transactions.forEach(t => { totalIncome += t.income || 0; totalExpense += t.expense || 0; });
-            const finalBalance = totalIncome - totalExpense;
-
-            html += `<tr><td colspan="4" class="spacer-td"></td></tr>`;
-            html += `<tr><td colspan="4" class="spacer-td"></td></tr>`;
             
-            html += `<tr class="grand-total">
-                <td colspan="2" class="grand-total-label">📈 TOTAL PENDAPATAN</td>
-                <td colspan="2" class="grand-total-value">${formatCurrency(totalIncome)}</td>
-            </tr>`;
-            html += `<tr class="grand-total">
-                <td colspan="2" class="grand-total-label">📉 TOTAL PENGELUARAN</td>
-                <td colspan="2" class="grand-total-value">${formatCurrency(totalExpense)}</td>
-            </tr>`;
-            html += `<tr class="final-balance">
-                <td colspan="2" class="grand-total-label">💎 SALDO AKHIR</td>
-                <td colspan="2" class="grand-total-value">${formatCurrency(finalBalance)}</td>
-            </tr>`;
-
-            html += `</table></body></html>`;
-
-            const blob = new Blob([html], { type: 'application/vnd.ms-excel;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `cash-track-laporan-${new Date().toISOString().split('T')[0]}.xls`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            SoundManager.play('success');
-        }
-
-        // ============= EXPORT EXCEL BERKELOMPOK (SIMPLE) =============
-        function exportToExcelGrouped() {
-            SoundManager.play('click');
-            if (transactions.length === 0) { alert('Tidak ada data!'); return; }
-
-            const grouped = {};
+            let totalIncome = 0;
+            let totalExpense = 0;
             transactions.forEach(t => {
-                const k = t.date.substring(0, 7);
-                if (!grouped[k]) grouped[k] = [];
-                grouped[k].push(t);
+                totalIncome += t.income || 0;
+                totalExpense += t.expense || 0;
             });
-            const months = Object.keys(grouped).sort().reverse();
-
-            let html = `
-            <html xmlns:x="urn:schemas-microsoft-com:office:excel">
-            <head>
-            <meta charset="UTF-8">
+            const totalBalance = totalIncome - totalExpense;
+            
+            excelContent += `
+                <tr style="background-color: #e3f2fd;">
+                    <td colspan="2"><strong>TOTAL KESELURUHAN</strong></td>
+                    <td><strong>${formatCurrency(totalIncome)}</strong></td>
+                    <td><strong>${formatCurrency(totalExpense)}</strong></td>
+                </tr>
+                <tr style="background-color: #fce4ec;">
+                    <td colspan="3"><strong>SALDO AKHIR</strong></td>
+                    <td><strong style="color: ${totalBalance >= 0 ? 'green' : 'red'}">${formatCurrency(totalBalance)}</strong></td>
+                </tr>
+            </table>
+            
             <style>
-                table { border-collapse: collapse; font-family: Calibri, Arial, sans-serif; font-size: 11pt; }
-                td, th { padding: 10px 14px; vertical-align: middle; }
-                .title { font-size: 16pt; font-weight: bold; color: #1a73e8; text-align: center; padding: 15px; }
-                .month-header { 
-                    background-color: #1a73e8; color: white; 
-                    font-size: 12pt; font-weight: bold;
-                    padding: 14px 15px; text-align: left;
-                }
-                .header-row th {
-                    background-color: #e8f0fe; color: #1a73e8;
-                    font-weight: bold; text-align: center;
-                    border: 1px solid #c5d5f0;
-                }
-                .data-row td { 
-                    border: 1px solid #e0e0e0; 
-                    padding: 10px 14px;
-                }
-                .income { color: #1e7e34; text-align: right; font-weight: 500; }
-                .expense { color: #c62828; text-align: right; font-weight: 500; }
-                .date-col { text-align: center; white-space: nowrap; }
-                .spacer-td { height: 30px; border: none; background: white; }
-                .subtotal td {
-                    background-color: #fff8e1; font-weight: bold;
-                    border: 2px solid #ffb74d; padding: 12px 14px;
-                }
-                .subtotal-label { text-align: left; }
-                .subtotal-value { text-align: right; }
+                td { padding: 5px; }
+                th { background-color: #4CAF50; color: white; padding: 8px; }
             </style>
-            </head>
-            <body>
-            <table>
-                <tr><td colspan="4" class="title">📊 CashTrack - Data Per Bulan</td></tr>
-                <tr><td colspan="4" class="spacer-td"></td></tr>
             `;
-
-            months.forEach((mk, idx) => {
-                const [year, month] = mk.split('-');
-                const monthName = getMonthName(month);
-                const list = grouped[mk];
-                
-                let inc = 0, exp = 0;
-                list.forEach(t => { inc += t.income || 0; exp += t.expense || 0; });
-                list.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-                html += `<tr><td colspan="4" class="month-header">${monthName} ${year}</td></tr>`;
-                html += `<tr class="header-row">
-                    <th style="width:120px">Tanggal</th>
-                    <th style="width:300px">Keterangan</th>
-                    <th style="width:150px">Pendapatan</th>
-                    <th style="width:150px">Pengeluaran</th>
-                </tr>`;
-
-                list.forEach(t => {
-                    html += `<tr class="data-row">
-                        <td class="date-col">${formatDate(t.date)}</td>
-                        <td>${t.description}</td>
-                        <td class="income">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                        <td class="expense">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                    </tr>`;
-                });
-
-                html += `<tr class="subtotal">
-                    <td colspan="2" class="subtotal-label">Total ${monthName} (Saldo: ${formatCurrency(inc - exp)})</td>
-                    <td class="subtotal-value income">${formatCurrency(inc)}</td>
-                    <td class="subtotal-value expense">${formatCurrency(exp)}</td>
-                </tr>`;
-
-                if (idx < months.length - 1) {
-                    html += `<tr><td colspan="4" class="spacer-td"></td></tr>`;
-                }
-            });
-
-            html += `</table></body></html>`;
-
-            const blob = new Blob([html], { type: 'application/vnd.ms-excel;charset=utf-8' });
+            
+            const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `cash-track-berkelompok-${new Date().toISOString().split('T')[0]}.xls`;
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cash-track-report-${new Date().toISOString().split('T')[0]}.xls`);
+            link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             SoundManager.play('success');
         }
 
-        // ============= NAVIGATION =============
+        function exportToExcelGrouped() {
+            exportToExcel();
+        }
+
+        // ==================== NAVIGATION ====================
         function setupNavigationTabs() {
-            document.querySelectorAll('.nav-tab').forEach(tab => {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     SoundManager.play('click');
-                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-                    const pid = tab.dataset.page;
-                    document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-                    document.getElementById(pid).classList.add('active');
-                    currentPage = pid;
-                    if (pid === 'history-page') displayGroupedTransactions();
+                    
+                    const pageId = tab.dataset.page;
+                    document.querySelectorAll('.page-section').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    currentPage = pageId;
+                    
+                    if (pageId === 'history-page') {
+                        displayGroupedTransactions();
+                    }
                 });
             });
         }
 
+        // ==================== LOGOUT ====================
         function logout() {
             SoundManager.play('click');
-            if (confirm('Yakin ingin keluar?')) {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
                 localStorage.removeItem('cashTrackLoggedIn');
                 showLoginScreen();
                 document.getElementById('password-input').value = '';
