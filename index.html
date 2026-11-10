@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- PWA Manifest -->
-    <link rel="manifest" id="app-manifest">
+    <link rel="manifest" href="manifest.json">
     
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
@@ -66,7 +66,7 @@
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
-            transition: var(--transition);
+            transition: background-color 0.3s ease, color 0.3s ease;
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
         }
@@ -177,7 +177,7 @@
         /* Login Screen */
         #login-screen {
             min-height: 100vh;
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -220,6 +220,10 @@
             color: var(--primary);
             font-size: 30px;
             font-weight: bold;
+        }
+
+        [data-theme="dark"] .app-icon {
+            background: #2d2d2d;
         }
 
         .app-title {
@@ -297,8 +301,6 @@
 
         .login-btn:hover {
             background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
         }
 
         .error-message {
@@ -307,243 +309,6 @@
             margin-top: 10px;
             font-size: 14px;
             display: none;
-        }
-
-        /* Donation Screen */
-        #donation-screen {
-            min-height: 100vh;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #977dff 0%, #0033ff 50%, #0600ab 100%);
-            padding-top: var(--safe-area-top);
-            padding-bottom: var(--safe-area-bottom);
-        }
-
-        .donation-container {
-            width: 100%;
-            max-width: 380px;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            animation: fadeIn 0.5s ease;
-            text-align: center;
-        }
-
-        .donation-header {
-            margin-bottom: 15px;
-        }
-
-        .donation-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #977dff, #0033ff);
-            border-radius: 15px;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .donation-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a73e8;
-            margin-bottom: 5px;
-        }
-
-        .donation-subtitle {
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-
-        .donation-message {
-            color: #555;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: rgba(151, 125, 255, 0.05);
-            border-radius: 8px;
-            border-left: 3px solid #977dff;
-        }
-
-        .donation-box {
-            background: linear-gradient(145deg, #f8f9ff, #eef2ff);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px 0;
-            border: 2px solid #e0e7ff;
-            box-shadow: 0 6px 15px rgba(151, 125, 255, 0.1);
-            text-align: center;
-            position: relative;
-        }
-
-        .bank-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: #0033ff;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .account-number {
-            font-size: 20px;
-            font-weight: 800;
-            color: #0600ab;
-            letter-spacing: 1px;
-            margin: 12px 0;
-            padding: 12px;
-            background: #ffffff;
-            border-radius: 8px;
-            border: 2px dashed #977dff;
-            font-family: monospace, sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            word-break: break-all;
-            position: relative;
-            user-select: all;
-        }
-
-        .account-number:hover {
-            background: #f9f9ff;
-            transform: scale(1.02);
-        }
-
-        .account-number.copied {
-            background: #34a853;
-            color: white;
-            border-color: #2d924a;
-        }
-
-        .copy-indicator {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: #34a853;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            animation: popIn 0.3s ease;
-            z-index: 2;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            70% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .account-name {
-            font-size: 16px;
-            color: #444;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .copy-notice {
-            font-size: 12px;
-            color: #666;
-            font-style: italic;
-            margin-top: 8px;
-        }
-
-        .copy-btn {
-            margin-top: 10px;
-            background: linear-gradient(to right, #977dff, #0033ff);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(151, 125, 255, 0.3);
-        }
-
-        .copy-btn.copied {
-            background: #34a853;
-        }
-
-        .donation-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .donation-btn {
-            background: linear-gradient(to right, #977dff, #0033ff);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(151, 125, 255, 0.4);
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.3px;
-        }
-
-        .donation-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(151, 125, 255, 0.6);
-        }
-
-        .donation-btn:active {
-            transform: translateY(-1px);
-        }
-
-        .button-shine {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 200%; }
-        }
-
-        .donation-footer {
-            margin-top: 20px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.9);
-            text-align: center;
-            line-height: 1.4;
         }
 
         /* Sound Control */
@@ -1153,14 +918,46 @@
             height: 100% !important;
         }
 
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        /* Scrollbar Styling */
+        .transactions-table::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .transactions-table::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .transactions-table::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .transactions-table::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-tabs {
-                display: flex;
-            }
-            
-            .login-container,
-            .donation-container {
+            .login-container {
                 padding: 20px;
                 margin: 10px;
                 max-width: 100%;
@@ -1268,21 +1065,6 @@
                 margin: 20px 0 12px;
             }
             
-            .donation-title {
-                font-size: 1.4rem;
-            }
-            
-            .account-number {
-                font-size: 18px;
-                padding: 10px;
-                letter-spacing: 1px;
-            }
-            
-            .donation-btn {
-                padding: 12px;
-                font-size: 15px;
-            }
-            
             .toggle-switch {
                 width: 50px;
                 height: 25px;
@@ -1316,8 +1098,7 @@
                 font-size: 30px;
             }
             
-            .app-title,
-            .donation-title {
+            .app-title {
                 font-size: 1.5rem;
             }
             
@@ -1395,25 +1176,6 @@
                 padding: 10px;
                 font-size: 13px;
             }
-            
-            .account-number {
-                font-size: 16px;
-                padding: 8px;
-            }
-            
-            .donation-container {
-                padding: 15px;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .nav-tabs {
-                display: none;
-            }
-            
-            .page-section {
-                display: block !important;
-            }
         }
 
         @media (max-width: 360px) {
@@ -1434,75 +1196,26 @@
                 padding: 8px;
                 font-size: 12px;
             }
-            
-            .account-number {
-                font-size: 15px;
-                letter-spacing: 0;
-            }
-            
-            .donation-btn {
-                padding: 10px;
-                font-size: 14px;
-            }
         }
 
         /* Touch Device Optimization */
         @media (hover: none) and (pointer: coarse) {
             .btn:hover,
             .icon-btn:hover,
-            .nav-tab:hover,
-            .donation-btn:hover {
+            .nav-tab:hover {
                 transform: none;
             }
             
             .btn:active,
             .icon-btn:active,
-            .nav-tab:active,
-            .donation-btn:active {
+            .nav-tab:active {
                 transform: scale(0.95);
                 transition: transform 0.1s ease;
             }
             
-            .login-btn:active,
-            .donation-btn:active {
+            .login-btn:active {
                 transform: scale(0.98);
             }
-        }
-
-        /* Scrollbar Styling */
-        .transactions-table::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .transactions-table::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 3px;
-        }
-
-        .transactions-table::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 3px;
-        }
-
-        .transactions-table::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--gray);
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-
-        .empty-state p {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -1514,7 +1227,7 @@
 
     <!-- Install Prompt -->
     <div class="install-prompt" id="install-prompt">
-        Pasang CashTrack di perangkat Anda untuk pengalaman terbaik
+        Pasang CashTrack di perangkat Anda
         <button class="install-btn" id="install-btn">Pasang</button>
         <button class="install-btn" onclick="hideInstallPrompt()" style="background: transparent; color: white;">
             <i class="fas fa-times"></i>
@@ -1529,7 +1242,6 @@
         <h1 class="splash-title">CashTrack</h1>
         <p class="splash-subtitle">Kelola Keuangan dengan Mudah</p>
         
-        <!-- Splash Footer -->
         <div class="splash-footer">
             <p class="version">CashTrack Version 2.0</p>
             <p>Karya Muhammad Abid – Buatan Indonesia</p>
@@ -1560,46 +1272,6 @@
             </button>
 
             <div class="error-message" id="password-error">Password salah!</div>
-        </div>
-    </div>
-
-    <!-- Donation Screen -->
-    <div id="donation-screen">
-        <div class="donation-container">
-            <div class="donation-header">
-                <div class="donation-icon">
-                    <i class="fas fa-hand-holding-heart"></i>
-                </div>
-                <h1 class="donation-title">Support Developer</h1>
-                <p class="donation-subtitle">Bantu pengembangan aplikasi dengan donasi seikhlasnya</p>
-            </div>
-
-            <div class="donation-message">
-                "Terima kasih telah menggunakan CashTrack! Donasi Anda akan membantu pengembangan aplikasi ini menjadi lebih baik."
-            </div>
-
-            <div class="donation-box">
-                <div class="bank-name">
-                    <i class="fas fa-university"></i> Bank Seabank
-                </div>
-                <div class="account-name">Muhamad Abid kalkautsar</div>
-                <div class="account-number" id="copy-account-number" onclick="copyAccountNumber()">9018 9866 1823</div>
-                <button class="copy-btn" onclick="copyAccountNumber()">
-                    <i class="far fa-copy"></i> Salin Nomor Rekening
-                </button>
-                <div class="copy-notice">Klik nomor rekening atau tombol di atas untuk menyalin</div>
-            </div>
-
-            <div class="donation-buttons">
-                <button class="donation-btn" id="enter-app-btn">
-                    <span class="button-shine"></span>
-                    <i class="fas fa-arrow-right"></i> KLIK UNTUK MASUK KE APLIKASI
-                </button>
-            </div>
-        </div>
-        
-        <div class="donation-footer">
-            CashTrack © 2027 | Buatan Anak Indonesia <i class="fas fa-flag"></i>
         </div>
     </div>
 
@@ -1748,61 +1420,48 @@
             sounds: {},
             
             init() {
-                // Create audio elements
                 this.sounds = {
                     click: new Audio('mixkit-positive-notification-951.wav'),
                     success: new Audio('mixkit-positive-notification-951.wav'),
                     error: new Audio('new-notification-011-364050.mp3'),
-                    notification: new Audio('notification-center-443093.mp3'),
-                    preview: new Audio('preview.mp3'),
-                    positive: new Audio('preview.mp3')
+                    notification: new Audio('notification-center-443093.mp3')
                 };
                 
-                // Set volume
                 Object.values(this.sounds).forEach(sound => {
                     sound.volume = 0.5;
                 });
                 
-                // Load sound settings from storage
                 const savedSettings = localStorage.getItem('cashTrackSoundSettings');
                 if (savedSettings) {
-                    const settings = JSON.parse(savedSettings);
-                    this.isMuted = settings.isMuted || false;
+                    try {
+                        const settings = JSON.parse(savedSettings);
+                        this.isMuted = settings.isMuted || false;
+                    } catch(e) {}
                 }
                 
-                // Update UI
                 this.updateSoundIcon();
             },
             
             play(soundName) {
                 if (this.isMuted) return;
-                
                 const sound = this.sounds[soundName];
                 if (sound) {
                     sound.currentTime = 0;
-                    sound.play().catch(e => console.log('Sound play failed:', e));
+                    sound.play().catch(() => {});
                 }
             },
             
             toggleMute() {
                 this.isMuted = !this.isMuted;
                 this.updateSoundIcon();
-                
-                // Play click sound when unmuting
-                if (!this.isMuted) {
-                    this.play('click');
-                }
-                
-                // Save settings
-                localStorage.setItem('cashTrackSoundSettings', JSON.stringify({
-                    isMuted: this.isMuted,
-                    volume: 0.5
-                }));
+                if (!this.isMuted) this.play('click');
+                localStorage.setItem('cashTrackSoundSettings', JSON.stringify({ isMuted: this.isMuted }));
             },
             
             updateSoundIcon() {
                 const soundIcon = document.getElementById('sound-icon');
                 const soundControl = document.getElementById('sound-control');
+                if (!soundIcon || !soundControl) return;
                 
                 if (this.isMuted) {
                     soundIcon.className = 'fas fa-volume-mute';
@@ -1817,7 +1476,6 @@
         // ==================== STORAGE MANAGER ====================
         const StorageManager = {
             STORAGE_KEY: 'cashTrackData_v2',
-            BACKUP_KEY: 'cashTrackBackup',
             
             save(data) {
                 try {
@@ -1825,178 +1483,30 @@
                         transactions: data.transactions || [],
                         settings: data.settings || {},
                         version: '2.0',
-                        lastBackup: new Date().toISOString()
+                        lastSave: new Date().toISOString()
                     };
-                    
-                    // Save to localStorage
                     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(saveData));
-                    
-                    // Create backup
-                    this.createBackup(saveData);
-                    
-                    // Also save to sessionStorage for redundancy
-                    sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(saveData));
-                    
-                    console.log('Data saved successfully');
-                    SoundManager.play('success');
                     return true;
                 } catch (error) {
                     console.error('Save failed:', error);
-                    SoundManager.play('error');
-                    this.tryFallbackSave(data);
                     return false;
                 }
             },
             
             load() {
                 try {
-                    // Try main storage first
-                    let data = localStorage.getItem(this.STORAGE_KEY);
-                    
-                    if (!data) {
-                        // Try sessionStorage
-                        data = sessionStorage.getItem(this.STORAGE_KEY);
-                    }
-                    
-                    if (!data) {
-                        // Try backup
-                        data = localStorage.getItem(this.BACKUP_KEY);
-                    }
-                    
+                    const data = localStorage.getItem(this.STORAGE_KEY);
                     if (data) {
                         const parsed = JSON.parse(data);
-                        
-                        // Validate and migrate old data
-                        if (!parsed.version || parsed.version === '1.0') {
-                            return this.migrateOldData(parsed);
-                        }
-                        
-                        SoundManager.play('notification');
-                        return parsed;
+                        return {
+                            transactions: parsed.transactions || [],
+                            settings: parsed.settings || {}
+                        };
                     }
-                    
-                    return { transactions: [], settings: {} };
                 } catch (error) {
                     console.error('Load failed:', error);
-                    SoundManager.play('error');
-                    return this.loadBackup();
-                }
-            },
-            
-            createBackup(data) {
-                try {
-                    localStorage.setItem(this.BACKUP_KEY, JSON.stringify(data));
-                } catch (error) {
-                    console.warn('Backup creation failed:', error);
-                }
-            },
-            
-            loadBackup() {
-                try {
-                    const backup = localStorage.getItem(this.BACKUP_KEY);
-                    if (backup) {
-                        SoundManager.play('notification');
-                        return JSON.parse(backup);
-                    }
-                } catch (error) {
-                    console.error('Backup load failed:', error);
-                    SoundManager.play('error');
                 }
                 return { transactions: [], settings: {} };
-            },
-            
-            tryFallbackSave(data) {
-                try {
-                    // Try indexedDB as fallback
-                    if (window.indexedDB) {
-                        this.saveToIndexedDB(data);
-                    }
-                    
-                    // Try compressed storage
-                    const compressed = this.compressData(data);
-                    localStorage.setItem('cashTrackCompressed', compressed);
-                    SoundManager.play('success');
-                } catch (error) {
-                    console.error('All storage methods failed:', error);
-                    SoundManager.play('error');
-                }
-            },
-            
-            compressData(data) {
-                return btoa(JSON.stringify(data));
-            },
-            
-            decompressData(compressed) {
-                try {
-                    return JSON.parse(atob(compressed));
-                } catch (error) {
-                    return { transactions: [], settings: {} };
-                }
-            },
-            
-            migrateOldData(oldData) {
-                // Migrate from old storage format
-                const migrated = {
-                    transactions: Array.isArray(oldData) ? oldData : (oldData.transactions || []),
-                    settings: oldData.settings || {},
-                    version: '2.0',
-                    migrated: new Date().toISOString()
-                };
-                
-                // Save migrated data
-                this.save(migrated);
-                SoundManager.play('positive');
-                
-                return migrated;
-            },
-            
-            saveToIndexedDB(data) {
-                if (!window.indexedDB) return;
-                
-                const request = indexedDB.open('CashTrackDB', 1);
-                
-                request.onupgradeneeded = function(event) {
-                    const db = event.target.result;
-                    if (!db.objectStoreNames.contains('transactions')) {
-                        db.createObjectStore('transactions', { keyPath: 'id' });
-                    }
-                };
-                
-                request.onsuccess = function(event) {
-                    const db = event.target.result;
-                    const transaction = db.transaction(['transactions'], 'readwrite');
-                    const store = transaction.objectStore('transactions');
-                    
-                    // Clear existing data
-                    store.clear();
-                    
-                    // Save all transactions
-                    data.transactions.forEach(item => {
-                        store.put(item);
-                    });
-                    
-                    transaction.oncomplete = function() {
-                        console.log('Data saved to IndexedDB');
-                        SoundManager.play('success');
-                    };
-                };
-            },
-            
-            clearAll() {
-                try {
-                    localStorage.removeItem(this.STORAGE_KEY);
-                    sessionStorage.removeItem(this.STORAGE_KEY);
-                    localStorage.removeItem(this.BACKUP_KEY);
-                    localStorage.removeItem('cashTrackCompressed');
-                    
-                    if (window.indexedDB) {
-                        indexedDB.deleteDatabase('CashTrackDB');
-                    }
-                    SoundManager.play('notification');
-                } catch (error) {
-                    console.error('Clear storage failed:', error);
-                    SoundManager.play('error');
-                }
             }
         };
 
@@ -2012,34 +1522,32 @@
 
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize sound manager
             SoundManager.init();
             
-            // Initialize storage and load data
             const savedData = StorageManager.load();
             transactions = savedData.transactions || [];
             appSettings = savedData.settings || {};
             
-            // Set today's date as default in transaction form
+            // Set today's date
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('transaction-date').value = today;
             
             // Setup sound control
             document.getElementById('sound-control').addEventListener('click', () => {
                 SoundManager.toggleMute();
-                SoundManager.play('click');
             });
             
             // Enter key support for form inputs
             ['transaction-desc', 'transaction-income', 'transaction-expense'].forEach(id => {
-                document.getElementById(id).addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        addTransaction();
-                    }
-                });
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') addTransaction();
+                    });
+                }
             });
             
-            // Initialize password toggle
+            // Password toggle
             const togglePassword = document.getElementById('toggle-password');
             const passwordInput = document.getElementById('password-input');
             
@@ -2050,70 +1558,61 @@
                 SoundManager.play('click');
             });
             
-            // Enter key for password input
             passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkPassword();
-                }
+                if (e.key === 'Enter') checkPassword();
             });
             
-            // Initialize dark mode toggle
+            // ==================== FIXED DARK MODE ====================
             const darkModeToggle = document.getElementById('dark-mode-toggle');
             const currentTheme = appSettings.theme || 'light';
             
-            if (currentTheme === 'dark') {
-                document.body.setAttribute('data-theme', 'dark');
-                darkModeToggle.checked = true;
-            }
-            
-            darkModeToggle.addEventListener('change', function() {
-                SoundManager.play('click');
-                if (this.checked) {
+            // Apply initial theme safely
+            function applyTheme(theme) {
+                if (theme === 'dark') {
                     document.body.setAttribute('data-theme', 'dark');
-                    appSettings.theme = 'dark';
+                    if (darkModeToggle) darkModeToggle.checked = true;
                 } else {
                     document.body.removeAttribute('data-theme');
-                    appSettings.theme = 'light';
+                    if (darkModeToggle) darkModeToggle.checked = false;
                 }
-                
-                // Save settings
-                StorageManager.save({ transactions, settings: appSettings });
-                
-                if (financeChart) {
-                    renderChart();
-                }
-                
-                if (currentPage === 'history-page') {
-                    displayGroupedTransactions();
-                }
-            });
+                appSettings.theme = theme;
+            }
+            
+            // Apply theme after a small delay to ensure DOM is ready
+            setTimeout(() => {
+                applyTheme(currentTheme);
+            }, 50);
+            
+            // Dark mode toggle handler - FIXED
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', function() {
+                    try {
+                        SoundManager.play('click');
+                        const newTheme = this.checked ? 'dark' : 'light';
+                        applyTheme(newTheme);
+                        
+                        // Save settings
+                        StorageManager.save({ transactions, settings: appSettings });
+                        
+                        // Re-render chart with new theme colors
+                        if (transactions.length > 0) {
+                            renderChart();
+                        }
+                        
+                        // Re-render history if on history page
+                        if (currentPage === 'history-page') {
+                            displayGroupedTransactions();
+                        }
+                    } catch(e) {
+                        console.error('Dark mode toggle error:', e);
+                        // Fallback: reset toggle
+                        this.checked = !this.checked;
+                    }
+                });
+            }
         });
 
-        // ==================== PWA FUNCTIONS ====================
-        const manifest = {
-            "name": "CashTrack",
-            "short_name": "CashTrack",
-            "description": "Aplikasi manajemen keuangan pribadi",
-            "start_url": "/",
-            "display": "standalone",
-            "background_color": "#ffffff",
-            "theme_color": "#1a73e8",
-            "orientation": "portrait-primary",
-            "categories": ["finance", "productivity"],
-            "icons": [
-                {
-                    "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=",
-                    "sizes": "192x192",
-                    "type": "image/svg+xml"
-                }
-            ]
-        };
-
-        const manifestJson = JSON.stringify(manifest);
-        const manifestBlob = new Blob([manifestJson], { type: 'application/json' });
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        document.getElementById('app-manifest').href = manifestURL;
-
+        // ==================== PWA ====================
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -2125,14 +1624,13 @@
         function showInstallPrompt() {
             if (deferredPrompt) {
                 const installPrompt = document.getElementById('install-prompt');
-                installPrompt.style.display = 'block';
-                SoundManager.play('notification');
+                if (installPrompt) installPrompt.style.display = 'block';
             }
         }
 
         function hideInstallPrompt() {
             const installPrompt = document.getElementById('install-prompt');
-            installPrompt.style.display = 'none';
+            if (installPrompt) installPrompt.style.display = 'none';
             SoundManager.play('click');
         }
 
@@ -2142,7 +1640,6 @@
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
                     SoundManager.play('success');
                 }
                 deferredPrompt = null;
@@ -2153,33 +1650,21 @@
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(registration => {
-                    console.log('SW registered: ', registration);
-                    SoundManager.play('success');
-                }).catch(registrationError => {
-                    console.log('SW registration failed: ', registrationError);
-                    SoundManager.play('error');
-                });
+                navigator.serviceWorker.register('sw.js').catch(() => {});
             });
         }
 
         // ==================== SPLASH SCREEN ====================
         window.addEventListener('load', () => {
-            // Play preview sound when app starts
-            setTimeout(() => {
-                SoundManager.play('preview');
-            }, 500);
-            
             setTimeout(() => {
                 const splashScreen = document.getElementById('splash-screen');
                 splashScreen.style.opacity = '0';
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                     
-                    // Check if already logged in
                     const isLoggedIn = localStorage.getItem('cashTrackLoggedIn');
                     if (isLoggedIn) {
-                        showDonationScreen();
+                        enterApp();
                     } else {
                         showLoginScreen();
                     }
@@ -2190,15 +1675,13 @@
         // ==================== LOGIN FUNCTIONS ====================
         function showLoginScreen() {
             document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('donation-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'none';
             
-            // Set today's date as default
             document.getElementById('transaction-date').valueAsDate = new Date();
             
-            // Focus on password input
             setTimeout(() => {
-                document.getElementById('password-input').focus();
+                const pwd = document.getElementById('password-input');
+                if (pwd) pwd.focus();
             }, 100);
         }
 
@@ -2210,7 +1693,7 @@
             if (passwordInput.value === correctPassword) {
                 localStorage.setItem('cashTrackLoggedIn', 'true');
                 SoundManager.play('success');
-                showDonationScreen();
+                enterApp();
             } else {
                 errorMessage.style.display = 'block';
                 passwordInput.value = '';
@@ -2222,175 +1705,27 @@
             }
         }
 
-        // ==================== DONATION SCREEN FUNCTIONS ====================
-        function copyAccountNumber() {
-            SoundManager.play('click');
-            const accountNumber = document.getElementById('copy-account-number');
-            const copyBtn = document.querySelector('.copy-btn');
-            const text = accountNumber.textContent.replace(/\s/g, '');
-            
-            // Create a temporary textarea element
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-999999px';
-            textarea.style.top = '-999999px';
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    // Show success state
-                    accountNumber.classList.add('copied');
-                    copyBtn.classList.add('copied');
-                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Berhasil Disalin!';
-                    
-                    // Create copy indicator
-                    const indicator = document.createElement('div');
-                    indicator.className = 'copy-indicator';
-                    indicator.innerHTML = '<i class="fas fa-check"></i>';
-                    accountNumber.parentElement.appendChild(indicator);
-                    
-                    SoundManager.play('success');
-                    
-                    // Reset after 2 seconds
-                    setTimeout(() => {
-                        accountNumber.classList.remove('copied');
-                        copyBtn.classList.remove('copied');
-                        copyBtn.innerHTML = '<i class="far fa-copy"></i> Salin Nomor Rekening';
-                        if (indicator.parentElement) {
-                            indicator.parentElement.removeChild(indicator);
-                        }
-                    }, 2000);
-                    
-                    // Fallback: Copy to clipboard API
-                    if (navigator.clipboard) {
-                        navigator.clipboard.writeText(text).catch(err => {
-                            console.log('Clipboard API failed:', err);
-                        });
-                    }
-                } else {
-                    throw new Error('execCommand failed');
-                }
-            } catch (err) {
-                console.log('Copy failed:', err);
-                
-                // Fallback method for mobile devices
-                try {
-                    if (navigator.clipboard) {
-                        navigator.clipboard.writeText(text).then(() => {
-                            accountNumber.classList.add('copied');
-                            copyBtn.classList.add('copied');
-                            copyBtn.innerHTML = '<i class="fas fa-check"></i> Berhasil Disalin!';
-                            SoundManager.play('success');
-                            
-                            setTimeout(() => {
-                                accountNumber.classList.remove('copied');
-                                copyBtn.classList.remove('copied');
-                                copyBtn.innerHTML = '<i class="far fa-copy"></i> Salin Nomor Rekening';
-                            }, 2000);
-                        }).catch(fallbackErr => {
-                            console.log('Clipboard API fallback failed:', fallbackErr);
-                            showCopyFallback(text);
-                        });
-                    } else {
-                        showCopyFallback(text);
-                    }
-                } catch (fallbackErr) {
-                    console.log('All copy methods failed:', fallbackErr);
-                    showCopyFallback(text);
-                }
-            } finally {
-                document.body.removeChild(textarea);
-            }
-        }
-        
-        function showCopyFallback(text) {
-            SoundManager.play('error');
-            const accountNumber = document.getElementById('copy-account-number');
-            const copyBtn = document.querySelector('.copy-btn');
-            
-            // Show fallback message
-            accountNumber.style.background = '#ffebee';
-            accountNumber.style.color = '#c62828';
-            copyBtn.style.background = '#c62828';
-            copyBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Gagal, salin manual';
-            
-            // Select text for manual copy
-            accountNumber.style.userSelect = 'text';
-            const range = document.createRange();
-            range.selectNodeContents(accountNumber);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            
-            setTimeout(() => {
-                accountNumber.style.background = '';
-                accountNumber.style.color = '';
-                accountNumber.style.userSelect = 'all';
-                copyBtn.style.background = '';
-                copyBtn.innerHTML = '<i class="far fa-copy"></i> Salin Nomor Rekening';
-                selection.removeAllRanges();
-            }, 3000);
-        }
-
-        function showDonationScreen() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('donation-screen').style.display = 'flex';
-            document.getElementById('main-app').style.display = 'none';
-            
-            // Play positive notification
-            SoundManager.play('positive');
-            
-            // Setup copy functionality
-            const accountNumber = document.getElementById('copy-account-number');
-            const copyBtn = document.querySelector('.copy-btn');
-            
-            // Remove any existing event listeners
-            accountNumber.onclick = null;
-            copyBtn.onclick = null;
-            
-            // Add new event listeners
-            accountNumber.addEventListener('click', copyAccountNumber);
-            copyBtn.addEventListener('click', copyAccountNumber);
-            
-            document.getElementById('enter-app-btn').addEventListener('click', enterApp);
-        }
-
         function enterApp() {
-            SoundManager.play('click');
-            document.getElementById('donation-screen').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             initializeApp();
         }
 
         // ==================== APP INITIALIZATION ====================
         function initializeApp() {
-            // Play notification sound
-            SoundManager.play('notification');
-            
-            // Set today's date as default
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('transaction-date').value = today;
             
-            // Initialize filter options
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
             
-            // Set default filters
             currentFilters.year = new Date().getFullYear().toString();
             currentFilters.month = (new Date().getMonth() + 1).toString().padStart(2, '0');
             
-            // Update UI
             updateBalance();
             renderChart();
-            
-            // Load transactions based on current filters
             filterTransactions();
-            
-            // Setup navigation tabs
             setupNavigationTabs();
         }
 
@@ -2416,7 +1751,7 @@
         }
 
         function formatDate(dateString) {
-            const date = new Date(dateString);
+            const date = new Date(dateString + 'T00:00:00');
             return date.toLocaleDateString('id-ID', { 
                 day: '2-digit', 
                 month: 'long', 
@@ -2481,15 +1816,12 @@
             renderChart();
             clearForm();
             
-            // PERBAIKAN: Selalu update riwayat transaksi terlepas dari halaman aktif
             displayGroupedTransactions();
             
-            // Update filter options
             updateYearOptions();
             updateMonthOptions();
             updateDayOptions();
             
-            // Show success message and play sound
             alert('Transaksi berhasil ditambahkan!');
             SoundManager.play('success');
         }
@@ -2510,8 +1842,6 @@
                 saveData();
                 updateBalance();
                 renderChart();
-                
-                // PERBAIKAN: Selalu update riwayat transaksi
                 displayGroupedTransactions();
                 SoundManager.play('success');
             } else {
@@ -2532,7 +1862,6 @@
             document.getElementById('transaction-income').value = transaction.income ? transaction.income.toLocaleString('id-ID') : '';
             document.getElementById('transaction-expense').value = transaction.expense ? transaction.expense.toLocaleString('id-ID') : '';
             
-            // Scroll to form
             document.getElementById('transactions-page').classList.add('active');
             document.getElementById('history-page').classList.remove('active');
             document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -2544,10 +1873,8 @@
             });
             currentPage = 'transactions-page';
             
-            // Play success sound
-            SoundManager.play('positive');
+            SoundManager.play('success');
             
-            // Remove the transaction being edited
             transactions = transactions.filter(t => t.id !== id);
             saveData();
         }
@@ -2560,36 +1887,30 @@
         function updateBalance() {
             let totalIncome = 0;
             let totalExpense = 0;
-            let totalTransactions = 0;
             
             transactions.forEach(transaction => {
                 totalIncome += transaction.income || 0;
                 totalExpense += transaction.expense || 0;
-                totalTransactions++;
             });
             
             const balance = totalIncome - totalExpense;
             
             document.getElementById('balance-amount').textContent = formatCurrency(balance);
-            document.getElementById('total-transactions').textContent = totalTransactions;
+            document.getElementById('total-transactions').textContent = transactions.length;
             
-            // Update last update time
             const now = new Date();
             document.getElementById('last-update').textContent = now.toLocaleTimeString('id-ID', { 
                 hour: '2-digit', 
                 minute: '2-digit' 
             });
-            
-            // Play notification sound on significant balance update
-            if (transactions.length > 0) {
-                SoundManager.play('notification');
-            }
         }
 
         // ==================== CHART FUNCTIONS ====================
         function renderChart() {
-            const ctx = document.getElementById('finance-chart').getContext('2d');
+            const canvas = document.getElementById('finance-chart');
             const placeholder = document.getElementById('chart-placeholder');
+            
+            if (!canvas || !placeholder) return;
             
             if (transactions.length === 0) {
                 if (financeChart) {
@@ -2602,18 +1923,16 @@
             
             placeholder.style.display = 'none';
             
-            // Group by month
             const monthlyData = {};
             transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                const monthKey = transaction.date.substring(0, 7);
                 if (!monthlyData[monthKey]) {
                     monthlyData[monthKey] = { income: 0, expense: 0 };
                 }
-                monthlyData[monthKey].income += transaction.income;
-                monthlyData[monthKey].expense += transaction.expense;
+                monthlyData[monthKey].income += transaction.income || 0;
+                monthlyData[monthKey].expense += transaction.expense || 0;
             });
             
-            // Sort months
             const sortedMonths = Object.keys(monthlyData).sort();
             const labels = sortedMonths.map(month => {
                 const [year, monthNum] = month.split('-');
@@ -2631,102 +1950,88 @@
                 financeChart.destroy();
             }
             
-            financeChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Pendapatan',
-                            data: incomeData,
-                            backgroundColor: '#34a853',
-                            borderColor: '#2d924a',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Pengeluaran',
-                            data: expenseData,
-                            backgroundColor: '#ea4335',
-                            borderColor: '#d33426',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: textColor
+            try {
+                const ctx = canvas.getContext('2d');
+                financeChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Pendapatan',
+                                data: incomeData,
+                                backgroundColor: '#34a853',
+                                borderColor: '#2d924a',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Pengeluaran',
+                                data: expenseData,
+                                backgroundColor: '#ea4335',
+                                borderColor: '#d33426',
+                                borderWidth: 1
                             }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { color: textColor }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) label += ': ';
+                                        label += formatCurrency(context.raw);
+                                        return label;
                                     }
-                                    label += formatCurrency(context.raw);
-                                    return label;
                                 }
                             }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                color: gridColor
-                            },
-                            ticks: {
-                                color: textColor
-                            }
                         },
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: gridColor
+                        scales: {
+                            x: {
+                                grid: { color: gridColor },
+                                ticks: { color: textColor }
                             },
-                            ticks: {
-                                color: textColor,
-                                callback: function(value) {
-                                    if (value >= 1000000) {
-                                        return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: gridColor },
+                                ticks: {
+                                    color: textColor,
+                                    callback: function(value) {
+                                        if (value >= 1000000) return 'Rp' + (value / 1000000).toFixed(1) + 'Jt';
+                                        if (value >= 1000) return 'Rp' + (value / 1000).toFixed(0) + 'rb';
+                                        return 'Rp' + value;
                                     }
-                                    if (value >= 1000) {
-                                        return 'Rp' + (value / 1000).toFixed(0) + 'rb';
-                                    }
-                                    return 'Rp' + value;
                                 }
                             }
                         }
                     }
-                }
-            });
-            
-            // Play preview sound when chart is rendered
-            SoundManager.play('preview');
+                });
+            } catch(e) {
+                console.error('Chart render error:', e);
+            }
         }
 
         // ==================== FILTER FUNCTIONS ====================
         function updateYearOptions() {
             const yearSelect = document.getElementById('filter-year');
-            const years = new Set();
+            if (!yearSelect) return;
             
+            const years = new Set();
             transactions.forEach(transaction => {
                 years.add(getYearFromDate(transaction.date));
             });
             
-            // Get current year and next year
             const currentYear = new Date().getFullYear();
             years.add(currentYear.toString());
             years.add((currentYear + 1).toString());
             
-            // Sort years descending
             const sortedYears = Array.from(years).sort((a, b) => b - a);
             
-            // Update options
             yearSelect.innerHTML = '<option value="">Semua Tahun</option>';
             sortedYears.forEach(year => {
                 const option = document.createElement('option');
@@ -2735,7 +2040,6 @@
                 yearSelect.appendChild(option);
             });
             
-            // Set to current year by default
             yearSelect.value = currentYear.toString();
             currentFilters.year = currentYear.toString();
         }
@@ -2743,8 +2047,9 @@
         function updateMonthOptions() {
             const yearSelect = document.getElementById('filter-year');
             const monthSelect = document.getElementById('filter-month');
-            const selectedYear = yearSelect.value;
+            if (!yearSelect || !monthSelect) return;
             
+            const selectedYear = yearSelect.value;
             const months = new Set();
             
             if (selectedYear) {
@@ -2755,7 +2060,6 @@
                 });
             }
             
-            // Update options
             monthSelect.innerHTML = '<option value="">Semua Bulan</option>';
             for (let i = 1; i <= 12; i++) {
                 const month = i.toString().padStart(2, '0');
@@ -2767,7 +2071,6 @@
                 }
             }
             
-            // Set to current month by default if year is current year
             const currentYear = new Date().getFullYear().toString();
             if (selectedYear === currentYear) {
                 const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
@@ -2780,6 +2083,8 @@
             const yearSelect = document.getElementById('filter-year');
             const monthSelect = document.getElementById('filter-month');
             const daySelect = document.getElementById('filter-day');
+            if (!yearSelect || !monthSelect || !daySelect) return;
+            
             const selectedYear = yearSelect.value;
             const selectedMonth = monthSelect.value;
             
@@ -2795,14 +2100,12 @@
                 });
             }
             
-            // Update options
             daySelect.innerHTML = '<option value="">Semua Tanggal</option>';
             if (selectedYear && selectedMonth) {
-                // Get number of days in month
                 const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
                 for (let i = 1; i <= daysInMonth; i++) {
                     const day = i.toString().padStart(2, '0');
-                    if (!selectedYear || !selectedMonth || days.has(day)) {
+                    if (days.has(day)) {
                         const option = document.createElement('option');
                         option.value = day;
                         option.textContent = day;
@@ -2830,7 +2133,6 @@
             });
             
             displayGroupedTransactions();
-            SoundManager.play('notification');
         }
 
         function applyFilter() {
@@ -2852,12 +2154,13 @@
             filteredTransactions = [...transactions];
             
             displayGroupedTransactions();
-            SoundManager.play('positive');
+            SoundManager.play('success');
         }
 
         // ==================== DISPLAY FUNCTIONS ====================
         function displayGroupedTransactions() {
             const container = document.getElementById('transactions-container');
+            if (!container) return;
             
             if (transactions.length === 0) {
                 container.innerHTML = `
@@ -2870,20 +2173,28 @@
                 return;
             }
             
-            // Gunakan filteredTransactions untuk tampilan
             const transactionsToDisplay = filteredTransactions.length > 0 ? filteredTransactions : transactions;
             
-            // Group by month
+            if (transactionsToDisplay.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-filter"></i>
+                        <p>Tidak ada transaksi sesuai filter</p>
+                        <p>Coba ubah atau reset filter Anda</p>
+                    </div>
+                `;
+                return;
+            }
+            
             const grouped = {};
             transactionsToDisplay.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                const monthKey = transaction.date.substring(0, 7);
                 if (!grouped[monthKey]) {
                     grouped[monthKey] = [];
                 }
                 grouped[monthKey].push(transaction);
             });
             
-            // Sort months descending
             const sortedMonths = Object.keys(grouped).sort().reverse();
             
             let html = '';
@@ -2893,7 +2204,6 @@
                 const monthName = getMonthName(month);
                 const monthTransactions = grouped[monthKey];
                 
-                // Calculate month totals
                 let monthIncome = 0;
                 let monthExpense = 0;
                 
@@ -2904,7 +2214,6 @@
                 
                 const monthBalance = monthIncome - monthExpense;
                 
-                // Sort transactions by date descending
                 monthTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
                 
                 let transactionsHtml = `
@@ -2965,7 +2274,6 @@
             });
             
             container.innerHTML = html;
-            SoundManager.play('preview');
         }
 
         // ==================== EXPORT FUNCTIONS ====================
@@ -2988,7 +2296,7 @@
                 ].join(','))
             ].join('\n');
             
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
@@ -3008,17 +2316,15 @@
                 return;
             }
             
-            // Group by month for Excel export
             const grouped = {};
             transactions.forEach(transaction => {
-                const monthKey = transaction.date.substring(0, 7); // YYYY-MM
+                const monthKey = transaction.date.substring(0, 7);
                 if (!grouped[monthKey]) {
                     grouped[monthKey] = [];
                 }
                 grouped[monthKey].push(transaction);
             });
             
-            // Sort months descending
             const sortedMonths = Object.keys(grouped).sort().reverse();
             
             let excelContent = '<table border="1"><tr><th colspan="4">CashTrack - Laporan Keuangan</th></tr>';
@@ -3028,7 +2334,6 @@
                 const monthName = getMonthName(month);
                 const monthTransactions = grouped[monthKey];
                 
-                // Calculate month totals
                 let monthIncome = 0;
                 let monthExpense = 0;
                 
@@ -3076,7 +2381,6 @@
                 `;
             });
             
-            // Add overall summary
             let totalIncome = 0;
             let totalExpense = 0;
             transactions.forEach(t => {
@@ -3112,12 +2416,11 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            SoundManager.play('positive');
+            SoundManager.play('success');
         }
 
         function exportToExcelGrouped() {
-            SoundManager.play('click');
-            exportToExcel(); // Same function for now
+            exportToExcel();
         }
 
         // ==================== NAVIGATION ====================
@@ -3126,11 +2429,9 @@
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     SoundManager.play('click');
-                    // Update active tab
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
                     
-                    // Show corresponding page
                     const pageId = tab.dataset.page;
                     document.querySelectorAll('.page-section').forEach(page => {
                         page.classList.remove('active');
@@ -3139,13 +2440,9 @@
                     
                     currentPage = pageId;
                     
-                    // PERBAIKAN: Selalu refresh riwayat transaksi saat pindah ke halaman riwayat
                     if (pageId === 'history-page') {
                         displayGroupedTransactions();
                     }
-                    
-                    // Play notification sound
-                    SoundManager.play('notification');
                 });
             });
         }
@@ -3155,11 +2452,8 @@
             SoundManager.play('click');
             if (confirm('Apakah Anda yakin ingin keluar?')) {
                 localStorage.removeItem('cashTrackLoggedIn');
-                SoundManager.play('notification');
                 showLoginScreen();
                 document.getElementById('password-input').value = '';
-            } else {
-                SoundManager.play('error');
             }
         }
     </script>
