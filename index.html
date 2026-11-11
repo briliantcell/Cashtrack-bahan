@@ -1749,40 +1749,45 @@
 
         /* ==================== EXPORT EXCEL (DETAIL) ==================== */
         function exportToExcel() {
-            SoundManager.play('click');
-            const { data, label } = getExportData();
-            if (data.length === 0) {
-                alert('Tidak ada data transaksi untuk diexport pada filter ini!');
-                SoundManager.play('error');
-                return;
-            }
+    SoundManager.play('click');
+    const { data, label } = getExportData();
+    if (data.length === 0) {
+        alert('Tidak ada data transaksi untuk diexport pada filter ini!');
+        SoundManager.play('error');
+        return;
+    }
 
-            const grouped = {};
-            data.forEach(t => {
-                const k = t.date.substring(0, 7);
-                if (!grouped[k]) grouped[k] = [];
-                grouped[k].push(t);
-            });
-            const sortedMonths = Object.keys(grouped).sort().reverse();
+    const grouped = {};
+    data.forEach(t => {
+        const k = t.date.substring(0, 7);
+        if (!grouped[k]) grouped[k] = [];
+        grouped[k].push(t);
+    });
+    const sortedMonths = Object.keys(grouped).sort().reverse();
 
-            const cell       = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;mso-number-format:"\\@";';
-            const header     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
-            const monthHdr   = 'padding:18px 22px;border:1px solid #cfcfcf;background:#2980b9;color:#ffffff;font-family:Arial,sans-serif;font-size:13pt;font-weight:bold;vertical-align:middle;letter-spacing:0.5px;';
-            const incStyle   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-            const expStyle   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-            const totInc     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-            const totExp     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-            const balStyle   = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e8f0fe;color:#3498db;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-            const spacer     = 'height:32px;border:none;background:transparent;';
-            const infoRow    = 'padding:12px 22px;background:#f8f9fa;color:#555;font-size:10.5pt;text-align:center;border:1px solid #cfcfcf;';
-            const dateCell   = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;font-weight:bold;color:#3498db;vertical-align:middle;mso-number-format:"\\@";';
-            const dateHeader = 'padding:16px 22px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
-            const titleCell  = 'padding:32px 22px;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:20pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
-            const recapCell  = 'padding:22px;background:#2980b9;color:#ffffff;font-size:14pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
+    // ===== LEBAR KOLOM (DIPERBESAR DRASTIS) =====
+    // Tgl: 90 | Ket: 550 | Pendapatan: 240 | Pengeluaran: 240
+    const W_TGL = 90;
+    const W_KET = 550;
+    const W_ANG = 240;
 
-            let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
-                               xmlns:x="urn:schemas-microsoft-com:office:excel"
-                               xmlns="http://www.w3.org/TR/REC-html40">
+    const cell       = `padding:14px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;mso-number-format:"\\@";`;
+    const header     = `padding:16px 20px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;`;
+    const monthHdr   = `padding:18px 20px;border:1px solid #cfcfcf;background:#2980b9;color:#ffffff;font-family:Arial,sans-serif;font-size:13pt;font-weight:bold;vertical-align:middle;letter-spacing:0.5px;`;
+    const incStyle   = `padding:14px 20px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:600;mso-number-format:"\\@";`;
+    const expStyle   = `padding:14px 20px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:600;mso-number-format:"\\@";`;
+    const totInc     = `padding:16px 20px;border:1px solid #cfcfcf;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";`;
+    const totExp     = `padding:16px 20px;border:1px solid #cfcfcf;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";`;
+    const balStyle   = `padding:16px 20px;border:1px solid #cfcfcf;background:#e8f0fe;color:#3498db;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";`;
+    const spacer     = 'height:32px;border:none;background:transparent;';
+    const infoRow    = 'padding:12px 20px;background:#f8f9fa;color:#555;font-size:10.5pt;text-align:center;border:1px solid #cfcfcf;';
+    const dateCell   = `padding:14px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;font-weight:bold;color:#3498db;vertical-align:middle;mso-number-format:"\\@";`;
+    const titleCell  = 'padding:32px 20px;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:20pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
+    const recapCell  = 'padding:22px;background:#2980b9;color:#ffffff;font-size:14pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
+
+    let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+                       xmlns:x="urn:schemas-microsoft-com:office:excel"
+                       xmlns="http://www.w3.org/TR/REC-html40">
 <head>
 <meta charset="UTF-8">
 <!--[if gte mso 9]>
@@ -1791,7 +1796,14 @@
 <x:ExcelWorksheets>
 <x:ExcelWorksheet>
 <x:Name>Laporan CashTrack</x:Name>
-<x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
+<x:WorksheetOptions>
+<x:DisplayGridlines/>
+<x:FreezePanes/>
+<x:FrozenNoSplit/>
+<x:SplitHorizontal>2</x:SplitHorizontal>
+<x:TopRowBottomPane>2</x:TopRowBottomPane>
+<x:ActivePane>2</x:ActivePane>
+</x:WorksheetOptions>
 </x:ExcelWorksheet>
 </x:ExcelWorksheets>
 </x:ExcelWorkbook>
@@ -1802,10 +1814,10 @@
 <body>
 <table style="border-collapse:collapse;font-family:Arial,sans-serif;">
 <colgroup>
-    <col width="110">
-    <col width="420">
-    <col width="200">
-    <col width="200">
+    <col width="${W_TGL}">
+    <col width="${W_KET}">
+    <col width="${W_ANG}">
+    <col width="${W_ANG}">
 </colgroup>
 <tr>
     <td colspan="4" style="${titleCell}">CashTrack &nbsp;•&nbsp; Laporan Keuangan</td>
@@ -1819,122 +1831,130 @@
 <tr><td colspan="4" style="${spacer}"></td></tr>
 `;
 
-            let gInc = 0, gExp = 0;
+    let gInc = 0, gExp = 0;
 
-            sortedMonths.forEach(k => {
-                const [year, month] = k.split('-');
-                const mn = getMonthName(month);
-                const mTx = grouped[k];
-                let mi = 0, me = 0;
-                mTx.forEach(t => { mi += t.income || 0; me += t.expense || 0; });
-                gInc += mi; gExp += me;
-                const mb = mi - me;
+    sortedMonths.forEach(k => {
+        const [year, month] = k.split('-');
+        const mn = getMonthName(month);
+        const mTx = grouped[k];
+        let mi = 0, me = 0;
+        mTx.forEach(t => { mi += t.income || 0; me += t.expense || 0; });
+        gInc += mi; gExp += me;
+        const mb = mi - me;
 
-                html += `<tr>
-                    <td colspan="4" style="${monthHdr}">${mn} ${year}</td>
-                </tr>
-                <tr>
-                    <td style="${dateHeader}">Tgl</td>
-                    <td style="${header}">Keterangan</td>
-                    <td style="${header}">Pendapatan</td>
-                    <td style="${header}">Pengeluaran</td>
-                </tr>`;
+        html += `<tr>
+            <td colspan="4" style="${monthHdr}">${mn} ${year}</td>
+        </tr>
+        <tr>
+            <td width="${W_TGL}" style="${header} width:${W_TGL}px;">Tgl</td>
+            <td width="${W_KET}" style="${header} width:${W_KET}px;">Keterangan</td>
+            <td width="${W_ANG}" style="${header} width:${W_ANG}px;">Pendapatan</td>
+            <td width="${W_ANG}" style="${header} width:${W_ANG}px;">Pengeluaran</td>
+        </tr>`;
 
-                mTx.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
-                    html += `<tr>
-                        <td style="${dateCell}">${formatDayOnly(t.date)}</td>
-                        <td style="${cell}">${t.description}</td>
-                        <td style="${incStyle}">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                        <td style="${expStyle}">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-                    </tr>`;
-                });
-
-                html += `<tr>
-                    <td colspan="2" style="${cell}"><b>Total ${mn} ${year}</b></td>
-                    <td style="${totInc}">${formatCurrency(mi)}</td>
-                    <td style="${totExp}">${formatCurrency(me)}</td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="${cell}"><b>Saldo ${mn} ${year}</b></td>
-                    <td style="${balStyle}">${formatCurrency(mb)}</td>
-                </tr>
-                <tr><td colspan="4" style="${spacer}"></td></tr>`;
-            });
-
-            const gb = gInc - gExp;
+        mTx.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
             html += `<tr>
-                <td colspan="4" style="${recapCell}">REKAP ${label.toUpperCase()}</td>
-            </tr>
-            <tr>
-                <td colspan="2" style="${cell}"><b>Total Pendapatan</b></td>
-                <td colspan="2" style="${totInc}">${formatCurrency(gInc)}</td>
-            </tr>
-            <tr>
-                <td colspan="2" style="${cell}"><b>Total Pengeluaran</b></td>
-                <td colspan="2" style="${totExp}">${formatCurrency(gExp)}</td>
-            </tr>
-            <tr>
-                <td colspan="2" style="${cell}"><b>SALDO AKHIR</b></td>
-                <td colspan="2" style="${balStyle}">${formatCurrency(gb)}</td>
-            </tr>
-            <tr><td colspan="4" style="${spacer}"></td></tr>
-            <tr>
-                <td colspan="4" style="padding:16px;text-align:center;color:#888;font-size:9.5pt;border:none;">
-                    © 2027 CashTrack — Buatan Anak Indonesia
-                </td>
-            </tr>
-            </table>
+                <td width="${W_TGL}" style="${dateCell} width:${W_TGL}px;">${formatDayOnly(t.date)}</td>
+                <td width="${W_KET}" style="${cell} width:${W_KET}px;">${t.description}</td>
+                <td width="${W_ANG}" style="${incStyle} width:${W_ANG}px;">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                <td width="${W_ANG}" style="${expStyle} width:${W_ANG}px;">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+            </tr>`;
+        });
+
+        html += `<tr>
+            <td colspan="2" style="${cell}"><b>Total ${mn} ${year}</b></td>
+            <td width="${W_ANG}" style="${totInc} width:${W_ANG}px;">${formatCurrency(mi)}</td>
+            <td width="${W_ANG}" style="${totExp} width:${W_ANG}px;">${formatCurrency(me)}</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="${cell}"><b>Saldo ${mn} ${year}</b></td>
+            <td width="${W_ANG}" style="${balStyle} width:${W_ANG}px;">${formatCurrency(mb)}</td>
+        </tr>
+        <tr><td colspan="4" style="${spacer}"></td></tr>`;
+    });
+
+    const gb = gInc - gExp;
+    html += `<tr>
+        <td colspan="4" style="${recapCell}">REKAP ${label.toUpperCase()}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="${cell}"><b>Total Pendapatan</b></td>
+        <td colspan="2" style="${totInc}">${formatCurrency(gInc)}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="${cell}"><b>Total Pengeluaran</b></td>
+        <td colspan="2" style="${totExp}">${formatCurrency(gExp)}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="${cell}"><b>SALDO AKHIR</b></td>
+        <td colspan="2" style="${balStyle}">${formatCurrency(gb)}</td>
+    </tr>
+    <tr><td colspan="4" style="${spacer}"></td></tr>
+    <tr>
+        <td colspan="4" style="padding:16px;text-align:center;color:#888;font-size:9.5pt;border:none;">
+            © 2027 CashTrack — Laporan dari Abid
+        </td>
+    </tr>
+    </table>
 </body>
 </html>`;
 
-            const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `cash-track-${label.replace(/[^\w]/g, '_')}-${new Date().toISOString().split('T')[0]}.xls`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            SoundManager.play('success');
-        }
+    const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `cash-track-${label.replace(/[^\w]/g, '_')}-${new Date().toISOString().split('T')[0]}.xls`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    SoundManager.play('success');
+}
+          
 
         /* ==================== EXPORT EXCEL GRUP (REKAP BULANAN) ==================== */
         function exportToExcelGrouped() {
-            SoundManager.play('click');
-            const { data, label } = getExportData();
-            if (data.length === 0) {
-                alert('Tidak ada data transaksi untuk diexport pada filter ini!');
-                SoundManager.play('error');
-                return;
-            }
+    SoundManager.play('click');
+    const { data, label } = getExportData();
+    if (data.length === 0) {
+        alert('Tidak ada data transaksi untuk diexport pada filter ini!');
+        SoundManager.play('error');
+        return;
+    }
 
-            const grouped = {};
-            data.forEach(t => {
-                const k = t.date.substring(0, 7);
-                if (!grouped[k]) grouped[k] = { income: 0, expense: 0, count: 0 };
-                grouped[k].income += t.income || 0;
-                grouped[k].expense += t.expense || 0;
-                grouped[k].count += 1;
-            });
-            const sortedMonths = Object.keys(grouped).sort();
+    const grouped = {};
+    data.forEach(t => {
+        const k = t.date.substring(0, 7);
+        if (!grouped[k]) grouped[k] = { income: 0, expense: 0, count: 0 };
+        grouped[k].income += t.income || 0;
+        grouped[k].expense += t.expense || 0;
+        grouped[k].count += 1;
+    });
+    const sortedMonths = Object.keys(grouped).sort();
 
-            const titleCell = 'padding:32px 22px;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:20pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
-            const infoRow   = 'padding:12px 22px;background:#f8f9fa;color:#555;font-size:10.5pt;text-align:center;border:1px solid #cfcfcf;';
-            const header    = 'padding:16px 22px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
-            const cell      = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;mso-number-format:"\\@";';
-            const cellC     = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;vertical-align:middle;font-weight:600;color:#2980b9;mso-number-format:"\\@";';
-            const incCell   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:600;mso-number-format:"\\@";';
-            const expCell   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:600;mso-number-format:"\\@";';
-            const balPos    = 'padding:14px 22px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:bold;background:#e6f4ea;mso-number-format:"\\@";';
-            const balNeg    = 'padding:14px 22px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:bold;background:#fce8e6;mso-number-format:"\\@";';
-            const recapCell = 'padding:22px;background:#2980b9;color:#ffffff;font-size:14pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
-            const spacer    = 'height:32px;border:none;background:transparent;';
-            const totInc    = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-            const totExp    = 'padding:16px 22px;border:1px solid #cfcfcf;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-            const totBal    = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e8f0fe;color:#3498db;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+    // ===== LEBAR KOLOM (DIPERBESAR DRASTIS) =====
+    // Bulan: 200 | Jml: 150 | Pendapatan: 240 | Pengeluaran: 240 | Saldo: 240
+    const W_BLN = 200;
+    const W_JML = 150;
+    const W_ANG = 240;
+    const W_SAL = 240;
 
-            let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
-                               xmlns:x="urn:schemas-microsoft-com:office:excel"
-                               xmlns="http://www.w3.org/TR/REC-html40">
+    const titleCell = 'padding:32px 20px;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:20pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
+    const infoRow   = 'padding:12px 20px;background:#f8f9fa;color:#555;font-size:10.5pt;text-align:center;border:1px solid #cfcfcf;';
+    const header    = 'padding:16px 20px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
+    const cell      = 'padding:14px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;mso-number-format:"\\@";';
+    const cellC     = 'padding:14px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;vertical-align:middle;font-weight:600;color:#2980b9;mso-number-format:"\\@";';
+    const incCell   = 'padding:14px 20px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:600;mso-number-format:"\\@";';
+    const expCell   = 'padding:14px 20px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:600;mso-number-format:"\\@";';
+    const balPos    = 'padding:14px 20px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:bold;background:#e6f4ea;mso-number-format:"\\@";';
+    const balNeg    = 'padding:14px 20px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:bold;background:#fce8e6;mso-number-format:"\\@";';
+    const recapCell = 'padding:22px;background:#2980b9;color:#ffffff;font-size:14pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
+    const spacer    = 'height:32px;border:none;background:transparent;';
+    const totInc    = 'padding:16px 20px;border:1px solid #cfcfcf;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+    const totExp    = 'padding:16px 20px;border:1px solid #cfcfcf;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+    const totBal    = 'padding:16px 20px;border:1px solid #cfcfcf;background:#e8f0fe;color:#3498db;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+
+    let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+                       xmlns:x="urn:schemas-microsoft-com:office:excel"
+                       xmlns="http://www.w3.org/TR/REC-html40">
 <head>
 <meta charset="UTF-8">
 <!--[if gte mso 9]>
@@ -1954,11 +1974,11 @@
 <body>
 <table style="border-collapse:collapse;font-family:Arial,sans-serif;">
 <colgroup>
-    <col width="180">
-    <col width="130">
-    <col width="200">
-    <col width="200">
-    <col width="200">
+    <col width="${W_BLN}">
+    <col width="${W_JML}">
+    <col width="${W_ANG}">
+    <col width="${W_ANG}">
+    <col width="${W_SAL}">
 </colgroup>
 
 <tr>
@@ -1973,75 +1993,74 @@
 <tr><td colspan="5" style="${spacer}"></td></tr>
 
 <tr>
-    <td style="${header}">Bulan</td>
-    <td style="${header}">Jumlah Transaksi</td>
-    <td style="${header}">Total Pendapatan</td>
-    <td style="${header}">Total Pengeluaran</td>
-    <td style="${header}">Saldo Bulan</td>
+    <td width="${W_BLN}" style="${header} width:${W_BLN}px;">Bulan</td>
+    <td width="${W_JML}" style="${header} width:${W_JML}px;">Jumlah Transaksi</td>
+    <td width="${W_ANG}" style="${header} width:${W_ANG}px;">Total Pendapatan</td>
+    <td width="${W_ANG}" style="${header} width:${W_ANG}px;">Total Pengeluaran</td>
+    <td width="${W_SAL}" style="${header} width:${W_SAL}px;">Saldo Bulan</td>
 </tr>
 `;
 
-            let gInc = 0, gExp = 0, gCount = 0;
+    let gInc = 0, gExp = 0, gCount = 0;
 
-            sortedMonths.forEach(k => {
-                const [year, month] = k.split('-');
-                const mn = getMonthName(month);
-                const g = grouped[k];
-                const mb = g.income - g.expense;
-                gInc += g.income;
-                gExp += g.expense;
-                gCount += g.count;
+    sortedMonths.forEach(k => {
+        const [year, month] = k.split('-');
+        const mn = getMonthName(month);
+        const g = grouped[k];
+        const mb = g.income - g.expense;
+        gInc += g.income;
+        gExp += g.expense;
+        gCount += g.count;
 
-                html += `<tr>
-                    <td style="${cellC}">${mn} ${year}</td>
-                    <td style="${cell} text-align:center;">${g.count}</td>
-                    <td style="${incCell}">${formatCurrency(g.income)}</td>
-                    <td style="${expCell}">${formatCurrency(g.expense)}</td>
-                    <td style="${mb >= 0 ? balPos : balNeg}">${formatCurrency(mb)}</td>
-                </tr>`;
-            });
+        html += `<tr>
+            <td width="${W_BLN}" style="${cellC} width:${W_BLN}px;">${mn} ${year}</td>
+            <td width="${W_JML}" style="${cell} width:${W_JML}px;text-align:center;">${g.count}</td>
+            <td width="${W_ANG}" style="${incCell} width:${W_ANG}px;">${formatCurrency(g.income)}</td>
+            <td width="${W_ANG}" style="${expCell} width:${W_ANG}px;">${formatCurrency(g.expense)}</td>
+            <td width="${W_SAL}" style="${mb >= 0 ? balPos : balNeg} width:${W_SAL}px;">${formatCurrency(mb)}</td>
+        </tr>`;
+    });
 
-            const gBal = gInc - gExp;
-            html += `<tr><td colspan="5" style="${spacer}"></td></tr>
-            <tr>
-                <td colspan="5" style="${recapCell}">REKAP KESELURUHAN ${label.toUpperCase()}</td>
-            </tr>
-            <tr>
-                <td colspan="2" style="${cell}"><b>Total Transaksi</b></td>
-                <td colspan="3" style="${cell} text-align:right;font-weight:600;">${gCount} transaksi</td>
-            </tr>
-            <tr>
-                <td colspan="2" style="${cell}"><b>Total Pendapatan</b></td>
-                <td colspan="3" style="${totInc}">${formatCurrency(gInc)}</td>
-            </tr>
-            <tr>
-                <td colspan="2" style="${cell}"><b>Total Pengeluaran</b></td>
-                <td colspan="3" style="${totExp}">${formatCurrency(gExp)}</td>
-            </tr>
-            <tr>
-                <td colspan="2" style="${cell}"><b>SALDO AKHIR</b></td>
-                <td colspan="3" style="${totBal}">${formatCurrency(gBal)}</td>
-            </tr>
-            <tr><td colspan="5" style="${spacer}"></td></tr>
-            <tr>
-                <td colspan="5" style="padding:16px;text-align:center;color:#888;font-size:9.5pt;border:none;">
-                    © 2027 CashTrack — Buatan Anak Indonesia
-                </td>
-            </tr>
-            </table>
+    const gBal = gInc - gExp;
+    html += `<tr><td colspan="5" style="${spacer}"></td></tr>
+    <tr>
+        <td colspan="5" style="${recapCell}">REKAP KESELURUHAN ${label.toUpperCase()}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="${cell}"><b>Total Transaksi</b></td>
+        <td colspan="3" style="${cell} text-align:right;font-weight:600;">${gCount} transaksi</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="${cell}"><b>Total Pendapatan</b></td>
+        <td colspan="3" style="${totInc}">${formatCurrency(gInc)}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="${cell}"><b>Total Pengeluaran</b></td>
+        <td colspan="3" style="${totExp}">${formatCurrency(gExp)}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="${cell}"><b>SALDO AKHIR</b></td>
+        <td colspan="3" style="${totBal}">${formatCurrency(gBal)}</td>
+    </tr>
+    <tr><td colspan="5" style="${spacer}"></td></tr>
+    <tr>
+        <td colspan="5" style="padding:16px;text-align:center;color:#888;font-size:9.5pt;border:none;">
+            © 2027 CashTrack — Laporan dari Abid
+        </td>
+    </tr>
+    </table>
 </body>
 </html>`;
 
-            const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `cash-track-rekap-${label.replace(/[^\w]/g, '_')}-${new Date().toISOString().split('T')[0]}.xls`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            SoundManager.play('success');
-        }
-
+    const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `cash-track-rekap-${label.replace(/[^\w]/g, '_')}-${new Date().toISOString().split('T')[0]}.xls`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    SoundManager.play('success');
+}
         /* ==================== NAVIGATION ==================== */
         function setupNavigationTabs() {
             document.querySelectorAll('.nav-tab').forEach(tab => {
