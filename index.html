@@ -15,7 +15,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* ===================== BASE & VARIABLES ===================== */
         :root {
             --bg: #dde1e7;
             --bg-alt: #e4e7ec;
@@ -63,10 +62,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-        }
+        html, body { width: 100%; height: 100%; }
 
         body {
             background: var(--bg);
@@ -112,9 +108,7 @@
             text-align: center;
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             padding-top: calc(15px + var(--safe-area-top));
@@ -177,13 +171,11 @@
             color: var(--text-light);
             font-size: 1rem;
             margin-bottom: 40px;
-            font-weight: 400;
         }
         .splash-footer {
             position: absolute;
             bottom: 30px;
-            left: 0;
-            right: 0;
+            left: 0; right: 0;
             text-align: center;
             color: var(--text-light);
             font-size: 0.85rem;
@@ -194,7 +186,7 @@
         .splash-footer .version { font-weight: 600; color: var(--text); }
         .splash-footer .copyright { font-size: 0.75rem; opacity: 0.8; }
 
-        /* ===================== LOGIN SCREEN ===================== */
+        /* ===================== LOGIN ===================== */
         #login-screen {
             min-height: 100vh;
             display: none;
@@ -204,7 +196,6 @@
             padding: 20px;
             background: var(--bg);
         }
-
         .login-container {
             width: 100%;
             max-width: 360px;
@@ -219,7 +210,6 @@
             from { opacity: 0; transform: scale(0.92); }
             to { opacity: 1; transform: scale(1); }
         }
-
         .app-header { text-align: center; margin-bottom: 30px; }
         .app-icon {
             width: 80px;
@@ -241,12 +231,8 @@
             color: var(--text-strong);
             margin-bottom: 5px;
         }
-        .app-subtitle {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
+        .app-subtitle { color: var(--text-light); font-size: 0.9rem; }
 
-        /* Input field dengan style neumorphism */
         .field {
             position: relative;
             height: 50px;
@@ -266,7 +252,6 @@
             border-radius: var(--radius-lg);
             box-shadow: inset 2px 2px 5px var(--shadow-dark),
                         inset -5px -5px 10px var(--shadow-light);
-            font-family: 'Poppins', sans-serif;
         }
         .field input:focus {
             box-shadow: inset 1px 1px 2px var(--shadow-dark),
@@ -305,7 +290,6 @@
         }
         .toggle-password:hover { color: var(--accent); }
 
-        /* Tombol neumorphism */
         .btn-neu {
             width: 100%;
             height: 50px;
@@ -320,7 +304,6 @@
             box-shadow: 2px 2px 5px var(--shadow-dark),
                        -5px -5px 10px var(--shadow-light);
             transition: all .2s ease;
-            font-family: 'Poppins', sans-serif;
         }
         .btn-neu:hover { color: var(--accent); }
         .btn-neu:active,
@@ -381,7 +364,6 @@
         }
         .header-actions { display: flex; gap: 12px; align-items: center; }
 
-        /* Toggle dark mode neumorphism */
         .toggle-switch {
             position: relative;
             display: inline-block;
@@ -389,7 +371,6 @@
             height: 28px;
             flex-shrink: 0;
             cursor: pointer;
-            vertical-align: middle;
         }
         .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
         .toggle-slider {
@@ -458,7 +439,6 @@
                         inset -2px -2px 4px var(--shadow-light);
         }
 
-        /* Nav tabs */
         .nav-tabs {
             display: flex;
             gap: 15px;
@@ -482,7 +462,6 @@
             transition: all .2s ease;
             box-shadow: 2px 2px 5px var(--shadow-dark),
                        -2px -2px 5px var(--shadow-light);
-            font-family: 'Poppins', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -507,12 +486,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Footer */
         .app-footer {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             background: var(--bg);
             border-top: 1px solid var(--shadow-light);
             padding: 12px 20px;
@@ -524,7 +500,6 @@
             box-shadow: 0 -4px 8px rgba(0,0,0,0.04);
         }
 
-        /* ===================== BALANCE CARD ===================== */
         .balance-card {
             background: var(--bg);
             padding: 28px 25px;
@@ -532,8 +507,6 @@
             margin: 10px 0 20px;
             box-shadow: -3px -3px 7px var(--shadow-light),
                          2px 2px 5px var(--shadow-dark);
-            text-align: left;
-            position: relative;
         }
         .balance-label {
             font-size: 0.85rem;
@@ -560,7 +533,6 @@
         .balance-details span { display: flex; align-items: center; gap: 5px; }
         .balance-details b { color: var(--text); }
 
-        /* ===================== SECTION TITLE ===================== */
         .section-title {
             font-size: 1.05rem;
             font-weight: 600;
@@ -572,7 +544,6 @@
         }
         .section-title i { color: var(--accent); font-size: 0.95rem; }
 
-        /* ===================== FORMS ===================== */
         .transaction-form,
         .filter-section,
         .chart-container {
@@ -604,7 +575,6 @@
             outline: none;
             box-shadow: inset 2px 2px 5px var(--shadow-dark),
                         inset -5px -5px 10px var(--shadow-light);
-            font-family: 'Poppins', sans-serif;
             -webkit-appearance: none;
         }
         .form-input:focus,
@@ -631,7 +601,6 @@
         }
         .filter-buttons { justify-content: flex-end; }
 
-        /* Button styles - neumorphism */
         .btn {
             padding: 13px 20px;
             border: none;
@@ -644,7 +613,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            font-family: 'Poppins', sans-serif;
             flex: 1;
             min-width: 120px;
             background: var(--bg);
@@ -665,7 +633,6 @@
         .btn-secondary { color: var(--text); }
         .btn-secondary:hover { color: var(--text-strong); }
 
-        /* ===================== EXPORT ===================== */
         .export-section {
             display: flex;
             justify-content: flex-end;
@@ -688,7 +655,6 @@
         }
         .export-info.show { display: block; }
 
-        /* ===================== MONTH GROUPS ===================== */
         .month-group {
             margin-bottom: 22px;
             border-radius: var(--radius);
@@ -720,7 +686,7 @@
         .month-totals span { display: flex; align-items: center; gap: 4px; }
         .month-totals strong { color: var(--text); font-weight: 600; }
 
-        /* ===================== TABLE ===================== */
+        /* ===================== TABEL ===================== */
         .transactions-table {
             width: 100%;
             display: block;
@@ -730,7 +696,7 @@
         }
         .transactions-table table {
             width: 100%;
-            min-width: 720px;
+            min-width: 820px; /* diperlebar agar kolom lebih lega */
             table-layout: auto;
             border-collapse: collapse;
         }
@@ -754,6 +720,7 @@
         .transactions-table tr:last-child td { border-bottom: none; }
         .transactions-table tr:hover { background: rgba(52,152,219,.05); }
 
+        /* Kolom Tanggal - sempit */
         .transactions-table th.col-tanggal,
         .transactions-table td.col-tanggal {
             width: 70px;
@@ -762,17 +729,21 @@
             font-weight: 600;
             color: var(--accent);
         }
+        /* Kolom Keterangan - lebar wrap */
         .transactions-table th.col-ket,
         .transactions-table td.col-ket {
-            min-width: 220px;
+            min-width: 240px;
             white-space: normal;
             word-break: break-word;
         }
+        /* ⭐ KOLOM ANGKA DIPERLEBAR — INI KUNCI FIX HP ⭐ */
         .transactions-table th.col-angka,
         .transactions-table td.col-angka {
-            min-width: 140px;
+            min-width: 170px;
+            width: 170px;
             text-align: right;
         }
+        /* Kolom Aksi */
         .transactions-table th.col-aksi,
         .transactions-table td.col-aksi {
             min-width: 180px;
@@ -789,7 +760,6 @@
             flex: 0 0 auto;
         }
 
-        /* ===================== CHART ===================== */
         .chart-wrapper {
             position: relative;
             width: 100%;
@@ -813,7 +783,6 @@
         .chart-placeholder i { font-size: 2rem; opacity: .5; color: var(--accent); }
         #finance-chart { width: 100% !important; height: 100% !important; }
 
-        /* ===================== EMPTY STATE ===================== */
         .empty-state {
             text-align: center;
             padding: 50px 20px;
@@ -832,7 +801,6 @@
         }
         .empty-state p { font-size: 0.95rem; margin-bottom: 6px; }
 
-        /* Scrollbar */
         .transactions-table::-webkit-scrollbar { height: 6px; }
         .transactions-table::-webkit-scrollbar-track { background: transparent; }
         .transactions-table::-webkit-scrollbar-thumb {
@@ -847,17 +815,21 @@
             .form-grid, .filter-grid { grid-template-columns: 1fr; gap: 12px; }
             .form-buttons, .filter-buttons { flex-direction: row; justify-content: stretch; }
             .btn { flex: 1; min-width: 0; padding: 12px 14px; font-size: 12.5px; }
+
+            /* ⭐ TABLE — biarkan scroll horizontal, kolom tetap lega ⭐ */
+            .transactions-table table { min-width: 800px; }
             .transactions-table th,
-            .transactions-table td { padding: 12px 12px; font-size: 12.5px; }
-            .transactions-table table { min-width: 680px; }
+            .transactions-table td { padding: 12px 14px; font-size: 13px; }
             .transactions-table th.col-tanggal,
-            .transactions-table td.col-tanggal { width: 56px; min-width: 56px; }
+            .transactions-table td.col-tanggal { width: 60px; min-width: 60px; }
             .transactions-table th.col-ket,
-            .transactions-table td.col-ket { min-width: 180px; }
+            .transactions-table td.col-ket { min-width: 220px; }
+            /* kolom angka tetap 170px agar Rp 1.234.567 tidak terpotong */
             .transactions-table th.col-angka,
-            .transactions-table td.col-angka { min-width: 120px; }
+            .transactions-table td.col-angka { min-width: 170px; width: 170px; }
             .transactions-table th.col-aksi,
-            .transactions-table td.col-aksi { min-width: 160px; }
+            .transactions-table td.col-aksi { min-width: 165px; }
+
             .balance-amount { font-size: 1.7rem; }
             .balance-details { flex-direction: column; gap: 8px; }
             .export-section { flex-direction: column; align-items: stretch; }
@@ -889,6 +861,10 @@
             .icon-btn { width: 38px; height: 38px; font-size: 14px; }
             .nav-tab { padding: 11px 8px; font-size: 11.5px; gap: 4px; }
             .app-footer { font-size: 0.72rem; padding: 10px 15px; }
+
+            /* ⭐ Di HP kecil, kolom angka tetap lega ⭐ */
+            .transactions-table th.col-angka,
+            .transactions-table td.col-angka { min-width: 160px; width: 160px; }
         }
 
         @media (hover: none) and (pointer: coarse) {
@@ -899,12 +875,10 @@
 </head>
 <body>
 
-    <!-- Sound Control -->
     <div class="sound-control" id="sound-control" title="Mute/Unmute Sound">
         <i class="fas fa-volume-up" id="sound-icon"></i>
     </div>
 
-    <!-- Install Prompt -->
     <div class="install-prompt" id="install-prompt">
         <span>Pasang CashTrack di perangkat Anda</span>
         <button class="install-btn" id="install-btn">Pasang</button>
@@ -913,7 +887,6 @@
         </button>
     </div>
 
-    <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-logo"><i class="fas fa-chart-line"></i></div>
         <h1 class="splash-title">CashTrack</h1>
@@ -925,7 +898,6 @@
         </div>
     </div>
 
-    <!-- ===================== LOGIN SCREEN ===================== -->
     <div id="login-screen">
         <div class="login-container">
             <div class="app-header">
@@ -933,7 +905,6 @@
                 <h1 class="app-title">CashTrack</h1>
                 <p class="app-subtitle">Masukkan kata sandi untuk melanjutkan</p>
             </div>
-
             <div class="field">
                 <input type="password" id="password-input" placeholder="Masukkan password" required>
                 <span class="field-icon"><i class="fas fa-lock"></i></span>
@@ -941,7 +912,6 @@
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
-
             <button class="btn-neu" onclick="checkPassword()">Lanjutkan</button>
             <div class="error-message" id="password-error">
                 <i class="fas fa-exclamation-circle"></i> Password salah!
@@ -949,7 +919,6 @@
         </div>
     </div>
 
-    <!-- ===================== MAIN APP ===================== -->
     <div id="main-app">
         <header class="main-header">
             <div class="header-title">
@@ -1053,11 +1022,8 @@
                 <h3 class="section-title"><i class="fas fa-download"></i> Export Data</h3>
                 <div class="export-section">
                     <div class="export-info" id="export-info"></div>
-                    <button class="btn btn-success" onclick="exportToCSV()">
-                        <i class="fas fa-file-csv"></i> CSV
-                    </button>
                     <button class="btn btn-success" onclick="exportToExcel()">
-                        <i class="fas fa-file-excel"></i> Excel
+                        <i class="fas fa-file-excel"></i> Export Excel
                     </button>
                     <button class="btn btn-warning" onclick="exportToExcelGrouped()">
                         <i class="fas fa-layer-group"></i> Excel Grup
@@ -1409,9 +1375,7 @@
             const d = new Date(dateString + 'T00:00:00');
             return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
         }
-        function formatDayOnly(dateString) {
-            return dateString.substring(8, 10);
-        }
+        function formatDayOnly(dateString) { return dateString.substring(8, 10); }
         function getMonthName(monthNumber) {
             const m = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
             return m[parseInt(monthNumber) - 1] || monthNumber;
@@ -1783,8 +1747,8 @@
             container.innerHTML = html;
         }
 
-        /* ==================== EXPORT CSV ==================== */
-        function exportToCSV() {
+        /* ==================== EXPORT EXCEL (DETAIL) ==================== */
+        function exportToExcel() {
             SoundManager.play('click');
             const { data, label } = getExportData();
             if (data.length === 0) {
@@ -1792,68 +1756,33 @@
                 SoundManager.play('error');
                 return;
             }
-            const headers = ['Tanggal', 'Keterangan', 'Pendapatan', 'Pengeluaran'];
-            const csv = [
-                `"CashTrack - Laporan Keuangan"`,
-                `"Periode: ${label}"`,
-                `"Diekspor: ${new Date().toLocaleString('id-ID')}"`,
-                '',
-                headers.join(','),
-                ...data.map(t => [
-                    formatDayOnly(t.date),
-                    `"${t.description.replace(/"/g, '""')}"`,
-                    t.income,
-                    t.expense
-                ].join(','))
-            ].join('\n');
-            const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `cash-track-export-${label.replace(/[^\w]/g, '_')}-${new Date().toISOString().split('T')[0]}.csv`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            SoundManager.play('success');
-        }
 
-        /* ==================== EXPORT EXCEL ==================== */
-       function exportToExcel() {
-    SoundManager.play('click');
-    const { data, label } = getExportData();
-    if (data.length === 0) {
-        alert('Tidak ada data transaksi untuk diexport pada filter ini!');
-        SoundManager.play('error');
-        return;
-    }
+            const grouped = {};
+            data.forEach(t => {
+                const k = t.date.substring(0, 7);
+                if (!grouped[k]) grouped[k] = [];
+                grouped[k].push(t);
+            });
+            const sortedMonths = Object.keys(grouped).sort().reverse();
 
-    const grouped = {};
-    data.forEach(t => {
-        const k = t.date.substring(0, 7);
-        if (!grouped[k]) grouped[k] = [];
-        grouped[k].push(t);
-    });
-    const sortedMonths = Object.keys(grouped).sort().reverse();
+            const cell       = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;mso-number-format:"\\@";';
+            const header     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
+            const monthHdr   = 'padding:18px 22px;border:1px solid #cfcfcf;background:#2980b9;color:#ffffff;font-family:Arial,sans-serif;font-size:13pt;font-weight:bold;vertical-align:middle;letter-spacing:0.5px;';
+            const incStyle   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+            const expStyle   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+            const totInc     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+            const totExp     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+            const balStyle   = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e8f0fe;color:#3498db;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+            const spacer     = 'height:32px;border:none;background:transparent;';
+            const infoRow    = 'padding:12px 22px;background:#f8f9fa;color:#555;font-size:10.5pt;text-align:center;border:1px solid #cfcfcf;';
+            const dateCell   = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;font-weight:bold;color:#3498db;vertical-align:middle;mso-number-format:"\\@";';
+            const dateHeader = 'padding:16px 22px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
+            const titleCell  = 'padding:32px 22px;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:20pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
+            const recapCell  = 'padding:22px;background:#2980b9;color:#ffffff;font-size:14pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
 
-    // ===== STYLE DENGAN LEBAR KOLOM EKSPLISIT =====
-    const cell       = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;mso-number-format:"\\@";';
-    const cellNum    = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;text-align:right;mso-number-format:"\\@";';
-    const header     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
-    const monthHdr   = 'padding:18px 22px;border:1px solid #cfcfcf;background:#2980b9;color:#ffffff;font-family:Arial,sans-serif;font-size:13pt;font-weight:bold;vertical-align:middle;letter-spacing:0.5px;';
-    const incStyle   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-    const expStyle   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-    const totInc     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-    const totExp     = 'padding:16px 22px;border:1px solid #cfcfcf;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-    const balStyle   = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e8f0fe;color:#3498db;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
-    const spacer     = 'height:32px;border:none;background:transparent;';
-    const infoRow    = 'padding:12px 22px;background:#f8f9fa;color:#555;font-size:10.5pt;text-align:center;border:1px solid #cfcfcf;';
-    const dateCell   = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;font-weight:bold;color:#3498db;vertical-align:middle;mso-number-format:"\\@";';
-    const dateHeader = 'padding:16px 22px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
-    const titleCell  = 'padding:32px 22px;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:20pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
-    const recapCell  = 'padding:22px;background:#2980b9;color:#ffffff;font-size:14pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
-
-    let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
-                       xmlns:x="urn:schemas-microsoft-com:office:excel"
-                       xmlns="http://www.w3.org/TR/REC-html40">
+            let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+                               xmlns:x="urn:schemas-microsoft-com:office:excel"
+                               xmlns="http://www.w3.org/TR/REC-html40">
 <head>
 <meta charset="UTF-8">
 <!--[if gte mso 9]>
@@ -1862,130 +1791,257 @@
 <x:ExcelWorksheets>
 <x:ExcelWorksheet>
 <x:Name>Laporan CashTrack</x:Name>
-<x:WorksheetOptions>
-<x:DisplayGridlines/>
-<x:Print>
-<x:ValidPrinterInfo/>
-<x:Scale>100</x:Scale>
-</x:Print>
-</x:WorksheetOptions>
+<x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
 </x:ExcelWorksheet>
 </x:ExcelWorksheets>
 </x:ExcelWorkbook>
 </xml>
 <![endif]-->
-<style>
-    table { border-collapse: collapse; }
-    td { mso-number-format:"\\@"; }
-</style>
+<style>td { mso-number-format:"\\@"; }</style>
 </head>
 <body>
 <table style="border-collapse:collapse;font-family:Arial,sans-serif;">
-<!-- ====== LEBAR KOLOM EKSPLISIT ====== -->
 <colgroup>
-    <col width="110">   <!-- Tgl -->
-    <col width="420">   <!-- Keterangan (lebar) -->
-    <col width="200">   <!-- Pendapatan -->
-    <col width="200">   <!-- Pengeluaran -->
+    <col width="110">
+    <col width="420">
+    <col width="200">
+    <col width="200">
 </colgroup>
-
 <tr>
-    <td colspan="4" style="${titleCell}">
-        CashTrack &nbsp;•&nbsp; Laporan Keuangan
-    </td>
+    <td colspan="4" style="${titleCell}">CashTrack &nbsp;•&nbsp; Laporan Keuangan</td>
 </tr>
 <tr>
-    <td colspan="4" style="${infoRow}">
-        <b>Periode: ${label}</b>
-    </td>
+    <td colspan="4" style="${infoRow}"><b>Periode: ${label}</b></td>
 </tr>
 <tr>
-    <td colspan="4" style="${infoRow}">
-        Diekspor: ${new Date().toLocaleString('id-ID')}
-    </td>
+    <td colspan="4" style="${infoRow}">Diekspor: ${new Date().toLocaleString('id-ID')}</td>
 </tr>
 <tr><td colspan="4" style="${spacer}"></td></tr>
 `;
 
-    let gInc = 0, gExp = 0;
+            let gInc = 0, gExp = 0;
 
-    sortedMonths.forEach(k => {
-        const [year, month] = k.split('-');
-        const mn = getMonthName(month);
-        const mTx = grouped[k];
-        let mi = 0, me = 0;
-        mTx.forEach(t => { mi += t.income || 0; me += t.expense || 0; });
-        gInc += mi; gExp += me;
-        const mb = mi - me;
+            sortedMonths.forEach(k => {
+                const [year, month] = k.split('-');
+                const mn = getMonthName(month);
+                const mTx = grouped[k];
+                let mi = 0, me = 0;
+                mTx.forEach(t => { mi += t.income || 0; me += t.expense || 0; });
+                gInc += mi; gExp += me;
+                const mb = mi - me;
 
-        html += `<tr>
-            <td colspan="4" style="${monthHdr}">${mn} ${year}</td>
-        </tr>
-        <tr>
-            <td style="${dateHeader}">Tgl</td>
-            <td style="${header}">Keterangan</td>
-            <td style="${header}">Pendapatan</td>
-            <td style="${header}">Pengeluaran</td>
-        </tr>`;
+                html += `<tr>
+                    <td colspan="4" style="${monthHdr}">${mn} ${year}</td>
+                </tr>
+                <tr>
+                    <td style="${dateHeader}">Tgl</td>
+                    <td style="${header}">Keterangan</td>
+                    <td style="${header}">Pendapatan</td>
+                    <td style="${header}">Pengeluaran</td>
+                </tr>`;
 
-        mTx.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                mTx.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+                    html += `<tr>
+                        <td style="${dateCell}">${formatDayOnly(t.date)}</td>
+                        <td style="${cell}">${t.description}</td>
+                        <td style="${incStyle}">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
+                        <td style="${expStyle}">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
+                    </tr>`;
+                });
+
+                html += `<tr>
+                    <td colspan="2" style="${cell}"><b>Total ${mn} ${year}</b></td>
+                    <td style="${totInc}">${formatCurrency(mi)}</td>
+                    <td style="${totExp}">${formatCurrency(me)}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="${cell}"><b>Saldo ${mn} ${year}</b></td>
+                    <td style="${balStyle}">${formatCurrency(mb)}</td>
+                </tr>
+                <tr><td colspan="4" style="${spacer}"></td></tr>`;
+            });
+
+            const gb = gInc - gExp;
             html += `<tr>
-                <td style="${dateCell}">${formatDayOnly(t.date)}</td>
-                <td style="${cell}">${t.description}</td>
-                <td style="${incStyle}">${t.income > 0 ? formatCurrency(t.income) : '-'}</td>
-                <td style="${expStyle}">${t.expense > 0 ? formatCurrency(t.expense) : '-'}</td>
-            </tr>`;
-        });
-
-        html += `<tr>
-            <td colspan="2" style="${cell}"><b>Total ${mn} ${year}</b></td>
-            <td style="${totInc}">${formatCurrency(mi)}</td>
-            <td style="${totExp}">${formatCurrency(me)}</td>
-        </tr>
-        <tr>
-            <td colspan="3" style="${cell}"><b>Saldo ${mn} ${year}</b></td>
-            <td style="${balStyle}">${formatCurrency(mb)}</td>
-        </tr>
-        <tr><td colspan="4" style="${spacer}"></td></tr>`;
-    });
-
-    const gb = gInc - gExp;
-    html += `<tr>
-        <td colspan="4" style="${recapCell}">
-            REKAP ${label.toUpperCase()}
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2" style="${cell}"><b>Total Pendapatan</b></td>
-        <td colspan="2" style="${totInc}">${formatCurrency(gInc)}</td>
-    </tr>
-    <tr>
-        <td colspan="2" style="${cell}"><b>Total Pengeluaran</b></td>
-        <td colspan="2" style="${totExp}">${formatCurrency(gExp)}</td>
-    </tr>
-    <tr>
-        <td colspan="2" style="${cell}"><b>SALDO AKHIR</b></td>
-        <td colspan="2" style="${balStyle}">${formatCurrency(gb)}</td>
-    </tr>
-    <tr><td colspan="4" style="${spacer}"></td></tr>
-    <tr>
-        <td colspan="4" style="padding:16px;text-align:center;color:#888;font-size:9.5pt;border:none;">
-            © 2027 CashTrack — laporan dari Abid 
-        </td>
-    </tr>
-    </table>
+                <td colspan="4" style="${recapCell}">REKAP ${label.toUpperCase()}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="${cell}"><b>Total Pendapatan</b></td>
+                <td colspan="2" style="${totInc}">${formatCurrency(gInc)}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="${cell}"><b>Total Pengeluaran</b></td>
+                <td colspan="2" style="${totExp}">${formatCurrency(gExp)}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="${cell}"><b>SALDO AKHIR</b></td>
+                <td colspan="2" style="${balStyle}">${formatCurrency(gb)}</td>
+            </tr>
+            <tr><td colspan="4" style="${spacer}"></td></tr>
+            <tr>
+                <td colspan="4" style="padding:16px;text-align:center;color:#888;font-size:9.5pt;border:none;">
+                    © 2027 CashTrack — Buatan Anak Indonesia
+                </td>
+            </tr>
+            </table>
 </body>
 </html>`;
 
-    const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `cash-track-${label.replace(/[^\w]/g, '_')}-${new Date().toISOString().split('T')[0]}.xls`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    SoundManager.play('success');
-}
+            const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `cash-track-${label.replace(/[^\w]/g, '_')}-${new Date().toISOString().split('T')[0]}.xls`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            SoundManager.play('success');
+        }
+
+        /* ==================== EXPORT EXCEL GRUP (REKAP BULANAN) ==================== */
+        function exportToExcelGrouped() {
+            SoundManager.play('click');
+            const { data, label } = getExportData();
+            if (data.length === 0) {
+                alert('Tidak ada data transaksi untuk diexport pada filter ini!');
+                SoundManager.play('error');
+                return;
+            }
+
+            const grouped = {};
+            data.forEach(t => {
+                const k = t.date.substring(0, 7);
+                if (!grouped[k]) grouped[k] = { income: 0, expense: 0, count: 0 };
+                grouped[k].income += t.income || 0;
+                grouped[k].expense += t.expense || 0;
+                grouped[k].count += 1;
+            });
+            const sortedMonths = Object.keys(grouped).sort();
+
+            const titleCell = 'padding:32px 22px;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:20pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
+            const infoRow   = 'padding:12px 22px;background:#f8f9fa;color:#555;font-size:10.5pt;text-align:center;border:1px solid #cfcfcf;';
+            const header    = 'padding:16px 22px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
+            const cell      = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;mso-number-format:"\\@";';
+            const cellC     = 'padding:14px 22px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;vertical-align:middle;font-weight:600;color:#2980b9;mso-number-format:"\\@";';
+            const incCell   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:600;mso-number-format:"\\@";';
+            const expCell   = 'padding:14px 22px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:600;mso-number-format:"\\@";';
+            const balPos    = 'padding:14px 22px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:bold;background:#e6f4ea;mso-number-format:"\\@";';
+            const balNeg    = 'padding:14px 22px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;font-weight:bold;background:#fce8e6;mso-number-format:"\\@";';
+            const recapCell = 'padding:22px;background:#2980b9;color:#ffffff;font-size:14pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;letter-spacing:1px;';
+            const spacer    = 'height:32px;border:none;background:transparent;';
+            const totInc    = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+            const totExp    = 'padding:16px 22px;border:1px solid #cfcfcf;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+            const totBal    = 'padding:16px 22px;border:1px solid #cfcfcf;background:#e8f0fe;color:#3498db;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;mso-number-format:"\\@";';
+
+            let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+                               xmlns:x="urn:schemas-microsoft-com:office:excel"
+                               xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="UTF-8">
+<!--[if gte mso 9]>
+<xml>
+<x:ExcelWorkbook>
+<x:ExcelWorksheets>
+<x:ExcelWorksheet>
+<x:Name>Rekap Bulanan</x:Name>
+<x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
+</x:ExcelWorksheet>
+</x:ExcelWorksheets>
+</x:ExcelWorkbook>
+</xml>
+<![endif]-->
+<style>td { mso-number-format:"\\@"; }</style>
+</head>
+<body>
+<table style="border-collapse:collapse;font-family:Arial,sans-serif;">
+<colgroup>
+    <col width="180">
+    <col width="130">
+    <col width="200">
+    <col width="200">
+    <col width="200">
+</colgroup>
+
+<tr>
+    <td colspan="5" style="${titleCell}">CashTrack &nbsp;•&nbsp; Rekap Bulanan</td>
+</tr>
+<tr>
+    <td colspan="5" style="${infoRow}"><b>Periode: ${label}</b></td>
+</tr>
+<tr>
+    <td colspan="5" style="${infoRow}">Diekspor: ${new Date().toLocaleString('id-ID')}</td>
+</tr>
+<tr><td colspan="5" style="${spacer}"></td></tr>
+
+<tr>
+    <td style="${header}">Bulan</td>
+    <td style="${header}">Jumlah Transaksi</td>
+    <td style="${header}">Total Pendapatan</td>
+    <td style="${header}">Total Pengeluaran</td>
+    <td style="${header}">Saldo Bulan</td>
+</tr>
+`;
+
+            let gInc = 0, gExp = 0, gCount = 0;
+
+            sortedMonths.forEach(k => {
+                const [year, month] = k.split('-');
+                const mn = getMonthName(month);
+                const g = grouped[k];
+                const mb = g.income - g.expense;
+                gInc += g.income;
+                gExp += g.expense;
+                gCount += g.count;
+
+                html += `<tr>
+                    <td style="${cellC}">${mn} ${year}</td>
+                    <td style="${cell} text-align:center;">${g.count}</td>
+                    <td style="${incCell}">${formatCurrency(g.income)}</td>
+                    <td style="${expCell}">${formatCurrency(g.expense)}</td>
+                    <td style="${mb >= 0 ? balPos : balNeg}">${formatCurrency(mb)}</td>
+                </tr>`;
+            });
+
+            const gBal = gInc - gExp;
+            html += `<tr><td colspan="5" style="${spacer}"></td></tr>
+            <tr>
+                <td colspan="5" style="${recapCell}">REKAP KESELURUHAN ${label.toUpperCase()}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="${cell}"><b>Total Transaksi</b></td>
+                <td colspan="3" style="${cell} text-align:right;font-weight:600;">${gCount} transaksi</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="${cell}"><b>Total Pendapatan</b></td>
+                <td colspan="3" style="${totInc}">${formatCurrency(gInc)}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="${cell}"><b>Total Pengeluaran</b></td>
+                <td colspan="3" style="${totExp}">${formatCurrency(gExp)}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="${cell}"><b>SALDO AKHIR</b></td>
+                <td colspan="3" style="${totBal}">${formatCurrency(gBal)}</td>
+            </tr>
+            <tr><td colspan="5" style="${spacer}"></td></tr>
+            <tr>
+                <td colspan="5" style="padding:16px;text-align:center;color:#888;font-size:9.5pt;border:none;">
+                    © 2027 CashTrack — Buatan Anak Indonesia
+                </td>
+            </tr>
+            </table>
+</body>
+</html>`;
+
+            const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `cash-track-rekap-${label.replace(/[^\w]/g, '_')}-${new Date().toISOString().split('T')[0]}.xls`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            SoundManager.play('success');
+        }
+
         /* ==================== NAVIGATION ==================== */
         function setupNavigationTabs() {
             document.querySelectorAll('.nav-tab').forEach(tab => {
