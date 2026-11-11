@@ -5,48 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CashTrack - Kelola Keuangan</title>
     <meta name="description" content="Aplikasi manajemen keuangan pribadi">
-    <meta name="theme-color" content="#1a73e8">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#dde1e7">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxYTczZTgiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
-    
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMzNDk4ZGIiLz48cGF0aCBkPSJNNjUgMzVINTVWMjVINDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTM1IDY1SDQ1Vjc1SDU1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNSA0MEw2MCA2NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDM1TDM1IDYwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <style>
+        /* ===================== BASE & VARIABLES ===================== */
         :root {
-            --primary: #1a73e8;
-            --primary-dark: #0d47a1;
-            --secondary: #34a853;
-            --danger: #ea4335;
-            --warning: #fbbc04;
-            --light: #f8f9fa;
-            --dark: #202124;
-            --gray: #5f6368;
-            --border-radius: 12px;
-            --shadow: 0 2px 10px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
+            --bg: #dde1e7;
+            --bg-alt: #e4e7ec;
+            --text: #595959;
+            --text-light: #7a7a7a;
+            --text-strong: #444;
+            --accent: #3498db;
+            --accent-dark: #2980b9;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+
+            --shadow-light: #ffffff73;
+            --shadow-dark: #babecC;
+
+            --radius: 10px;
+            --radius-sm: 8px;
+            --radius-lg: 25px;
+
             --safe-area-top: env(safe-area-inset-top);
             --safe-area-bottom: env(safe-area-inset-bottom);
         }
 
         [data-theme="dark"] {
-            --primary: #4a90e2;
-            --primary-dark: #1c5bb5;
-            --secondary: #4caf50;
-            --danger: #f44336;
-            --warning: #ff9800;
-            --light: #121212;
-            --dark: #e0e0e0;
-            --gray: #b0b0b0;
-            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --bg: #2b2e35;
+            --bg-alt: #31353d;
+            --text: #c4c8ce;
+            --text-light: #8b9099;
+            --text-strong: #e8ebef;
+            --accent: #5dade2;
+            --accent-dark: #3498db;
+            --success: #2ecc71;
+            --danger: #ff6b5a;
+            --warning: #f5b041;
+
+            --shadow-light: #3a3f48;
+            --shadow-dark: #1f2128;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -56,233 +69,23 @@
         }
 
         body {
-            background-color: var(--light);
-            color: var(--dark);
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background 0.3s ease, color 0.3s ease;
             padding-top: var(--safe-area-top);
             padding-bottom: var(--safe-area-bottom);
         }
 
-        .install-prompt {
-            background: var(--primary);
-            color: white;
-            padding: 15px 20px;
-            text-align: center;
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            padding-top: calc(15px + var(--safe-area-top));
-            font-size: 14px;
-        }
-
-        .install-btn {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin-left: 10px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-            padding-top: var(--safe-area-top);
-            padding-bottom: var(--safe-area-bottom);
-        }
-
-        .splash-logo {
-            width: 120px;
-            height: 120px;
-            background: white;
-            border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            font-size: 40px;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .splash-title {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        .splash-subtitle {
-            color: rgba(255,255,255,0.8);
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        .splash-footer {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            padding: 0 20px;
-        }
-
-        .splash-footer p { margin-bottom: 5px; }
-        .splash-footer .version { font-weight: 600; margin-bottom: 8px; }
-        .splash-footer .copyright { font-size: 0.8rem; opacity: 0.8; }
-
-        #login-screen {
-            min-height: 100vh;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background: var(--light);
-            padding-top: var(--safe-area-top);
-            padding-bottom: var(--safe-area-bottom);
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            background: var(--light);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 30px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .app-header { text-align: center; margin-bottom: 30px; }
-
-        .app-icon {
-            width: 80px;
-            height: 80px;
-            background: white;
-            border: 3px solid var(--primary);
-            border-radius: 20px;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-        [data-theme="dark"] .app-icon { background: #2d2d2d; }
-
-        .app-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 5px;
-            text-align: center;
-        }
-
-        .app-subtitle { color: var(--gray); font-size: 1rem; text-align: center; }
-
-        .input-container { position: relative; margin-bottom: 20px; }
-
-        .password-input {
-            width: 100%;
-            padding: 15px 50px 15px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: var(--transition);
-            background: var(--light);
-            color: var(--dark);
-        }
-
-        [data-theme="dark"] .password-input { border-color: #444; background: #2d2d2d; }
-
-        .password-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--gray);
-            cursor: pointer;
-            font-size: 18px;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            margin-bottom: 20px;
-            touch-action: manipulation;
-        }
-
-        .login-btn:hover { background: var(--primary-dark); }
-
-        .error-message {
-            color: var(--danger);
-            text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-            display: none;
-        }
-
+        /* ===================== SOUND CONTROL ===================== */
         .sound-control {
             position: fixed;
             bottom: 80px;
             right: 20px;
             z-index: 1000;
-            background: var(--primary);
-            color: white;
+            background: var(--bg);
+            color: var(--text);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -290,25 +93,264 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            box-shadow: 3px 3px 6px var(--shadow-dark),
+                       -3px -3px 6px var(--shadow-light);
+            transition: all .2s ease;
+        }
+        .sound-control:hover { color: var(--accent); }
+        .sound-control:active {
+            box-shadow: inset 2px 2px 4px var(--shadow-dark),
+                        inset -2px -2px 4px var(--shadow-light);
+        }
+        .sound-control.muted { color: var(--text-light); }
+
+        /* ===================== INSTALL PROMPT ===================== */
+        .install-prompt {
+            background: var(--bg);
+            color: var(--text);
+            padding: 15px 20px;
+            text-align: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding-top: calc(15px + var(--safe-area-top));
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .install-btn {
+            background: var(--bg);
+            color: var(--accent);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 2px 2px 5px var(--shadow-dark),
+                       -2px -2px 5px var(--shadow-light);
         }
 
-        .sound-control:hover { transform: scale(1.1); background: var(--primary-dark); }
-        .sound-control.muted { background: var(--gray); }
+        /* ===================== SPLASH ===================== */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+            padding: var(--safe-area-top) 20px var(--safe-area-bottom);
+        }
+        .splash-logo {
+            width: 120px;
+            height: 120px;
+            background: var(--bg);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 44px;
+            color: var(--accent);
+            box-shadow: -6px -6px 14px var(--shadow-light),
+                         6px 6px 14px var(--shadow-dark);
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+        @keyframes floatLogo {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .splash-title {
+            color: var(--text-strong);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .splash-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+        .splash-footer {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        .splash-footer p { margin-bottom: 4px; }
+        .splash-footer .version { font-weight: 600; color: var(--text); }
+        .splash-footer .copyright { font-size: 0.75rem; opacity: 0.8; }
 
+        /* ===================== LOGIN SCREEN ===================== */
+        #login-screen {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: var(--bg);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 360px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            box-shadow: -3px -3px 7px var(--shadow-light),
+                         2px 2px 5px var(--shadow-dark);
+            padding: 40px 30px;
+            animation: fadeScale .5s ease;
+        }
+        @keyframes fadeScale {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .app-header { text-align: center; margin-bottom: 30px; }
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg);
+            border-radius: 22px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 32px;
+            box-shadow: -4px -4px 9px var(--shadow-light),
+                         4px 4px 9px var(--shadow-dark);
+        }
+        .app-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: var(--text-strong);
+            margin-bottom: 5px;
+        }
+        .app-subtitle {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Input field dengan style neumorphism */
+        .field {
+            position: relative;
+            height: 50px;
+            width: 100%;
+            margin-bottom: 22px;
+            display: flex;
+        }
+        .field input {
+            height: 100%;
+            width: 100%;
+            padding: 0 50px 0 45px;
+            outline: none;
+            border: none;
+            font-size: 16px;
+            background: var(--bg);
+            color: var(--text);
+            border-radius: var(--radius-lg);
+            box-shadow: inset 2px 2px 5px var(--shadow-dark),
+                        inset -5px -5px 10px var(--shadow-light);
+            font-family: 'Poppins', sans-serif;
+        }
+        .field input:focus {
+            box-shadow: inset 1px 1px 2px var(--shadow-dark),
+                        inset -1px -1px 2px var(--shadow-light);
+        }
+        .field input::placeholder { color: var(--text-light); opacity: 0.7; }
+        .field .field-icon {
+            position: absolute;
+            left: 0;
+            width: 45px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 15px;
+            pointer-events: none;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 16px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: color .2s ease;
+        }
+        .toggle-password:hover { color: var(--accent); }
+
+        /* Tombol neumorphism */
+        .btn-neu {
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: var(--text);
+            box-shadow: 2px 2px 5px var(--shadow-dark),
+                       -5px -5px 10px var(--shadow-light);
+            transition: all .2s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        .btn-neu:hover { color: var(--accent); }
+        .btn-neu:active,
+        .btn-neu:focus {
+            color: var(--accent);
+            box-shadow: inset 2px 2px 5px var(--shadow-dark),
+                        inset -5px -5px 10px var(--shadow-light);
+        }
+
+        .error-message {
+            color: var(--danger);
+            text-align: center;
+            margin-top: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* ===================== MAIN APP ===================== */
         #main-app {
             display: none;
             min-height: 100vh;
-            background: var(--light);
+            background: var(--bg);
             position: relative;
             padding-bottom: 60px;
         }
 
         .main-header {
-            background: var(--light);
+            background: var(--bg);
             padding: 15px 20px;
-            box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -316,517 +358,497 @@
             top: 0;
             z-index: 100;
             padding-top: calc(15px + var(--safe-area-top));
+            box-shadow: 0 4px 8px rgba(0,0,0,0.04);
         }
-
-        .header-title { display: flex; align-items: center; gap: 10px; }
-
+        .header-title { display: flex; align-items: center; gap: 12px; }
         .header-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            background: var(--bg);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--accent);
             font-size: 18px;
-            font-weight: bold;
+            box-shadow: 3px 3px 6px var(--shadow-dark),
+                       -3px -3px 6px var(--shadow-light);
         }
+        .header-title h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-strong);
+        }
+        .header-actions { display: flex; gap: 12px; align-items: center; }
 
-        .header-actions { display: flex; gap: 15px; align-items: center; }
-
+        /* Toggle dark mode neumorphism */
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 30px;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+            width: 54px;
+            height: 28px;
             flex-shrink: 0;
             cursor: pointer;
             vertical-align: middle;
         }
-
-        .toggle-switch input[type="checkbox"] {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            margin: 0; padding: 0;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 5;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
+        .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
         .toggle-slider {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(145deg, #c5c5c5, #a0a0a0);
-            transition: var(--transition);
+            inset: 0;
+            background: var(--bg);
+            transition: all .3s ease;
             border-radius: 34px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-            z-index: 1;
+            box-shadow: inset 2px 2px 5px var(--shadow-dark),
+                        inset -2px -2px 5px var(--shadow-light);
         }
-
         .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 24px; width: 24px;
-            left: 3px; bottom: 3px;
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            transition: var(--transition);
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background: var(--bg);
+            transition: all .3s ease;
             border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 2;
+            box-shadow: 2px 2px 4px var(--shadow-dark),
+                       -1px -1px 3px var(--shadow-light);
         }
-
         .toggle-slider:after {
-            content: "🌙";
+            content: "\f186";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
             position: absolute;
-            right: 8px; top: 50%;
+            right: 7px;
+            top: 50%;
             transform: translateY(-50%);
-            font-size: 12px;
-            color: #666;
-            z-index: 2;
-            pointer-events: none;
+            font-size: 11px;
+            color: var(--text-light);
         }
-
-        .toggle-switch input:checked + .toggle-slider {
-            background: linear-gradient(145deg, #4a90e2, #1c5bb5);
-        }
-
         .toggle-switch input:checked + .toggle-slider:before {
-            transform: translateX(30px);
-            background: linear-gradient(145deg, #ffffff, #f5f5f5);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transform: translateX(26px);
+            background: var(--accent);
         }
-
         .toggle-switch input:checked + .toggle-slider:after {
-            content: "☀️";
-            right: auto; left: 8px;
-            color: white;
+            content: "\f185";
+            right: auto;
+            left: 7px;
+            color: var(--warning);
         }
 
         .icon-btn {
-            background: none;
+            background: var(--bg);
             border: none;
-            font-size: 20px;
-            color: var(--gray);
+            font-size: 16px;
+            color: var(--text);
             cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            transition: var(--transition);
-            width: 44px; height: 44px;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            touch-action: manipulation;
+            box-shadow: 3px 3px 6px var(--shadow-dark),
+                       -3px -3px 6px var(--shadow-light);
+            transition: all .2s ease;
+        }
+        .icon-btn:hover { color: var(--danger); }
+        .icon-btn:active {
+            box-shadow: inset 2px 2px 4px var(--shadow-dark),
+                        inset -2px -2px 4px var(--shadow-light);
         }
 
-        .icon-btn:hover { background: #f1f3f4; color: var(--dark); }
-        [data-theme="dark"] .icon-btn:hover { background: #3d3d3d; }
-
+        /* Nav tabs */
         .nav-tabs {
             display: flex;
-            background: var(--light);
-            border-bottom: 1px solid #e0e0e0;
+            gap: 15px;
+            padding: 20px;
+            background: var(--bg);
             position: sticky;
-            top: 70px;
+            top: 72px;
             z-index: 99;
         }
-
-        [data-theme="dark"] .nav-tabs { background: #1a1a1a; border-bottom-color: #444; }
-
         .nav-tab {
             flex: 1;
-            padding: 15px;
+            padding: 14px 12px;
             text-align: center;
-            background: none;
+            background: var(--bg);
             border: none;
-            border-bottom: 3px solid transparent;
-            font-size: 16px;
+            border-radius: var(--radius);
+            font-size: 13px;
             font-weight: 500;
-            color: var(--gray);
+            color: var(--text-light);
             cursor: pointer;
-            transition: var(--transition);
-            touch-action: manipulation;
+            transition: all .2s ease;
+            box-shadow: 2px 2px 5px var(--shadow-dark),
+                       -2px -2px 5px var(--shadow-light);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
-
         .nav-tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-            background: rgba(26, 115, 232, 0.05);
+            color: var(--accent);
+            box-shadow: inset 2px 2px 5px var(--shadow-dark),
+                        inset -2px -2px 5px var(--shadow-light);
         }
-
-        [data-theme="dark"] .nav-tab.active { background: rgba(74, 144, 226, 0.1); }
 
         .app-content {
-            padding: 20px;
+            padding: 10px 20px 20px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            min-height: calc(100vh - 140px);
+        }
+        .page-section { display: none; animation: fadeIn .3s ease; }
+        .page-section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .page-section { display: none; animation: fadeIn 0.3s ease; }
-        .page-section.active { display: block; }
-
+        /* Footer */
         .app-footer {
             position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: var(--light);
-            border-top: 1px solid #e0e0e0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg);
+            border-top: 1px solid var(--shadow-light);
             padding: 12px 20px;
             text-align: center;
-            color: var(--gray);
-            font-size: 0.85rem;
+            color: var(--text-light);
+            font-size: 0.8rem;
             z-index: 99;
             padding-bottom: calc(12px + var(--safe-area-bottom));
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.04);
         }
 
-        [data-theme="dark"] .app-footer { border-top-color: #444; background: #1a1a1a; }
-
+        /* ===================== BALANCE CARD ===================== */
         .balance-card {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 25px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
+            background: var(--bg);
+            padding: 28px 25px;
+            border-radius: var(--radius);
+            margin: 10px 0 20px;
+            box-shadow: -3px -3px 7px var(--shadow-light),
+                         2px 2px 5px var(--shadow-dark);
+            text-align: left;
+            position: relative;
         }
-
-        .balance-label { font-size: 1rem; opacity: 0.9; margin-bottom: 5px; }
-
+        .balance-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
         .balance-amount {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            color: var(--accent);
+            margin-bottom: 14px;
             word-break: break-word;
         }
-
         .balance-details {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
-            opacity: 0.9;
+            font-size: 0.78rem;
+            color: var(--text-light);
             flex-wrap: wrap;
             gap: 10px;
         }
+        .balance-details span { display: flex; align-items: center; gap: 5px; }
+        .balance-details b { color: var(--text); }
 
+        /* ===================== SECTION TITLE ===================== */
         .section-title {
-            font-size: 1.3rem;
+            font-size: 1.05rem;
             font-weight: 600;
             margin: 25px 0 15px;
-            color: var(--dark);
-        }
-
-        .transaction-form {
-            background: var(--light);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .form-input {
-            padding: 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: var(--transition);
-            background: var(--light);
-            color: var(--dark);
-            width: 100%;
-            -webkit-appearance: none;
-        }
-
-        [data-theme="dark"] .form-input { border-color: #444; background: #2d2d2d; }
-        .form-input:focus { outline: none; border-color: var(--primary); }
-
-        .form-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: var(--transition);
+            color: var(--text-strong);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 5px;
-            touch-action: manipulation;
-            white-space: nowrap;
-            flex: 1;
-            min-width: 120px;
+            gap: 8px;
         }
+        .section-title i { color: var(--accent); font-size: 0.95rem; }
 
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-dark); }
-
-        .btn-secondary { background: #f1f3f4; color: var(--dark); }
-        .btn-secondary:hover { background: #e8eaed; }
-        [data-theme="dark"] .btn-secondary { background: #2d2d2d; color: var(--dark); }
-        [data-theme="dark"] .btn-secondary:hover { background: #3d3d3d; }
-
-        .btn-success { background: var(--secondary); color: white; }
-        .btn-success:hover { background: #2d924a; }
-
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-danger:hover { background: #d33426; }
-
-        .btn-warning { background: var(--warning); color: var(--dark); }
-        .btn-warning:hover { background: #e0ac03; }
-
-        .filter-section {
-            background: var(--light);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+        /* ===================== FORMS ===================== */
+        .transaction-form,
+        .filter-section,
+        .chart-container {
+            background: var(--bg);
+            padding: 22px 20px;
+            border-radius: var(--radius);
+            box-shadow: -3px -3px 7px var(--shadow-light),
+                         2px 2px 5px var(--shadow-dark);
             margin-bottom: 20px;
         }
 
+        .form-grid,
         .filter-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 16px;
         }
+
+        .form-input,
+        .filter-select {
+            padding: 13px 18px;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 15px;
+            background: var(--bg);
+            color: var(--text);
+            width: 100%;
+            outline: none;
+            box-shadow: inset 2px 2px 5px var(--shadow-dark),
+                        inset -5px -5px 10px var(--shadow-light);
+            font-family: 'Poppins', sans-serif;
+            -webkit-appearance: none;
+        }
+        .form-input:focus,
+        .filter-select:focus {
+            box-shadow: inset 1px 1px 2px var(--shadow-dark),
+                        inset -1px -1px 2px var(--shadow-light);
+        }
+        .form-input::placeholder { color: var(--text-light); opacity: 0.75; }
 
         .filter-label {
             font-weight: 500;
-            margin-bottom: 5px;
-            color: var(--dark);
+            margin-bottom: 6px;
+            color: var(--text);
             display: block;
+            font-size: 0.85rem;
+            padding-left: 5px;
         }
 
-        .filter-select {
-            padding: 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background: var(--light);
-            font-size: 16px;
-            width: 100%;
-            color: var(--dark);
-            -webkit-appearance: none;
-        }
-
-        [data-theme="dark"] .filter-select { border-color: #444; background: #2d2d2d; }
-        .filter-select:focus { outline: none; border-color: var(--primary); }
-
+        .form-buttons,
         .filter-buttons {
             display: flex;
             gap: 10px;
-            justify-content: flex-end;
             flex-wrap: wrap;
         }
+        .filter-buttons { justify-content: flex-end; }
 
-        .transactions-page { padding-bottom: 20px; }
+        /* Button styles - neumorphism */
+        .btn {
+            padding: 13px 20px;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all .2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-family: 'Poppins', sans-serif;
+            flex: 1;
+            min-width: 120px;
+            background: var(--bg);
+            color: var(--text);
+            box-shadow: 2px 2px 5px var(--shadow-dark),
+                       -2px -2px 5px var(--shadow-light);
+        }
+        .btn:hover { color: var(--accent); }
+        .btn:active {
+            box-shadow: inset 2px 2px 5px var(--shadow-dark),
+                        inset -2px -2px 5px var(--shadow-light);
+        }
+        .btn-primary { color: var(--accent); }
+        .btn-primary:hover { color: var(--accent-dark); }
+        .btn-success { color: var(--success); }
+        .btn-danger { color: var(--danger); }
+        .btn-warning { color: var(--warning); }
+        .btn-secondary { color: var(--text); }
+        .btn-secondary:hover { color: var(--text-strong); }
 
+        /* ===================== EXPORT ===================== */
         .export-section {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
-
         .export-info {
             width: 100%;
             text-align: center;
-            font-size: 0.85rem;
-            color: var(--gray);
+            font-size: 0.8rem;
+            color: var(--accent);
             margin-bottom: 10px;
-            padding: 8px;
-            background: rgba(26, 115, 232, 0.08);
-            border-radius: 8px;
+            padding: 10px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            box-shadow: inset 2px 2px 4px var(--shadow-dark),
+                        inset -2px -2px 4px var(--shadow-light);
             display: none;
         }
-
         .export-info.show { display: block; }
 
+        /* ===================== MONTH GROUPS ===================== */
         .month-group {
-            margin-bottom: 30px;
-            border-radius: var(--border-radius);
+            margin-bottom: 22px;
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: -3px -3px 7px var(--shadow-light),
+                         2px 2px 5px var(--shadow-dark);
         }
-
         .month-group .month-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 15px 20px;
-            font-size: 1.1rem;
+            background: var(--bg);
+            color: var(--text-strong);
+            padding: 18px 20px;
+            font-size: 1rem;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
+            border-bottom: 1px solid var(--shadow-light);
         }
-
+        .month-header > span { color: var(--accent); }
         .month-totals {
             display: flex;
             gap: 15px;
-            font-size: 0.9rem;
-            opacity: 0.9;
+            font-size: 0.78rem;
+            color: var(--text-light);
             flex-wrap: wrap;
         }
+        .month-totals span { display: flex; align-items: center; gap: 4px; }
+        .month-totals strong { color: var(--text); font-weight: 600; }
 
-        .month-totals span { display: flex; align-items: center; gap: 5px; }
-
-        /* ============ TRANSACTIONS TABLE - LEBIH LEBAR ============ */
+        /* ===================== TABLE ===================== */
         .transactions-table {
             width: 100%;
-            border-collapse: collapse;
             display: block;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            background: var(--bg-alt);
         }
-
         .transactions-table table {
             width: 100%;
             min-width: 720px;
             table-layout: auto;
+            border-collapse: collapse;
         }
-
         .transactions-table th,
         .transactions-table td {
             padding: 14px 16px;
             text-align: left;
-            border-bottom: 1px solid #f0f0f0;
-            color: var(--dark);
+            border-bottom: 1px solid var(--shadow-light);
+            color: var(--text);
             white-space: nowrap;
-            font-size: 14px;
+            font-size: 13.5px;
         }
-
-        [data-theme="dark"] .transactions-table th,
-        [data-theme="dark"] .transactions-table td {
-            border-color: #444;
-        }
-
         .transactions-table th {
-            background: #f8f9fa;
+            background: var(--bg);
             font-weight: 600;
-            color: var(--gray);
-            font-size: 0.9rem;
+            color: var(--text-light);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        .transactions-table tr:last-child td { border-bottom: none; }
+        .transactions-table tr:hover { background: rgba(52,152,219,.05); }
 
-        [data-theme="dark"] .transactions-table th {
-            background: #2d2d2d;
-        }
-
-        .transactions-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .transactions-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        [data-theme="dark"] .transactions-table tr:hover {
-            background: #2d2d2d;
-        }
-
-        /* Kolom Tanggal - sempit & center */
         .transactions-table th.col-tanggal,
         .transactions-table td.col-tanggal {
             width: 70px;
             min-width: 70px;
             text-align: center;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--accent);
         }
-
-        /* Kolom Keterangan - lebar & wrap */
         .transactions-table th.col-ket,
         .transactions-table td.col-ket {
             min-width: 220px;
             white-space: normal;
             word-break: break-word;
         }
-
-        /* Kolom angka - rata kanan */
         .transactions-table th.col-angka,
         .transactions-table td.col-angka {
             min-width: 140px;
             text-align: right;
         }
-
-        /* Kolom aksi */
         .transactions-table th.col-aksi,
         .transactions-table td.col-aksi {
             min-width: 180px;
         }
 
-        .income-amount { color: var(--secondary); font-weight: 600; }
+        .income-amount { color: var(--success); font-weight: 600; }
         .expense-amount { color: var(--danger); font-weight: 600; }
-        .action-buttons { display: flex; gap: 6px; flex-wrap: nowrap; }
 
-        .chart-container {
-            background: var(--light);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+        .action-buttons { display: flex; gap: 6px; flex-wrap: nowrap; }
+        .action-buttons .btn {
+            padding: 8px 12px;
+            font-size: 11px;
+            min-width: 0;
+            flex: 0 0 auto;
         }
 
+        /* ===================== CHART ===================== */
         .chart-wrapper {
             position: relative;
             width: 100%;
             height: 300px;
         }
-
         .chart-placeholder {
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f8f9fa;
-            border-radius: 8px;
-            color: var(--gray);
+            background: var(--bg-alt);
+            border-radius: var(--radius-sm);
+            color: var(--text-light);
             padding: 20px;
             text-align: center;
+            box-shadow: inset 2px 2px 5px var(--shadow-dark),
+                        inset -2px -2px 5px var(--shadow-light);
+            flex-direction: column;
+            gap: 10px;
         }
-
-        [data-theme="dark"] .chart-placeholder { background: #2d2d2d; }
+        .chart-placeholder i { font-size: 2rem; opacity: .5; color: var(--accent); }
         #finance-chart { width: 100% !important; height: 100% !important; }
 
+        /* ===================== EMPTY STATE ===================== */
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
-            color: var(--gray);
+            padding: 50px 20px;
+            color: var(--text-light);
+            background: var(--bg);
+            border-radius: var(--radius);
+            box-shadow: -3px -3px 7px var(--shadow-light),
+                         2px 2px 5px var(--shadow-dark);
+        }
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.4;
+            color: var(--accent);
+            display: block;
+        }
+        .empty-state p { font-size: 0.95rem; margin-bottom: 6px; }
+
+        /* Scrollbar */
+        .transactions-table::-webkit-scrollbar { height: 6px; }
+        .transactions-table::-webkit-scrollbar-track { background: transparent; }
+        .transactions-table::-webkit-scrollbar-thumb {
+            background: var(--shadow-dark);
+            border-radius: 3px;
         }
 
-        .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
-        .empty-state p { font-size: 1.1rem; margin-bottom: 10px; }
-
-        .transactions-table::-webkit-scrollbar { height: 6px; }
-        .transactions-table::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
-        .transactions-table::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
-        .transactions-table::-webkit-scrollbar-thumb:hover { background: #555; }
-
+        /* ===================== RESPONSIVE ===================== */
         @media (max-width: 768px) {
-            .login-container { padding: 20px; margin: 10px; max-width: 100%; }
-            .app-content { padding: 15px; }
+            .login-container { padding: 32px 24px; }
+            .app-content { padding: 10px 15px 20px; }
             .form-grid, .filter-grid { grid-template-columns: 1fr; gap: 12px; }
-            .filter-buttons, .form-buttons { flex-direction: row; justify-content: stretch; }
-            .btn { flex: 1; min-width: 0; padding: 12px 15px; font-size: 13px; }
+            .form-buttons, .filter-buttons { flex-direction: row; justify-content: stretch; }
+            .btn { flex: 1; min-width: 0; padding: 12px 14px; font-size: 12.5px; }
             .transactions-table th,
-            .transactions-table td {
-                padding: 12px 12px;
-                font-size: 13px;
-            }
+            .transactions-table td { padding: 12px 12px; font-size: 12.5px; }
             .transactions-table table { min-width: 680px; }
             .transactions-table th.col-tanggal,
             .transactions-table td.col-tanggal { width: 56px; min-width: 56px; }
@@ -836,86 +858,74 @@
             .transactions-table td.col-angka { min-width: 120px; }
             .transactions-table th.col-aksi,
             .transactions-table td.col-aksi { min-width: 160px; }
-            .balance-amount { font-size: 1.8rem; }
+            .balance-amount { font-size: 1.7rem; }
             .balance-details { flex-direction: column; gap: 8px; }
-            .export-section { flex-direction: column; align-items: stretch; gap: 8px; }
-            .app-footer { padding: 10px 15px; font-size: 0.75rem; line-height: 1.4; }
-            .month-header { flex-direction: column; gap: 10px; align-items: flex-start; padding: 12px 15px; }
-            .month-totals { flex-direction: column; gap: 8px; width: 100%; }
+            .export-section { flex-direction: column; align-items: stretch; }
+            .month-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+            .month-totals { flex-direction: column; gap: 6px; width: 100%; }
             .month-totals span { justify-content: space-between; width: 100%; }
             .action-buttons { flex-direction: column; gap: 5px; }
-            .action-buttons .btn { padding: 8px 10px; font-size: 12px; min-width: 0; }
-            .chart-container { padding: 15px; }
-            .chart-wrapper { height: 250px; }
-            .chart-placeholder { font-size: 14px; padding: 15px; }
-            .nav-tab { padding: 12px; font-size: 14px; }
-            .section-title { font-size: 1.2rem; margin: 20px 0 12px; }
+            .action-buttons .btn { padding: 8px 10px; font-size: 11.5px; }
+            .chart-wrapper { height: 240px; }
+            .nav-tab { padding: 12px 10px; font-size: 12px; }
+            .section-title { font-size: 1rem; margin: 20px 0 12px; }
             .sound-control { bottom: 70px; right: 15px; width: 45px; height: 45px; }
+            .nav-tabs { top: 70px; padding: 15px; gap: 10px; }
+            .header-title h2 { font-size: 1.05rem; }
         }
 
         @media (max-width: 480px) {
-            .splash-title { font-size: 2rem; }
-            .splash-logo { width: 100px; height: 100px; font-size: 30px; }
+            .splash-title { font-size: 1.8rem; }
+            .splash-logo { width: 100px; height: 100px; font-size: 36px; border-radius: 24px; }
             .app-title { font-size: 1.5rem; }
-            .app-footer { padding: 8px 12px; font-size: 0.7rem; }
-            .balance-card { padding: 20px; }
+            .app-icon { width: 70px; height: 70px; font-size: 26px; }
+            .balance-card { padding: 22px 20px; }
             .balance-amount { font-size: 1.6rem; }
-            .balance-details { font-size: 0.8rem; }
-            .transaction-form, .filter-section, .chart-container { padding: 15px; }
-            .form-input, .filter-select { padding: 10px; font-size: 15px; }
-            .btn { padding: 10px 12px; font-size: 12px; }
-            .month-header { font-size: 1rem; padding: 10px 12px; }
-            .month-totals { font-size: 0.8rem; }
+            .transaction-form, .filter-section, .chart-container { padding: 18px 16px; }
+            .form-input, .filter-select { padding: 12px 16px; font-size: 14px; }
+            .btn { padding: 11px 14px; font-size: 12px; }
             .chart-wrapper { height: 200px; }
-            .chart-placeholder { font-size: 13px; }
             .main-header { padding: 12px 15px; }
-            .header-title h2 { font-size: 1.2rem; }
-            .icon-btn { width: 40px; height: 40px; padding: 6px; font-size: 18px; }
-            .header-actions { gap: 10px; }
-            .nav-tab { padding: 10px; font-size: 13px; }
-        }
-
-        @media (max-width: 360px) {
-            .balance-amount { font-size: 1.4rem; }
-            .btn { padding: 8px 10px; font-size: 11px; }
-            .chart-wrapper { height: 180px; }
-            .nav-tab { padding: 8px; font-size: 12px; }
+            .icon-btn { width: 38px; height: 38px; font-size: 14px; }
+            .nav-tab { padding: 11px 8px; font-size: 11.5px; gap: 4px; }
+            .app-footer { font-size: 0.72rem; padding: 10px 15px; }
         }
 
         @media (hover: none) and (pointer: coarse) {
-            .btn:hover, .icon-btn:hover, .nav-tab:hover { transform: none; }
-            .btn:active, .icon-btn:active, .nav-tab:active {
-                transform: scale(0.95);
-                transition: transform 0.1s ease;
-            }
-            .login-btn:active { transform: scale(0.98); }
+            .btn:active, .icon-btn:active, .nav-tab:active,
+            .btn-neu:active { transform: scale(0.97); }
         }
     </style>
 </head>
 <body>
+
+    <!-- Sound Control -->
     <div class="sound-control" id="sound-control" title="Mute/Unmute Sound">
         <i class="fas fa-volume-up" id="sound-icon"></i>
     </div>
 
+    <!-- Install Prompt -->
     <div class="install-prompt" id="install-prompt">
-        Pasang CashTrack di perangkat Anda
+        <span>Pasang CashTrack di perangkat Anda</span>
         <button class="install-btn" id="install-btn">Pasang</button>
-        <button class="install-btn" onclick="hideInstallPrompt()" style="background: transparent; color: white;">
+        <button class="install-btn" onclick="hideInstallPrompt()" style="background: transparent; box-shadow: none;">
             <i class="fas fa-times"></i>
         </button>
     </div>
 
+    <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-logo"><i class="fas fa-chart-line"></i></div>
         <h1 class="splash-title">CashTrack</h1>
         <p class="splash-subtitle">Kelola Keuangan dengan Mudah</p>
         <div class="splash-footer">
-            <p class="version">CashTrack Version 2.0</p>
+            <p class="version">Version 2.0</p>
             <p>Karya Muhammad Abid – Buatan Indonesia</p>
             <p class="copyright">© 2027 CashTrack. All Rights Reserved.</p>
         </div>
     </div>
 
+    <!-- ===================== LOGIN SCREEN ===================== -->
     <div id="login-screen">
         <div class="login-container">
             <div class="app-header">
@@ -923,17 +933,23 @@
                 <h1 class="app-title">CashTrack</h1>
                 <p class="app-subtitle">Masukkan kata sandi untuk melanjutkan</p>
             </div>
-            <div class="input-container">
-                <input type="password" class="password-input" placeholder="Masukkan password" id="password-input">
+
+            <div class="field">
+                <input type="password" id="password-input" placeholder="Masukkan password" required>
+                <span class="field-icon"><i class="fas fa-lock"></i></span>
                 <button type="button" class="toggle-password" id="toggle-password">
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
-            <button class="login-btn" onclick="checkPassword()"><span>Lanjutkan</span></button>
-            <div class="error-message" id="password-error">Password salah!</div>
+
+            <button class="btn-neu" onclick="checkPassword()">Lanjutkan</button>
+            <div class="error-message" id="password-error">
+                <i class="fas fa-exclamation-circle"></i> Password salah!
+            </div>
         </div>
     </div>
 
+    <!-- ===================== MAIN APP ===================== -->
     <div id="main-app">
         <header class="main-header">
             <div class="header-title">
@@ -963,15 +979,15 @@
         <div class="app-content">
             <div id="transactions-page" class="page-section active">
                 <div class="balance-card">
-                    <div class="balance-label">Saldo Saat Ini</div>
+                    <div class="balance-label">SALDO SAAT INI</div>
                     <div class="balance-amount" id="balance-amount">Rp 0</div>
                     <div class="balance-details">
-                        <span>Update: <span id="last-update">-</span></span>
-                        <span>Total Transaksi: <span id="total-transactions">0</span></span>
+                        <span><i class="fas fa-clock"></i> Update: <b id="last-update">-</b></span>
+                        <span><i class="fas fa-receipt"></i> Total: <b id="total-transactions">0</b> transaksi</span>
                     </div>
                 </div>
 
-                <h3 class="section-title">Tambah Transaksi Baru</h3>
+                <h3 class="section-title"><i class="fas fa-plus-circle"></i> Tambah Transaksi Baru</h3>
                 <div class="transaction-form">
                     <div class="form-grid">
                         <input type="date" class="form-input" id="transaction-date">
@@ -981,19 +997,20 @@
                     </div>
                     <div class="form-buttons">
                         <button class="btn btn-primary" onclick="addTransaction()">
-                            <i class="fas fa-plus"></i> Tambah Transaksi
+                            <i class="fas fa-plus"></i> Tambah
                         </button>
                         <button class="btn btn-secondary" onclick="clearForm()">
-                            <i class="fas fa-trash"></i> Bersihkan Form
+                            <i class="fas fa-trash"></i> Bersihkan
                         </button>
                     </div>
                 </div>
 
-                <h3 class="section-title">Grafik Keuangan</h3>
+                <h3 class="section-title"><i class="fas fa-chart-bar"></i> Grafik Keuangan</h3>
                 <div class="chart-container">
                     <div class="chart-wrapper">
                         <div class="chart-placeholder" id="chart-placeholder">
-                            <i class="fas fa-chart-bar"></i> Grafik akan ditampilkan di sini
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Grafik akan ditampilkan di sini</span>
                         </div>
                         <canvas id="finance-chart"></canvas>
                     </div>
@@ -1001,55 +1018,54 @@
             </div>
 
             <div id="history-page" class="page-section">
-                <div class="transactions-page">
-                    <h3 class="section-title">Filter Transaksi</h3>
-                    <div class="filter-section">
-                        <div class="filter-grid">
-                            <div>
-                                <label class="filter-label">Tahun</label>
-                                <select class="filter-select" id="filter-year" onchange="updateMonthOptions()">
-                                    <option value="">Semua Tahun</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="filter-label">Bulan</label>
-                                <select class="filter-select" id="filter-month" onchange="updateDayOptions()">
-                                    <option value="">Semua Bulan</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="filter-label">Tanggal</label>
-                                <select class="filter-select" id="filter-day">
-                                    <option value="">Semua Tanggal</option>
-                                </select>
-                            </div>
+                <h3 class="section-title"><i class="fas fa-filter"></i> Filter Transaksi</h3>
+                <div class="filter-section">
+                    <div class="filter-grid">
+                        <div>
+                            <label class="filter-label">Tahun</label>
+                            <select class="filter-select" id="filter-year" onchange="updateMonthOptions()">
+                                <option value="">Semua Tahun</option>
+                            </select>
                         </div>
-                        <div class="filter-buttons">
-                            <button class="btn btn-primary" onclick="applyFilter()">
-                                <i class="fas fa-filter"></i> Terapkan Filter
-                            </button>
-                            <button class="btn btn-secondary" onclick="resetFilters()">
-                                <i class="fas fa-redo"></i> Reset Filter
-                            </button>
+                        <div>
+                            <label class="filter-label">Bulan</label>
+                            <select class="filter-select" id="filter-month" onchange="updateDayOptions()">
+                                <option value="">Semua Bulan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="filter-label">Tanggal</label>
+                            <select class="filter-select" id="filter-day">
+                                <option value="">Semua Tanggal</option>
+                            </select>
                         </div>
                     </div>
-
-                    <div class="export-section">
-                        <div class="export-info" id="export-info"></div>
-                        <button class="btn btn-success" onclick="exportToCSV()">
-                            <i class="fas fa-file-csv"></i> Export CSV
+                    <div class="filter-buttons">
+                        <button class="btn btn-primary" onclick="applyFilter()">
+                            <i class="fas fa-filter"></i> Terapkan
                         </button>
-                        <button class="btn btn-success" onclick="exportToExcel()">
-                            <i class="fas fa-file-excel"></i> Export Excel
-                        </button>
-                        <button class="btn btn-warning" onclick="exportToExcelGrouped()">
-                            <i class="fas fa-layer-group"></i> Export Excel Berkelompok
+                        <button class="btn btn-secondary" onclick="resetFilters()">
+                            <i class="fas fa-redo"></i> Reset
                         </button>
                     </div>
-
-                    <h3 class="section-title">Riwayat Transaksi</h3>
-                    <div id="transactions-container"></div>
                 </div>
+
+                <h3 class="section-title"><i class="fas fa-download"></i> Export Data</h3>
+                <div class="export-section">
+                    <div class="export-info" id="export-info"></div>
+                    <button class="btn btn-success" onclick="exportToCSV()">
+                        <i class="fas fa-file-csv"></i> CSV
+                    </button>
+                    <button class="btn btn-success" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </button>
+                    <button class="btn btn-warning" onclick="exportToExcelGrouped()">
+                        <i class="fas fa-layer-group"></i> Excel Grup
+                    </button>
+                </div>
+
+                <h3 class="section-title"><i class="fas fa-history"></i> Riwayat Transaksi</h3>
+                <div id="transactions-container"></div>
             </div>
         </div>
 
@@ -1059,12 +1075,11 @@
     </div>
 
     <script>
-        // ==================== SOUND MANAGER ====================
+        /* ==================== SOUND MANAGER ==================== */
         const SoundManager = {
             isMuted: false,
             sounds: {},
             unlocked: false,
-
             init() {
                 const soundFiles = {
                     click: 'mixkit-positive-notification-951.wav',
@@ -1079,20 +1094,14 @@
                         audio.preload = 'auto';
                         audio.addEventListener('error', () => {}, { once: true });
                         this.sounds[key] = audio;
-                    } catch(e) {
-                        this.sounds[key] = null;
-                    }
+                    } catch(e) { this.sounds[key] = null; }
                 });
                 try {
                     const saved = localStorage.getItem('cashTrackSoundSettings');
-                    if (saved) {
-                        const s = JSON.parse(saved);
-                        this.isMuted = s.isMuted || false;
-                    }
+                    if (saved) this.isMuted = JSON.parse(saved).isMuted || false;
                 } catch(e) {}
                 this.updateIcon();
             },
-
             unlock() {
                 if (this.unlocked) return;
                 this.unlocked = true;
@@ -1110,7 +1119,6 @@
                     } catch(e) {}
                 });
             },
-
             play(name) {
                 if (this.isMuted) return;
                 const sound = this.sounds[name];
@@ -1121,7 +1129,6 @@
                     if (p && p.catch) p.catch(() => {});
                 } catch(e) {}
             },
-
             toggleMute() {
                 this.isMuted = !this.isMuted;
                 this.updateIcon();
@@ -1130,7 +1137,6 @@
                     localStorage.setItem('cashTrackSoundSettings', JSON.stringify({ isMuted: this.isMuted }));
                 } catch(e) {}
             },
-
             updateIcon() {
                 const soundIcon = document.getElementById('sound-icon');
                 const soundControl = document.getElementById('sound-control');
@@ -1145,7 +1151,7 @@
             }
         };
 
-        // ==================== STORAGE ====================
+        /* ==================== STORAGE ==================== */
         const StorageManager = {
             STORAGE_KEY: 'cashTrackData_v2',
             save(data) {
@@ -1171,7 +1177,7 @@
             }
         };
 
-        // ==================== STATE ====================
+        /* ==================== STATE ==================== */
         let transactions = [];
         let appSettings = {};
         const correctPassword = "free palestina";
@@ -1185,9 +1191,11 @@
             if (theme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 document.body.setAttribute('data-theme', 'dark');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#2b2e35');
             } else {
                 document.documentElement.removeAttribute('data-theme');
                 document.body.removeAttribute('data-theme');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#dde1e7');
             }
             appSettings.theme = theme;
             const toggle = document.getElementById('dark-mode-toggle');
@@ -1206,7 +1214,7 @@
             } catch(e) {}
         })();
 
-        // ==================== DOM READY ====================
+        /* ==================== DOM READY ==================== */
         document.addEventListener('DOMContentLoaded', function() {
             SoundManager.init();
 
@@ -1281,7 +1289,7 @@
             }
         });
 
-        // ==================== PWA ====================
+        /* ==================== PWA ==================== */
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -1297,7 +1305,7 @@
                     const promptEl = document.getElementById('install-prompt');
                     if (promptEl) {
                         promptEl.innerHTML = '<span style="font-size:13px;">📱 Tap <b>Share</b> → <b>Add to Home Screen</b></span>' +
-                            '<button class="install-btn" onclick="hideInstallPrompt()" style="background:transparent;color:white;padding:4px 8px;"><i class="fas fa-times"></i></button>';
+                            '<button class="install-btn" onclick="hideInstallPrompt()" style="background:transparent;box-shadow:none;padding:4px 8px;"><i class="fas fa-times"></i></button>';
                         promptEl.style.display = 'block';
                     }
                 }, 4000);
@@ -1320,7 +1328,7 @@
             });
         }
 
-        // ==================== SPLASH ====================
+        /* ==================== SPLASH ==================== */
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
@@ -1334,7 +1342,7 @@
             }, 2000);
         });
 
-        // ==================== LOGIN ====================
+        /* ==================== LOGIN ==================== */
         function showLoginScreen() {
             document.getElementById('login-screen').style.display = 'flex';
             document.getElementById('main-app').style.display = 'none';
@@ -1383,7 +1391,7 @@
             setupNavigationTabs();
         }
 
-        // ==================== UTILITIES ====================
+        /* ==================== UTILITIES ==================== */
         function formatCurrency(amount) {
             if (!amount && amount !== 0) return '-';
             return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -1401,7 +1409,6 @@
             const d = new Date(dateString + 'T00:00:00');
             return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
         }
-        // Ambil angka tanggal saja (01-31) dari string YYYY-MM-DD
         function formatDayOnly(dateString) {
             return dateString.substring(8, 10);
         }
@@ -1412,7 +1419,7 @@
         function getMonthFromDate(d) { return d.substring(5, 7); }
         function getYearFromDate(d) { return d.substring(0, 4); }
 
-        // ==================== GET FILTERED DATA FOR EXPORT ====================
+        /* ==================== EXPORT DATA ==================== */
         function getExportData() {
             const { year, month, day } = currentFilters;
             const hasFilter = year || month || day;
@@ -1432,7 +1439,7 @@
             return { data, label };
         }
 
-        // ==================== TRANSACTIONS ====================
+        /* ==================== TRANSACTIONS ==================== */
         function addTransaction() {
             SoundManager.play('click');
             const date = document.getElementById('transaction-date').value;
@@ -1506,7 +1513,7 @@
             StorageManager.save({ transactions, settings: appSettings });
         }
 
-        // ==================== BALANCE ====================
+        /* ==================== BALANCE ==================== */
         function updateBalance() {
             let inc = 0, exp = 0;
             transactions.forEach(t => { inc += t.income || 0; exp += t.expense || 0; });
@@ -1515,7 +1522,7 @@
             document.getElementById('last-update').textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
         }
 
-        // ==================== CHART ====================
+        /* ==================== CHART ==================== */
         function renderChart() {
             const canvas = document.getElementById('finance-chart');
             const placeholder = document.getElementById('chart-placeholder');
@@ -1541,8 +1548,8 @@
             const incomeData = sorted.map(m => monthly[m].income);
             const expenseData = sorted.map(m => monthly[m].expense);
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-            const textColor = isDark ? '#e0e0e0' : '#202124';
+            const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+            const textColor = isDark ? '#c4c8ce' : '#595959';
             if (financeChart) financeChart.destroy();
             try {
                 financeChart = new Chart(canvas.getContext('2d'), {
@@ -1550,24 +1557,25 @@
                     data: {
                         labels,
                         datasets: [
-                            { label: 'Pendapatan', data: incomeData, backgroundColor: '#34a853', borderColor: '#2d924a', borderWidth: 1 },
-                            { label: 'Pengeluaran', data: expenseData, backgroundColor: '#ea4335', borderColor: '#d33426', borderWidth: 1 }
+                            { label: 'Pendapatan', data: incomeData, backgroundColor: '#27ae60', borderColor: '#1e8449', borderWidth: 1, borderRadius: 6 },
+                            { label: 'Pengeluaran', data: expenseData, backgroundColor: '#e74c3c', borderColor: '#c0392b', borderWidth: 1, borderRadius: 6 }
                         ]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: { labels: { color: textColor } },
+                            legend: { labels: { color: textColor, font: { family: 'Poppins' } } },
                             tooltip: { callbacks: { label: c => (c.dataset.label || '') + ': ' + formatCurrency(c.raw) } }
                         },
                         scales: {
-                            x: { grid: { color: gridColor }, ticks: { color: textColor } },
+                            x: { grid: { color: gridColor }, ticks: { color: textColor, font: { family: 'Poppins' } } },
                             y: {
                                 beginAtZero: true,
                                 grid: { color: gridColor },
                                 ticks: {
                                     color: textColor,
+                                    font: { family: 'Poppins' },
                                     callback: v => {
                                         if (v >= 1000000) return 'Rp' + (v/1000000).toFixed(1) + 'Jt';
                                         if (v >= 1000) return 'Rp' + (v/1000).toFixed(0) + 'rb';
@@ -1581,7 +1589,7 @@
             } catch(e) { console.error('Chart error:', e); }
         }
 
-        // ==================== FILTERS ====================
+        /* ==================== FILTERS ==================== */
         function updateYearOptions() {
             const sel = document.getElementById('filter-year');
             if (!sel) return;
@@ -1672,10 +1680,10 @@
                 infoEl.classList.remove('show');
                 return;
             }
-            let label = 'Export akan menyertakan: ';
+            let label = 'Export: ';
             if (year) label += year;
-            if (month) label += (year ? ' - ' : '') + getMonthName(month);
-            if (day) label += ' - Tanggal ' + day;
+            if (month) label += (year ? ' · ' : '') + getMonthName(month);
+            if (day) label += ' · Tgl ' + day;
             infoEl.textContent = label;
             infoEl.classList.add('show');
         }
@@ -1700,17 +1708,25 @@
             SoundManager.play('success');
         }
 
-        // ==================== DISPLAY ====================
+        /* ==================== DISPLAY ==================== */
         function displayGroupedTransactions() {
             const container = document.getElementById('transactions-container');
             if (!container) return;
             if (transactions.length === 0) {
-                container.innerHTML = `<div class="empty-state"><i class="fas fa-chart-bar"></i><p>Tidak ada transaksi ditemukan</p><p>Tambahkan transaksi baru di halaman "Tambah Transaksi"</p></div>`;
+                container.innerHTML = `<div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Belum ada transaksi</p>
+                    <p style="font-size:.82rem;opacity:.7;">Tambahkan transaksi baru di halaman "Tambah Transaksi"</p>
+                </div>`;
                 return;
             }
             const toShow = filteredTransactions.length > 0 ? filteredTransactions : transactions;
             if (toShow.length === 0) {
-                container.innerHTML = `<div class="empty-state"><i class="fas fa-filter"></i><p>Tidak ada transaksi sesuai filter</p><p>Coba ubah atau reset filter Anda</p></div>`;
+                container.innerHTML = `<div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <p>Tidak ada transaksi sesuai filter</p>
+                    <p style="font-size:.82rem;opacity:.7;">Coba ubah atau reset filter Anda</p>
+                </div>`;
                 return;
             }
             const grouped = {};
@@ -1745,9 +1761,9 @@
                     <div class="month-header">
                         <span><i class="fas fa-calendar-alt"></i> ${mn} ${year}</span>
                         <div class="month-totals">
-                            <span><i class="fas fa-arrow-up" style="color:#34a853"></i> Pendapatan: <strong>${formatCurrency(mi)}</strong></span>
-                            <span><i class="fas fa-arrow-down" style="color:#ea4335"></i> Pengeluaran: <strong>${formatCurrency(me)}</strong></span>
-                            <span><i class="fas fa-wallet"></i> Saldo: <strong style="color:${mb>=0?'#34a853':'#ea4335'}">${formatCurrency(mb)}</strong></span>
+                            <span><i class="fas fa-arrow-up" style="color:var(--success)"></i> Masuk: <strong>${formatCurrency(mi)}</strong></span>
+                            <span><i class="fas fa-arrow-down" style="color:var(--danger)"></i> Keluar: <strong>${formatCurrency(me)}</strong></span>
+                            <span><i class="fas fa-wallet"></i> Saldo: <strong style="color:${mb>=0?'var(--success)':'var(--danger)'}">${formatCurrency(mb)}</strong></span>
                         </div>
                     </div>
                     <div class="transactions-table">
@@ -1767,7 +1783,7 @@
             container.innerHTML = html;
         }
 
-        // ==================== EXPORT CSV ====================
+        /* ==================== EXPORT CSV ==================== */
         function exportToCSV() {
             SoundManager.play('click');
             const { data, label } = getExportData();
@@ -1800,7 +1816,7 @@
             SoundManager.play('success');
         }
 
-        // ==================== EXPORT EXCEL ====================
+        /* ==================== EXPORT EXCEL ==================== */
         function exportToExcel() {
             SoundManager.play('click');
             const { data, label } = getExportData();
@@ -1819,17 +1835,17 @@
             const sortedMonths = Object.keys(grouped).sort().reverse();
 
             const cell = 'padding:12px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;vertical-align:middle;';
-            const header = 'padding:14px 20px;border:1px solid #cfcfcf;background:#1a73e8;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
-            const monthHdr = 'padding:18px 20px;border:1px solid #cfcfcf;background:#0d47a1;color:#ffffff;font-family:Arial,sans-serif;font-size:13pt;font-weight:bold;vertical-align:middle;';
+            const header = 'padding:14px 20px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;';
+            const monthHdr = 'padding:18px 20px;border:1px solid #cfcfcf;background:#2980b9;color:#ffffff;font-family:Arial,sans-serif;font-size:13pt;font-weight:bold;vertical-align:middle;';
             const incStyle = 'padding:12px 20px;border:1px solid #cfcfcf;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;';
             const expStyle = 'padding:12px 20px;border:1px solid #cfcfcf;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;text-align:right;vertical-align:middle;';
             const totInc = 'padding:14px 20px;border:1px solid #cfcfcf;background:#e6f4ea;color:#0a7d32;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;';
             const totExp = 'padding:14px 20px;border:1px solid #cfcfcf;background:#fce8e6;color:#c5221f;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;';
-            const balStyle = 'padding:14px 20px;border:1px solid #cfcfcf;background:#e8f0fe;color:#1a73e8;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;';
+            const balStyle = 'padding:14px 20px;border:1px solid #cfcfcf;background:#e8f0fe;color:#3498db;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:right;vertical-align:middle;';
             const spacer = 'height:28px;border:none;background:transparent;';
             const infoRow = 'padding:10px 20px;background:#f8f9fa;color:#555;font-size:10pt;text-align:center;border:1px solid #cfcfcf;';
-            const dateCell = 'padding:12px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;font-weight:bold;color:#1a73e8;width:60px;vertical-align:middle;';
-            const dateHeader = 'padding:14px 20px;border:1px solid #cfcfcf;background:#1a73e8;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;width:60px;';
+            const dateCell = 'padding:12px 20px;border:1px solid #cfcfcf;font-family:Arial,sans-serif;font-size:11pt;text-align:center;font-weight:bold;color:#3498db;width:60px;vertical-align:middle;';
+            const dateHeader = 'padding:14px 20px;border:1px solid #cfcfcf;background:#3498db;color:#ffffff;font-family:Arial,sans-serif;font-size:11pt;font-weight:bold;text-align:center;vertical-align:middle;width:60px;';
 
             let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
 <head><meta charset="UTF-8">
@@ -1838,8 +1854,8 @@
 </head><body>
 <table style="border-collapse:collapse;font-family:Arial,sans-serif;">
 <tr>
-    <td colspan="4" style="padding:24px 20px;background:#1a73e8;color:#ffffff;font-size:17pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;">
-        💰 CashTrack - Laporan Keuangan
+    <td colspan="4" style="padding:24px 20px;background:#3498db;color:#ffffff;font-size:17pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;">
+        CashTrack - Laporan Keuangan
     </td>
 </tr>
 <tr>
@@ -1867,7 +1883,7 @@
                 const mb = mi - me;
 
                 html += `<tr>
-                    <td colspan="4" style="${monthHdr}">📅 ${mn} ${year}</td>
+                    <td colspan="4" style="${monthHdr}">${mn} ${year}</td>
                 </tr>
                 <tr>
                     <td style="${dateHeader}">Tgl</td>
@@ -1899,8 +1915,8 @@
 
             const gb = gInc - gExp;
             html += `<tr>
-                <td colspan="4" style="padding:20px;background:#1a73e8;color:#ffffff;font-size:13pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;">
-                    📊 REKAP ${label.toUpperCase()}
+                <td colspan="4" style="padding:20px;background:#3498db;color:#ffffff;font-size:13pt;font-weight:bold;text-align:center;border:1px solid #cfcfcf;">
+                    REKAP ${label.toUpperCase()}
                 </td>
             </tr>
             <tr>
@@ -1918,7 +1934,7 @@
             <tr><td colspan="4" style="${spacer}"></td></tr>
             <tr>
                 <td colspan="4" style="padding:12px;text-align:center;color:#888;font-size:9pt;border:none;">
-                    © 2027 CashTrack — Buatan Anak Indonesia 🇮🇩
+                    © 2027 CashTrack — Buatan Anak Indonesia
                 </td>
             </tr>
             </table></body></html>`;
@@ -1935,7 +1951,7 @@
 
         function exportToExcelGrouped() { exportToExcel(); }
 
-        // ==================== NAVIGATION ====================
+        /* ==================== NAVIGATION ==================== */
         function setupNavigationTabs() {
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -1954,7 +1970,7 @@
             });
         }
 
-        // ==================== LOGOUT ====================
+        /* ==================== LOGOUT ==================== */
         function logout() {
             SoundManager.play('click');
             if (confirm('Apakah Anda yakin ingin keluar?')) {
